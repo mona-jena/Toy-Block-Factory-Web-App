@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyBlockFactory", "ToyBlockFactory\ToyBlockFactory.csproj", "{A300156C-D0C4-4443-9E85-5143FED2D20F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyBlockFactoryKata", "ToyBlockFactoryKata\ToyBlockFactoryKata.csproj", "{A300156C-D0C4-4443-9E85-5143FED2D20F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyBlockFactoryTests", "ToyBlockFactoryTests\ToyBlockFactoryTests.csproj", "{20244D0F-E143-4844-872D-1C72305A1D02}"
 EndProject
