@@ -8,7 +8,7 @@ namespace ToyBlockFactoryTests
     {
 
         [Fact]
-        public void CheckIfCustomerAbleToProvideOrderAndIfInvoiceIsReturned()
+        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
         {
             var toyBlockFactory = new ToyBlockFactory();
             var customerName = "David Rudd";
