@@ -17,17 +17,29 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.SetDueDate("19 Jan 2019");
+            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            var orderDueDate = "19 Jan 2019";
+            customerOrder.SetDueDate(orderDueDate);
             toyBlockFactory.SubmitOrder(customerOrder);
+            var orderList = new Dictionary<Block, int>
+            {
+                {new Block(Shape.Square, Colour.Red), 1},
+                {new Block(Shape.Square, Colour.Yellow), 1},
+                {new Block(Shape.Triangle, Colour.Blue), 2},
+                {new Block(Shape.Circle, Colour.Blue), 1},
+                {new Block(Shape.Circle, Colour.Yellow), 2}
+            };
             
             var order = toyBlockFactory.GetOrder(0001);
             
             Assert.Equal(customerName, order.Name);
             Assert.Equal(customerAddress, order.Address);
             Assert.Equal(orderDueDate, order.DueDate);
-            Assert.Equal(customerAddress, order.Address);
+            Assert.Equal(0001, order.OrderNumber);
+            Assert.Equal(orderList, order.BlockList);
         }
         
         
@@ -54,7 +66,7 @@ namespace ToyBlockFactoryTests
          * give back invoice
          */
         
-        var expectedInvoiceReport = 
+        /*var expectedInvoiceReport = 
                 "Your invoice report has been generated:" +
                 "\n" +
                 "Name: David Rudd Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2019 Order #: 0001" +
@@ -70,7 +82,7 @@ namespace ToyBlockFactoryTests
                 "Circles			    3 @ $3 ppi = $9" +
                 "Red colour surcharge   1 @ $1 ppi = $1" +
                 "\n" +
-                "Total                  $16";
+                "Total                  $16";*/
     }
 
 
