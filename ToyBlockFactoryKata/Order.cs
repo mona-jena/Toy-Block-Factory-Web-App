@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection.PortableExecutable;
 
 namespace ToyBlockFactoryKata
 {
     public class Order
     {
-        
         public string Name { get; set; }
         public string Address { get; set; }
         public string DueDate { get; set; }
@@ -14,17 +14,22 @@ namespace ToyBlockFactoryKata
         
         internal Order()
         {
-            //BlockList = new Dictionary<Block, int>();
+            BlockList = new Dictionary<Block, int>();
         }
 
         public void AddBlock(Shape shape, Colour colour)
         {
-            throw new NotImplementedException();
+            var block = new Block(shape, colour);
+            if (BlockList.TryGetValue(block, out var blockQuantity))
+                BlockList[block] = ++blockQuantity;
+            else
+                BlockList.Add(block, 1);
         }
-
-        public string SetDueDate(string dueDate)
+        
+        public string GetOrderNumber()
         {
-            throw new NotImplementedException();
+            return OrderNumber.ToString().PadLeft(4, '0');
         }
+        
     }
 }

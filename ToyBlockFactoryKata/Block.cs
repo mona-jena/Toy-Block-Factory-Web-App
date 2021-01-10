@@ -2,13 +2,13 @@ namespace ToyBlockFactoryKata
 {
     public class Block
     {
-        private Colour BlockColour { get; }
-        private Shape BlockShape { get; }
+        private Colour Colour { get; }
+        private Shape Shape { get; }
         
         public Block(Shape shape, Colour colour)
         {
-            BlockShape = shape;
-            BlockColour = colour;
+            Shape = shape;
+            Colour = colour;
         }
 
     }

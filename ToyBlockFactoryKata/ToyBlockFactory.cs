@@ -2,18 +2,22 @@ namespace ToyBlockFactoryKata
 {
     public class ToyBlockFactory
     {
+        private Order _customerOrder;
+        private OrderManagementSystem _orderManagementSystem = new OrderManagementSystem();
         public Order CreateOrder(string customerName, string customerAddress)
         {
-            throw new System.NotImplementedException();
+            _customerOrder = new Order {Name = customerName, Address = customerAddress};
+            return _customerOrder;
         }
 
         public void SubmitOrder(Order customerOrder)
         {
-            throw new System.NotImplementedException();
+            _orderManagementSystem.SetOrder(customerOrder);
         }
 
-        public Order GetOrder(int orderId)
+        public Order GetOrder(string orderId)
         {
+            _orderManagementSystem.GetOrder(orderId); //Is calling GetOrder() twice bad?
             throw new System.NotImplementedException();
         }
     }

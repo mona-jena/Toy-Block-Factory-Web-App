@@ -6,7 +6,6 @@ namespace ToyBlockFactoryTests
 {
     public class OrderManagementSystemTests
     {
-
         [Fact]
         public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
         {
@@ -22,7 +21,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             var orderDueDate = "19 Jan 2019";
-            customerOrder.SetDueDate(orderDueDate);
+            customerOrder.DueDate = orderDueDate;
             toyBlockFactory.SubmitOrder(customerOrder);
             var orderList = new Dictionary<Block, int>
             {
@@ -33,12 +32,12 @@ namespace ToyBlockFactoryTests
                 {new Block(Shape.Circle, Colour.Yellow), 2}
             };
             
-            var order = toyBlockFactory.GetOrder(0001);
+            var order = toyBlockFactory.GetOrder("0001");
             
             Assert.Equal(customerName, order.Name);
             Assert.Equal(customerAddress, order.Address);
             Assert.Equal(orderDueDate, order.DueDate);
-            Assert.Equal(0001, order.OrderNumber);
+            Assert.Equal("0001", order.GetOrderNumber());
             Assert.Equal(orderList, order.BlockList);
         }
         
