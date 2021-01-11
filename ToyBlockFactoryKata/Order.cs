@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Reflection.PortableExecutable;
 
 namespace ToyBlockFactoryKata
 {
@@ -12,22 +10,18 @@ namespace ToyBlockFactoryKata
         public string OrderNumber { get; set; }
         public Dictionary<Block, int> BlockList { get; }
         
-        internal Order()
+        internal Order() 
         {
-            BlockList = new Dictionary<Block, int>();
+            BlockList = new Dictionary<Block, int>(new BlockMatcher());
         }
 
         public void AddBlock(Shape shape, Colour colour)
         {
             var block = new Block(shape, colour);
-            var blockQuantity = 0;
-            if (BlockList.ContainsKey(block))
+            if (BlockList.TryGetValue(block, out var blockQuantity))
                 BlockList[block] = ++blockQuantity;
             else
                 BlockList.Add(block, 1);
         }
-        
-        
-        
     }
 }
