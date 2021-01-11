@@ -9,7 +9,7 @@ namespace ToyBlockFactoryKata
         public string Name { get; set; }
         public string Address { get; set; }
         public string DueDate { get; set; }
-        public int OrderNumber { get; set; }
+        public string OrderNumber { get; set; }
         public Dictionary<Block, int> BlockList { get; }
         
         internal Order()
@@ -20,16 +20,14 @@ namespace ToyBlockFactoryKata
         public void AddBlock(Shape shape, Colour colour)
         {
             var block = new Block(shape, colour);
-            if (BlockList.TryGetValue(block, out var blockQuantity))
+            var blockQuantity = 0;
+            if (BlockList.ContainsKey(block))
                 BlockList[block] = ++blockQuantity;
             else
                 BlockList.Add(block, 1);
         }
         
-        public string GetOrderNumber()
-        {
-            return OrderNumber.ToString().PadLeft(4, '0');
-        }
+        
         
     }
 }

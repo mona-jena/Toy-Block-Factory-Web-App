@@ -37,9 +37,11 @@ namespace ToyBlockFactoryTests
             Assert.Equal(customerName, order.Name);
             Assert.Equal(customerAddress, order.Address);
             Assert.Equal(orderDueDate, order.DueDate);
-            Assert.Equal("0001", order.GetOrderNumber());
+            Assert.Equal("0001", order.OrderNumber);
             Assert.Equal(orderList, order.BlockList);
         }
+        //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
+        
         
         
         //var orderManagementSystem = new OrderManagementSystem(customerDetails);

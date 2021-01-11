@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Dynamic;
 
@@ -7,7 +8,7 @@ namespace ToyBlockFactoryKata
     {
         private static int _orderNumber = 0;
         //private List<Order> _listOfOrders = new List<Order>();
-        private Dictionary<int, Order> _allOrders = new Dictionary<int, Order>();
+        private Dictionary<string, Order> _allOrders = new Dictionary<string, Order>();
         
         public OrderManagementSystem()
         {
@@ -16,15 +17,23 @@ namespace ToyBlockFactoryKata
 
         internal void SetOrder(Order order)
         {
-            order.OrderNumber = ++_orderNumber;
-            _allOrders.Add(_orderNumber, order);
+            ++_orderNumber;
+            order.OrderNumber = GetOrderNumber();
+            _allOrders.Add(order.OrderNumber, order);
         }
 
-        internal Order GetOrder(int orderNumber)
+        internal Order GetOrder(string orderNumber)
         {
             var orderExists = _allOrders.TryGetValue(orderNumber, out var order);
-            if (orderExists)
-                return order;
+            if (!orderExists)
+                Console.WriteLine("Order does not exist"); //should get console to print this?
+            return order;
+        }
+
+        private string GetOrderNumber()
+        {
+            var formattedOrderNumber = _orderNumber.ToString().PadLeft(4, '0');
+            return formattedOrderNumber;
         }
 
        
