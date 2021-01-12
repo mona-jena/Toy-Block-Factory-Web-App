@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ToyBlockFactoryKata;
 using Xunit;
 
@@ -6,23 +7,24 @@ namespace ToyBlockFactoryTests
 {
     public class OrderManagementSystemTests
     {
-        [Fact]
-        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
+        private readonly ToyBlockFactory _toyBlockFactory;
+        private readonly Order _customerOrder;
+        public OrderManagementSystemTests()
         {
-            var toyBlockFactory = new ToyBlockFactory();
+            _toyBlockFactory = new ToyBlockFactory();
             var customerName = "David Rudd";
             var customerAddress = "1 Bob Avenue, Auckland";
-            Order customerOrder = toyBlockFactory.CreateOrder(customerName, customerAddress);
-            customerOrder.AddBlock(Shape.Square, Colour.Red);
-            customerOrder.AddBlock(Shape.Square, Colour.Yellow);
-            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            _customerOrder = _toyBlockFactory.CreateOrder(customerName, customerAddress);
+            _customerOrder.AddBlock(Shape.Square, Colour.Red);
+            _customerOrder.AddBlock(Shape.Square, Colour.Yellow);
+            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Blue);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             var orderDueDate = "19 Jan 2019";
-            customerOrder.DueDate = orderDueDate;
-            toyBlockFactory.SubmitOrder(customerOrder);
+            _customerOrder.DueDate = orderDueDate;
+            _toyBlockFactory.SubmitOrder(_customerOrder);
             var orderList = new Dictionary<Block, int>
             {
                 {new Block(Shape.Square, Colour.Red), 1},
@@ -31,15 +33,28 @@ namespace ToyBlockFactoryTests
                 {new Block(Shape.Circle, Colour.Blue), 1},
                 {new Block(Shape.Circle, Colour.Yellow), 2}
             };
-            
-            var order = toyBlockFactory.GetOrder("0001");
+        }
+        
+        [Fact]
+        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
             
             Assert.Equal(customerName, order.Name);
             Assert.Equal(customerAddress, order.Address);
             Assert.Equal(orderDueDate, order.DueDate);
             Assert.Equal("0001", order.OrderNumber);
-            Assert.Equal(orderList, order.BlockList);
+            CollectionAssert.AreEquivalent(orderList.ToList(), order.BlockList.ToList());
         }
+
+        [Fact]
+        public void CheckIfCustomerNameIsAbleToBeStoredAndReturned()
+        {
+            
+        }
+        
+        
+        
         //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
         
         
@@ -93,3 +108,31 @@ namespace ToyBlockFactoryTests
 }
 
 
+/*[Theory]
+[ClassData(typeof(GreetingTestData))]
+public void ShouldReturnCorrectGreetingMessage_WhenGivenAListOfNames(IEnumerable<string> names, string expected)
+{
+    // Arrange
+    var greeter = new Greeter();
+    // Act
+    var result = greeter.Greet(names);
+    // Assert
+    Assert.Equal(expected, result);
+}
+
+public class GreetingTestData : IEnumerable<object[]>
+{
+    public IEnumerator<object[]> GetEnumerator()
+    {
+        yield return new object[] {new List<string> {"Jill", "Jane"}, "Hello, Jill and Jane."};
+        yield return new object[]
+        {
+            new List<string> {"Amy", "Brian", "Charlotte"}, "Hello, Amy, Brian and Charlotte."
+        };
+        yield return new object[]
+        {
+            new List<string> {"Amy", "BRIAN", "Charlotte"}, "Hello, Amy and Charlotte. AND HELLO BRIAN!"
+        };
+    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}*/
