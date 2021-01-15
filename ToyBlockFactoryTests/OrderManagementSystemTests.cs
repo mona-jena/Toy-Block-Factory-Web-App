@@ -1,5 +1,4 @@
 using ToyBlockFactoryKata;
-using ToyBlockFactoryTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -11,7 +10,8 @@ namespace ToyBlockFactoryTests
         public OrderManagementSystemTests(ToyBlockFactoryFixture toyBlockFactoryFixture)
         {
             _toyBlockFactoryFixture = toyBlockFactoryFixture;
-            var customerOrder = _toyBlockFactoryFixture.Factory.CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
+            var customerOrder = _toyBlockFactoryFixture.Factory
+                                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -24,7 +24,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
+        public void CheckIfCustomerOrderDetailsAreAbleToBeRetrieved()
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
 
@@ -86,7 +86,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void CheckIf2YellowCircleExistsInTheOrder()
+        public void CheckIf2YellowCircleExistInTheOrder()
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
 
@@ -100,6 +100,7 @@ namespace ToyBlockFactoryTests
 }
 
 
+//TEST FOR MULTIPLE ORDERS!!!!!!
 
 
 //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
