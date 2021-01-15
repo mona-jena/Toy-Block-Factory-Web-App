@@ -1,25 +1,17 @@
 using ToyBlockFactoryKata;
+using ToyBlockFactoryTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    /*var _orderList = _orderList = new Dictionary<Block, int>
-        {
-            {new Block(Shape.Square, Colour.Red), 1},
-            {new Block(Shape.Square, Colour.Yellow), 1},
-            {new Block(Shape.Triangle, Colour.Blue), 2},
-            {new Block(Shape.Circle, Colour.Blue), 1},
-            {new Block(Shape.Circle, Colour.Yellow), 2}
-        };*/
-    public class OrderManagementSystemTests
+    public class OrderManagementSystemTests : IClassFixture<ToyBlockFactoryFixture>
     {
-        private readonly ToyBlockFactory _toyBlockFactory = new ToyBlockFactory();
+        private readonly ToyBlockFactoryFixture _toyBlockFactoryFixture;
 
-        public OrderManagementSystemTests()
+        public OrderManagementSystemTests(ToyBlockFactoryFixture toyBlockFactoryFixture)
         {
-            //_customerName = "David Rudd";
-            //_customerAddress = "1 Bob Avenue, Auckland";
-            var customerOrder = _toyBlockFactory.CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
+            _toyBlockFactoryFixture = toyBlockFactoryFixture;
+            var customerOrder = _toyBlockFactoryFixture.Factory.CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -27,16 +19,15 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            //_orderDueDate = "19 Jan 2019";
             customerOrder.DueDate = "19 Jan 2019";
-            _toyBlockFactory.SubmitOrder(customerOrder);
+            _toyBlockFactoryFixture.Factory.SubmitOrder(customerOrder);
         }
 
         [Fact]
         public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
         {
-            var order = _toyBlockFactory.GetOrder("0001");
-            
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+
             Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal("19 Jan 2019", order.DueDate);
@@ -44,23 +35,24 @@ namespace ToyBlockFactoryTests
         }
 
         //_orderList.Keys.ToHashSet().SetEquals(_orderList.Keys.ToHashSet());
-        //_orderList.Values
+ 
 
         [Fact]
         public void CheckIf1RedSquareExistsInTheOrder()
         {
-            var order = _toyBlockFactory.GetOrder("0001");
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
             Assert.Equal(1, blockValue);
+
         }
 
         [Fact]
         public void CheckIf1YellowSquareExistsInTheOrder()
         {
-            var order = _toyBlockFactory.GetOrder("0001");
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
 
             var block = new Block(Shape.Square, Colour.Yellow);
             var blockValue = order.BlockList[block];
@@ -72,7 +64,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf2BlueTrianglesExistInTheOrder()
         {
-            var order = _toyBlockFactory.GetOrder("0001");
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
 
             var block = new Block(Shape.Triangle, Colour.Blue);
             var blockValue = order.BlockList[block];
@@ -84,7 +76,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf1BlueCircleExistsInTheOrder()
         {
-            var order = _toyBlockFactory.GetOrder("0001");
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
 
             var block = new Block(Shape.Circle, Colour.Blue);
             var blockValue = order.BlockList[block];
@@ -96,7 +88,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf2YellowCircleExistsInTheOrder()
         {
-            var order = _toyBlockFactory.GetOrder("0001");
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
 
             var block = new Block(Shape.Circle, Colour.Yellow);
             var blockValue = order.BlockList[block];
@@ -104,9 +96,13 @@ namespace ToyBlockFactoryTests
             Assert.True(order.BlockList.ContainsKey(block));
             Assert.Equal(2, blockValue);
         }
+    }
+}
 
 
-        //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
+
+
+//IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
 
 
         //var orderManagementSystem = new OrderManagementSystem(customerDetails);
@@ -148,8 +144,9 @@ namespace ToyBlockFactoryTests
                 "Red colour surcharge   1 @ $1 ppi = $1" +
                 "\n" +
                 "Total                  $16";*/
-    }
-}
+        
+    
+
 
 
 /*[Theory]
