@@ -7,14 +7,8 @@ namespace ToyBlockFactoryKata
     public class OrderManagementSystem
     {
         private static int _orderNumber = 0;
-        //private List<Order> _listOfOrders = new List<Order>();
         private Dictionary<string, Order> _allOrders = new Dictionary<string, Order>();
         
-        public OrderManagementSystem()
-        {
-           
-        }
-
         internal void SetOrder(Order order)
         {
             ++_orderNumber;

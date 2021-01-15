@@ -12,7 +12,7 @@ namespace ToyBlockFactoryKata
         
         internal Order() 
         {
-            BlockList = new Dictionary<Block, int>(new BlockMatcher());
+            BlockList = new Dictionary<Block, int>();
         }
 
         public void AddBlock(Shape shape, Colour colour)

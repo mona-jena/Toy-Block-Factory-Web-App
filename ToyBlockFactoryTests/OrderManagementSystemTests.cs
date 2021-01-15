@@ -7,24 +7,36 @@ namespace ToyBlockFactoryTests
 {
     public class OrderManagementSystemTests
     {
-        private readonly ToyBlockFactory _toyBlockFactory;
-        private readonly Order _customerOrder;
-        public OrderManagementSystemTests()
+        [Fact]
+        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
         {
-            _toyBlockFactory = new ToyBlockFactory();
+            var toyBlockFactory = new ToyBlockFactory();
             var customerName = "David Rudd";
             var customerAddress = "1 Bob Avenue, Auckland";
-            _customerOrder = _toyBlockFactory.CreateOrder(customerName, customerAddress);
-            _customerOrder.AddBlock(Shape.Square, Colour.Red);
-            _customerOrder.AddBlock(Shape.Square, Colour.Yellow);
-            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            var customerOrder = toyBlockFactory.CreateOrder(customerName, customerAddress);
+            customerOrder.AddBlock(Shape.Square, Colour.Red);
+            customerOrder.AddBlock(Shape.Square, Colour.Yellow);
+            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            customerOrder.AddBlock(Shape.Circle, Colour.Blue);
+            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             var orderDueDate = "19 Jan 2019";
-            _customerOrder.DueDate = orderDueDate;
-            _toyBlockFactory.SubmitOrder(_customerOrder);
+            customerOrder.DueDate = orderDueDate;
+            toyBlockFactory.SubmitOrder(customerOrder);
+
+            var order = toyBlockFactory.GetOrder("0001");
+            
+            Assert.Equal(customerName, order.Name);
+            Assert.Equal(customerAddress, order.Address);
+            Assert.Equal(orderDueDate, order.DueDate);
+            Assert.Equal("0001", order.OrderNumber);
+            
+        }
+
+        [Fact]
+        public void CheckIfCustomerNameIsAbleToBeStoredAndReturned()
+        {
             var orderList = new Dictionary<Block, int>
             {
                 {new Block(Shape.Square, Colour.Red), 1},
@@ -33,24 +45,9 @@ namespace ToyBlockFactoryTests
                 {new Block(Shape.Circle, Colour.Blue), 1},
                 {new Block(Shape.Circle, Colour.Yellow), 2}
             };
-        }
-        
-        [Fact]
-        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-            
-            Assert.Equal(customerName, order.Name);
-            Assert.Equal(customerAddress, order.Address);
-            Assert.Equal(orderDueDate, order.DueDate);
-            Assert.Equal("0001", order.OrderNumber);
-            CollectionAssert.AreEquivalent(orderList.ToList(), order.BlockList.ToList());
-        }
-
-        [Fact]
-        public void CheckIfCustomerNameIsAbleToBeStoredAndReturned()
-        {
-            
+            orderList.Keys.ToHashSet().SetEquals(orderList.Keys.ToHashSet());
+            orderList.Values
+            Assert.Contains(orderList.Values, orderList.Values);
         }
         
         
