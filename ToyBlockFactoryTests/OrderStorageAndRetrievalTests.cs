@@ -3,11 +3,11 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class OrderManagementSystemTests : IClassFixture<ToyBlockFactoryFixture>
+    public class OrderStorageAndRetrievalTests : IClassFixture<ToyBlockFactoryFixture>
     {
         private readonly ToyBlockFactoryFixture _toyBlockFactoryFixture;
 
-        public OrderManagementSystemTests(ToyBlockFactoryFixture toyBlockFactoryFixture)
+        public OrderStorageAndRetrievalTests(ToyBlockFactoryFixture toyBlockFactoryFixture)
         {
             _toyBlockFactoryFixture = toyBlockFactoryFixture;
             var customerOrder = _toyBlockFactoryFixture.Factory

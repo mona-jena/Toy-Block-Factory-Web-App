@@ -18,7 +18,12 @@ namespace ToyBlockFactoryKata
 
         public Order GetOrder(string orderId)
         {
+            //should this also return the reports? should we ask customer what report they want?
+            
             return _orderManagementSystem.GetOrder(orderId); //Is calling GetOrder() twice bad?
         }
+        
+        //once user selected what report they want, call that particular method
+            // this method will call private GetOrder() ???
     }
 }
