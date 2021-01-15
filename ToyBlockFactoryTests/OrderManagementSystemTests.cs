@@ -7,6 +7,15 @@ namespace ToyBlockFactoryTests
 {
     public class OrderManagementSystemTests
     {
+        /*var _orderList = _orderList = new Dictionary<Block, int>
+        {
+            {new Block(Shape.Square, Colour.Red), 1},
+            {new Block(Shape.Square, Colour.Yellow), 1},
+            {new Block(Shape.Triangle, Colour.Blue), 2},
+            {new Block(Shape.Circle, Colour.Blue), 1},
+            {new Block(Shape.Circle, Colour.Yellow), 2}
+        };*/
+
         [Fact]
         public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
         {
@@ -33,21 +42,21 @@ namespace ToyBlockFactoryTests
             Assert.Equal("0001", order.OrderNumber);
             
         }
+        
+        //_orderList.Keys.ToHashSet().SetEquals(_orderList.Keys.ToHashSet());
+        //_orderList.Values
 
         [Fact]
-        public void CheckIfCustomerNameIsAbleToBeStoredAndReturned()
+        public void CheckIf1RedSquareExistsInTheOrder()
         {
-            var orderList = new Dictionary<Block, int>
-            {
-                {new Block(Shape.Square, Colour.Red), 1},
-                {new Block(Shape.Square, Colour.Yellow), 1},
-                {new Block(Shape.Triangle, Colour.Blue), 2},
-                {new Block(Shape.Circle, Colour.Blue), 1},
-                {new Block(Shape.Circle, Colour.Yellow), 2}
-            };
-            orderList.Keys.ToHashSet().SetEquals(orderList.Keys.ToHashSet());
-            orderList.Values
-            Assert.Contains(orderList.Values, orderList.Values);
+            var toyBlockFactory = new ToyBlockFactory();
+            var order = toyBlockFactory.GetOrder("0001");
+            
+            var block = new Block(Shape.Square, Colour.Red);
+            var blockValue = order.BlockList.TryGetValue(block, out var value);
+            
+            Assert.True(order.BlockList.ContainsKey(new Block(Shape.Square, Colour.Red)));
+            Assert.Equal(1, value);
         }
         
         
