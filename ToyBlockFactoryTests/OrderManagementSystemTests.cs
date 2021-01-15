@@ -42,19 +42,19 @@ namespace ToyBlockFactoryTests
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
+            
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
             Assert.Equal(1, blockValue);
-
         }
 
         [Fact]
         public void CheckIf1YellowSquareExistsInTheOrder()
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
-
             var block = new Block(Shape.Square, Colour.Yellow);
+            
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -65,8 +65,8 @@ namespace ToyBlockFactoryTests
         public void CheckIf2BlueTrianglesExistInTheOrder()
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
-
             var block = new Block(Shape.Triangle, Colour.Blue);
+            
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -77,8 +77,8 @@ namespace ToyBlockFactoryTests
         public void CheckIf1BlueCircleExistsInTheOrder()
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
-
             var block = new Block(Shape.Circle, Colour.Blue);
+            
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -89,18 +89,52 @@ namespace ToyBlockFactoryTests
         public void CheckIf2YellowCircleExistInTheOrder()
         {
             var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
-
             var block = new Block(Shape.Circle, Colour.Yellow);
+            
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
             Assert.Equal(2, blockValue);
         }
+
+
+        [Fact]
+        public void MultipleOrdersShouldBeAbleToBeStoredAndRetrieved()
+        {
+            var customerOrder2 = _toyBlockFactoryFixture.Factory
+                .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
+            customerOrder2.AddBlock(Shape.Square, Colour.Blue); 
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Red); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Red); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Red); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
+            customerOrder2.DueDate = "30-Jan-19";
+            _toyBlockFactoryFixture.Factory.SubmitOrder(customerOrder2);
+            
+            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order2 = _toyBlockFactoryFixture.Factory.GetOrder("0002");
+
+            Assert.Equal("David Rudd", order.Name);      //SHOULD THIS BE STORED IN VARIABLES?
+            Assert.Equal("1 Bob Avenue, Auckland", order.Address);
+            Assert.Equal("19 Jan 2019", order.DueDate);
+            Assert.Equal("0001", order.OrderNumber);
+            Assert.Equal("Ryan Chen", order2.Name);
+            Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
+            Assert.Equal("30-Jan-19", order2.DueDate);
+            Assert.Equal("0002", order2.OrderNumber);
+            
+        }
     }
 }
 
-
-//TEST FOR MULTIPLE ORDERS!!!!!!
 
 
 //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
