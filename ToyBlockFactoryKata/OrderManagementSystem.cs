@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 
 namespace ToyBlockFactoryKata
 {
     public class OrderManagementSystem
     {
-        private static int _orderNumber = 0;
-        private Dictionary<string, Order> _allOrders = new Dictionary<string, Order>();
-        
+        private static int _orderNumber;
+        private readonly Dictionary<string, Order> _allOrders = new Dictionary<string, Order>();
+
         internal void SetOrder(Order order)
         {
             ++_orderNumber;
@@ -29,7 +28,5 @@ namespace ToyBlockFactoryKata
             var formattedOrderNumber = _orderNumber.ToString().PadLeft(4, '0');
             return formattedOrderNumber;
         }
-
-       
     }
 }

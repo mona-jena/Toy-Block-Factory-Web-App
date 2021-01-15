@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using ToyBlockFactoryKata;
 using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class OrderManagementSystemTests
-    {
-        /*var _orderList = _orderList = new Dictionary<Block, int>
+    /*var _orderList = _orderList = new Dictionary<Block, int>
         {
             {new Block(Shape.Square, Colour.Red), 1},
             {new Block(Shape.Square, Colour.Yellow), 1},
@@ -15,14 +11,15 @@ namespace ToyBlockFactoryTests
             {new Block(Shape.Circle, Colour.Blue), 1},
             {new Block(Shape.Circle, Colour.Yellow), 2}
         };*/
+    public class OrderManagementSystemTests
+    {
+        private readonly ToyBlockFactory _toyBlockFactory = new ToyBlockFactory();
 
-        [Fact]
-        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
+        public OrderManagementSystemTests()
         {
-            var toyBlockFactory = new ToyBlockFactory();
-            var customerName = "David Rudd";
-            var customerAddress = "1 Bob Avenue, Auckland";
-            var customerOrder = toyBlockFactory.CreateOrder(customerName, customerAddress);
+            //_customerName = "David Rudd";
+            //_customerAddress = "1 Bob Avenue, Auckland";
+            var customerOrder = _toyBlockFactory.CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -30,41 +27,88 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            var orderDueDate = "19 Jan 2019";
-            customerOrder.DueDate = orderDueDate;
-            toyBlockFactory.SubmitOrder(customerOrder);
-
-            var order = toyBlockFactory.GetOrder("0001");
-            
-            Assert.Equal(customerName, order.Name);
-            Assert.Equal(customerAddress, order.Address);
-            Assert.Equal(orderDueDate, order.DueDate);
-            Assert.Equal("0001", order.OrderNumber);
-            
+            //_orderDueDate = "19 Jan 2019";
+            customerOrder.DueDate = "19 Jan 2019";
+            _toyBlockFactory.SubmitOrder(customerOrder);
         }
-        
+
+        [Fact]
+        public void CheckIfCustomerOrderIsAbleToBeCreatedAndReturned()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            
+            Assert.Equal("David Rudd", order.Name);
+            Assert.Equal("1 Bob Avenue, Auckland", order.Address);
+            Assert.Equal("19 Jan 2019", order.DueDate);
+            Assert.Equal("0001", order.OrderNumber);
+        }
+
         //_orderList.Keys.ToHashSet().SetEquals(_orderList.Keys.ToHashSet());
         //_orderList.Values
 
         [Fact]
         public void CheckIf1RedSquareExistsInTheOrder()
         {
-            var toyBlockFactory = new ToyBlockFactory();
-            var order = toyBlockFactory.GetOrder("0001");
-            
+            var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
-            var blockValue = order.BlockList.TryGetValue(block, out var value);
-            
-            Assert.True(order.BlockList.ContainsKey(new Block(Shape.Square, Colour.Red)));
-            Assert.Equal(1, value);
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(1, blockValue);
         }
-        
-        
-        
+
+        [Fact]
+        public void CheckIf1YellowSquareExistsInTheOrder()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+
+            var block = new Block(Shape.Square, Colour.Yellow);
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(1, blockValue);
+        }
+
+        [Fact]
+        public void CheckIf2BlueTrianglesExistInTheOrder()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+
+            var block = new Block(Shape.Triangle, Colour.Blue);
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(2, blockValue);
+        }
+
+        [Fact]
+        public void CheckIf1BlueCircleExistsInTheOrder()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+
+            var block = new Block(Shape.Circle, Colour.Blue);
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(1, blockValue);
+        }
+
+        [Fact]
+        public void CheckIf2YellowCircleExistsInTheOrder()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+
+            var block = new Block(Shape.Circle, Colour.Yellow);
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(2, blockValue);
+        }
+
+
         //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
-        
-        
-        
+
+
         //var orderManagementSystem = new OrderManagementSystem(customerDetails);
         //var customerOrder = orderManagementSystem.GetOrder();
         //var reportOrderManagement = new ReportOrderManagementSystem(customerOrder);
@@ -75,8 +119,7 @@ namespace ToyBlockFactoryTests
         pricingList.Red = 1;*/
 
         //var invoiceReport = reportOrderManagement.GenerateInvoice(customerOrder);
-        
-        
+
 
         /*
          * new toyblock factory
@@ -87,7 +130,7 @@ namespace ToyBlockFactoryTests
          * return order
          * give back invoice
          */
-        
+
         /*var expectedInvoiceReport = 
                 "Your invoice report has been generated:" +
                 "\n" +
@@ -106,11 +149,6 @@ namespace ToyBlockFactoryTests
                 "\n" +
                 "Total                  $16";*/
     }
-
-
-    
-
-    
 }
 
 

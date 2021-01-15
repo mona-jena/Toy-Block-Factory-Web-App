@@ -4,14 +4,14 @@ namespace ToyBlockFactoryKata
 {
     public class Block : IEquatable<Block>
     {
-        internal Colour Colour { get; }
-        internal Shape Shape { get; }
-        
         public Block(Shape shape, Colour colour)
         {
             Shape = shape;
             Colour = colour;
         }
+
+        private Colour Colour { get; }
+        private Shape Shape { get; }
 
         public bool Equals(Block other)
         {
@@ -24,7 +24,7 @@ namespace ToyBlockFactoryKata
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Block) obj);
         }
 

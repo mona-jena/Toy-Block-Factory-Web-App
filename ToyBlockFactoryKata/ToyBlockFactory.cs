@@ -3,8 +3,8 @@ namespace ToyBlockFactoryKata
     public class ToyBlockFactory
     {
         private Order _customerOrder;
-        private OrderManagementSystem _orderManagementSystem = new OrderManagementSystem();
-        
+        private readonly OrderManagementSystem _orderManagementSystem = new OrderManagementSystem();
+
         public Order CreateOrder(string customerName, string customerAddress)
         {
             _customerOrder = new Order {Name = customerName, Address = customerAddress};
@@ -18,7 +18,7 @@ namespace ToyBlockFactoryKata
 
         public Order GetOrder(string orderId)
         {
-           return  _orderManagementSystem.GetOrder(orderId); //Is calling GetOrder() twice bad?
+            return _orderManagementSystem.GetOrder(orderId); //Is calling GetOrder() twice bad?
         }
     }
 }
