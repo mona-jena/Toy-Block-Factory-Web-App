@@ -28,9 +28,9 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void GenerateInvoiceShouldReturnAnInvoiceReportForAParticularOrder()
         {
-            var order = _toyBlockFactoryFixture.GetOrder("0001"); 
-            
-            var invoiceReport = _toyBlockFactoryFixture.GetInvoiceReport(order);
+            //var order = _toyBlockFactoryFixture.GetOrder("0001"); 
+            //var requestedReport = 1; //should it be clearer what this means?
+            var invoiceReport = _toyBlockFactoryFixture.Factory.GetInvoiceReport("0001");
             var expectedInvoiceReport = 
                 "Your invoice report has been generated:" +
                 "\n" +
@@ -50,7 +50,6 @@ namespace ToyBlockFactoryTests
                 "Total                  $16";
             
             Assert.Equal(expectedInvoiceReport, invoiceReport);
-
         }
     }
 }
