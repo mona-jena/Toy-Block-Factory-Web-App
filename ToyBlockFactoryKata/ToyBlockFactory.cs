@@ -29,7 +29,7 @@ namespace ToyBlockFactoryKata
         public string GetInvoiceReport(string orderNumber)
         {
             var requestedOrder = _orderManagementSystem.GetOrder(orderNumber);
-            var priceList = new PricingList;
+            var priceList = new PricingList();
             _report = new ReportOrderManagementSystem(priceList, requestedOrder);
             var invoiceReport = _report.GenerateInvoice();
             return invoiceReport;
@@ -44,4 +44,6 @@ namespace ToyBlockFactoryKata
 
     
     }
+
+    
 }
