@@ -16,7 +16,6 @@ namespace ToyBlockFactoryTests
         public void Dispose()          
         {
             Factory = null;         //IS THIS FINE??
-                                    
         }
         
     }

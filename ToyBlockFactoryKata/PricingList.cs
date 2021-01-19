@@ -1,6 +1,10 @@
 namespace ToyBlockFactoryKata
 {
-    public class PricingList
+    internal class PricingList : IInvoiceCalculationStrategy
     {
+        public int CalculateInvoiceLine()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -4,7 +4,7 @@ namespace ToyBlockFactoryKata
     {
         private Order _customerOrder;
         private readonly OrderManagementSystem _orderManagementSystem = new OrderManagementSystem();
-        private ReportOrderManagementSystem _report;
+        private ReportGenerator _report;
             //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
         public Order CreateOrder(string customerName, string customerAddress)
         {
@@ -14,23 +14,22 @@ namespace ToyBlockFactoryKata
 
         public void SubmitOrder(Order customerOrder)
         {
-            _orderManagementSystem.SetOrder(customerOrder);
+            _orderManagementSystem.CreateOrder(customerOrder);
         }
 
         public Order GetOrder(string orderId)
         {
             //should this also return the reports? should we ask customer what report they want?
-           
-            return _orderManagementSystem.GetOrder(orderId); //Is calling GetOrder() twice bad?
+            var orderExists = _orderManagementSystem.GetOrder(orderId, out var order);
+            return order;
         }
 
         //OR
         
-        public string GetInvoiceReport(string orderNumber)
+        public string GetInvoiceReport(string orderId)
         {
-            var requestedOrder = _orderManagementSystem.GetOrder(orderNumber);
-            var priceList = new PricingList();
-            _report = new ReportOrderManagementSystem(priceList, requestedOrder);
+            var requestedOrder = GetOrder(orderId); //should I bring this method down?
+            _report = new ReportGenerator(requestedOrder);
             var invoiceReport = _report.GenerateInvoice();
             return invoiceReport;
         }

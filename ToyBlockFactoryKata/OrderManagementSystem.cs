@@ -3,24 +3,21 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    public class OrderManagementSystem
+    internal class OrderManagementSystem
     {
         private static int _orderNumber;
         private readonly Dictionary<string, Order> _orderDirectory = new Dictionary<string, Order>();
 
-        internal void SetOrder(Order order)
+        internal void CreateOrder(Order order)
         {
             ++_orderNumber;
             order.OrderNumber = GetOrderNumber();
             _orderDirectory.Add(order.OrderNumber, order);
         }
 
-        internal Order GetOrder(string orderNumber)
+        internal bool GetOrder(string orderId, out Order order)
         {
-            var orderExists = _orderDirectory.TryGetValue(orderNumber, out var order);
-            if (!orderExists)
-                Console.WriteLine("Order does not exist"); //should get console to print this?
-            return order;
+            return _orderDirectory.TryGetValue(orderId, out order);
         }
 
         private string GetOrderNumber()

@@ -7,7 +7,6 @@ namespace ToyBlockFactoryTests
     {
     
         private readonly ToyBlockFactoryFixture _toyBlockFactoryFixture;
-
         public ReportManagementTests(ToyBlockFactoryFixture toyBlockFactoryFixture)
         {
             _toyBlockFactoryFixture = toyBlockFactoryFixture;
@@ -23,8 +22,7 @@ namespace ToyBlockFactoryTests
             customerOrder.DueDate = "19 Jan 2019";
             _toyBlockFactoryFixture.Factory.SubmitOrder(customerOrder);
         }
-
-
+        
         [Fact]
         public void GenerateInvoiceShouldReturnAnInvoiceReportForAParticularOrder()
         {

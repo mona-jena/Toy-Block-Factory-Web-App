@@ -4,7 +4,6 @@ namespace ToyBlockFactoryKata
 {
     public class Order
     {
-        
         public string Name { get; set; }
         public string Address { get; set; }
         public string DueDate { get; set; }
