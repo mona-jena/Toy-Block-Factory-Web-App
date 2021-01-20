@@ -4,7 +4,7 @@ namespace ToyBlockFactoryKata
     {
         private Order _customerOrder;
         private readonly OrderManagementSystem _orderManagementSystem = new OrderManagementSystem();
-        private ReportGenerator _report;
+        private ReportGeneratorSystem _report;
             //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
         public Order CreateOrder(string customerName, string customerAddress)
         {
@@ -26,10 +26,10 @@ namespace ToyBlockFactoryKata
 
         //OR
         
-        public string GetInvoiceReport(string orderId)
+        public InvoiceReportGenerator GetInvoiceReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId); //should I bring this method down?
-            _report = new ReportGenerator(requestedOrder);
+            _report = new ReportGeneratorSystem(requestedOrder);
             var invoiceReport = _report.GenerateInvoice();
             return invoiceReport;
         }

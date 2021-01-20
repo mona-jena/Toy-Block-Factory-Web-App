@@ -11,8 +11,8 @@ namespace ToyBlockFactoryKata
         internal void CreateOrder(Order order)
         {
             ++_orderNumber;
-            order.OrderNumber = GetOrderNumber();
-            _orderDirectory.Add(order.OrderNumber, order);
+            order.OrderId = GetOrderNumber();
+            _orderDirectory.Add(order.OrderId, order);
         }
 
         internal bool GetOrder(string orderId, out Order order)

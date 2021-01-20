@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ToyBlockFactoryKata;
 using Xunit;
 
@@ -24,30 +25,49 @@ namespace ToyBlockFactoryTests
         }
         
         [Fact]
-        public void GenerateInvoiceShouldReturnAnInvoiceReportForAParticularOrder()
+        public void GenerateInvoiceShouldReturnAnInvoiceDataForAParticularOrder()
         {
-            //var order = _toyBlockFactoryFixture.GetOrder("0001"); 
-            //var requestedReport = 1; //should it be clearer what this means?
-            var invoiceReport = _toyBlockFactoryFixture.Factory.GetInvoiceReport("0001");
-            var expectedInvoiceReport = 
-                "Your invoice report has been generated:" +
-                "\n" +
-                "Name: David Rudd Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2019 Order #: 0001" +
-                "\n" +
-                "|          | Red | Blue | Yellow |" +
-                "|----------|-----|------|--------|" +
-                "| Square   | 1   | -    | 1      |" +
-                "| Triangle | -   | 2    | -      |" +
-                "| Circle   | -   | 1    | 2      |" +
-                "\n" +
-                "Squares 		        2 @ $1 ppi = $2" +
-                "Triangles		        2 @ $2 ppi = $4" +
-                "Circles			    3 @ $3 ppi = $9" +
-                "Red colour surcharge   1 @ $1 ppi = $1" +
-                "\n" +
-                "Total                  $16";
+            var invoiceInformation = _toyBlockFactoryFixture.Factory.GetInvoiceReport("0001");
             
-            Assert.Equal(expectedInvoiceReport, invoiceReport);
+            
+            /*var block = new Block(Shape.Circle, Colour.Blue);
+            block.Colour = Colour.Red;
+            var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/
+            
+            
+            Assert.Equal(invoice.Name, "David Rudd");
+            Assert.Equal(invoice.Address, "1 Bob Avenue, Auckland");
+            Assert.Equal(invoice.DueDate, "19 Jan 2019");
+            Assert.Equal(invoice.OrderId, "0001");
+            Assert.Equal(invoiceLine, "David Rudd");
+            Assert.Equal(invoiceLine, "David Rudd");
+            Assert.Equal(invoiceLine, "David Rudd");
+            Assert.Equal(invoiceLine, "David Rudd");
+            
+            
         }
     }
 }
+
+/*var expectedInvoiceReport = new List<string>()
+{
+    "Your invoice report has been generated:",
+    "\n",
+    "Name: David Rudd ",
+    "Address: 1 Bob Avenue, Auckland ",
+    "Due Date: 19 Jan 2019 ",
+    "Order #: 0001,",
+    "\n",
+    "|          | Red | Blue | Yellow |",
+    "|----------|-----|------|--------|",
+    "| Square   | 1   | -    | 1      |",
+    "| Triangle | -   | 2    | -      |",
+    "| Circle   | -   | 1    | 2      |",
+    "\n",
+    "Squares 		        2 @ $1 ppi = $2",
+    "Triangles		        2 @ $2 ppi = $4",
+    "Circles			    3 @ $3 ppi = $9",
+    "Red colour surcharge   1 @ $1 ppi = $1",
+    "\n",
+    "Total                  $16"
+};*/

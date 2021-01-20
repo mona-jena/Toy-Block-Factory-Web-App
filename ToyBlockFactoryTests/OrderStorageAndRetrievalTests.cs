@@ -31,7 +31,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal("19 Jan 2019", order.DueDate);
-            Assert.Equal("0001", order.OrderNumber);
+            Assert.Equal("0001", order.OrderId);
         }
 
         //_orderList.Keys.ToHashSet().SetEquals(_orderList.Keys.ToHashSet());
@@ -125,13 +125,16 @@ namespace ToyBlockFactoryTests
             Assert.Equal("David Rudd", order.Name);      //SHOULD THIS BE STORED IN VARIABLES?
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal("19 Jan 2019", order.DueDate);
-            Assert.Equal("0001", order.OrderNumber);
+            Assert.Equal("0001", order.OrderId);
             Assert.Equal("Ryan Chen", order2.Name);
             Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
             Assert.Equal("30-Jan-19", order2.DueDate);
-            Assert.Equal("0002", order2.OrderNumber);
-            
+            Assert.Equal("0002", order2.OrderId);
         }
+            /*var block = new Block(Shape.Circle, Colour.Blue);
+            block.Colour = Colour.Red;
+            var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/
+        
     }
 }
 
