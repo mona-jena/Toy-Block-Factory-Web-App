@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    internal class OrderManagementSystem
+    internal class OrderGenerator
     {
         private static int _orderNumber;
-        private readonly Dictionary<string, Order> _orderDirectory = new Dictionary<string, Order>();
+        private readonly Dictionary<string, Order> _orderDirectory = new(); //same as new Dictionary<string, Order>()
 
         internal void CreateOrder(Order order)
         {

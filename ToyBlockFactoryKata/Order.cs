@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
@@ -6,7 +7,7 @@ namespace ToyBlockFactoryKata
     {
         public string Name { get; set; }
         public string Address { get; set; }
-        public string DueDate { get; set; }
+        public DateTime DueDate { get; set; }
         public string OrderId { get; set; }
         public Dictionary<Block, int> BlockList { get; }
         

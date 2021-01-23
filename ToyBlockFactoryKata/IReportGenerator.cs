@@ -1,6 +1,6 @@
 namespace ToyBlockFactoryKata
 {
-    public interface IReport
+    public interface IReportGenerator
     {
         string GenerateReport();
     }
