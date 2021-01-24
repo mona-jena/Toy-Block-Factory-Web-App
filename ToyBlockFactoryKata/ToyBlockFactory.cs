@@ -3,8 +3,8 @@ namespace ToyBlockFactoryKata
     public class ToyBlockFactory
     {
         private Order _customerOrder;
-        private readonly OrderGenerator _orderGenerator = new OrderGenerator();
-        private readonly ReportGenerator _report = new ReportGenerator();
+        private readonly OrderGenerator _orderGenerator = new();
+        private readonly ReportGenerator _report = new();
 
         //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
         

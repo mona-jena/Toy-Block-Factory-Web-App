@@ -41,9 +41,6 @@ namespace ToyBlockFactoryTests
                 new List<object>() {"Red colour surcharge", 1, 1, 1}
             };
             
-            
-            
-
             var invoice = _toyBlockFactoryFixture.Factory.GetInvoiceReport(orderId);
             
             Assert.Equal(ReportType.Invoice, invoice.ReportType); 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    internal class Report
+    public class Report
     {
         public ReportType ReportType { get; set; }
         public string Name { get; set; }

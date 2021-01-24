@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using Microsoft.VisualBasic;
 
 namespace ToyBlockFactoryKata
 {
@@ -15,41 +17,59 @@ namespace ToyBlockFactoryKata
             _requestedOrder = requestedOrder;
         }
 
-        public void GenerateReport() //date collator 
+        public Report GenerateReport() //date collator 
         {
             _report.ReportType = ReportType.Invoice;
             _report.Name = _requestedOrder.Name;
             _report.Address = _requestedOrder.Address;
-            _report.DueDate = Convert.ToDateTime(_requestedOrder.DueDate); //change to datetime
+            _report.DueDate = _requestedOrder.DueDate; //change to datetime
             _report.OrderId = _requestedOrder.OrderId;
+            AddLineItem();
+            return _report;
         }
 
         public void AddLineItem()
         {
-            _report.LineItems.Add(new List<object>
+            foreach (var shape in (Shape[]) Enum.GetValues(typeof(Shape)))
             {
-                block.Key.Name, 
-                // CalculateShapeQuantity(shape)
-                _priceList
-                total
-            });
-            
-            
-            CalculateShapeQuantity();
-
-
-            foreach (var block in _requestedOrder.BlockList)
-            {
+                var shapeQuantity = CalculateShapeQuantity(shape);
+                var shapePrice = GetPrice(shape);
                 _report.LineItems.Add(new List<object>
                 {
-                    block.Key.Name, 
-                    block.Key
+                    shape, 
+                    shapeQuantity,
+                    shapePrice,
+                    _priceList.CalculateInvoiceLine(shapeQuantity, shapePrice)
                 });
             }
-            
         }
 
-        private void CalculateShapeQuantity()
+        private int CalculateShapeQuantity(Shape shape)
+        {
+            var shapeQuantity = 0;
+            foreach (var block in _requestedOrder.BlockList)
+            {
+                if (block.Key.Shape.Equals(shape))
+                    shapeQuantity++;
+            }
+
+            return shapeQuantity;
+        }
+
+        private int GetPrice(Shape shape)
+        {
+            var SGFJJJR = shape.ToString();
+            if (SGFJJJR == "Square")
+                return _priceList.Square;
+            if (SGFJJJR == "Triangle")
+                return _priceList.Triangle;
+            if (SGFJJJR == "Circle")
+                return _priceList.Circle;
+            return 0;                           //is this ok?
+        }
+
+
+        /*private void CalculateShapeQuantity()
         {
             var squareCount = 0;
             var triangleCount = 0;
@@ -64,7 +84,14 @@ namespace ToyBlockFactoryKata
                 else if (block.Key.Shape.Equals(Shape.Circle))
                     circleCount++;
             }
-        }
+        }*/
     }
     
+    
+    /*
+     * for each line for the length of number of enums:
+     * calc total quan for each shape
+     * insert price (shape)
+     * calc tolal 
+     */
 }
