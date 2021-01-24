@@ -78,7 +78,7 @@ namespace ToyBlockFactoryKata
                 return _priceList.Triangle;
             if (SGFJJJR == "Circle")
                 return _priceList.Circle;
-            return 0;                           //is this ok?
+            return 0;                          //is this ok?
         }
 
 
