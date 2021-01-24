@@ -5,7 +5,8 @@ namespace ToyBlockFactoryKata
         int Square { get; }
         int Triangle { get; }
         int Circle { get; }
-        
-        int CalculateInvoiceLine(int shapeQuantity, int shapePrice);
+        int Red { get; }
+
+        int CalculateInvoiceLine(int quantity, int shapePrice);
     }
 }

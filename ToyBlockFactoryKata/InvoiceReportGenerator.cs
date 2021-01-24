@@ -10,6 +10,7 @@ namespace ToyBlockFactoryKata
         private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Order _requestedOrder;
         private readonly Report _report = new();
+        private int _redBlock = 0;
         
         internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
         {
@@ -24,11 +25,11 @@ namespace ToyBlockFactoryKata
             _report.Address = _requestedOrder.Address;
             _report.DueDate = _requestedOrder.DueDate; //change to datetime
             _report.OrderId = _requestedOrder.OrderId;
-            AddLineItem();
+            AddLineItems();
             return _report;
         }
 
-        public void AddLineItem()
+        private void AddLineItems() 
         {
             foreach (var shape in (Shape[]) Enum.GetValues(typeof(Shape)))
             {
@@ -36,12 +37,20 @@ namespace ToyBlockFactoryKata
                 var shapePrice = GetPrice(shape);
                 _report.LineItems.Add(new List<object>
                 {
-                    shape, 
+                    shape.ToString(), 
                     shapeQuantity,
                     shapePrice,
                     _priceList.CalculateInvoiceLine(shapeQuantity, shapePrice)
                 });
             }
+            
+            _report.LineItems.Add(new List<object>
+            {
+                Colour.Red + " colour surcharge", 
+                _redBlock,
+                _priceList.Red,
+                _priceList.CalculateInvoiceLine(_redBlock, _priceList.Red)
+            });
         }
 
         private int CalculateShapeQuantity(Shape shape)
@@ -50,7 +59,11 @@ namespace ToyBlockFactoryKata
             foreach (var block in _requestedOrder.BlockList)
             {
                 if (block.Key.Shape.Equals(shape))
-                    shapeQuantity++;
+                {
+                    shapeQuantity += block.Value;
+                    if (block.Key.Colour.Equals(Colour.Red))
+                        _redBlock += block.Value;
+                }
             }
 
             return shapeQuantity;

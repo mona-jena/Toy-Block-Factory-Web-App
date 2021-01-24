@@ -6,10 +6,15 @@ namespace ToyBlockFactoryKata
 {
     public class Order
     {
-        private DateTime _dueDate;
+        
         public string Name { get; set; }
         public string Address { get; set; }
-        public DateTime DueDate { get => _dueDate; set => _dueDate = DateTime.Parse(value); }
+        
+        //private DateTime _dueDate;
+        //public DateTime DueDate { get => _dueDate; set => _dueDate = Convert.ToDateTime(value); }
+
+        public string DueDate { get; set; }
+
         public string OrderId { get; set; }
         public Dictionary<Block, int> BlockList { get; }
         
