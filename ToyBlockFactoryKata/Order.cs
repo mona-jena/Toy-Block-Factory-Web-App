@@ -7,6 +7,24 @@ namespace ToyBlockFactoryKata
     {
         public string Name { get; init; }
         public string Address { get; init; }
+        
+        /*private static DateTime _dueDate;
+        //public DateTime DueDate { get => _dueDate; set => _dueDate = Convert.ToDateTime(value); }
+        //private string _date;
+        
+        public DateTime DueDate
+        {
+            get => _dueDate;
+            set
+            {
+                var validDate = DateTime.TryParse(value, out DateTime date);
+                if (validDate)
+                {
+                    _dueDate = date;
+                }
+            }
+        }
+        */
 
         public DateTime DueDate { get; set; }
         public string OrderId { get; set; }

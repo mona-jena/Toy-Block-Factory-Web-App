@@ -5,13 +5,13 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class ReportManagementTests 
+    public class ReportGeneratorTests 
     {
         private readonly string _customerName;
         private readonly string _customerAddress;
         private readonly ToyBlockFactory _toyBlockFactory;
 
-        public ReportManagementTests()
+        public ReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
             _customerName = "David Rudd";                                                                                                                             
