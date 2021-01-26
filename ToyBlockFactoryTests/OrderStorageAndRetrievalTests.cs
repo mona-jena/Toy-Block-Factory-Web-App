@@ -1,3 +1,4 @@
+using System;
 using ToyBlockFactoryKata;
 using Xunit;
 
@@ -19,7 +20,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.DueDate = "19 Jan 2019";
+            customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
@@ -30,7 +31,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
-            Assert.Equal("19 Jan 2019", order.DueDate);
+            Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
             Assert.Equal("0001", order.OrderId);
         }
 
@@ -116,7 +117,7 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
-            customerOrder2.DueDate = "30-Jan-19";
+            customerOrder2.DueDate = new DateTime(2019, 1, 30);
             _toyBlockFactory.SubmitOrder(customerOrder2);
             
             var order = _toyBlockFactory.GetOrder("0001");
@@ -124,11 +125,11 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal("David Rudd", order.Name);      //SHOULD THIS BE STORED IN VARIABLES?
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
-            Assert.Equal("19 Jan 2019", order.DueDate);
+            Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
             Assert.Equal("0001", order.OrderId);
             Assert.Equal("Ryan Chen", order2.Name);
             Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
-            Assert.Equal("30-Jan-19", order2.DueDate);
+            Assert.Equal(new DateTime(2019, 1, 30), order2.DueDate);
             Assert.Equal("0002", order2.OrderId);
         }
             /*var block = new Block(Shape.Circle, Colour.Blue);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ToyBlockFactoryKata;
 using Xunit;
@@ -23,7 +24,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.DueDate = "19 Jan 2019";
+            customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
         
@@ -34,10 +35,10 @@ namespace ToyBlockFactoryTests
             const string orderId = "0001";
             var invoiceLines = new List<InvoiceLine>
             {
-                new InvoiceLine("Square", 1, 2),
-                new InvoiceLine("Triangle", 2, 2),
-                new InvoiceLine("Circle", 3, 3),
-                new InvoiceLine("Red colour surcharge", 1, 1)
+                new("Square", 2, 1),
+                new("Triangle", 2, 2),
+                new("Circle", 3, 3),
+                new("Red colour surcharge", 1, 1)
             };
             
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
@@ -45,7 +46,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(ReportType.Invoice, invoice.ReportType); 
             Assert.Equal(_customerName, invoice.Name);
             Assert.Equal(_customerAddress, invoice.Address);
-            //Assert.Equal(new DateTime(2019, 1, 19, invoice.DueDate)); 
+            Assert.Equal(new DateTime(2019, 1, 19), invoice.DueDate); 
             Assert.Equal(orderId, invoice.OrderId);
             Assert.Equal(invoiceLines[0], invoice.LineItems[0]);
             Assert.Equal(invoiceLines[1], invoice.LineItems[1]);
