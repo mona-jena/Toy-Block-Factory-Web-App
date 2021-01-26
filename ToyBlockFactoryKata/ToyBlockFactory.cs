@@ -25,8 +25,7 @@ namespace ToyBlockFactoryKata
             var orderExists = _orderGenerator.GetOrder(orderId, out var order);
             return order;
         }
-        
-        
+
         public Report GetInvoiceReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);

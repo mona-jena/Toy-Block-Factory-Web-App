@@ -3,14 +3,14 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class OrderStorageAndRetrievalTests : IClassFixture<ToyBlockFactoryFixture>
+    public class OrderStorageAndRetrievalTests
     {
-        private readonly ToyBlockFactoryFixture _toyBlockFactoryFixture;
+        private readonly ToyBlockFactory _toyBlockFactory;
 
-        public OrderStorageAndRetrievalTests(ToyBlockFactoryFixture toyBlockFactoryFixture)
+        public OrderStorageAndRetrievalTests()
         {
-            _toyBlockFactoryFixture = toyBlockFactoryFixture;
-            var customerOrder = _toyBlockFactoryFixture.Factory
+            _toyBlockFactory = new ToyBlockFactory();
+            var customerOrder = _toyBlockFactory
                                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
@@ -20,13 +20,13 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.DueDate = "19 Jan 2019";
-            _toyBlockFactoryFixture.Factory.SubmitOrder(customerOrder);
+            _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
         [Fact]
         public void CheckIfCustomerOrderDetailsAreAbleToBeRetrieved()
         {
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order = _toyBlockFactory.GetOrder("0001");
 
             Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
@@ -40,7 +40,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf1RedSquareExistsInTheOrder()
         {
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
             
             var blockValue = order.BlockList[block];
@@ -52,7 +52,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf1YellowSquareExistsInTheOrder()
         {
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Yellow);
             
             var blockValue = order.BlockList[block];
@@ -64,7 +64,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf2BlueTrianglesExistInTheOrder()
         {
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Triangle, Colour.Blue);
             
             var blockValue = order.BlockList[block];
@@ -76,7 +76,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf1BlueCircleExistsInTheOrder()
         {
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Circle, Colour.Blue);
             
             var blockValue = order.BlockList[block];
@@ -88,7 +88,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CheckIf2YellowCircleExistInTheOrder()
         {
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
+            var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Circle, Colour.Yellow);
             
             var blockValue = order.BlockList[block];
@@ -101,7 +101,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void MultipleOrdersShouldBeAbleToBeStoredAndRetrieved()
         {
-            var customerOrder2 = _toyBlockFactoryFixture.Factory
+            var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
             customerOrder2.AddBlock(Shape.Square, Colour.Blue); 
@@ -117,10 +117,10 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
             customerOrder2.DueDate = "30-Jan-19";
-            _toyBlockFactoryFixture.Factory.SubmitOrder(customerOrder2);
+            _toyBlockFactory.SubmitOrder(customerOrder2);
             
-            var order = _toyBlockFactoryFixture.Factory.GetOrder("0001");
-            var order2 = _toyBlockFactoryFixture.Factory.GetOrder("0002");
+            var order = _toyBlockFactory.GetOrder("0001");
+            var order2 = _toyBlockFactory.GetOrder("0002");
 
             Assert.Equal("David Rudd", order.Name);      //SHOULD THIS BE STORED IN VARIABLES?
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);

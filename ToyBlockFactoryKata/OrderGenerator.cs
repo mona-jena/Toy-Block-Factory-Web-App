@@ -1,23 +1,22 @@
-using System;
 using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
     internal class OrderGenerator
     {
-        private static int _orderNumber;
-        private readonly Dictionary<string, Order> _orderDirectory = new(); //same as new Dictionary<string, Order>()
+        private int _orderNumber;
+        private readonly Dictionary<string, Order> _orderRecords = new();
 
         internal void CreateOrder(Order order)
         {
             ++_orderNumber;
             order.OrderId = GetOrderNumber();
-            _orderDirectory.Add(order.OrderId, order);
+            _orderRecords.Add(order.OrderId, order);
         }
 
         internal bool GetOrder(string orderId, out Order order)
         {
-            return _orderDirectory.TryGetValue(orderId, out order);
+            return _orderRecords.TryGetValue(orderId, out order);
         }
 
         private string GetOrderNumber()

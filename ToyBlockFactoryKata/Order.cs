@@ -1,20 +1,16 @@
-using System;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace ToyBlockFactoryKata
 {
     public class Order
     {
-        
-        public string Name { get; set; }
-        public string Address { get; set; }
+        public string Name { get; init; }
+        public string Address { get; init; }
         
         //private DateTime _dueDate;
         //public DateTime DueDate { get => _dueDate; set => _dueDate = Convert.ToDateTime(value); }
 
         public string DueDate { get; set; }
-
         public string OrderId { get; set; }
         public Dictionary<Block, int> BlockList { get; }
         

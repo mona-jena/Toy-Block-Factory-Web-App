@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
@@ -10,6 +9,20 @@ namespace ToyBlockFactoryKata
         public string Address { get; set; }
         public string DueDate { get; set; }
         public string OrderId { get; set; }
-        public List<object> LineItems { get; } = new();
+        public List<InvoiceLine> LineItems { get; } = new();
+        //public string[,] OrderTable { get; }
+    }
+    
+        
+    public class CuttingLine
+    {
+        private int quantity;
+        private int bladeWear;
+        private string shape;
+            
+        string Print()
+        {
+            return "ffgdg";
+        }
     }
 }

@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using Microsoft.VisualBasic;
 
 namespace ToyBlockFactoryKata
 {
-    public class InvoiceReportGenerator : IReportGenerator
+    internal class InvoiceReportGenerator : IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Order _requestedOrder;
         private readonly Report _report = new();
-        private int _redBlock = 0;
+        private int _redBlockQuantity;
         
         internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
         {
@@ -18,7 +16,7 @@ namespace ToyBlockFactoryKata
             _requestedOrder = requestedOrder;
         }
 
-        public Report GenerateReport() //date collator 
+        public Report GenerateReport() //Should sep setup and getting part of report?
         {
             _report.ReportType = ReportType.Invoice;
             _report.Name = _requestedOrder.Name;
@@ -35,22 +33,18 @@ namespace ToyBlockFactoryKata
             {
                 var shapeQuantity = CalculateShapeQuantity(shape);
                 var shapePrice = GetPrice(shape);
-                _report.LineItems.Add(new List<object>
-                {
-                    shape.ToString(), 
+                _report.LineItems.Add(new InvoiceLine(
+                    shape.ToString(),
                     shapeQuantity,
-                    shapePrice,
-                    _priceList.CalculateInvoiceLine(shapeQuantity, shapePrice)
-                });
+                    shapePrice
+                ));
             }
             
-            _report.LineItems.Add(new List<object>
-            {
+            _report.LineItems.Add(new InvoiceLine(
                 Colour.Red + " colour surcharge", 
-                _redBlock,
-                _priceList.Red,
-                _priceList.CalculateInvoiceLine(_redBlock, _priceList.Red)
-            });
+                _redBlockQuantity,
+                _priceList.Red
+            ));
         }
 
         private int CalculateShapeQuantity(Shape shape)
@@ -58,12 +52,10 @@ namespace ToyBlockFactoryKata
             var shapeQuantity = 0;
             foreach (var block in _requestedOrder.BlockList)
             {
-                if (block.Key.Shape.Equals(shape))
-                {
-                    shapeQuantity += block.Value;
-                    if (block.Key.Colour.Equals(Colour.Red))
-                        _redBlock += block.Value;
-                }
+                if (!block.Key.Shape.Equals(shape)) continue;
+                shapeQuantity += block.Value;
+                if (block.Key.Colour.Equals(Colour.Red))
+                    _redBlockQuantity += block.Value;
             }
 
             return shapeQuantity;
