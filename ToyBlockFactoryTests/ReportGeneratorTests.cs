@@ -30,7 +30,7 @@ namespace ToyBlockFactoryTests
         
         
         [Fact]
-        public void GenerateInvoiceShouldReturnInvoiceDataForAParticularOrder()
+        public void ReturnsInvoiceDataForAParticularOrder()
         {
             const string orderId = "0001";
             var invoiceLines = new List<InvoiceLine>

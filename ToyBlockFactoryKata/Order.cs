@@ -28,13 +28,9 @@ namespace ToyBlockFactoryKata
 
         public DateTime DueDate { get; set; }
         public string OrderId { get; set; }
-        public Dictionary<Block, int> BlockList { get; }
-        
-        internal Order()
-        {
-            BlockList = new Dictionary<Block, int>();
-        }
+        public Dictionary<Block, int> BlockList { get; } = new();
 
+        
         public void AddBlock(Shape shape, Colour colour)
         {
             var block = new Block(shape, colour);

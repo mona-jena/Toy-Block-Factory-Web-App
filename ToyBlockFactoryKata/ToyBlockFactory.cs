@@ -16,7 +16,7 @@ namespace ToyBlockFactoryKata
 
         public void SubmitOrder(Order customerOrder)
         {
-            _orderGenerator.CreateOrder(customerOrder);
+            _orderGenerator.CreateOrder(customerOrder);  //.SubmitOrder()???
         }
 
         public Order GetOrder(string orderId)

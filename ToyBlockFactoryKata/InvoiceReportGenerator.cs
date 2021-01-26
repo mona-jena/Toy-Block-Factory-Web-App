@@ -16,7 +16,7 @@ namespace ToyBlockFactoryKata
             _requestedOrder = requestedOrder;
         }
 
-        public Report GenerateReport() //Should sep setup and getting part of report?
+        public Report InputOrderDetails() //Should sep setup and getting part of report?
         {
             _report.ReportType = ReportType.Invoice;
             _report.Name = _requestedOrder.Name;
