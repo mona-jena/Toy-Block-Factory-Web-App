@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+using Xunit;
 
 namespace ToyBlockFactoryKata
 {
@@ -30,7 +35,7 @@ namespace ToyBlockFactoryKata
         {
             //generate list of shapes and colours used and iterate through that
             
-            foreach (var shape in (Shape[]) Enum.GetValues(typeof(Shape)))
+            /*foreach (var shape in (Shape[]) Enum.GetValues(typeof(Shape)))
             {
                 var shapeQuantity = CalculateShapeQuantity(shape);
                 var shapePrice = GetPrice(shape);
@@ -39,13 +44,59 @@ namespace ToyBlockFactoryKata
                     shapeQuantity,
                     shapePrice
                 ));
+            }*/
+
+            foreach (var item in GetItemsUsedInOrder())
+            {
+                var shapeQuantity = CalculateShapeQuantity(item);
+                var shapePrice = GetPrice(item);
+                _report.LineItems.Add(new InvoiceLine(
+                    item.ToString(),
+                    shapeQuantity,
+                    shapePrice
+                ));
             }
+
+            foreach (var item in GetSurchargeItems())
+            {
+                _report.LineItems.Add(new InvoiceLine(
+                    item + " colour surcharge",
+                    _redBlockQuantity,
+                    _priceList.Red
+                ));
+
+            }
+        }
+
+        private IEnumerable<Shape> GetItemsUsedInOrder()
+        {
+            var itemsUsed = _requestedOrder.BlockList.Keys.ToList();
+            return itemsUsed.Select(item => item.Shape).Distinct();
+        }
+
+        private IEnumerable<Colour> GetSurchargeItems()
+        {
             
-            _report.LineItems.Add(new InvoiceLine(
-                Colour.Red + " colour surcharge", 
-                _redBlockQuantity,
-                _priceList.Red
-            ));
+            // var properties = typeof(IInvoiceCalculationStrategy).GetProperties().ToList();
+            // var propertiesAsStrings = properties.Select(property => property.ToString()).ToList();
+            var coloursUsed = _requestedOrder.BlockList.Keys.ToList();
+            var distinctColours = coloursUsed.Select(item => item.Colour).Distinct();
+           
+            var surchargeItems = new List<Colour>();
+            foreach (var colour in distinctColours)
+            {
+                if (colour == Colour.Red)
+                {
+                    surchargeItems.Add(Colour.Red);
+                }
+                
+                //add new colour charge conditions here
+            }
+
+            return surchargeItems;
+
+            //return distinctColours.Where(colour => propertiesAsStrings.Contains(colour.ToString())).ToList();
+
         }
 
         private int CalculateShapeQuantity(Shape shape)

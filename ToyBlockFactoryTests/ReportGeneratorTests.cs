@@ -58,15 +58,15 @@ namespace ToyBlockFactoryTests
 
 
         [Fact]
-        public void InvoiceDataShouldOnlyContainDetailsAboutBlocksAndColoursInOrder()
+        public void InvoiceDataShouldOnlyReturnDetailsAboutBlocksAndColoursInOrder()
         {
             var customer2Name = "Steve Richards";                                                                                                                             
             var customer2Address = "27 Valley Road, Auckland";
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address);
-            customer2Order.AddBlock(Shape.Square, Colour.Red);
-            customer2Order.AddBlock(Shape.Square, Colour.Red);
-            customer2Order.AddBlock(Shape.Triangle, Colour.Blue);
-            customer2Order.AddBlock(Shape.Triangle, Colour.Blue);
+            customer2Order.AddBlock(Shape.Square, Colour.Yellow);
+            customer2Order.AddBlock(Shape.Square, Colour.Blue);
+            customer2Order.AddBlock(Shape.Circle, Colour.Blue);
+            customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.SetDueDate("15 Feb 2019");
             _toyBlockFactory.SubmitOrder(customer2Order);
             
@@ -74,16 +74,13 @@ namespace ToyBlockFactoryTests
             var invoiceLines = new List<InvoiceLine>
             {
                 new("Square", 2, 1),
-                new("Triangle", 2, 2),
-                new("Red colour surcharge", 2, 1)
+                new("Circle", 2, 3)
             };
             
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
             
             Assert.Equal(invoiceLines[0], invoice.LineItems[0]);
             Assert.Equal(invoiceLines[1], invoice.LineItems[1]);
-            Assert.Equal(invoiceLines[2], invoice.LineItems[2]);
-            Assert.Equal(invoiceLines[3], invoice.LineItems[3]); //should throw error
         }
 
 
