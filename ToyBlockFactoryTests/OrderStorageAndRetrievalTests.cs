@@ -20,8 +20,6 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            //customerOrder.DueDate = "19 Jan 2019";
-            //customerOrder.DueDate = new DateTime(2019, 1, 19);
             customerOrder.SetDueDate("19 Jan 2019");
             _toyBlockFactory.SubmitOrder(customerOrder);
         }

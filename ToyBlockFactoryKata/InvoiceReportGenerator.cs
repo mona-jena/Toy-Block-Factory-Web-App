@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using Xunit;
+using System.Security;
 
 namespace ToyBlockFactoryKata
 {
@@ -12,7 +10,6 @@ namespace ToyBlockFactoryKata
         private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Order _requestedOrder;
         private readonly Report _report = new(); //when does this get created in the program??
-        private int _redBlockQuantity;
         
         internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
         {
@@ -25,7 +22,7 @@ namespace ToyBlockFactoryKata
             _report.ReportType = ReportType.Invoice;
             _report.Name = _requestedOrder.Name;
             _report.Address = _requestedOrder.Address;
-            _report.DueDate = _requestedOrder.DueDate; //change to datetime
+            _report.DueDate = _requestedOrder.DueDate; 
             _report.OrderId = _requestedOrder.OrderId;
             AddLineItems();
             return _report;
@@ -33,42 +30,30 @@ namespace ToyBlockFactoryKata
 
         private void AddLineItems() 
         {
-            //generate list of shapes and colours used and iterate through that
-            
-            /*foreach (var shape in (Shape[]) Enum.GetValues(typeof(Shape)))
+            foreach (var shape in GetShapesUsedInOrder())
             {
-                var shapeQuantity = CalculateShapeQuantity(shape);
+                var shapeQuantity = CalculateItemQuantity(shape);
                 var shapePrice = GetPrice(shape);
                 _report.LineItems.Add(new InvoiceLine(
                     shape.ToString(),
                     shapeQuantity,
                     shapePrice
                 ));
-            }*/
-
-            foreach (var item in GetItemsUsedInOrder())
-            {
-                var shapeQuantity = CalculateShapeQuantity(item);
-                var shapePrice = GetPrice(item);
-                _report.LineItems.Add(new InvoiceLine(
-                    item.ToString(),
-                    shapeQuantity,
-                    shapePrice
-                ));
             }
 
-            foreach (var item in GetSurchargeItems())
+            foreach (var colour in GetSurchargeItems())    //item or colour??
             {
+                var itemQuantity = CalculateItemQuantity(colour);
+                var colourPrice = GetPrice(colour);
                 _report.LineItems.Add(new InvoiceLine(
-                    item + " colour surcharge",
-                    _redBlockQuantity,
-                    _priceList.Red
+                    colour + " colour surcharge",
+                    itemQuantity,
+                    colourPrice
                 ));
-
             }
         }
-
-        private IEnumerable<Shape> GetItemsUsedInOrder()
+        
+        private IEnumerable<Shape> GetShapesUsedInOrder()
         {
             var itemsUsed = _requestedOrder.BlockList.Keys.ToList();
             return itemsUsed.Select(item => item.Shape).Distinct();
@@ -76,7 +61,6 @@ namespace ToyBlockFactoryKata
 
         private IEnumerable<Colour> GetSurchargeItems()
         {
-            
             // var properties = typeof(IInvoiceCalculationStrategy).GetProperties().ToList();
             // var propertiesAsStrings = properties.Select(property => property.ToString()).ToList();
             var coloursUsed = _requestedOrder.BlockList.Keys.ToList();
@@ -94,24 +78,33 @@ namespace ToyBlockFactoryKata
             }
 
             return surchargeItems;
-
             //return distinctColours.Where(colour => propertiesAsStrings.Contains(colour.ToString())).ToList();
-
         }
 
-        private int CalculateShapeQuantity(Shape shape)
+        private int CalculateItemQuantity(Shape shape)
         {
             var shapeQuantity = 0;
             foreach (var (block, quantity) in _requestedOrder.BlockList)
             {
-                if (!block.Shape.Equals(shape)) continue;
-                shapeQuantity += quantity;
-                if (block.Colour.Equals(Colour.Red))
-                    _redBlockQuantity += quantity;
+                if (block.Shape.Equals(shape))
+                    shapeQuantity += quantity;
             }
 
             return shapeQuantity;
         }
+
+        private int CalculateItemQuantity(Colour colour)
+        {
+            var noOfRedItems = 0;
+            foreach (var (block, quantity) in _requestedOrder.BlockList)
+            {
+                if (block.Colour.Equals(colour))
+                    noOfRedItems += quantity;
+            }
+
+            return noOfRedItems;
+        }
+        
 
         private int GetPrice(Shape shape)
         {
@@ -128,31 +121,18 @@ namespace ToyBlockFactoryKata
                     return 0;                          //is this ok?
             }
         }
-
-
-        /*private void CalculateShapeQuantity()
+        
+        private int GetPrice(Colour colour)
         {
-            var squareCount = 0;
-            var triangleCount = 0;
-            var circleCount = 0;
-
-            foreach (var block in _requestedOrder.BlockList)
+            var colourType = colour.ToString();
+            switch (colourType)
             {
-                if (block.Key.Shape.Equals(Shape.Square))
-                    squareCount++;
-                else if (block.Key.Shape.Equals(Shape.Triangle))
-                    triangleCount++;
-                else if (block.Key.Shape.Equals(Shape.Circle))
-                    circleCount++;
+                case "Red":
+                    return _priceList.Red;
+                default:
+                    return 0;                          //is this ok?
             }
-        }*/
+        }
+    
     }
-    
-    
-    /*
-     * for each line for the length of number of enums:
-     * calc total quan for each shape
-     * insert price (shape)
-     * calc tolal 
-     */
 }

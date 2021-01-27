@@ -24,8 +24,6 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            //customerOrder.DueDate = new DateTime(2019, 1, 19);
-            //customerOrder.DueDate = "19 Jan 2019";
             customerOrder.SetDueDate("19 Jan 2019");
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
@@ -54,6 +52,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(invoiceLines[1], invoice.LineItems[1]);
             Assert.Equal(invoiceLines[2], invoice.LineItems[2]);
             Assert.Equal(invoiceLines[3], invoice.LineItems[3]);
+            Assert.Equal(16, invoice.Total);
         }
 
 
@@ -81,6 +80,7 @@ namespace ToyBlockFactoryTests
             
             Assert.Equal(invoiceLines[0], invoice.LineItems[0]);
             Assert.Equal(invoiceLines[1], invoice.LineItems[1]);
+            Assert.Equal(8, invoice.Total);
         }
 
 
