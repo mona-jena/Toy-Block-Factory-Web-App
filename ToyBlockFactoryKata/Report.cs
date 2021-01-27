@@ -11,6 +11,7 @@ namespace ToyBlockFactoryKata
         public DateTime DueDate { get; set; }
         public string OrderId { get; set; }
         public List<InvoiceLine> LineItems { get; } = new();
+        
         //public string[,] OrderTable { get; }
     }
     

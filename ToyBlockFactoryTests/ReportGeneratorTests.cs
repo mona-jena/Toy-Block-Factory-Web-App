@@ -7,16 +7,16 @@ namespace ToyBlockFactoryTests
 {
     public class ReportGeneratorTests 
     {
-        private readonly string _customerName;
-        private readonly string _customerAddress;
+        private readonly string customerName;
+        private readonly string customerAddress;
         private readonly ToyBlockFactory _toyBlockFactory;
 
         public ReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
-            _customerName = "David Rudd";                                                                                                                             
-            _customerAddress = "1 Bob Avenue, Auckland";
-            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress);
+            customerName = "David Rudd";                                                                                                                             
+            customerAddress = "1 Bob Avenue, Auckland";
+            var customerOrder = _toyBlockFactory.CreateOrder(customerName, customerAddress);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -24,7 +24,9 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.DueDate = new DateTime(2019, 1, 19);
+            //customerOrder.DueDate = new DateTime(2019, 1, 19);
+            //customerOrder.DueDate = "19 Jan 2019";
+            customerOrder.SetDueDate("19 Jan 2019");
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
         
@@ -44,14 +46,44 @@ namespace ToyBlockFactoryTests
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
             
             Assert.Equal(ReportType.Invoice, invoice.ReportType); 
-            Assert.Equal(_customerName, invoice.Name);
-            Assert.Equal(_customerAddress, invoice.Address);
+            Assert.Equal(customerName, invoice.Name);
+            Assert.Equal(customerAddress, invoice.Address);
             Assert.Equal(new DateTime(2019, 1, 19), invoice.DueDate); 
             Assert.Equal(orderId, invoice.OrderId);
             Assert.Equal(invoiceLines[0], invoice.LineItems[0]);
             Assert.Equal(invoiceLines[1], invoice.LineItems[1]);
             Assert.Equal(invoiceLines[2], invoice.LineItems[2]);
             Assert.Equal(invoiceLines[3], invoice.LineItems[3]);
+        }
+
+
+        [Fact]
+        public void InvoiceDataShouldOnlyContainDetailsAboutBlocksAndColoursInOrder()
+        {
+            var customer2Name = "Steve Richards";                                                                                                                             
+            var customer2Address = "27 Valley Road, Auckland";
+            var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address);
+            customer2Order.AddBlock(Shape.Square, Colour.Red);
+            customer2Order.AddBlock(Shape.Square, Colour.Red);
+            customer2Order.AddBlock(Shape.Triangle, Colour.Blue);
+            customer2Order.AddBlock(Shape.Triangle, Colour.Blue);
+            customer2Order.SetDueDate("15 Feb 2019");
+            _toyBlockFactory.SubmitOrder(customer2Order);
+            
+            const string orderId = "0002";
+            var invoiceLines = new List<InvoiceLine>
+            {
+                new("Square", 2, 1),
+                new("Triangle", 2, 2),
+                new("Red colour surcharge", 2, 1)
+            };
+            
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            
+            Assert.Equal(invoiceLines[0], invoice.LineItems[0]);
+            Assert.Equal(invoiceLines[1], invoice.LineItems[1]);
+            Assert.Equal(invoiceLines[2], invoice.LineItems[2]);
+            Assert.Equal(invoiceLines[3], invoice.LineItems[3]); //should throw error
         }
 
 

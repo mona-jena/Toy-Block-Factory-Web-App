@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
@@ -7,7 +6,7 @@ namespace ToyBlockFactoryKata
     {
         private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Order _requestedOrder;
-        private readonly Report _report = new();
+        private readonly Report _report = new(); //when does this get created in the program??
         private int _redBlockQuantity;
         
         internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
@@ -29,6 +28,8 @@ namespace ToyBlockFactoryKata
 
         private void AddLineItems() 
         {
+            //generate list of shapes and colours used and iterate through that
+            
             foreach (var shape in (Shape[]) Enum.GetValues(typeof(Shape)))
             {
                 var shapeQuantity = CalculateShapeQuantity(shape);
@@ -50,12 +51,12 @@ namespace ToyBlockFactoryKata
         private int CalculateShapeQuantity(Shape shape)
         {
             var shapeQuantity = 0;
-            foreach (var block in _requestedOrder.BlockList)
+            foreach (var (block, quantity) in _requestedOrder.BlockList)
             {
-                if (!block.Key.Shape.Equals(shape)) continue;
-                shapeQuantity += block.Value;
-                if (block.Key.Colour.Equals(Colour.Red))
-                    _redBlockQuantity += block.Value;
+                if (!block.Shape.Equals(shape)) continue;
+                shapeQuantity += quantity;
+                if (block.Colour.Equals(Colour.Red))
+                    _redBlockQuantity += quantity;
             }
 
             return shapeQuantity;
@@ -63,14 +64,18 @@ namespace ToyBlockFactoryKata
 
         private int GetPrice(Shape shape)
         {
-            var SGFJJJR = shape.ToString();
-            if (SGFJJJR == "Square")
-                return _priceList.Square;
-            if (SGFJJJR == "Triangle")
-                return _priceList.Triangle;
-            if (SGFJJJR == "Circle")
-                return _priceList.Circle;
-            return 0;                          //is this ok?
+            var shapeType = shape.ToString();
+            switch (shapeType)
+            {
+                case "Square":
+                    return _priceList.Square;
+                case "Triangle":
+                    return _priceList.Triangle;
+                case "Circle":
+                    return _priceList.Circle;
+                default:
+                    return 0;                          //is this ok?
+            }
         }
 
 
