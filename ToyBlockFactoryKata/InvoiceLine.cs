@@ -1,11 +1,11 @@
 namespace ToyBlockFactoryKata
 {
-    public record InvoiceLine(string Description, int  Quantity, int Price)
+    public record InvoiceLine(string Description, int Quantity, int Price)
     {
         public decimal Total => Quantity * Price;
-        
 
-        string Print()
+
+        private string Print()
         {
             return "ffgdg";
         }

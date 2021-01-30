@@ -7,10 +7,10 @@ namespace ToyBlockFactoryKata
     {
         public string Name { get; init; }
         public string Address { get; init; }
-        
+
         //public DateTime DueDate { get => _dueDate; set => _dueDate = Convert.ToDateTime(value); }
         //private string _date;
-        
+
         /*private static DateTime _dueDate;
         public string DueDate
         {
@@ -24,7 +24,7 @@ namespace ToyBlockFactoryKata
                 }
             }
         }*/
-        
+
         public DateTime DueDate { get; set; }
         public string OrderId { get; set; }
         public Dictionary<Block, int> BlockList { get; } = new();
@@ -32,13 +32,10 @@ namespace ToyBlockFactoryKata
         public void SetDueDate(string dueDate)
         {
             var validDate = DateTime.TryParse(dueDate, out var date);
-            if (validDate)
-            {
-                DueDate = date;
-            }
+            if (validDate) DueDate = date;
         }
-        
-        
+
+
         public void AddBlock(Shape shape, Colour colour)
         {
             var block = new Block(shape, colour);

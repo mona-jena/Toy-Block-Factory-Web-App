@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using ToyBlockFactoryKata;
 using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class ReportGeneratorTests 
+    public class ReportGeneratorTests
     {
-        private readonly string customerName;
-        private readonly string customerAddress;
         private readonly ToyBlockFactory _toyBlockFactory;
+        private readonly string customerAddress;
+        private readonly string customerName;
 
         public ReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
-            customerName = "David Rudd";                                                                                                                             
+            customerName = "David Rudd";
             customerAddress = "1 Bob Avenue, Auckland";
             var customerOrder = _toyBlockFactory.CreateOrder(customerName, customerAddress);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
@@ -29,8 +27,8 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.SetDueDate("19 Jan 2019");
             _toyBlockFactory.SubmitOrder(customerOrder);
-            
-            var customer2Name = "Steve Richards";                                                                                                                             
+
+            var customer2Name = "Steve Richards";
             var customer2Address = "27 Valley Road, Auckland";
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address);
             customer2Order.AddBlock(Shape.Square, Colour.Yellow);
@@ -39,40 +37,14 @@ namespace ToyBlockFactoryTests
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.SetDueDate("15 Feb 2019");
             _toyBlockFactory.SubmitOrder(customer2Order);
-            
-            var customer3Name = "Tony Williams";                                                                                                                             
+
+            var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
             customer3Order.SetDueDate("21 Nov 2019");
             _toyBlockFactory.SubmitOrder(customer3Order);
         }
-        
-        
-        [Theory]
-        [InlineData("Square", 2, 1)]
-        [InlineData("Circle", 3, 3)]
-        [InlineData("Red colour surcharge", 1, 1)]
-        [InlineData("Triangle", 2, 2)]
-        public void NAMETHIS(string description, int quantity, decimal price)
-        {
-            const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
-            Assert.Equal(ReportType.Invoice, invoice.ReportType); 
-            Assert.Equal(customerName, invoice.Name);
-            Assert.Equal(customerAddress, invoice.Address);
-            Assert.Equal(new DateTime(2019, 1, 19), invoice.DueDate); 
-            Assert.Equal(orderId, invoice.OrderId);
-
-            var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
-            Assert.NotNull(invoiceLine); //understand these 2 lines
-            Assert.Equal(description, invoiceLine.Description);
-            Assert.Equal(quantity, invoiceLine.Quantity);
-            Assert.Equal(price, invoiceLine.Price);
-    
-            Assert.Equal(16.00m, invoice.Total);
-        }
 
         [Fact]
         public void IsInvoice()
@@ -80,47 +52,47 @@ namespace ToyBlockFactoryTests
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
-            Assert.Equal(ReportType.Invoice, invoice.ReportType); 
+
+            Assert.Equal(ReportType.Invoice, invoice.ReportType);
         }
 
         [Fact]
-        public void MatchesCustomerName()
+        public void ReportCustomerNameMatchesOrder()
         {
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             Assert.Equal(customerName, invoice.Name);
         }
-        
+
         [Fact]
-        public void MatchesCustomerAddress()
+        public void ReportCustomerAddressMatchesOrder()
         {
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             Assert.Equal(customerAddress, invoice.Address);
         }
-        
+
         [Fact]
-        public void MatchesDueDate()
+        public void ReportDueDateMatchesOrder()
         {
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             Assert.Equal(new DateTime(2019, 1, 19), invoice.DueDate);
         }
-        
+
         [Fact]
-        public void MatchesOrderId()
+        public void ReportOrderIdMatchesOrder()
         {
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             Assert.Equal(orderId, invoice.OrderId);
         }
 
@@ -129,53 +101,53 @@ namespace ToyBlockFactoryTests
         [InlineData("Circle", 3, 3, 9)]
         [InlineData("Red colour surcharge", 1, 1, 1)]
         [InlineData("Triangle", 2, 2, 4)]
-        public void HasLineItems(string description, int quantity, decimal price, decimal total)
+        public void LineItemsContainAllDetailsAboutOrder(string description, int quantity, decimal price, decimal total)
         {
             const string orderId = "0001";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
-            
+            //read up on this
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
             Assert.Equal(quantity, invoiceLine.Quantity);
             Assert.Equal(price, invoiceLine.Price);
             Assert.Equal(total, invoiceLine.Total);
         }
-        
+
         [Fact]
-        public void MatchesTotal()
+        public void ContainsCorrectOrderTotal()
         {
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             Assert.Equal(16.00m, invoice.Total);
         }
-        
-        
+
+
         [Theory]
         [InlineData("Square", 2, 1, 2)]
-        [InlineData("Circle", 3, 3, 9)]
-        public void RENAME(string description, int quantity, decimal price, decimal total)
+        [InlineData("Circle", 2, 3, 6)]
+        public void OnlyItemsInOrderAreListedInLineItems(string description, int quantity, decimal price, decimal total)
         {
-            const string orderId = "0001";
+            const string orderId = "0002";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            
+
             var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
-            
+
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
             Assert.Equal(quantity, invoiceLine.Quantity);
             Assert.Equal(price, invoiceLine.Price);
             Assert.Equal(total, invoiceLine.Total);
         }
-        
+
         [Fact]
         public void EmptyOrderReturnsEmptyInvoiceLines()
         {
             var invoice = _toyBlockFactory.GetInvoiceReport("0003");
-            
+
             Assert.Empty(invoice.LineItems);
         }
 
@@ -183,16 +155,20 @@ namespace ToyBlockFactoryTests
         public void GenerateReportShouldReturnOrderTable()
         {
             // TableColumn =  List<(string, int)
-           // List<(Shape, List<TableRow>)> orderTable = new();
+            // List<(Shape, List<TableRow>)> orderTable = new();
             List<TableRow> orderTable = new();
-            orderTable.Add(new(Shape.Square, 
-                new List<TableColumn>{new (Colour.Red, 1), 
-                                                   new (Colour.Yellow, 1)}));
-            orderTable.Add(new(Shape.Triangle, 
-                new List<TableColumn>{new(Colour.Blue, 2)}));
-            orderTable.Add(new(Shape.Circle, 
-                new List<TableColumn> {new(Colour.Blue, 1), 
-                                                    new(Colour.Yellow, 2)}));
+            orderTable.Add(new TableRow(Shape.Square,
+                new List<TableColumn>
+                {
+                    new(Colour.Red, 1), new(Colour.Yellow, 1)
+                }));
+            orderTable.Add(new TableRow(Shape.Triangle,
+                new List<TableColumn> {new(Colour.Blue, 2)}));
+            orderTable.Add(new TableRow(Shape.Circle,
+                new List<TableColumn>
+                {
+                    new(Colour.Blue, 1), new(Colour.Yellow, 2)
+                }));
 
             var invoice = _toyBlockFactory.GetInvoiceReport("0001");
 
@@ -201,7 +177,6 @@ namespace ToyBlockFactoryTests
             Assert.Equal(orderTable[2], invoice.OrderTable[2]);
         }
     }
-    
 }
 
 /*var expectedInvoiceReport = new List<string>()
@@ -226,7 +201,6 @@ namespace ToyBlockFactoryTests
     "\n",
     "Total                  $16"
 };*/
-
 
 
 //string[,] invoiceLine2 = new string[Enum.GetNames(typeof(Colour)).Length,Enum.GetNames(typeof(Shape)).Length];

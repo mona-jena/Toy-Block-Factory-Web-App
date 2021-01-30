@@ -10,6 +10,4 @@ namespace ToyBlockFactoryKata
             return invoiceReportGenerator.InputOrderDetails();
         }
     }
-
-    
 }

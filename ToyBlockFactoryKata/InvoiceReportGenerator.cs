@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,9 +7,9 @@ namespace ToyBlockFactoryKata
     internal class InvoiceReportGenerator : IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _priceList;
-        private readonly Order _requestedOrder;
         private readonly Report _report = new(); //when does this get created in the program??
-        
+        private readonly Order _requestedOrder;
+
         internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
         {
             _priceList = priceList;
@@ -20,14 +21,14 @@ namespace ToyBlockFactoryKata
             _report.ReportType = ReportType.Invoice;
             _report.Name = _requestedOrder.Name;
             _report.Address = _requestedOrder.Address;
-            _report.DueDate = _requestedOrder.DueDate; 
+            _report.DueDate = _requestedOrder.DueDate;
             _report.OrderId = _requestedOrder.OrderId;
-            // GenerateTable();
+            //GenerateTable();
             AddLineItems();
             return _report;
         }
 
-        private void AddLineItems() 
+        private void AddLineItems()
         {
             foreach (var shape in GetShapesUsedInOrder())
             {
@@ -40,7 +41,7 @@ namespace ToyBlockFactoryKata
                 ));
             }
 
-            foreach (var colour in GetSurchargeItems())    //item or colour??
+            foreach (var colour in GetSurchargeItems()) //item or colour??
             {
                 var itemQuantity = CalculateItemQuantity(colour);
                 var colourPrice = GetPrice(colour);
@@ -51,7 +52,7 @@ namespace ToyBlockFactoryKata
                 ));
             }
         }
-        
+
         private IEnumerable<Shape> GetShapesUsedInOrder()
         {
             var itemsUsed = _requestedOrder.BlockList.Keys.ToList();
@@ -62,17 +63,13 @@ namespace ToyBlockFactoryKata
         {
             var coloursUsed = _requestedOrder.BlockList.Keys.ToList();
             var distinctColours = coloursUsed.Select(item => item.Colour).Distinct();
-           
+
             var surchargeItems = new List<Colour>();
             foreach (var colour in distinctColours)
-            {
                 if (colour == Colour.Red)
-                {
                     surchargeItems.Add(Colour.Red);
-                }
-                
-                //add new colour charge conditions here
-            }
+
+            //add new colour charge conditions here
 
             return surchargeItems;
         }
@@ -84,10 +81,9 @@ namespace ToyBlockFactoryKata
 
         private int CalculateItemQuantity(Colour colour)
         {
-            return _requestedOrder.BlockList.Where(b => b.Key.Colour == colour).Sum(b => b.Value); 
+            return _requestedOrder.BlockList.Where(b => b.Key.Colour == colour).Sum(b => b.Value);
         }
 
-        
 
         private int GetPrice(Shape shape)
         {
@@ -101,47 +97,41 @@ namespace ToyBlockFactoryKata
                 case "Circle":
                     return _priceList.Circle;
                 default:
-                    return 0;                          //is this ok?
+                    return 0; //is this ok?
             }
         }
-        
+
         private int GetPrice(Colour colour)
         {
             var colourType = colour.ToString();
-            switch (colourType)          // should I do switch statement even though there is only 1 case now
+            switch (colourType) // should I do switch statement even though there is only 1 case now
             {
                 case "Red":
                     return _priceList.Red;
                 default:
-                    return 0;                          //is this ok?
+                    return 0; //is this ok?
             }
         }
 
-        /*private void GenerateTable()
+        private void GenerateTable()
         {
-            foreach (var shape in GetShapesUsedInOrder())
-            {
-                _report.OrderTable.Add(new TableRow(
-                    shape.ToString(),
-                    CalculateItemQuantity(r, shape),
-                    CalculateItemQuantity(colour, shape),
-                    CalculateItemQuantity(colour, shape)
-                ));
-                foreach (var colour in GetColoursUsedInOrder())
-                {
-                   
-                }
-            }
+            // how to write in LINQ??
+
+            foreach (Shape shape in Enum.GetValues(typeof(Shape)))
+                _report.OrderTable.Add(new TableRow(shape, RowItems(shape)));
         }
-        
-        private int CalculateItemQuantity(Colour colour, Shape shape)
+
+        private List<TableColumn> RowItems(Shape shape)
         {
-            var noOfItems = 0;
-            foreach (var (block, quantity) in _requestedOrder.BlockList)
+            var rowItemQuantities = new List<TableColumn>();
+            foreach (Colour colour in Enum.GetValues(typeof(Colour)))
             {
-                
+                var block = new Block(shape, colour);
+                if (_requestedOrder.BlockList.ContainsKey(block))
+                    rowItemQuantities.Add(new TableColumn(colour, _requestedOrder.BlockList[block]));
             }
-        }*/
-    
+
+            return rowItemQuantities;
+        }
     }
 }

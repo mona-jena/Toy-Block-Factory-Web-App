@@ -12,7 +12,7 @@ namespace ToyBlockFactoryTests
         {
             _toyBlockFactory = new ToyBlockFactory();
             var customerOrder = _toyBlockFactory
-                                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
+                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -36,14 +36,14 @@ namespace ToyBlockFactoryTests
         }
 
         //_orderList.Keys.ToHashSet().SetEquals(_orderList.Keys.ToHashSet());
- 
+
 
         [Fact]
         public void CheckIf1RedSquareExistsInTheOrder()
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
-            
+
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -55,7 +55,7 @@ namespace ToyBlockFactoryTests
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Yellow);
-            
+
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -67,7 +67,7 @@ namespace ToyBlockFactoryTests
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Triangle, Colour.Blue);
-            
+
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -79,7 +79,7 @@ namespace ToyBlockFactoryTests
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Circle, Colour.Blue);
-            
+
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -91,7 +91,7 @@ namespace ToyBlockFactoryTests
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Circle, Colour.Yellow);
-            
+
             var blockValue = order.BlockList[block];
 
             Assert.True(order.BlockList.ContainsKey(block));
@@ -104,26 +104,26 @@ namespace ToyBlockFactoryTests
         {
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
-            customerOrder2.AddBlock(Shape.Square, Colour.Blue); 
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Red); 
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Red); 
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Red); 
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow); 
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue); 
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
+            customerOrder2.AddBlock(Shape.Square, Colour.Blue);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Red);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Red);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Red);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.DueDate = new DateTime(2019, 1, 30);
             _toyBlockFactory.SubmitOrder(customerOrder2);
-            
+
             var order = _toyBlockFactory.GetOrder("0001");
             var order2 = _toyBlockFactory.GetOrder("0002");
 
-            Assert.Equal("David Rudd", order.Name);      //SHOULD THIS BE STORED IN VARIABLES?
+            Assert.Equal("David Rudd", order.Name); //SHOULD THIS BE STORED IN VARIABLES?
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
             Assert.Equal("0001", order.OrderId);
@@ -132,60 +132,56 @@ namespace ToyBlockFactoryTests
             Assert.Equal(new DateTime(2019, 1, 30), order2.DueDate);
             Assert.Equal("0002", order2.OrderId);
         }
-            /*var block = new Block(Shape.Circle, Colour.Blue);
-            block.Colour = Colour.Red;
-            var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/
-        
+
+        /*var block = new Block(Shape.Circle, Colour.Blue);
+        block.Colour = Colour.Red;
+        var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/
     }
 }
-
 
 
 //IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
 
 
-        //var orderManagementSystem = new OrderManagementSystem(customerDetails);
-        //var customerOrder = orderManagementSystem.GetOrder();
-        //var reportOrderManagement = new ReportOrderManagementSystem(customerOrder);
-        /*var pricingList = new PricingList();
-        pricingList.Square = 1;
-        pricingList.Triangle = 2;
-        pricingList.Circle = 1;
-        pricingList.Red = 1;*/
+//var orderManagementSystem = new OrderManagementSystem(customerDetails);
+//var customerOrder = orderManagementSystem.GetOrder();
+//var reportOrderManagement = new ReportOrderManagementSystem(customerOrder);
+/*var pricingList = new PricingList();
+pricingList.Square = 1;
+pricingList.Triangle = 2;
+pricingList.Circle = 1;
+pricingList.Red = 1;*/
 
-        //var invoiceReport = reportOrderManagement.GenerateInvoice(customerOrder);
+//var invoiceReport = reportOrderManagement.GenerateInvoice(customerOrder);
 
 
-        /*
-         * new toyblock factory
-         * new customer
-         * system creates new order
-         * get customer details
-         * customer add new block each time - in the back blocks and dict of blocks will be created
-         * return order
-         * give back invoice
-         */
+/*
+ * new toyblock factory
+ * new customer
+ * system creates new order
+ * get customer details
+ * customer add new block each time - in the back blocks and dict of blocks will be created
+ * return order
+ * give back invoice
+ */
 
-        /*var expectedInvoiceReport = 
-                "Your invoice report has been generated:" +
-                "\n" +
-                "Name: David Rudd Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2019 Order #: 0001" +
-                "\n" +
-                "|          | Red | Blue | Yellow |" +
-                "|----------|-----|------|--------|" +
-                "| Square   | 1   | -    | 1      |" +
-                "| Triangle | -   | 2    | -      |" +
-                "| Circle   | -   | 1    | 2      |" +
-                "\n" +
-                "Squares 		        2 @ $1 ppi = $2" +
-                "Triangles		        2 @ $2 ppi = $4" +
-                "Circles			    3 @ $3 ppi = $9" +
-                "Red colour surcharge   1 @ $1 ppi = $1" +
-                "\n" +
-                "Total                  $16";*/
-        
-    
-
+/*var expectedInvoiceReport = 
+        "Your invoice report has been generated:" +
+        "\n" +
+        "Name: David Rudd Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2019 Order #: 0001" +
+        "\n" +
+        "|          | Red | Blue | Yellow |" +
+        "|----------|-----|------|--------|" +
+        "| Square   | 1   | -    | 1      |" +
+        "| Triangle | -   | 2    | -      |" +
+        "| Circle   | -   | 1    | 2      |" +
+        "\n" +
+        "Squares 		        2 @ $1 ppi = $2" +
+        "Triangles		        2 @ $2 ppi = $4" +
+        "Circles			    3 @ $3 ppi = $9" +
+        "Red colour surcharge   1 @ $1 ppi = $1" +
+        "\n" +
+        "Total                  $16";*/
 
 
 /*[Theory]

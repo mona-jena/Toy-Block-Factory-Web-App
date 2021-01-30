@@ -2,12 +2,12 @@ namespace ToyBlockFactoryKata
 {
     public class ToyBlockFactory
     {
-        private Order _customerOrder;
         private readonly OrderGenerator _orderGenerator = new();
         private readonly ReportGenerator _report = new();
+        private Order _customerOrder;
 
         //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
-        
+
         public Order CreateOrder(string customerName, string customerAddress)
         {
             _customerOrder = new Order {Name = customerName, Address = customerAddress};
@@ -16,7 +16,7 @@ namespace ToyBlockFactoryKata
 
         public void SubmitOrder(Order customerOrder)
         {
-            _orderGenerator.CreateOrder(customerOrder);  //.SubmitOrder()???
+            _orderGenerator.CreateOrder(customerOrder); //.SubmitOrder()???
         }
 
         public Order GetOrder(string orderId)
@@ -32,6 +32,4 @@ namespace ToyBlockFactoryKata
             return _report.GenerateInvoice(requestedOrder);
         }
     }
-
-    
 }

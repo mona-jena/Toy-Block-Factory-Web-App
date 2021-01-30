@@ -4,8 +4,8 @@ namespace ToyBlockFactoryKata
 {
     internal class OrderGenerator
     {
-        private int _orderNumber;
         private readonly Dictionary<string, Order> _orderRecords = new();
+        private int _orderNumber;
 
         internal void CreateOrder(Order order)
         {
