@@ -1,7 +1,8 @@
+using System.Collections.Generic;
+
 namespace ToyBlockFactoryKata
 {
-    public class Table
+    public record TableRow(Shape Shape, List<TableColumn> TableColumn)
     {
-        
     }
 }

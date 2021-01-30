@@ -15,10 +15,27 @@ namespace ToyBlockFactoryKata
             Red = 1;
         }
 
-
         public int CalculateInvoiceLine(int quantity, int shapePrice)
         {
             return quantity * shapePrice;
         }
+
+        /*internal int GetPrice(Block block)
+        {
+            //var shapeType = block.Shape.ToString();
+            switch (shapeType)
+            {
+                case "Square":
+                    return Square;
+                case "Triangle":
+                    return Triangle;
+                case "Circle":
+                    return Circle;
+                case "Red":
+                    return Red;
+                default:
+                    return 0;                            //is this ok?
+            }
+        }*/
     }
 }

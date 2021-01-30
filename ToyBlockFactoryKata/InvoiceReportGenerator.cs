@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 
 namespace ToyBlockFactoryKata
 {
@@ -24,6 +22,7 @@ namespace ToyBlockFactoryKata
             _report.Address = _requestedOrder.Address;
             _report.DueDate = _requestedOrder.DueDate; 
             _report.OrderId = _requestedOrder.OrderId;
+            // GenerateTable();
             AddLineItems();
             return _report;
         }
@@ -61,8 +60,6 @@ namespace ToyBlockFactoryKata
 
         private IEnumerable<Colour> GetSurchargeItems()
         {
-            // var properties = typeof(IInvoiceCalculationStrategy).GetProperties().ToList();
-            // var propertiesAsStrings = properties.Select(property => property.ToString()).ToList();
             var coloursUsed = _requestedOrder.BlockList.Keys.ToList();
             var distinctColours = coloursUsed.Select(item => item.Colour).Distinct();
            
@@ -78,32 +75,18 @@ namespace ToyBlockFactoryKata
             }
 
             return surchargeItems;
-            //return distinctColours.Where(colour => propertiesAsStrings.Contains(colour.ToString())).ToList();
         }
 
         private int CalculateItemQuantity(Shape shape)
         {
-            var shapeQuantity = 0;
-            foreach (var (block, quantity) in _requestedOrder.BlockList)
-            {
-                if (block.Shape.Equals(shape))
-                    shapeQuantity += quantity;
-            }
-
-            return shapeQuantity;
+            return _requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
         }
 
         private int CalculateItemQuantity(Colour colour)
         {
-            var noOfRedItems = 0;
-            foreach (var (block, quantity) in _requestedOrder.BlockList)
-            {
-                if (block.Colour.Equals(colour))
-                    noOfRedItems += quantity;
-            }
-
-            return noOfRedItems;
+            return _requestedOrder.BlockList.Where(b => b.Key.Colour == colour).Sum(b => b.Value); 
         }
+
         
 
         private int GetPrice(Shape shape)
@@ -125,7 +108,7 @@ namespace ToyBlockFactoryKata
         private int GetPrice(Colour colour)
         {
             var colourType = colour.ToString();
-            switch (colourType)
+            switch (colourType)          // should I do switch statement even though there is only 1 case now
             {
                 case "Red":
                     return _priceList.Red;
@@ -133,6 +116,32 @@ namespace ToyBlockFactoryKata
                     return 0;                          //is this ok?
             }
         }
+
+        /*private void GenerateTable()
+        {
+            foreach (var shape in GetShapesUsedInOrder())
+            {
+                _report.OrderTable.Add(new TableRow(
+                    shape.ToString(),
+                    CalculateItemQuantity(r, shape),
+                    CalculateItemQuantity(colour, shape),
+                    CalculateItemQuantity(colour, shape)
+                ));
+                foreach (var colour in GetColoursUsedInOrder())
+                {
+                   
+                }
+            }
+        }
+        
+        private int CalculateItemQuantity(Colour colour, Shape shape)
+        {
+            var noOfItems = 0;
+            foreach (var (block, quantity) in _requestedOrder.BlockList)
+            {
+                
+            }
+        }*/
     
     }
 }

@@ -12,9 +12,8 @@ namespace ToyBlockFactoryKata
         public DateTime DueDate { get; set; }
         public string OrderId { get; set; }
         public List<InvoiceLine> LineItems { get; } = new();
-        public int Total => LineItems.Sum(item => item.Total);
-        
-        //public string[,] OrderTable { get; }
+        public decimal Total => LineItems.Sum(item => item.Total);
+        public List<TableRow> OrderTable { get; } = new();
     }
     
         

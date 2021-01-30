@@ -11,20 +11,20 @@ namespace ToyBlockFactoryKata
         //public DateTime DueDate { get => _dueDate; set => _dueDate = Convert.ToDateTime(value); }
         //private string _date;
         
-        //private static DateTime _dueDate;
-        /*public DateTime DueDate
+        /*private static DateTime _dueDate;
+        public string DueDate
         {
             get => _dueDate;
             set
             {
-                var validDate = DateTime.TryParse(value, out var date);
+                var validDate = DateTime.TryParse(value, out string date);
                 if (validDate)
                 {
                     _dueDate = date;
                 }
             }
         }*/
-
+        
         public DateTime DueDate { get; set; }
         public string OrderId { get; set; }
         public Dictionary<Block, int> BlockList { get; } = new();
