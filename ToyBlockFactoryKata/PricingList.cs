@@ -20,10 +20,9 @@ namespace ToyBlockFactoryKata
             return quantity * shapePrice;
         }
 
-        /*internal int GetPrice(Block block)
+        public int GetPrice(string chargedItem)
         {
-            //var shapeType = block.Shape.ToString();
-            switch (shapeType)
+            switch (chargedItem)
             {
                 case "Square":
                     return Square;
@@ -36,6 +35,7 @@ namespace ToyBlockFactoryKata
                 default:
                     return 0;                            //is this ok?
             }
-        }*/
+        }
+        
     }
 }

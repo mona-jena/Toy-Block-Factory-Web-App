@@ -7,5 +7,6 @@ namespace ToyBlockFactoryKata
         int Circle { get; }
         int Red { get; }
         int CalculateInvoiceLine(int quantity, int shapePrice);
+        int GetPrice(string chargedItem);
     }
 }

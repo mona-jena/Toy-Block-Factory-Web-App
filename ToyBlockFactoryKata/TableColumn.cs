@@ -1,6 +1,6 @@
 namespace ToyBlockFactoryKata
 {
-    public record TableColumn(Colour Colour, int Quantity)
+    public record TableColumn(string MeasuredItem, int Quantity)
     {
     }
 }

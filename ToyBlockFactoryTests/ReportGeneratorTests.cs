@@ -104,8 +104,8 @@ namespace ToyBlockFactoryTests
         public void LineItemsContainAllDetailsAboutOrder(string description, int quantity, decimal price, decimal total)
         {
             const string orderId = "0001";
+            
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-
             var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
             //read up on this
             Assert.NotNull(invoiceLine);
@@ -150,32 +150,29 @@ namespace ToyBlockFactoryTests
 
             Assert.Empty(invoice.LineItems);
         }
-
-        [Fact]
-        public void GenerateReportShouldReturnOrderTable()
+        
+        
+        [Theory]
+        [InlineData(Shape.Square, "Red", 1)]
+        [InlineData(Shape.Square, "Yellow", 1)]
+        [InlineData(Shape.Triangle, "Blue", 2)]
+        [InlineData(Shape.Circle, "Blue", 1)]
+        [InlineData(Shape.Circle, "Yellow", 2)]
+        public void ReportShouldGenerateOrderTable(Shape shape, string colour, int quantity)
         {
-            // TableColumn =  List<(string, int)
-            // List<(Shape, List<TableRow>)> orderTable = new();
-            List<TableRow> orderTable = new();
-            orderTable.Add(new TableRow(Shape.Square,
-                new List<TableColumn>
-                {
-                    new(Colour.Red, 1), new(Colour.Yellow, 1)
-                }));
-            orderTable.Add(new TableRow(Shape.Triangle,
-                new List<TableColumn> {new(Colour.Blue, 2)}));
-            orderTable.Add(new TableRow(Shape.Circle,
-                new List<TableColumn>
-                {
-                    new(Colour.Blue, 1), new(Colour.Yellow, 2)
-                }));
+            const string orderId = "0001";
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            var invoice = _toyBlockFactory.GetInvoiceReport("0001");
+            var tableRow = invoice.OrderTable.SingleOrDefault(l => l.Shape == shape);
+            var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
 
-            Assert.Equal(orderTable[0], invoice.OrderTable[0]);
-            Assert.Equal(orderTable[1], invoice.OrderTable[1]);
-            Assert.Equal(orderTable[2], invoice.OrderTable[2]);
+            Assert.NotNull(tableRow);
+            Assert.NotNull(tableColumn);      
+            Assert.Equal(shape, tableRow.Shape);
+            Assert.Equal(colour, tableColumn.MeasuredItem);
+            Assert.Equal(quantity, tableColumn.Quantity);
         }
+        
     }
 }
 
