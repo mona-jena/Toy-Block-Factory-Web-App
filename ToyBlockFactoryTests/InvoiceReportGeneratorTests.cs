@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ToyBlockFactoryKata;
 using Xunit;
@@ -9,15 +8,15 @@ namespace ToyBlockFactoryTests
     public class InvoiceReportGeneratorTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        private readonly string customerAddress;
-        private readonly string customerName;
+        private readonly string _customerAddress;
+        private readonly string _customerName;
 
         public InvoiceReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
-            customerName = "David Rudd";
-            customerAddress = "1 Bob Avenue, Auckland";
-            var customerOrder = _toyBlockFactory.CreateOrder(customerName, customerAddress);
+            _customerName = "David Rudd";
+            _customerAddress = "1 Bob Avenue, Auckland";
+            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -63,7 +62,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(customerName, invoice.Name);
+            Assert.Equal(_customerName, invoice.Name);
         }
 
         [Fact]
@@ -73,7 +72,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(customerAddress, invoice.Address);
+            Assert.Equal(_customerAddress, invoice.Address);
         }
 
         [Fact]
