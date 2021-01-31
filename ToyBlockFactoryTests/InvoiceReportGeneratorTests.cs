@@ -6,13 +6,13 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class ReportGeneratorTests
+    public class InvoiceReportGeneratorTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
         private readonly string customerAddress;
         private readonly string customerName;
 
-        public ReportGeneratorTests()
+        public InvoiceReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
             customerName = "David Rudd";
@@ -143,6 +143,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(total, invoiceLine.Total);
         }
 
+        
         [Fact]
         public void EmptyOrderReturnsEmptyInvoiceLines()
         {
@@ -172,7 +173,6 @@ namespace ToyBlockFactoryTests
             Assert.Equal(colour, tableColumn.MeasuredItem);
             Assert.Equal(quantity, tableColumn.Quantity);
         }
-        
     }
 }
 

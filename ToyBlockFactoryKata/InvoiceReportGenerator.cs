@@ -72,7 +72,6 @@ namespace ToyBlockFactoryKata
             }
 
             //add new colour charge conditions here
-
             return surchargeItems;
         }
 
@@ -85,7 +84,6 @@ namespace ToyBlockFactoryKata
         {
             return _requestedOrder.BlockList.Where(b => b.Key.Colour == colour).Sum(b => b.Value);
         }
-        
 
         private void GenerateTable()
         {
