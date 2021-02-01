@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ToyBlockFactoryKata
 {
     internal interface IInvoiceCalculationStrategy
@@ -8,5 +10,6 @@ namespace ToyBlockFactoryKata
         int Red { get; }
         int CalculateInvoiceLine(int quantity, int shapePrice);
         int GetPrice(string chargedItem);
+        void AddLineItems(Report report, Order requestedOrder);
     }
 }

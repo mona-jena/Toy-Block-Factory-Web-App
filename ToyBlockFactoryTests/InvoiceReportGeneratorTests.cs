@@ -42,6 +42,16 @@ namespace ToyBlockFactoryTests
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
             customer3Order.SetDueDate("21 Nov 2019");
             _toyBlockFactory.SubmitOrder(customer3Order);
+            
+            var customer4Name = "Catherine Jenkins";
+            var customer4Address = "56 Owens Road, Auckland";
+            var customer4Order = _toyBlockFactory.CreateOrder(customer4Name, customer4Address);
+            customer4Order.AddBlock(Shape.Circle, Colour.Red);
+            customer4Order.AddBlock(Shape.Circle, Colour.Red);
+            customer4Order.AddBlock(Shape.Circle, Colour.Blue);
+            customer4Order.AddBlock(Shape.Circle, Colour.Blue);
+            customer4Order.SetDueDate("23 Apr 2019");
+            _toyBlockFactory.SubmitOrder(customer4Order);
         }
 
 
@@ -130,6 +140,23 @@ namespace ToyBlockFactoryTests
         public void OnlyItemsInOrderAreListedInLineItems(string description, int quantity, decimal price, decimal total)
         {
             const string orderId = "0002";
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+
+            var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
+
+            Assert.NotNull(invoiceLine);
+            Assert.Equal(description, invoiceLine.Description);
+            Assert.Equal(quantity, invoiceLine.Quantity);
+            Assert.Equal(price, invoiceLine.Price);
+            Assert.Equal(total, invoiceLine.Total);
+        }
+        
+        [Theory]
+        [InlineData("Circle", 4, 3, 12)]
+        [InlineData("Red colour surcharge", 2, 1, 2)]        //What did we want to check for this test case?
+        public void CheckPriceFor2RedAnd2BlueCircles(string description, int quantity, decimal price, decimal total)
+        {
+            const string orderId = "0004";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
             var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);

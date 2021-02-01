@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
-    internal class InvoiceReportGenerator :  IReportGenerator
+    internal class InvoiceReportGenerator : IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Report _report = new(); //when does this get created in the program??
@@ -24,58 +24,10 @@ namespace ToyBlockFactoryKata
             _report.DueDate = requestedOrder.DueDate;
             _report.OrderId = requestedOrder.OrderId;
             GenerateTable();
-            AddLineItems();
+            _priceList.AddLineItems(_report, _requestedOrder);
             return _report;
         }
-
-        private void AddLineItems()
-        {
-            foreach (var shape in GetShapesUsedInOrder())
-            {
-                var shapeQuantity = CalculateItemQuantity(shape);
-                var shapePrice = _priceList.GetPrice(shape.ToString());
-                _report.LineItems.Add(new InvoiceLine(
-                    shape.ToString(),
-                    shapeQuantity,
-                    shapePrice
-                ));
-            }
-
-            foreach (var colour in GetSurchargeItems()) //item or colour??
-            {
-                var itemQuantity = CalculateItemQuantity(colour);
-                var colourPrice = _priceList.GetPrice(colour.ToString());
-                _report.LineItems.Add(new InvoiceLine(
-                    colour + " colour surcharge",
-                    itemQuantity,
-                    colourPrice
-                ));
-            }
-        }
-
-        private IEnumerable<Shape> GetShapesUsedInOrder()
-        {
-            var shapesUsed = _requestedOrder.BlockList.Keys;
-            return shapesUsed.Select(item => item.Shape).Distinct();
-        }
-
-        private IEnumerable<Colour> GetSurchargeItems()
-        {
-            var coloursUsed = _requestedOrder.BlockList.Keys;
-            return coloursUsed.Select(item => item.Colour).Where(item => item == Colour.Red).Distinct();
-            
-        }
-
-        private int CalculateItemQuantity(Shape shape)
-        {
-            return _requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
-        }
-
-        private int CalculateItemQuantity(Colour colour)
-        {
-            return _requestedOrder.BlockList.Where(b => b.Key.Colour == colour).Sum(b => b.Value);
-        }
-
+        
         private void GenerateTable()
         {
             // how to write in LINQ??
