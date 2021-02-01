@@ -2,8 +2,8 @@ namespace ToyBlockFactoryKata
 {
     internal class ReportGenerator
     {
-        private static readonly IInvoiceCalculationStrategy PriceList = new PricingCalculation();
-        private readonly InvoiceReportGenerator _invoiceReportGenerator = new InvoiceReportGenerator(PriceList);
+        private static readonly IInvoiceCalculationStrategy PriceCalculator = new PricingCalculator();
+        private readonly InvoiceReportGenerator _invoiceReportGenerator = new InvoiceReportGenerator(PriceCalculator);
         private readonly CuttingListReportGenerator _cuttingReportGenerator = new CuttingListReportGenerator();
         private readonly PaintingReportGenerator _paintingReportGenerator = new PaintingReportGenerator();
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    internal class PaintingReportGenerator
+    internal class PaintingReportGenerator : IReportGenerator
     {
         private Order _requestedOrder;
         private readonly Report _report = new();

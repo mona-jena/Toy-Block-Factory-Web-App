@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
-    internal class InvoiceReportGenerator 
+    internal class InvoiceReportGenerator :  IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Report _report = new(); //when does this get created in the program??

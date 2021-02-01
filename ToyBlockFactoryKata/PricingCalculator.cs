@@ -1,6 +1,6 @@
 namespace ToyBlockFactoryKata
 {
-    internal class PricingCalculation : IInvoiceCalculationStrategy
+    internal class PricingCalculator : IInvoiceCalculationStrategy
     {
         
         public int Square { get; }
@@ -8,7 +8,7 @@ namespace ToyBlockFactoryKata
         public int Circle { get; }
         public int Red { get; }
         
-        internal PricingCalculation()
+        internal PricingCalculator()
         {
             Square = 1;
             Triangle = 2;
