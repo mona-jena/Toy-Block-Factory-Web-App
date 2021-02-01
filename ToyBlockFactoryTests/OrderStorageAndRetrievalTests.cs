@@ -22,86 +22,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.SetDueDate("19 Jan 2019");
             _toyBlockFactory.SubmitOrder(customerOrder);
-        }
-
-        [Fact]
-        public void CheckIfCustomerOrderDetailsAreAbleToBeRetrieved()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-
-            Assert.Equal("David Rudd", order.Name);
-            Assert.Equal("1 Bob Avenue, Auckland", order.Address);
-            Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
-            Assert.Equal("0001", order.OrderId);
-        }
-
-        //_orderList.Keys.ToHashSet().SetEquals(_orderList.Keys.ToHashSet());
-
-
-        [Fact]
-        public void CheckIf1RedSquareExistsInTheOrder()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-            var block = new Block(Shape.Square, Colour.Red);
-
-            var blockValue = order.BlockList[block];
-
-            Assert.True(order.BlockList.ContainsKey(block));
-            Assert.Equal(1, blockValue);
-        }
-
-        [Fact]
-        public void CheckIf1YellowSquareExistsInTheOrder()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-            var block = new Block(Shape.Square, Colour.Yellow);
-
-            var blockValue = order.BlockList[block];
-
-            Assert.True(order.BlockList.ContainsKey(block));
-            Assert.Equal(1, blockValue);
-        }
-
-        [Fact]
-        public void CheckIf2BlueTrianglesExistInTheOrder()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-            var block = new Block(Shape.Triangle, Colour.Blue);
-
-            var blockValue = order.BlockList[block];
-
-            Assert.True(order.BlockList.ContainsKey(block));
-            Assert.Equal(2, blockValue);
-        }
-
-        [Fact]
-        public void CheckIf1BlueCircleExistsInTheOrder()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-            var block = new Block(Shape.Circle, Colour.Blue);
-
-            var blockValue = order.BlockList[block];
-
-            Assert.True(order.BlockList.ContainsKey(block));
-            Assert.Equal(1, blockValue);
-        }
-
-        [Fact]
-        public void CheckIf2YellowCircleExistInTheOrder()
-        {
-            var order = _toyBlockFactory.GetOrder("0001");
-            var block = new Block(Shape.Circle, Colour.Yellow);
-
-            var blockValue = order.BlockList[block];
-
-            Assert.True(order.BlockList.ContainsKey(block));
-            Assert.Equal(2, blockValue);
-        }
-
-
-        [Fact]
-        public void MultipleOrdersShouldBeAbleToBeStoredAndRetrieved()
-        {
+            
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
@@ -117,20 +38,96 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.DueDate = new DateTime(2019, 1, 30);
+            customerOrder2.DueDate = new DateTime(2019, 1, 30); //INCONSISTENT 
             _toyBlockFactory.SubmitOrder(customerOrder2);
+        }
 
+        [Fact]
+        public void CanRetrieveOrderDetails()
+        {
             var order = _toyBlockFactory.GetOrder("0001");
-            var order2 = _toyBlockFactory.GetOrder("0002");
 
-            Assert.Equal("David Rudd", order.Name); //SHOULD THIS BE STORED IN VARIABLES?
+            Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
             Assert.Equal("0001", order.OrderId);
+        }
+
+        [Fact]
+        public void OrderContains1RedSquare()  //should I be clear on which order in const?
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            var block = new Block(Shape.Square, Colour.Red);
+
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(1, blockValue);
+        }
+
+        [Fact]
+        public void OrderContains1YellowSquare()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            var block = new Block(Shape.Square, Colour.Yellow);
+
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(1, blockValue);
+        }
+
+        [Fact]
+        public void OrderContains2BlueTriangles()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            var block = new Block(Shape.Triangle, Colour.Blue);
+
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(2, blockValue);
+        }
+
+        [Fact]
+        public void OrderContains1BlueCircle()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            var block = new Block(Shape.Circle, Colour.Blue);
+
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(1, blockValue);
+        }
+
+        [Fact]
+        public void OrderContains2YellowCircles()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            var block = new Block(Shape.Circle, Colour.Yellow);
+
+            var blockValue = order.BlockList[block];
+
+            Assert.True(order.BlockList.ContainsKey(block));
+            Assert.Equal(2, blockValue);
+        }
+
+        [Fact]
+        public void MultipleOrdersCanBeStoredAndRetrieved()
+        {
+            var order = _toyBlockFactory.GetOrder("0001");
+            var order2 = _toyBlockFactory.GetOrder("0002");
+            
+            Assert.Equal("0001", order.OrderId);
+            Assert.Equal("David Rudd", order.Name); //SHOULD THIS BE STORED IN VARIABLES?
+            Assert.Equal("1 Bob Avenue, Auckland", order.Address);
+            Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
+            
+            Assert.Equal("0002", order2.OrderId);
             Assert.Equal("Ryan Chen", order2.Name);
             Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
             Assert.Equal(new DateTime(2019, 1, 30), order2.DueDate);
-            Assert.Equal("0002", order2.OrderId);
         }
 
         /*var block = new Block(Shape.Circle, Colour.Blue);

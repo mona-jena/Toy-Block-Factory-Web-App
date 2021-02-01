@@ -39,7 +39,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportCustomerNameMatchesOrder()
+        public void ReportContainsCustomerName()
         {
             const string orderId = "0001";
 
@@ -49,7 +49,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportCustomerAddressMatchesOrder()
+        public void ReportContainsCustomerAddress()
         {
             const string orderId = "0001";
 
@@ -59,7 +59,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportDueDateMatchesOrder()
+        public void ReportContainsOrderDueDate()
         {
             const string orderId = "0001";
 
@@ -69,7 +69,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportOrderIdMatchesOrder()
+        public void ReportContainsOrderId()
         {
             const string orderId = "0001";
 
@@ -82,7 +82,7 @@ namespace ToyBlockFactoryTests
         [InlineData(Shape.Square, 2)]
         [InlineData(Shape.Triangle, 2)]
         [InlineData(Shape.Circle, 3)]
-        public void ReportShouldGenerateOrderTable(Shape shape, int quantity)
+        public void ReportGeneratesOrderTable(Shape shape, int quantity)
         {
             const string orderId = "0001";
             

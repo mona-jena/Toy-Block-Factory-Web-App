@@ -4,15 +4,13 @@ using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
-    internal class CuttingListReportGenerator
+    internal class CuttingListReportGenerator : IReportGenerator
     {
-        private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Order _requestedOrder;
         private readonly Report _report = new();
 
-        public CuttingListReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
+        public CuttingListReportGenerator(Order requestedOrder)
         {
-            _priceList = priceList;
             _requestedOrder = requestedOrder;
         }
 
@@ -24,7 +22,6 @@ namespace ToyBlockFactoryKata
             _report.DueDate = _requestedOrder.DueDate;
             _report.OrderId = _requestedOrder.OrderId;
             GenerateTable();
-            //AddLineItems();
             return _report;
         }
 

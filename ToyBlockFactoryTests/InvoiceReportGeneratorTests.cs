@@ -56,7 +56,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportCustomerNameMatchesOrder()
+        public void ReportContainsCustomerName()
         {
             const string orderId = "0001";
 
@@ -66,7 +66,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportCustomerAddressMatchesOrder()
+        public void ReportContainsCustomerAddress()
         {
             const string orderId = "0001";
 
@@ -76,7 +76,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportDueDateMatchesOrder()
+        public void ReportContainsOrderDueDate()
         {
             const string orderId = "0001";
 
@@ -86,7 +86,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportOrderIdMatchesOrder()
+        public void ReportContainsOrderId()
         {
             const string orderId = "0001";
 
@@ -100,7 +100,7 @@ namespace ToyBlockFactoryTests
         [InlineData("Circle", 3, 3, 9)]
         [InlineData("Red colour surcharge", 1, 1, 1)]
         [InlineData("Triangle", 2, 2, 4)]
-        public void LineItemsContainAllDetailsAboutOrder(string description, int quantity, decimal price, decimal total)
+        public void LineItemsContainDetailsAboutEachOrderItem(string description, int quantity, decimal price, decimal total)
         {
             const string orderId = "0001";
             
@@ -115,7 +115,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ContainsCorrectOrderTotal()
+        public void ReportCalculatesOrderTotal()
         {
             const string orderId = "0001";
 
@@ -123,8 +123,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(16.00m, invoice.Total);
         }
-
-
+        
         [Theory]
         [InlineData("Square", 2, 1, 2)]
         [InlineData("Circle", 2, 3, 6)]
@@ -141,16 +140,14 @@ namespace ToyBlockFactoryTests
             Assert.Equal(price, invoiceLine.Price);
             Assert.Equal(total, invoiceLine.Total);
         }
-
         
         [Fact]
-        public void EmptyOrderReturnsEmptyInvoiceLines()
+        public void EmptyOrderReturnsEmptyLineItems()
         {
             var invoice = _toyBlockFactory.GetInvoiceReport("0003");
 
             Assert.Empty(invoice.LineItems);
         }
-        
         
         [Theory]
         [InlineData(Shape.Square, "Red", 1)]
@@ -158,7 +155,7 @@ namespace ToyBlockFactoryTests
         [InlineData(Shape.Triangle, "Blue", 2)]
         [InlineData(Shape.Circle, "Blue", 1)]
         [InlineData(Shape.Circle, "Yellow", 2)]
-        public void ReportShouldGenerateOrderTable(Shape shape, string colour, int quantity)
+        public void ReportGeneratesOrderTable(Shape shape, string colour, int quantity)
         {
             const string orderId = "0001";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);

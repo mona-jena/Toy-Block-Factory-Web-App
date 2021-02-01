@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using System.Linq;
 using ToyBlockFactoryKata;
 using Xunit;
@@ -8,9 +7,9 @@ namespace ToyBlockFactoryTests
 {
     public class PaintingReportGeneratorTests
     {
-        private ToyBlockFactory _toyBlockFactory;
-        private string _customerName;
-        private string _customerAddress;
+        private readonly ToyBlockFactory _toyBlockFactory;
+        private readonly string _customerName;
+        private readonly string _customerAddress;
 
         public PaintingReportGeneratorTests()
         {
@@ -40,7 +39,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportCustomerNameMatchesOrder()
+        public void ReportContainsCustomerName()
         {
             const string orderId = "0001";
 
@@ -50,7 +49,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportCustomerAddressMatchesOrder()
+        public void ReportContainsCustomerAddress()
         {
             const string orderId = "0001";
 
@@ -60,7 +59,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportDueDateMatchesOrder()
+        public void ReportContainsOrderDueDate()
         {
             const string orderId = "0001";
 
@@ -70,7 +69,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void ReportOrderIdMatchesOrder()
+        public void ReportContainsOrderId()
         {
             const string orderId = "0001";
 
@@ -85,7 +84,7 @@ namespace ToyBlockFactoryTests
         [InlineData(Shape.Triangle, "Blue", 2)]
         [InlineData(Shape.Circle, "Blue", 1)]
         [InlineData(Shape.Circle, "Yellow", 2)]
-        public void ReportShouldGenerateOrderTable(Shape shape, string colour, int quantity)
+        public void ReportGeneratesOrderTable(Shape shape, string colour, int quantity)
         {
             const string orderId = "0001";
             var cuttingList = _toyBlockFactory.GetPaintingReport(orderId);

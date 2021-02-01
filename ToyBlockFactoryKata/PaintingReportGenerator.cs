@@ -5,13 +5,11 @@ namespace ToyBlockFactoryKata
 {
     internal class PaintingReportGenerator
     {
-        private readonly IInvoiceCalculationStrategy _priceList;
         private readonly Order _requestedOrder;
         private readonly Report _report = new();
 
-        public PaintingReportGenerator(IInvoiceCalculationStrategy priceList, Order requestedOrder)
+        public PaintingReportGenerator(Order requestedOrder)
         {
-            _priceList = priceList;
             _requestedOrder = requestedOrder;
         }
 

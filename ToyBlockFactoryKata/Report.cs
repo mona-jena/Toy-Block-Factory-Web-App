@@ -15,17 +15,5 @@ namespace ToyBlockFactoryKata
         public decimal Total => LineItems.Sum(item => item.Total);
         public List<TableRow> OrderTable { get; } = new();
     }
-
-
-    public class CuttingLine
-    {
-        private int bladeWear;
-        private int quantity;
-        private string shape;
-
-        private string Print()
-        {
-            return "ffgdg";
-        }
-    }
+    
 }
