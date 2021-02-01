@@ -2,6 +2,6 @@ namespace ToyBlockFactoryKata
 {
     public interface IReportGenerator
     {
-        Report InputOrderDetails();
+        Report InputOrderDetails(Order requestedOrder);
     }
 }

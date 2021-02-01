@@ -6,16 +6,12 @@ namespace ToyBlockFactoryKata
 {
     internal class CuttingListReportGenerator : IReportGenerator
     {
-        private readonly Order _requestedOrder;
+        private Order _requestedOrder;
         private readonly Report _report = new();
 
-        public CuttingListReportGenerator(Order requestedOrder)
+        public Report InputOrderDetails(Order requestedOrder)
         {
             _requestedOrder = requestedOrder;
-        }
-
-        public Report InputOrderDetails()
-        {
             _report.ReportType = ReportType.CuttingList;
             _report.Name = _requestedOrder.Name;
             _report.Address = _requestedOrder.Address;
@@ -36,6 +32,7 @@ namespace ToyBlockFactoryKata
             var shapeQuantity = _requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
             return new List<TableColumn>{new("Qty", shapeQuantity)};
         }
+        
     }
     
 }

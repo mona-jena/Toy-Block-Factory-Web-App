@@ -5,16 +5,13 @@ namespace ToyBlockFactoryKata
 {
     internal class PaintingReportGenerator
     {
-        private readonly Order _requestedOrder;
+        private Order _requestedOrder;
         private readonly Report _report = new();
+        
 
-        public PaintingReportGenerator(Order requestedOrder)
+        public Report InputOrderDetails(Order requestedOrder)
         {
             _requestedOrder = requestedOrder;
-        }
-
-        public Report InputOrderDetails()
-        {
             _report.ReportType = ReportType.Painting;
             _report.Name = _requestedOrder.Name;
             _report.Address = _requestedOrder.Address;
