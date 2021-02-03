@@ -10,7 +10,6 @@ namespace ToyBlockFactoryKata
         internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList) 
         {
             _priceList = priceList;
-            
         }
 
         public IReport GenerateReport(Order requestedOrder) //Should sep setup and getting part of report?

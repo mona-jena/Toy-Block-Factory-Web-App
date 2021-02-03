@@ -187,6 +187,7 @@ namespace ToyBlockFactoryTests
             Assert.Empty((invoice as InvoiceReport).LineItems);
         }
         
+        
         [Theory]
         [InlineData(Shape.Square, "Red", 1)]
         [InlineData(Shape.Square, "Yellow", 1)]

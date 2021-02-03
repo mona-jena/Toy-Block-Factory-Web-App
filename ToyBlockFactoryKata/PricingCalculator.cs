@@ -75,7 +75,7 @@ namespace ToyBlockFactoryKata
             if (_surchargeQuantities.ContainsKey(surchargeItem))
                 _surchargeQuantities[surchargeItem] += block.Value;
             else
-                _surchargeQuantities.Add(surchargeItem, 1);
+                _surchargeQuantities.Add(surchargeItem, block.Value);
         }
         
     }
