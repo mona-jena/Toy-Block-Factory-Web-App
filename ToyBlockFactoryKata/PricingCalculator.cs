@@ -1,118 +1,133 @@
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
-    internal class PricingCalculator : IInvoiceCalculationStrategy
+    public class PricingCalculator : IInvoiceCalculationStrategy
     {
-        private Report _report;
-        private Order _requestedOrder;
 
-        public int Square { get; }
-        public int Triangle { get; }
-        public int Circle { get; }
-        public int Red { get; }
-        
-        internal PricingCalculator()
+        private readonly Dictionary<string, int> _chargedItemQuantities = new();
+        private readonly Dictionary<string, decimal> _chargedItemPrice = new();
+
+        private InvoiceReport _report;
+        private Order _requestedOrder;
+        private decimal Square { get; }
+        private decimal Triangle { get; }
+        private decimal Circle { get; }
+        private decimal Red { get; }
+
+        public PricingCalculator()
         {
             Square = 1;
             Triangle = 2;
             Circle = 3;
             Red = 1;
         }
+        
+        public List<LineItem> AddLineItems(InvoiceReport report, Order requestedOrder)
+        {
+            _report = report;
+            _requestedOrder = requestedOrder;
+            BlockListIterator();
+            
+            var lineItems = new List<LineItem>();
+            foreach (var chargedItem in _chargedItemQuantities)
+            {
+                lineItems.Add(new LineItem(
+                    chargedItem.Key,
+                    chargedItem.Value,
+                    _chargedItemPrice[chargedItem.Key],
+                    CalculateInvoiceLine(chargedItem.Value, _chargedItemPrice[chargedItem.Key])
+                ));
+            }
 
-        //USE THIS INSTEAD OF THE ONE IN INVOICE LINE
-        public int CalculateInvoiceLine(int quantity, int shapePrice) 
+            return lineItems;
+        }
+        
+        private void BlockListIterator()
+        {
+            foreach (var block in _requestedOrder.BlockList)
+            {
+                HandleShapes(block);
+                HandleSurcharges(block);
+                GetPrice(block.Key);
+            }
+        }
+
+        private void HandleShapes(KeyValuePair<Block, int> block)
+        {
+            var shape = block.Key.Shape.ToString();
+            
+            if (_chargedItemQuantities.TryGetValue(shape, out var quantity))
+                _chargedItemQuantities[shape] = ++quantity;
+            else 
+                _chargedItemQuantities.Add(shape, 1);
+
+            var price = GetPrice(block.Key);
+            if (_chargedItemPrice.ContainsKey(shape))
+                _chargedItemPrice[shape] += price;
+            else
+            {
+                _chargedItemPrice.Add(shape, price);
+            }
+        }
+
+        private void HandleSurcharges(KeyValuePair<Block, int> block)
+        {
+            if (block.Key.Colour != Colour.Red) return;
+            
+            var surchargeItem = block.Key.Colour.ToString();
+            if (_chargedItemQuantities.TryGetValue(surchargeItem, out var quantity))
+                _chargedItemQuantities[surchargeItem] = ++quantity;
+            else
+                _chargedItemQuantities.Add(surchargeItem, 1);
+            
+            var price = GetPrice(block.Key);
+            if (_chargedItemPrice.ContainsKey(surchargeItem))
+                _chargedItemPrice[surchargeItem] += price;
+            else
+            {
+                _chargedItemPrice.Add(surchargeItem, price);
+            }
+        }
+        
+        private decimal GetPrice(Block block) //eg (Square, Red) 
+        {
+            var price = 0m; //is this how you initialise decimal?
+            switch (block.Shape) //are switch stat bad?
+            {
+                case Shape.Square:
+                {
+                    price += Square;
+                    if (block.Colour == Colour.Red) //should this be in a surcharge method?
+                        price += Red;
+                    break;
+                }
+                case Shape.Triangle:
+                {
+                    price += Triangle;
+                    if (block.Colour == Colour.Red)
+                        price += Red;
+                    break;
+                }
+                case Shape.Circle:
+                {
+                    price += Circle;
+                    if (block.Colour == Colour.Red)
+                        price += Red;
+                    break;
+                }
+            }
+
+            return price;
+        }
+        
+        
+        private decimal CalculateInvoiceLine(int quantity, decimal shapePrice)
         {
             return quantity * shapePrice;
         }
 
-        public int GetPrice(string chargedItem)
-        {
-            switch (chargedItem)
-            {
-                case "Square":
-                    return Square;
-                case "Triangle":
-                    return Triangle;
-                case "Circle":
-                    return Circle;
-                case "Red":
-                    return Red;
-                default:
-                    return 0;                            //is this ok?
-            }
-        }
 
-        
-        /*public int GetPrice(Block block)
-        {
-            switch (block)
-            {
-                case "Square":
-                    return Square;
-                case "Triangle":
-                    return Triangle;
-                case "Circle":
-                    return Circle;
-                case "Red":
-                    return Red;
-                default:
-                    return 0;                            //is this ok?
-            }
-        }*/
-        
-        
-        public void AddLineItems(Report report, Order requestedOrder)
-        {
-            _report = report;
-            _requestedOrder = requestedOrder;
-            foreach (var shape in GetShapesUsedInOrder())
-            {
-                var shapeQuantity = CalculateItemQuantity(shape);
-                var shapePrice = GetPrice(shape.ToString());
-                _report.LineItems.Add(new InvoiceLine(
-                    shape.ToString(),
-                    shapeQuantity,
-                    shapePrice
-                ));
-            }
-
-            foreach (var colour in GetSurchargeItems()) //item or colour??
-            {
-                var itemQuantity = CalculateItemQuantity(colour);
-                var colourPrice = GetPrice(colour.ToString());
-                _report.LineItems.Add(new InvoiceLine(
-                    colour + " colour surcharge",
-                    itemQuantity,
-                    colourPrice
-                ));
-            }
-        }
-
-        private IEnumerable<Shape> GetShapesUsedInOrder()
-        {
-            var shapesUsed = _requestedOrder.BlockList.Keys;
-            return shapesUsed.Select(item => item.Shape).Distinct();
-        }
-
-        private IEnumerable<Colour> GetSurchargeItems()
-        {
-            var coloursUsed = _requestedOrder.BlockList.Keys;
-            return coloursUsed.Select(item => item.Colour).Where(item => item == Colour.Red).Distinct();
-            
-        }
-
-        private int CalculateItemQuantity(Shape shape)
-        {
-            return _requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
-        }
-
-        private int CalculateItemQuantity(Colour colour)
-        {
-            return _requestedOrder.BlockList.Where(b => b.Key.Colour == colour).Sum(b => b.Value);
-        }
-        
         
     }
 }

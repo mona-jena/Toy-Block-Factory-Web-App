@@ -20,7 +20,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.SetDueDate("19 Jan 2019");
+            customerOrder.SetDueDate(new DateTime(2019, 1, 19));
             _toyBlockFactory.SubmitOrder(customerOrder);
             
             var customerOrder2 = _toyBlockFactory
@@ -38,7 +38,7 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.DueDate = new DateTime(2019, 1, 30); //INCONSISTENT 
+            customerOrder2.SetDueDate(new DateTime(2019, 1, 30)); 
             _toyBlockFactory.SubmitOrder(customerOrder2);
         }
 

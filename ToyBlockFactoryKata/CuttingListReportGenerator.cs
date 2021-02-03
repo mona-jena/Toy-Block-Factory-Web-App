@@ -6,30 +6,30 @@ namespace ToyBlockFactoryKata
 {
     internal class CuttingListReportGenerator : IReportGenerator
     {
-        private Order _requestedOrder;
-        private readonly Report _report = new();
 
-        public Report InputOrderDetails(Order requestedOrder)
+        public Report GenerateReport(Order requestedOrder) 
         {
-            _requestedOrder = requestedOrder;
-            _report.ReportType = ReportType.CuttingList;
-            _report.Name = _requestedOrder.Name;
-            _report.Address = _requestedOrder.Address;
-            _report.DueDate = _requestedOrder.DueDate;
-            _report.OrderId = _requestedOrder.OrderId;
-            GenerateTable();
-            return _report;
+            var report = new Report
+            {
+                ReportType = ReportType.CuttingList,
+                Name = requestedOrder.Name,
+                Address = requestedOrder.Address,
+                DueDate = requestedOrder.DueDate,
+                OrderId = requestedOrder.OrderId
+            };
+            GenerateTable(report, requestedOrder);
+            return report;
         }
 
-        private void GenerateTable()
+        private void GenerateTable(Report report, Order requestedOrder)
         {
             foreach (Shape shape in Enum.GetValues(typeof(Shape)))
-                _report.OrderTable.Add(new TableRow(shape, RowQuantity(shape)));
+                report.OrderTable.Add(new TableRow(shape, RowQuantity(shape, requestedOrder)));
         }
 
-        private List<TableColumn> RowQuantity(Shape shape)
+        private List<TableColumn> RowQuantity(Shape shape, Order requestedOrder)
         {
-            var shapeQuantity = _requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
+            var shapeQuantity = requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
             return new List<TableColumn>{new("Qty", shapeQuantity)};
         }
         

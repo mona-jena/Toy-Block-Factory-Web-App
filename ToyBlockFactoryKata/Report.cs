@@ -4,15 +4,13 @@ using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
-    public class Report
+    public record Report : IReport
     {
-        public ReportType ReportType { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public DateTime DueDate { get; set; }
-        public string OrderId { get; set; }
-        public List<InvoiceLine> LineItems { get; } = new();
-        public decimal Total => LineItems.Sum(item => item.Total);
+        public ReportType ReportType { get; init; }
+        public string Name { get; init; }
+        public string Address { get; init; }
+        public DateTime DueDate { get; init; }
+        public string OrderId { get; init; }
         public List<TableRow> OrderTable { get; } = new();
     }
     

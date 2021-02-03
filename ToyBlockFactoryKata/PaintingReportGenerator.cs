@@ -5,37 +5,35 @@ namespace ToyBlockFactoryKata
 {
     internal class PaintingReportGenerator : IReportGenerator
     {
-        private Order _requestedOrder;
-        private readonly Report _report = new();
-        
 
-        public Report InputOrderDetails(Order requestedOrder)
+        public IReport GenerateReport(Order requestedOrder)
         {
-            _requestedOrder = requestedOrder;
-            _report.ReportType = ReportType.Painting;
-            _report.Name = _requestedOrder.Name;
-            _report.Address = _requestedOrder.Address;
-            _report.DueDate = _requestedOrder.DueDate;
-            _report.OrderId = _requestedOrder.OrderId;
-            GenerateTable();
-            return _report;
+            var report = new Report
+            {
+                ReportType = ReportType.Painting,
+                Name = requestedOrder.Name,
+                Address = requestedOrder.Address,
+                DueDate = requestedOrder.DueDate,
+                OrderId = requestedOrder.OrderId
+            };
+            GenerateTable(report, requestedOrder);
+            return report;
         }
 
-        private void GenerateTable()
+        private void GenerateTable(Report report, Order requestedOrder)
         {
-            // how to write in LINQ??
             foreach (Shape shape in Enum.GetValues(typeof(Shape)))
-                _report.OrderTable.Add(new TableRow(shape, RowItems(shape)));
+                report.OrderTable.Add(new TableRow(shape, RowItems(shape, requestedOrder)));
         }
 
-        private List<TableColumn> RowItems(Shape shape)
+        private List<TableColumn> RowItems(Shape shape, Order requestedOrder)
         {
             var rowItemQuantities = new List<TableColumn>();
             foreach (Colour colour in Enum.GetValues(typeof(Colour)))
             {
                 var block = new Block(shape, colour);
-                if (_requestedOrder.BlockList.ContainsKey(block))
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), _requestedOrder.BlockList[block]));
+                if (requestedOrder.BlockList.ContainsKey(block))
+                    rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
             }
 
             return rowItemQuantities;

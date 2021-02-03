@@ -7,45 +7,49 @@ namespace ToyBlockFactoryKata
     internal class InvoiceReportGenerator : IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _priceList;
-        private readonly Report _report = new(); //when does this get created in the program??
-        private Order _requestedOrder;
 
-        internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList)
+        internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList) 
         {
             _priceList = priceList;
+            
         }
 
-        public Report InputOrderDetails(Order requestedOrder) //Should sep setup and getting part of report?
+        public IReport GenerateReport(Order requestedOrder) //Should sep setup and getting part of report?
         {
-            _requestedOrder = requestedOrder;
-            _report.ReportType = ReportType.Invoice;
-            _report.Name = requestedOrder.Name;
-            _report.Address = requestedOrder.Address;
-            _report.DueDate = requestedOrder.DueDate;
-            _report.OrderId = requestedOrder.OrderId;
-            GenerateTable();
-            _priceList.AddLineItems(_report, _requestedOrder);
-            return _report;
+            var report = new InvoiceReport()
+            {
+                ReportType = ReportType.Invoice,
+                Name = requestedOrder.Name,
+                Address = requestedOrder.Address,
+                DueDate = requestedOrder.DueDate,
+                OrderId = requestedOrder.OrderId
+            };
+            GenerateTable(report, requestedOrder);
+            _priceList.BlockListIterator(report, requestedOrder);
+            return report;
         }
         
-        private void GenerateTable()
+
+        private void GenerateTable(InvoiceReport report, Order requestedOrder)
         {
             // how to write in LINQ??
             foreach (Shape shape in Enum.GetValues(typeof(Shape)))
-                _report.OrderTable.Add(new TableRow(shape, RowItems(shape)));
+                report.OrderTable.Add(new TableRow(shape, RowItems(shape, requestedOrder)));
         }
 
-        private List<TableColumn> RowItems(Shape shape)
+        private List<TableColumn> RowItems(Shape shape, Order requestedOrder)
         {
             var rowItemQuantities = new List<TableColumn>();
             foreach (Colour colour in Enum.GetValues(typeof(Colour)))
             {
                 var block = new Block(shape, colour);
-                if (_requestedOrder.BlockList.ContainsKey(block))
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), _requestedOrder.BlockList[block]));
+                if (requestedOrder.BlockList.ContainsKey(block))
+                    rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
             }
 
             return rowItemQuantities;
         }
+
+        
     }
 }

@@ -3,23 +3,23 @@ namespace ToyBlockFactoryKata
     internal class ReportGenerator
     {
         private static readonly IInvoiceCalculationStrategy PriceCalculator = new PricingCalculator();
-        private readonly InvoiceReportGenerator _invoiceReportGenerator = new InvoiceReportGenerator(PriceCalculator);
-        private readonly CuttingListReportGenerator _cuttingReportGenerator = new CuttingListReportGenerator();
-        private readonly PaintingReportGenerator _paintingReportGenerator = new PaintingReportGenerator();
+        private readonly IReportGenerator _invoiceReportGenerator = new InvoiceReportGenerator(PriceCalculator);
+        private readonly IReportGenerator _cuttingReportGenerator = new CuttingListReportGenerator();
+        private readonly IReportGenerator _paintingReportGenerator = new PaintingReportGenerator();
 
-        internal Report GenerateInvoice(Order requestedOrder) //should I return an interface?
+        internal IReport GenerateInvoice(Order requestedOrder) //should I return an interface?
         {
-            return _invoiceReportGenerator.InputOrderDetails(requestedOrder);
+            return _invoiceReportGenerator.GenerateReport(requestedOrder);
         }
 
-        public Report GenerateCuttingList(Order requestedOrder)
+        public IReport GenerateCuttingList(Order requestedOrder)
         {
-            return _cuttingReportGenerator.InputOrderDetails(requestedOrder);
+            return _cuttingReportGenerator.GenerateReport(requestedOrder);
         }
 
-        public Report GeneratePaintingReport(Order requestedOrder)
+        public IReport GeneratePaintingReport(Order requestedOrder)
         {
-            return _paintingReportGenerator.InputOrderDetails(requestedOrder);
+            return _paintingReportGenerator.GenerateReport(requestedOrder);
         }
     }
 

@@ -13,7 +13,7 @@ namespace ToyBlockFactoryTests
 
         public InvoiceReportGeneratorTests()
         {
-            _toyBlockFactory = new ToyBlockFactory();
+            _toyBlockFactory = new ToyBlockFactory(new PricingCalculator());
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress);
@@ -24,7 +24,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.SetDueDate("19 Jan 2019");
+            customerOrder.SetDueDate(new DateTime(2019, 1, 19));
             _toyBlockFactory.SubmitOrder(customerOrder);
 
             var customer2Name = "Steve Richards";
@@ -34,13 +34,13 @@ namespace ToyBlockFactoryTests
             customer2Order.AddBlock(Shape.Square, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
-            customer2Order.SetDueDate("15 Feb 2019");
+            customerOrder.SetDueDate(new DateTime(2019, 2, 15));
             _toyBlockFactory.SubmitOrder(customer2Order);
 
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
-            customer3Order.SetDueDate("21 Nov 2019");
+            customerOrder.SetDueDate(new DateTime(2019, 11, 21));
             _toyBlockFactory.SubmitOrder(customer3Order);
             
             var customer4Name = "Catherine Jenkins";
@@ -50,7 +50,7 @@ namespace ToyBlockFactoryTests
             customer4Order.AddBlock(Shape.Circle, Colour.Red);
             customer4Order.AddBlock(Shape.Circle, Colour.Blue);
             customer4Order.AddBlock(Shape.Circle, Colour.Blue);
-            customer4Order.SetDueDate("23 Apr 2019");
+            customer4Order.SetDueDate(new DateTime(2019, 4, 23));
             _toyBlockFactory.SubmitOrder(customer4Order);
         }
 
@@ -94,6 +94,16 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(new DateTime(2019, 1, 19), invoice.DueDate);
         }
+        
+        [Fact]
+        public void ReportContainsOrderDueDateTEST()
+        {
+            const string orderId = "0002";
+
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+
+            Assert.Equal(new DateTime(2019, 2, 15), invoice.DueDate);
+        }
 
         [Fact]
         public void ReportContainsOrderId()
@@ -104,7 +114,8 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(orderId, invoice.OrderId);
         }
-
+        
+        
         [Theory]
         [InlineData("Square", 2, 1, 2)]
         [InlineData("Circle", 3, 3, 9)]
