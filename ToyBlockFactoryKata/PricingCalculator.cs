@@ -1,45 +1,49 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
     public class PricingCalculator : IInvoiceCalculationStrategy
     {
-
-        private readonly Dictionary<string, int> _chargedItemQuantities = new();
-        private readonly Dictionary<string, decimal> _chargedItemPrice = new();
-
-        private InvoiceReport _report;
         private Order _requestedOrder;
-        private decimal Square { get; }
-        private decimal Triangle { get; }
-        private decimal Circle { get; }
-        private decimal Red { get; }
+        private readonly Dictionary<Shape, decimal> _pricingList = new();
+        private readonly Dictionary<string, decimal> _surchargePricingList = new();
+        private readonly Dictionary<Shape, int> _shapeQuantities = new();
+        private readonly Dictionary<string, int> _surchargeQuantities = new();
 
         public PricingCalculator()
         {
-            Square = 1;
-            Triangle = 2;
-            Circle = 3;
-            Red = 1;
+            _pricingList.Add(Shape.Square, 1);          //what's the purpose of storing as shape, when we convert it to string at the end?
+            _pricingList.Add(Shape.Triangle, 2);
+            _pricingList.Add(Shape.Circle, 3);
+            _surchargePricingList.Add("Red", 1);        // too soon to assume its not always Colour?
         }
         
-        public List<LineItem> GenerateLineItems(InvoiceReport report, Order requestedOrder)
+        public List<LineItem> GenerateLineItems(Order requestedOrder)
         {
-            _report = report;
             _requestedOrder = requestedOrder;
             BlockListIterator();
             
             var lineItems = new List<LineItem>();
-            foreach (var chargedItem in _chargedItemQuantities)
+            foreach (var shape in _shapeQuantities)
             {
                 lineItems.Add(new LineItem(
-                    chargedItem.Key,
-                    chargedItem.Value,
-                    _chargedItemPrice[chargedItem.Key],
-                    CalculateInvoiceLine(chargedItem.Value, _chargedItemPrice[chargedItem.Key])
-                ));
+                    shape.Key.ToString(),
+                    shape.Value,
+                    _pricingList[shape.Key],
+                    shape.Value * _pricingList[shape.Key])
+                );
             }
 
+            foreach (var surcharge in _surchargeQuantities)
+            {
+                lineItems.Add(new LineItem(
+                    surcharge.Key + " colour surcharge",
+                    surcharge.Value,
+                    _surchargePricingList[surcharge.Key],
+                    surcharge.Value * _surchargePricingList[surcharge.Key])
+                );
+            }
             return lineItems;
         }
         
@@ -47,87 +51,32 @@ namespace ToyBlockFactoryKata
         {
             foreach (var block in _requestedOrder.BlockList)
             {
-                HandleShapes(block);
-                HandleSurcharges(block);
-                GetPrice(block.Key);
+                CalculateShapeQuantity(block);
+                CalculateSurchargeQuantity(block);
             }
         }
 
-        private void HandleShapes(KeyValuePair<Block, int> block)
+        private void CalculateShapeQuantity(KeyValuePair<Block, int> block)
         {
-            var shape = block.Key.Shape.ToString();
+            var shape = block.Key.Shape;
             
-            if (_chargedItemQuantities.TryGetValue(shape, out var quantity))
-                _chargedItemQuantities[shape] = ++quantity;
+            if (_shapeQuantities.ContainsKey(shape))
+                _shapeQuantities[shape] += block.Value;
             else 
-                _chargedItemQuantities.Add(shape, 1);
-
-            var price = GetPrice(block.Key);
-            if (_chargedItemPrice.ContainsKey(shape))
-                _chargedItemPrice[shape] += price;
-            else
-            {
-                _chargedItemPrice.Add(shape, price);
-            }
+                _shapeQuantities.Add(shape, block.Value);
         }
+        
 
-        private void HandleSurcharges(KeyValuePair<Block, int> block)
+        private void CalculateSurchargeQuantity(KeyValuePair<Block, int> block)
         {
             if (block.Key.Colour != Colour.Red) return;
             
             var surchargeItem = block.Key.Colour.ToString();
-            if (_chargedItemQuantities.TryGetValue(surchargeItem, out var quantity))
-                _chargedItemQuantities[surchargeItem] = ++quantity;
+            if (_surchargeQuantities.ContainsKey(surchargeItem))
+                _surchargeQuantities[surchargeItem] += 1;
             else
-                _chargedItemQuantities.Add(surchargeItem, 1);
-            
-            var price = GetPrice(block.Key);
-            if (_chargedItemPrice.ContainsKey(surchargeItem))
-                _chargedItemPrice[surchargeItem] += price;
-            else
-            {
-                _chargedItemPrice.Add(surchargeItem, price);
-            }
+                _surchargeQuantities.Add(surchargeItem, 1);
         }
-        
-        private decimal GetPrice(Block block) //eg (Square, Red) 
-        {
-            var price = 0m; //is this how you initialise decimal?
-            switch (block.Shape) //are switch stat bad?
-            {
-                case Shape.Square:
-                {
-                    price += Square;
-                    if (block.Colour == Colour.Red) //should this be in a surcharge method?
-                        price += Red;
-                    break;
-                }
-                case Shape.Triangle:
-                {
-                    price += Triangle;
-                    if (block.Colour == Colour.Red)
-                        price += Red;
-                    break;
-                }
-                case Shape.Circle:
-                {
-                    price += Circle;
-                    if (block.Colour == Colour.Red)
-                        price += Red;
-                    break;
-                }
-            }
-
-            return price;
-        }
-        
-        
-        private decimal CalculateInvoiceLine(int quantity, decimal shapePrice)
-        {
-            return quantity * shapePrice;
-        }
-
-
         
     }
 }
