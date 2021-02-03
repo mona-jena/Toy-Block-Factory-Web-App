@@ -2,7 +2,7 @@ using ToyBlockFactoryKata;
 
 namespace ToyBlockFactoryKataTests
 {
-    public class TestPricingCalculator : IInvoiceCalculationStrategy{
+    /*public class TestPricingCalculator : IInvoiceCalculationStrategy{
         public TestPricingCalculator()
         {
             
@@ -14,5 +14,5 @@ namespace ToyBlockFactoryKataTests
         {
             throw new System.NotImplementedException();
         }
-    }
+    }*/
 }

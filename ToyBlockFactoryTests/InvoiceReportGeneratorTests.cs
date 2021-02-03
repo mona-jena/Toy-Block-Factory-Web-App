@@ -13,7 +13,7 @@ namespace ToyBlockFactoryTests
 
         public InvoiceReportGeneratorTests()
         {
-            _toyBlockFactory = new ToyBlockFactory(new PricingCalculator());
+            _toyBlockFactory = new ToyBlockFactory();
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress);
@@ -126,7 +126,7 @@ namespace ToyBlockFactoryTests
             const string orderId = "0001";
             
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
+            var invoiceLine = (invoice as InvoiceReport).LineItems.SingleOrDefault(l => l.Description == description);
             //read up on this
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
@@ -142,7 +142,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(16.00m, invoice.Total);
+            Assert.Equal(16.00m, (invoice as InvoiceReport).Total);
         }
         
         [Theory]
@@ -153,7 +153,7 @@ namespace ToyBlockFactoryTests
             const string orderId = "0002";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
+            var invoiceLine = (invoice as InvoiceReport).LineItems.SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
@@ -170,7 +170,7 @@ namespace ToyBlockFactoryTests
             const string orderId = "0004";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            var invoiceLine = invoice.LineItems.SingleOrDefault(l => l.Description == description);
+            var invoiceLine = (invoice as InvoiceReport).LineItems.SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
@@ -184,7 +184,7 @@ namespace ToyBlockFactoryTests
         {
             var invoice = _toyBlockFactory.GetInvoiceReport("0003");
 
-            Assert.Empty(invoice.LineItems);
+            Assert.Empty((invoice as InvoiceReport).LineItems);
         }
         
         [Theory]

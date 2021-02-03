@@ -4,6 +4,6 @@ namespace ToyBlockFactoryKata
 {
     public interface IInvoiceCalculationStrategy
     {
-        List<LineItem> AddLineItems(InvoiceReport report, Order requestedOrder);
+        List<LineItem> GenerateLineItems(InvoiceReport report, Order requestedOrder);
     }
 }

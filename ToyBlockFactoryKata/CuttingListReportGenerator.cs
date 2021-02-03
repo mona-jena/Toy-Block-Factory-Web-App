@@ -7,7 +7,7 @@ namespace ToyBlockFactoryKata
     internal class CuttingListReportGenerator : IReportGenerator
     {
 
-        public Report GenerateReport(Order requestedOrder) 
+        public IReport GenerateReport(Order requestedOrder) 
         {
             var report = new Report
             {

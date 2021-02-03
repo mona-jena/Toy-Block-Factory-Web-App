@@ -36,19 +36,19 @@ namespace ToyBlockFactoryKata
             return order;
         }
 
-        public Report GetInvoiceReport(string orderId)
+        public IReport GetInvoiceReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);
             return _report.GenerateInvoice(requestedOrder);
         }
 
-        public Report GetCuttingListReport(string orderId)
+        public IReport GetCuttingListReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);
             return _report.GenerateCuttingList(requestedOrder);
         }
 
-        public Report GetPaintingReport(string orderId)
+        public IReport GetPaintingReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);
             return _report.GeneratePaintingReport(requestedOrder);

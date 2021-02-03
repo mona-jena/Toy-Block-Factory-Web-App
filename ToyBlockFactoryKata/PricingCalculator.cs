@@ -23,7 +23,7 @@ namespace ToyBlockFactoryKata
             Red = 1;
         }
         
-        public List<LineItem> AddLineItems(InvoiceReport report, Order requestedOrder)
+        public List<LineItem> GenerateLineItems(InvoiceReport report, Order requestedOrder)
         {
             _report = report;
             _requestedOrder = requestedOrder;

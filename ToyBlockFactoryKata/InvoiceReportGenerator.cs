@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace ToyBlockFactoryKata
 {
@@ -25,7 +26,11 @@ namespace ToyBlockFactoryKata
                 OrderId = requestedOrder.OrderId
             };
             GenerateTable(report, requestedOrder);
-            _priceList.BlockListIterator(report, requestedOrder);
+            var lineItems = _priceList.GenerateLineItems(report, requestedOrder);
+            foreach (var lineItem in lineItems)
+            {
+                report.LineItems.Add(lineItem);
+            }
             return report;
         }
         
