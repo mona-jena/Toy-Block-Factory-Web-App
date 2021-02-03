@@ -6,7 +6,7 @@ namespace ToyBlockFactoryKata
     public class PricingCalculator : IInvoiceCalculationStrategy
     {
         private Order _requestedOrder;
-        private readonly Dictionary<Shape, decimal> _pricingList = new();
+        private readonly Dictionary<Shape, decimal> _pricingList = new();               //condense??
         private readonly Dictionary<string, decimal> _surchargePricingList = new();
         private readonly Dictionary<Shape, int> _shapeQuantities = new();
         private readonly Dictionary<string, int> _surchargeQuantities = new();
