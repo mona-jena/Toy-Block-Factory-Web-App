@@ -16,7 +16,8 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory = new ToyBlockFactory();
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
-            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress);
+            var dueDate = new DateTime(2019, 1, 19);
+            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress, dueDate);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -24,7 +25,6 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
         

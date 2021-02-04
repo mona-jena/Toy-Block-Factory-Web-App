@@ -24,10 +24,8 @@ namespace ToyBlockFactoryKata
             };
             GenerateTable(report, requestedOrder);
             var lineItems = _priceList.GenerateLineItems(requestedOrder);
-            foreach (var lineItem in lineItems)
-            {
-                report.LineItems.Add(lineItem);
-            }
+            report.LineItems.AddRange(lineItems);
+            
             return report;
         }
         

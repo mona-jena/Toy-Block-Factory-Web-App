@@ -11,8 +11,9 @@ namespace ToyBlockFactoryTests
         public OrderStorageAndRetrievalTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
+            var orderDueDate = new DateTime(2019, 1, 19);
             var customerOrder = _toyBlockFactory
-                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland");
+                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -20,11 +21,11 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
             
+            var order2DueDate = new DateTime(2019, 1, 30);
             var customerOrder2 = _toyBlockFactory
-                .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
+                .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland", order2DueDate);
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Square, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
@@ -38,7 +39,6 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.DueDate = new DateTime(2019, 1, 30); 
             _toyBlockFactory.SubmitOrder(customerOrder2);
         }
 

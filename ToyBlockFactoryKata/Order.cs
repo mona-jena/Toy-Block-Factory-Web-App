@@ -9,7 +9,7 @@ namespace ToyBlockFactoryKata
         public string Address { get; }
         public string OrderId { get; init; }  //if i make this init, can't set in OrderGenerator
         public Dictionary<Block, int> BlockList { get; } = new();
-        public DateTime DueDate { get; set; }
+        public DateTime DueDate { get; }
 
         public Order(string customerName, string customerAddress) 
             : this(customerName, customerAddress, DateTime.Today.AddDays(7))

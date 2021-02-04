@@ -10,13 +10,15 @@ namespace ToyBlockFactoryTests
         private readonly ToyBlockFactory _toyBlockFactory;
         private readonly string _customerAddress;
         private readonly string _customerName;
+        private readonly DateTime _dueDate;
 
         public InvoiceReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
-            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress);
+            _dueDate = new DateTime(2019, 1, 19);
+            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress, _dueDate);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
             customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -24,37 +26,31 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.DueDate = new DateTime(2019, 1, 19);
+            //customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
 
             var customer2Name = "Steve Richards";
-            var customer2Address = "not all variations street";      
-            var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address);
+            var customer2Address = "102 Robin Street, Auckland";      
+            var customer2DueDate = new DateTime(2019, 2, 15);  
+            var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, customer2DueDate);
             customer2Order.AddBlock(Shape.Square, Colour.Yellow);
             customer2Order.AddBlock(Shape.Square, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder.DueDate = new DateTime(2019, 2, 15);
             _toyBlockFactory.SubmitOrder(customer2Order);
 
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
-            var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
-            customerOrder.DueDate = new DateTime(2019, 11, 21);
+            var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address); //check if default dueDate
+            //customerOrder.DueDate = new DateTime(2019, 11, 21);           
             _toyBlockFactory.SubmitOrder(customer3Order);
             
-            var customer4Name = "Catherine Jenkins";
-            var customer4Address = "56 Owens Road, Auckland";
-            var customer4Order = _toyBlockFactory.CreateOrder(customer4Name, customer4Address);
-            customer4Order.AddBlock(Shape.Circle, Colour.Red);
-            customer4Order.AddBlock(Shape.Circle, Colour.Red);
-            customer4Order.AddBlock(Shape.Circle, Colour.Blue);
-            customer4Order.AddBlock(Shape.Circle, Colour.Blue);
-            customer4Order.DueDate = new DateTime(2019, 4, 23);
-            _toyBlockFactory.SubmitOrder(customer4Order);
         }
-        
-        //public void TestForNotAllVariations
+
+        public void TestForWhenNotAllVariationsAreUsed()
+        {
+            
+        }
 
 
         [Fact]
@@ -94,18 +90,9 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(new DateTime(2019, 1, 19), invoice.DueDate);
+            Assert.Equal(_dueDate, invoice.DueDate);
         }
         
-        [Fact]
-        public void ReportContainsOrderDueDateTEST()
-        {
-            const string orderId = "0002";
-
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-
-            Assert.Equal(new DateTime(2019, 2, 15), invoice.DueDate);
-        }
 
         [Fact]
         public void ReportContainsOrderId()
@@ -144,7 +131,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(16.00m, (invoice as InvoiceReport).Total);
+            Assert.Equal(16.00m, ((InvoiceReport) invoice).Total);
         }
         
         [Theory]
@@ -155,7 +142,7 @@ namespace ToyBlockFactoryTests
             const string orderId = "0002";
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            var invoiceLine = (invoice as InvoiceReport).LineItems.SingleOrDefault(l => l.Description == description);
+            var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
@@ -163,30 +150,13 @@ namespace ToyBlockFactoryTests
             Assert.Equal(price, invoiceLine.Price);
             Assert.Equal(total, invoiceLine.Total);
         }
-        
-        [Theory]
-        [InlineData("Circle", 4, 3, 12)]
-        [InlineData("Red colour surcharge", 2, 1, 2)]        //What did we want to check for this test case?
-        public void CheckPriceFor2RedAnd2BlueCircles(string description, int quantity, decimal price, decimal total)
-        {
-            const string orderId = "0004";
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            var invoiceLine = (invoice as InvoiceReport).LineItems.SingleOrDefault(l => l.Description == description);
-
-            Assert.NotNull(invoiceLine);
-            Assert.Equal(description, invoiceLine.Description);
-            Assert.Equal(quantity, invoiceLine.Quantity);
-            Assert.Equal(price, invoiceLine.Price);
-            Assert.Equal(total, invoiceLine.Total);
-        }
-        
         [Fact]
         public void EmptyOrderReturnsEmptyLineItems()
         {
             var invoice = _toyBlockFactory.GetInvoiceReport("0003");
 
-            Assert.Empty((invoice as InvoiceReport).LineItems);
+            Assert.Empty(((InvoiceReport) invoice).LineItems);
         }
         
         
