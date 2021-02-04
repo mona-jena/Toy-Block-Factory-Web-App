@@ -8,13 +8,22 @@ namespace ToyBlockFactoryTests
     public class InvoiceReportGeneratorTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        private readonly string _customerAddress;
-        private readonly string _customerName;
-        private readonly DateTime _dueDate;
+        private string _customerAddress;
+        private string _customerName;
+        private DateTime _dueDate;
 
         public InvoiceReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory();
+            
+            OrderWhenAllShapeAndColoursIncluded();
+            OrderWhenNotAllVariationsAreUsed();
+            EmptyOrder();
+        }
+
+        private void OrderWhenAllShapeAndColoursIncluded()
+        {
+            
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             _dueDate = new DateTime(2019, 1, 19);
@@ -26,9 +35,11 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            //customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
+        }
 
+        private void OrderWhenNotAllVariationsAreUsed()
+        {
             var customer2Name = "Steve Richards";
             var customer2Address = "102 Robin Street, Auckland";      
             var customer2DueDate = new DateTime(2019, 2, 15);  
@@ -38,20 +49,16 @@ namespace ToyBlockFactoryTests
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             _toyBlockFactory.SubmitOrder(customer2Order);
+        }
 
+        private void EmptyOrder()
+        {
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address); //check if default dueDate
             //customerOrder.DueDate = new DateTime(2019, 11, 21);           
             _toyBlockFactory.SubmitOrder(customer3Order);
-            
         }
-
-        public void TestForWhenNotAllVariationsAreUsed()
-        {
-            
-        }
-
 
         [Fact]
         public void IsInvoice()

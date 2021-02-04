@@ -28,7 +28,6 @@ namespace ToyBlockFactoryKata
             
             return report;
         }
-        
 
         private void GenerateTable(InvoiceReport report, Order requestedOrder)
         {
