@@ -1,4 +1,4 @@
-namespace ToyBlockFactoryKata
+namespace 
 {
     public enum Colour
     {
