@@ -7,9 +7,9 @@ namespace ToyBlockFactoryTests
 {
     public class CuttingListReportGeneratorTests
     {
-        private ToyBlockFactory _toyBlockFactory;
-        private string _customerName;
-        private string _customerAddress;
+        private readonly ToyBlockFactory _toyBlockFactory;
+        private readonly string _customerName;
+        private readonly string _customerAddress;
 
         public CuttingListReportGeneratorTests()
         {

@@ -16,14 +16,13 @@ namespace ToyBlockFactoryTests
         {
             _toyBlockFactory = new ToyBlockFactory();
             
-            OrderWhenAllShapeAndColoursIncluded();
+            OrderWithAllShapeAndColoursIncluded();
             OrderWhenNotAllVariationsAreUsed();
             EmptyOrder();
         }
 
-        private void OrderWhenAllShapeAndColoursIncluded()
+        private void OrderWithAllShapeAndColoursIncluded()
         {
-            
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             _dueDate = new DateTime(2019, 1, 19);
@@ -130,16 +129,6 @@ namespace ToyBlockFactoryTests
             Assert.Equal(price, invoiceLine.Price);
             Assert.Equal(total, invoiceLine.Total);
         }
-
-        [Fact]
-        public void ReportCalculatesOrderTotal()
-        {
-            const string orderId = "0001";
-
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-
-            Assert.Equal(16.00m, ((InvoiceReport) invoice).Total);
-        }
         
         [Theory]
         [InlineData("Square", 2, 1, 2)]
@@ -159,13 +148,22 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
+        public void ReportCalculatesOrderTotal()
+        {
+            const string orderId = "0001";
+
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+
+            Assert.Equal(16.00m, ((InvoiceReport) invoice).Total);
+        }
+        
+        [Fact]
         public void EmptyOrderReturnsEmptyLineItems()
         {
             var invoice = _toyBlockFactory.GetInvoiceReport("0003");
 
             Assert.Empty(((InvoiceReport) invoice).LineItems);
         }
-        
         
         [Theory]
         [InlineData(Shape.Square, "Red", 1)]

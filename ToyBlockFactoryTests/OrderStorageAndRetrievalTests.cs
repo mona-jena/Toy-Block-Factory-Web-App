@@ -137,19 +137,7 @@ namespace ToyBlockFactoryTests
 }
 
 
-//IS IT BAD TO DO MULTIPLE ASSERTS IN ONE?
 
-
-//var orderManagementSystem = new OrderManagementSystem(customerDetails);
-//var customerOrder = orderManagementSystem.GetOrder();
-//var reportOrderManagement = new ReportOrderManagementSystem(customerOrder);
-/*var pricingList = new PricingList();
-pricingList.Square = 1;
-pricingList.Triangle = 2;
-pricingList.Circle = 1;
-pricingList.Red = 1;*/
-
-//var invoiceReport = reportOrderManagement.GenerateInvoice(customerOrder);
 
 
 /*
@@ -180,32 +168,3 @@ pricingList.Red = 1;*/
         "\n" +
         "Total                  $16";*/
 
-
-/*[Theory]
-[ClassData(typeof(GreetingTestData))]
-public void ShouldReturnCorrectGreetingMessage_WhenGivenAListOfNames(IEnumerable<string> names, string expected)
-{
-    // Arrange
-    var greeter = new Greeter();
-    // Act
-    var result = greeter.Greet(names);
-    // Assert
-    Assert.Equal(expected, result);
-}
-
-public class GreetingTestData : IEnumerable<object[]>
-{
-    public IEnumerator<object[]> GetEnumerator()
-    {
-        yield return new object[] {new List<string> {"Jill", "Jane"}, "Hello, Jill and Jane."};
-        yield return new object[]
-        {
-            new List<string> {"Amy", "Brian", "Charlotte"}, "Hello, Amy, Brian and Charlotte."
-        };
-        yield return new object[]
-        {
-            new List<string> {"Amy", "BRIAN", "Charlotte"}, "Hello, Amy and Charlotte. AND HELLO BRIAN!"
-        };
-    }
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-}*/
