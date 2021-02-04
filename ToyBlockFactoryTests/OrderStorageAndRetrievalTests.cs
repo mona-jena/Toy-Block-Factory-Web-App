@@ -23,9 +23,9 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customerOrder);
             
-            var order2DueDate = new DateTime(2019, 1, 30);
+            //uses default DateTime
             var customerOrder2 = _toyBlockFactory
-                .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland", order2DueDate);
+                .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Square, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
@@ -127,7 +127,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal("0002", order2.OrderId);
             Assert.Equal("Ryan Chen", order2.Name);
             Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
-            Assert.Equal(new DateTime(2019, 1, 30), order2.DueDate);
+            Assert.Equal(DateTime.Today.AddDays(7), order2.DueDate);
         }
 
         /*var block = new Block(Shape.Circle, Colour.Blue);
