@@ -10,15 +10,15 @@ namespace ToyBlockFactoryConsole
         {
             Console.WriteLine("Welcome to the Toy Block Factory!\n");
             
-            Console.Write("Please input your Name: ");              //check if not null
+            Console.Write("Please input your Name: ");              
             var name = Console.ReadLine();
-            name = CheckForNullInput(name);
+            name = CheckForEmptyInput(name);
             
-            Console.Write("Please input your Address: ");            //check if not null
+            Console.Write("Please input your Address: ");   
             var address = Console.ReadLine();
-            address = CheckForNullInput(address);
+            address = CheckForEmptyInput(address);
            
-            Console.Write("Please input your Due Date: ");          //check if valid
+            Console.Write("Please input your Due Date: ");       
             var dateInput = Console.ReadLine();
             DateTime dueDate;
             if (!string.IsNullOrEmpty(dateInput))
@@ -26,19 +26,19 @@ namespace ToyBlockFactoryConsole
 
             Console.WriteLine();
             
-            Console.Write("Please input the number of Red Squares: ");      //check if int
+            Console.Write("Please input the number of Red Squares 🟥: ");     
             var redSquareInput = Console.ReadLine();
             int redSquares;
             if (!string.IsNullOrEmpty(redSquareInput))
                 redSquares = IfValidInteger(redSquareInput);
 
-            Console.Write("Please input the number of Blue Squares: ");      //check if int 
+            Console.Write("Please input the number of Blue Squares 🟦: ");   
             var blueSquareInput = Console.ReadLine();
             int blueSquares;
             if (!string.IsNullOrEmpty(blueSquareInput))
                 blueSquares = IfValidInteger(blueSquareInput);
                 
-            Console.Write("Please input the number of Yellow Squares: ");      //check if int 
+            Console.Write("Please input the number of Yellow Squares 🟨: ");     
             var yellowSquareInput = Console.ReadLine();
             int yellowSquares;
             if (!string.IsNullOrEmpty(yellowSquareInput))
@@ -46,19 +46,19 @@ namespace ToyBlockFactoryConsole
             
             Console.WriteLine();
 
-            Console.Write("Please input the number of Red Triangles: ");        //check if int
+            Console.Write("Please input the number of Red Triangles 🔺: ");      
             var redTriangleInput = Console.ReadLine();
             int redTriangles;
             if (!string.IsNullOrEmpty(redTriangleInput))
                 redTriangles = IfValidInteger(redTriangleInput);
             
-            Console.Write("Please input the number of Blue Triangles: ");       //check if int
+            Console.Write("Please input the number of Blue Triangles : ");      
             var blueTriangleInput = Console.ReadLine();
             int blueTriangles;
             if (!string.IsNullOrEmpty(blueTriangleInput))
                 blueTriangles = IfValidInteger(blueTriangleInput);
             
-            Console.Write("Please input the number of Yellow Triangles: ");     //check if int
+            Console.Write("Please input the number of Yellow Triangles: ");    
             var yellowTriangleInput = Console.ReadLine();
             int yellowTriangles;
             if (!string.IsNullOrEmpty(yellowTriangleInput))
@@ -66,19 +66,19 @@ namespace ToyBlockFactoryConsole
             
             Console.WriteLine();
             
-            Console.Write("Please input the number of Red Circles: ");          //check if int
+            Console.Write("Please input the number of Red Circles 🔴: ");         
             var redCircleInput = Console.ReadLine();
             int redCircles;
             if (!string.IsNullOrEmpty(redCircleInput))
                 redCircles = IfValidInteger(redCircleInput);
             
-            Console.Write("Please input the number of Blue Circles: ");         //check if int
+            Console.Write("Please input the number of Blue Circles: 🔵");       
             var blueCircleInput = Console.ReadLine();
             int blueCircles;
             if (!string.IsNullOrEmpty(blueCircleInput))
                 blueCircles = IfValidInteger(blueCircleInput);
             
-            Console.Write("Please input the number of Yellow Circles: ");       //check if int
+            Console.Write("Please input the number of Yellow Circles: 🟡");     
             var yellowCircleInput = Console.ReadLine();
             int yellowCircles;
             if (!string.IsNullOrEmpty(yellowCircleInput))
@@ -86,13 +86,14 @@ namespace ToyBlockFactoryConsole
 
         }
 
-        private static string CheckForNullInput(string input)
+        private static string CheckForEmptyInput(string input)
         {
             while (string.IsNullOrEmpty(input))
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write("This field can't be empty! Please enter again: ");
                 Console.ResetColor();
+                
                 input = Console.ReadLine();
             }
             
@@ -109,6 +110,7 @@ namespace ToyBlockFactoryConsole
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Invalid date! Please enter again (eg 19 Jan 2021): ");
             Console.ResetColor();
+            
             dateInput = Console.ReadLine();
             ConvertToDateTime(dateInput);
 
@@ -122,6 +124,7 @@ namespace ToyBlockFactoryConsole
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Invalid integer! Please enter again: ");
             Console.ResetColor();
+            
             input = Console.ReadLine();
             IfValidInteger(input);
 
