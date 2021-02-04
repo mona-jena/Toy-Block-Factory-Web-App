@@ -7,16 +7,14 @@ namespace ToyBlockFactoryKata
     {
         private Order _requestedOrder;
         private readonly Dictionary<Shape, decimal> _pricingList = new();               //condense??
-        private readonly Dictionary<string, decimal> _surchargePricingList = new();
         private readonly Dictionary<Shape, int> _shapeQuantities = new();
-        private readonly Dictionary<string, int> _surchargeQuantities = new();
+        private const decimal _redCost = 1;
 
         public PricingCalculator()
         {
             _pricingList.Add(Shape.Square, 1);          //what's the purpose of storing as shape, when we convert it to string at the end?
             _pricingList.Add(Shape.Triangle, 2);
             _pricingList.Add(Shape.Circle, 3);
-            _surchargePricingList.Add("Red", 1);        // too soon to assume its not always Colour?
         }
         
         public List<LineItem> GenerateLineItems(Order requestedOrder)
@@ -34,16 +32,17 @@ namespace ToyBlockFactoryKata
                     shape.Value * _pricingList[shape.Key])
                 );
             }
-
-            foreach (var surcharge in _surchargeQuantities)
-            {
+            
+            
+            var _redQuantity = requestedOrder.BlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);
+            if(_redQuantity >= 1)
                 lineItems.Add(new LineItem(
-                    surcharge.Key + " colour surcharge",
-                    surcharge.Value,
-                    _surchargePricingList[surcharge.Key],
-                    surcharge.Value * _surchargePricingList[surcharge.Key])
+                    "Red colour surcharge",
+                    _redQuantity,
+                    _redCost,
+                    _redQuantity * _redCost)
                 );
-            }
+            
             return lineItems;
         }
         
@@ -51,32 +50,16 @@ namespace ToyBlockFactoryKata
         {
             foreach (var block in _requestedOrder.BlockList)
             {
-                CalculateShapeQuantity(block);
-                CalculateSurchargeQuantity(block);
+                CalculateShapeQuantity(block.Key.Shape, block.Value);
+                
             }
         }
 
-        private void CalculateShapeQuantity(KeyValuePair<Block, int> block)
+        private void CalculateShapeQuantity(Shape shape, int value)
         {
-            var shape = block.Key.Shape;
-            
-            if (_shapeQuantities.ContainsKey(shape))
-                _shapeQuantities[shape] += block.Value;
-            else 
-                _shapeQuantities.Add(shape, block.Value);
+            if (_shapeQuantities.TryAdd(shape, value)) return;
+            _shapeQuantities[shape] += value;
         }
-        
 
-        private void CalculateSurchargeQuantity(KeyValuePair<Block, int> block)
-        {
-            if (block.Key.Colour != Colour.Red) return;
-            
-            var surchargeItem = block.Key.Colour.ToString();
-            if (_surchargeQuantities.ContainsKey(surchargeItem))
-                _surchargeQuantities[surchargeItem] += block.Value;
-            else
-                _surchargeQuantities.Add(surchargeItem, block.Value);
-        }
-        
     }
 }

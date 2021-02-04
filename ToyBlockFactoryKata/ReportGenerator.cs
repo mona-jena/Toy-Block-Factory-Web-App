@@ -12,7 +12,7 @@ namespace ToyBlockFactoryKata
             _invoiceReportGenerator = new InvoiceReportGenerator(_priceCalculator);
         }
 
-        internal IReport GenerateInvoice(Order requestedOrder) //should I return an interface?
+        internal IReport GenerateInvoice(Order requestedOrder) 
         {
             return _invoiceReportGenerator.GenerateReport(requestedOrder);
         }

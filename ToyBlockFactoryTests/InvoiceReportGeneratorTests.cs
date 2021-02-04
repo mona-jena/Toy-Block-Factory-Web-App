@@ -24,23 +24,23 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.SetDueDate(new DateTime(2019, 1, 19));
+            customerOrder.DueDate = new DateTime(2019, 1, 19);
             _toyBlockFactory.SubmitOrder(customerOrder);
 
             var customer2Name = "Steve Richards";
-            var customer2Address = "27 Valley Road, Auckland";
+            var customer2Address = "not all variations street";      
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address);
             customer2Order.AddBlock(Shape.Square, Colour.Yellow);
             customer2Order.AddBlock(Shape.Square, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder.SetDueDate(new DateTime(2019, 2, 15));
+            customerOrder.DueDate = new DateTime(2019, 2, 15);
             _toyBlockFactory.SubmitOrder(customer2Order);
 
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
-            customerOrder.SetDueDate(new DateTime(2019, 11, 21));
+            customerOrder.DueDate = new DateTime(2019, 11, 21);
             _toyBlockFactory.SubmitOrder(customer3Order);
             
             var customer4Name = "Catherine Jenkins";
@@ -50,7 +50,7 @@ namespace ToyBlockFactoryTests
             customer4Order.AddBlock(Shape.Circle, Colour.Red);
             customer4Order.AddBlock(Shape.Circle, Colour.Blue);
             customer4Order.AddBlock(Shape.Circle, Colour.Blue);
-            customer4Order.SetDueDate(new DateTime(2019, 4, 23));
+            customer4Order.DueDate = new DateTime(2019, 4, 23);
             _toyBlockFactory.SubmitOrder(customer4Order);
         }
 
@@ -126,7 +126,7 @@ namespace ToyBlockFactoryTests
             const string orderId = "0001";
             
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            var invoiceLine = (invoice as InvoiceReport).LineItems.SingleOrDefault(l => l.Description == description);
+            var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
             //read up on this
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);

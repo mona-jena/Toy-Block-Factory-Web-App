@@ -4,35 +4,32 @@ namespace ToyBlockFactoryKata
 {
     public class ToyBlockFactory
     {
-        private readonly OrderGenerator _orderGenerator = new();
+        private readonly OrderRepository _orderRepository = new();
         private readonly ReportGenerator _report = new();
-        private Order _customerOrder;
 
         //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
 
         
         public Order CreateOrder(string customerName, string customerAddress)
         {
-            return CreateOrder(customerName, customerAddress, DateTime.Now.AddDays(7));
+            return new Order (customerName, customerAddress);
         }
         
         //USED WHEN NO DATE SPECIFIED 
-        public Order CreateOrder(string customerName, string customerAddress, DateTime date = default)
+        public Order CreateOrder(string customerName, string customerAddress, DateTime date)
         {
-            date = DateTime.Now.AddDays(7);
-            _customerOrder = new Order {Name = customerName, Address = customerAddress};
-            return _customerOrder;
+            return new Order (customerName, customerAddress, date);
         }
         
         public void SubmitOrder(Order customerOrder)
         {
-            _orderGenerator.CreateOrder(customerOrder); //.SubmitOrder()???
+            _orderRepository.SubmitOrder(customerOrder); 
         }
 
         public Order GetOrder(string orderId)
         {
             //should we ask customer what report they want?
-            var orderExists = _orderGenerator.GetOrder(orderId, out var order); 
+            var orderExists = _orderRepository.GetOrder(orderId, out var order); 
             return order;
         }
 

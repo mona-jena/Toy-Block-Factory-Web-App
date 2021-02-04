@@ -3,20 +3,25 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    public class Order
+    public record Order
     {
-        public string Name { get; init; }
-        public string Address { get; init; }
-        public string OrderId { get; set; }  //if i make this init, can't set in OrderGenerator
+        public string Name { get; }
+        public string Address { get; }
+        public string OrderId { get; init; }  //if i make this init, can't set in OrderGenerator
         public Dictionary<Block, int> BlockList { get; } = new();
-        public DateTime DueDate { get; private set; } = DateTime.Now;
+        public DateTime DueDate { get; set; }
 
-        public void SetDueDate(DateTime dueDate)
+        public Order(string customerName, string customerAddress) 
+            : this(customerName, customerAddress, DateTime.Today.AddDays(7))
         {
-            //DueDate = DueDate.AddDays(7);
-            DueDate = dueDate;
         }
-
+        
+        public Order(string customerName, string customerAddress, DateTime date) 
+        { 
+            Name = customerName;
+            Address = customerAddress;
+            DueDate = date;
+        }
 
         public void AddBlock(Shape shape, Colour colour)
         {

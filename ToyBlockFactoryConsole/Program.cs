@@ -10,11 +10,7 @@ namespace ToyBlockFactoryConsole
             
             Console.Write("Please input your Name: ");              //check if not null
             var name = Console.ReadLine();
-            while (string.IsNullOrEmpty(name))
-            {
-                Console.WriteLine("Name can't be empty! Input your name once more");
-                name = Console.ReadLine();
-            }
+            InputErrors(name);
             
             Console.Write("Please input your Address: ");            //check if not null
             var address = Console.ReadLine();
@@ -60,6 +56,17 @@ namespace ToyBlockFactoryConsole
             Console.Write("Please input the number of Yellow Circles: ");       //check if int
             var yellowCircles = Console.ReadLine();
 
+        }
+
+        private static string InputErrors(string input)
+        {
+            while (string.IsNullOrEmpty(input))
+            {
+                Console.WriteLine("input" + " can't be empty! Please enter once more");
+                input = Console.ReadLine();
+            }
+
+            return input;
         }
     }
 }

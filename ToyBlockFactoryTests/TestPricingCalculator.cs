@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using ToyBlockFactoryKata;
 
 namespace ToyBlockFactoryKataTests
 {
-    /*public class TestPricingCalculator : IInvoiceCalculationStrategy{
+    public class TestPricingCalculator : IInvoiceCalculationStrategy
+    {
         public TestPricingCalculator()
         {
             
@@ -10,9 +12,9 @@ namespace ToyBlockFactoryKataTests
 
         
 
-        public void AddLineItems(Report report, Order requestedOrder)
+        public List<LineItem> GenerateLineItems(Order requestedOrder)
         {
             throw new System.NotImplementedException();
         }
-    }*/
+    }
 }
