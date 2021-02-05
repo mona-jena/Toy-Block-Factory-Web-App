@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace ToyBlockFactoryConsole
 {
@@ -20,7 +21,7 @@ namespace ToyBlockFactoryConsole
 
         internal static DateTime ConvertToDateTime(string dateInput)
         {
-            if (DateTime.TryParse(dateInput, out var dueDate))
+            if (DateTime.TryParse(dateInput, new CultureInfo("NZ"),DateTimeStyles.AssumeLocal, out var dueDate))
             {
                 return dueDate;
             }
@@ -30,9 +31,7 @@ namespace ToyBlockFactoryConsole
             Console.ResetColor();
 
             dateInput = Console.ReadLine();
-            ConvertToDateTime(dateInput);
-
-            return dueDate;
+            return ConvertToDateTime(dateInput);
         }
 
         internal static int IfValidInteger(string input)

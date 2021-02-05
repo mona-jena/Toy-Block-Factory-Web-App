@@ -13,7 +13,7 @@ namespace ToyBlockFactoryTests
 
         public CuttingListReportGeneratorTests()
         {
-            _toyBlockFactory = new ToyBlockFactory();
+            _toyBlockFactory = new ToyBlockFactory(new PricingCalculator());
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var dueDate = new DateTime(2019, 1, 19);

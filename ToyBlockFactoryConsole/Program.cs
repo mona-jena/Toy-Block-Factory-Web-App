@@ -19,25 +19,25 @@ namespace ToyBlockFactoryConsole
            
             Console.Write("Please input your Due Date: ");       
             var dateInput = Console.ReadLine();
-            DateTime dueDate;
+            DateTime dueDate = default;
             if (!string.IsNullOrEmpty(dateInput))
                 dueDate = InputValidator.ConvertToDateTime(dateInput);
 
             Console.WriteLine();
             
-            Console.Write("Please input the number of Red Squares 🟥: ");     
+            Console.Write("Please input the number of Red Squares: ");     
             var redSquareInput = Console.ReadLine();
             int redSquares;
             if (!string.IsNullOrEmpty(redSquareInput))
                 redSquares = InputValidator.IfValidInteger(redSquareInput);
 
-            Console.Write("Please input the number of Blue Squares 🟦: ");   
+            Console.Write("Please input the number of Blue Squares: ");   
             var blueSquareInput = Console.ReadLine();
             int blueSquares;
             if (!string.IsNullOrEmpty(blueSquareInput))
                 blueSquares = InputValidator.IfValidInteger(blueSquareInput);
                 
-            Console.Write("Please input the number of Yellow Squares 🟨: ");     
+            Console.Write("Please input the number of Yellow Squares: ");     
             var yellowSquareInput = Console.ReadLine();
             int yellowSquares;
             if (!string.IsNullOrEmpty(yellowSquareInput))
@@ -45,7 +45,7 @@ namespace ToyBlockFactoryConsole
             
             Console.WriteLine();
 
-            Console.Write("Please input the number of Red Triangles 🔺: ");      
+            Console.Write("Please input the number of Red Triangles: ");      
             var redTriangleInput = Console.ReadLine();
             int redTriangles;
             if (!string.IsNullOrEmpty(redTriangleInput))
@@ -65,19 +65,19 @@ namespace ToyBlockFactoryConsole
             
             Console.WriteLine();
             
-            Console.Write("Please input the number of Red Circles 🔴: ");         
+            Console.Write("Please input the number of Red Circles: ");         
             var redCircleInput = Console.ReadLine();
             int redCircles;
             if (!string.IsNullOrEmpty(redCircleInput))
                 redCircles = InputValidator.IfValidInteger(redCircleInput);
             
-            Console.Write("Please input the number of Blue Circles: 🔵");       
+            Console.Write("Please input the number of Blue Circles: ");       
             var blueCircleInput = Console.ReadLine();
             int blueCircles;
             if (!string.IsNullOrEmpty(blueCircleInput))
                 blueCircles = InputValidator.IfValidInteger(blueCircleInput);
             
-            Console.Write("Please input the number of Yellow Circles: 🟡");     
+            Console.Write("Please input the number of Yellow Circles: ");     
             var yellowCircleInput = Console.ReadLine();
             int yellowCircles;
             if (!string.IsNullOrEmpty(yellowCircleInput))
@@ -85,12 +85,29 @@ namespace ToyBlockFactoryConsole
 
 
             var toyBlockFactory = new ToyBlockFactory();
-            if (string.IsNullOrEmpty(dueDate))
+            if (dueDate != default)
             {
                 toyBlockFactory.CreateOrder(name, address);
             }
+            toyBlockFactory.CreateOrder(name, address, dueDate);
             
-            Console.Write("Which report would you like: ");
+            toyBlockFactory.GetOrder();
+            //ASK MULTIPLE TIMES??
+            Console.Write("Which report would you like? \n(1) Invoice Report \n(2) Cutting List Report \n(3) Painting Report" +
+                          "Please pick an option");
+            var option = int.Parse(Console.ReadLine());
+            switch (option)
+            {
+                case 1:
+                    toyBlockFactory.GetInvoiceReport();
+                    break;
+                case 2:
+                    toyBlockFactory.GetCuttingListReport();
+                    break;
+                case 3:
+                    toyBlockFactory.GetPaintingReport();
+                    break;
+            }
 
         }
     }

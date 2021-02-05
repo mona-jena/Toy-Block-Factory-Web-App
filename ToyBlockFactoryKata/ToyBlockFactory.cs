@@ -5,10 +5,20 @@ namespace ToyBlockFactoryKata
     public class ToyBlockFactory
     {
         private readonly OrderRepository _orderRepository = new();
-        private readonly ReportGenerator _report = new();
+        private readonly ReportGenerator _report;
+        
 
         //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
 
+        public ToyBlockFactory() : this(new PricingCalculator())
+        {
+            
+        }
+        
+        public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator) 
+        {
+            _report = new(priceCalculator);
+        }
         
         public Order CreateOrder(string customerName, string customerAddress)
         {
@@ -16,9 +26,9 @@ namespace ToyBlockFactoryKata
         }
         
         //USED WHEN NO DATE SPECIFIED 
-        public Order CreateOrder(string customerName, string customerAddress, DateTime date)
+        public Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
         {
-            return new Order (customerName, customerAddress, date);
+            return new Order (customerName, customerAddress, dueDate);
         }
         
         public void SubmitOrder(Order customerOrder)

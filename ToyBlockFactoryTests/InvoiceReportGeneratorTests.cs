@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKataTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -14,11 +15,11 @@ namespace ToyBlockFactoryTests
 
         public InvoiceReportGeneratorTests()
         {
-            _toyBlockFactory = new ToyBlockFactory();
+            _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
             
             OrderWithAllShapeAndColoursIncluded();
-            OrderWhenNotAllVariationsAreUsed();
-            EmptyOrder();
+            OrderWithNotAllVariationsUsed();
+            EmptyOrderWithNoDate();
         }
 
         private void OrderWithAllShapeAndColoursIncluded()
@@ -37,7 +38,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
-        private void OrderWhenNotAllVariationsAreUsed()
+        private void OrderWithNotAllVariationsUsed()
         {
             var customer2Name = "Steve Richards";
             var customer2Address = "102 Robin Street, Auckland";      
@@ -50,12 +51,11 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customer2Order);
         }
 
-        private void EmptyOrder()
+        private void EmptyOrderWithNoDate()
         {
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address); //check if default dueDate
-            //customerOrder.DueDate = new DateTime(2019, 11, 21);           
             _toyBlockFactory.SubmitOrder(customer3Order);
         }
 

@@ -1,5 +1,6 @@
 using System;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKataTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -10,7 +11,7 @@ namespace ToyBlockFactoryTests
 
         public OrderStorageAndRetrievalTests()
         {
-            _toyBlockFactory = new ToyBlockFactory();
+            _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
             var orderDueDate = new DateTime(2019, 1, 19);
             var customerOrder = _toyBlockFactory
                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);

@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKataTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -13,7 +14,7 @@ namespace ToyBlockFactoryTests
 
         public PaintingReportGeneratorTests()
         {
-            _toyBlockFactory = new ToyBlockFactory();
+            _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var dueDate = new DateTime(2019, 1, 19);
