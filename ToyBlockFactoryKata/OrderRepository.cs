@@ -4,7 +4,7 @@ namespace ToyBlockFactoryKata
 {
     internal class OrderRepository
     {
-        internal Dictionary<string, Order> OrderRecords { get; set; } = new();
+        internal Dictionary<string, Order> OrderRecords { get; } = new();
         private int _orderNumber;
 
         internal string SubmitOrder(Order order)
