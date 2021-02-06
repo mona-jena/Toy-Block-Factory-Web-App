@@ -3,7 +3,7 @@ using ToyBlockFactoryKata;
 
 namespace ToyBlockFactoryConsole
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -89,25 +89,43 @@ namespace ToyBlockFactoryConsole
             {
                 toyBlockFactory.CreateOrder(name, address);
             }
-            toyBlockFactory.CreateOrder(name, address, dueDate);
+            var order = toyBlockFactory.CreateOrder(name, address, dueDate);
+            var orderId = toyBlockFactory.SubmitOrder(order);
             
-            toyBlockFactory.GetOrder();
-            //ASK MULTIPLE TIMES??
-            Console.Write("Which report would you like? \n(1) Invoice Report \n(2) Cutting List Report \n(3) Painting Report" +
-                          "Please pick an option");
-            var option = int.Parse(Console.ReadLine());
-            switch (option)
+            toyBlockFactory.GetOrder(orderId);
+            var option = 1;
+            while (option != 4)
             {
-                case 1:
-                    toyBlockFactory.GetInvoiceReport();
-                    break;
-                case 2:
-                    toyBlockFactory.GetCuttingListReport();
-                    break;
-                case 3:
-                    toyBlockFactory.GetPaintingReport();
-                    break;
+                Console.Write("\nWhich report(s) would you like? \n(1) Invoice Report \n(2) Cutting List Report \n(3) Painting Report \n" +
+                              "Please enter an option: ");
+                option = int.Parse(Console.ReadLine());
+                switch (option)
+                {
+                    case 1:
+                        var invoiceReport = toyBlockFactory.GetInvoiceReport(orderId);
+                        Console.WriteLine("invoice\n");
+                        //PrintingClass(invoiceReport)
+                        break;
+                    case 2:
+                        var cuttingListReport = toyBlockFactory.GetCuttingListReport(orderId);
+                        Console.WriteLine("cutting\n");
+                        //PrintingClass(cuttingListReport)
+                        break;
+                    case 3:
+                        var paintingReport = toyBlockFactory.GetPaintingReport(orderId);
+                        //PrintingClass(paintingReport)
+                        Console.WriteLine("painting\n");
+                        break;
+                    case 4:
+                        Environment.Exit(0);
+                        break;
+                    
+                }
             }
+            
+            
+            
+            
 
         }
     }

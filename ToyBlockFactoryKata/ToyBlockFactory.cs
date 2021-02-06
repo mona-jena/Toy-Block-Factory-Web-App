@@ -7,17 +7,13 @@ namespace ToyBlockFactoryKata
         private readonly OrderRepository _orderRepository = new();
         private readonly ReportGenerator _report;
         
-
-        //IS IT BAD TO INITIALISE HERE OR SHOULD IT BE IN CONSTR?
-
         public ToyBlockFactory() : this(new PricingCalculator())
         {
-            
         }
         
         public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator) 
         {
-            _report = new(priceCalculator);
+            _report = new ReportGenerator(priceCalculator);
         }
         
         public Order CreateOrder(string customerName, string customerAddress)
@@ -31,14 +27,13 @@ namespace ToyBlockFactoryKata
             return new Order (customerName, customerAddress, dueDate);
         }
         
-        public void SubmitOrder(Order customerOrder)
-        {
-            _orderRepository.SubmitOrder(customerOrder); 
+        public string SubmitOrder(Order customerOrder)
+        { 
+            return _orderRepository.SubmitOrder(customerOrder); 
         }
 
         public Order GetOrder(string orderId)
         {
-            //should we ask customer what report they want?
             var orderExists = _orderRepository.GetOrder(orderId, out var order); 
             return order;
         }
