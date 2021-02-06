@@ -5,7 +5,7 @@ namespace ToyBlockFactoryConsole
 {
     static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Console.WriteLine("Welcome to the Toy Block Factory!\n");
             
@@ -24,7 +24,7 @@ namespace ToyBlockFactoryConsole
                 dueDate = InputValidator.ConvertToDateTime(dateInput);
 
             Console.WriteLine();
-            
+                  
             Console.Write("Please input the number of Red Squares: ");     
             var redSquareInput = Console.ReadLine();
             int redSquares;
@@ -37,7 +37,7 @@ namespace ToyBlockFactoryConsole
             if (!string.IsNullOrEmpty(blueSquareInput))
                 blueSquares = InputValidator.IfValidInteger(blueSquareInput);
                 
-            Console.Write("Please input the number of Yellow Squares: ");     
+            Console.Write("Please input the number of Yellow Squares: ");      
             var yellowSquareInput = Console.ReadLine();
             int yellowSquares;
             if (!string.IsNullOrEmpty(yellowSquareInput))
@@ -68,7 +68,7 @@ namespace ToyBlockFactoryConsole
             Console.Write("Please input the number of Red Circles: ");         
             var redCircleInput = Console.ReadLine();
             int redCircles;
-            if (!string.IsNullOrEmpty(redCircleInput))
+            if (!string.IsNullOrEmpty(redCircleInput))   
                 redCircles = InputValidator.IfValidInteger(redCircleInput);
             
             Console.Write("Please input the number of Blue Circles: ");       
@@ -85,20 +85,22 @@ namespace ToyBlockFactoryConsole
 
 
             var toyBlockFactory = new ToyBlockFactory();
+            Order order;
             if (dueDate != default)
             {
-                toyBlockFactory.CreateOrder(name, address);
+                order = toyBlockFactory.CreateOrder(name, address);
             }
-            var order = toyBlockFactory.CreateOrder(name, address, dueDate);
+            order = toyBlockFactory.CreateOrder(name, address, dueDate);
             var orderId = toyBlockFactory.SubmitOrder(order);
             
-            toyBlockFactory.GetOrder(orderId);
+            
             var option = 1;
             while (option != 4)
             {
-                Console.Write("\nWhich report(s) would you like? \n(1) Invoice Report \n(2) Cutting List Report \n(3) Painting Report \n" +
+                Console.Write("\nWhich report would you like? \n(1) Invoice Report \n(2) Cutting List Report \n(3) Painting Report \n" +
                               "Please enter an option: ");
                 option = int.Parse(Console.ReadLine());
+                //var userOrder = toyBlockFactory.GetOrder(orderId);
                 switch (option)
                 {
                     case 1:
@@ -119,14 +121,9 @@ namespace ToyBlockFactoryConsole
                     case 4:
                         Environment.Exit(0);
                         break;
-                    
                 }
             }
             
-            
-            
-            
-
         }
     }
 }

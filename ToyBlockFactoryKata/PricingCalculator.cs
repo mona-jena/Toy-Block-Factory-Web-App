@@ -19,7 +19,7 @@ namespace ToyBlockFactoryKata
                 {Shape.Circle, 3}
             };
         }
-        
+
         public List<LineItem> GenerateLineItems(Order requestedOrder)
         {
             _requestedOrder = requestedOrder;

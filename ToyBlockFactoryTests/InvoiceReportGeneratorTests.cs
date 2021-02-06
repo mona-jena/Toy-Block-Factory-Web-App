@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
-using ToyBlockFactoryKataTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests

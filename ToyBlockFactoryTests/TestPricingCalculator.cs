@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ToyBlockFactoryKata;
 
-namespace ToyBlockFactoryKataTests
+namespace ToyBlockFactoryTests
 {
     public class TestPricingCalculator : IInvoiceCalculationStrategy
     {
@@ -59,7 +59,7 @@ namespace ToyBlockFactoryKataTests
             }
         }
         
-                                                                        //condense these??
+                                                                    //condense these??
         private void CalculateShapeQuantity(Shape shape, int value)
         {
             if (_shapeQuantities.TryAdd(shape, value)) return;

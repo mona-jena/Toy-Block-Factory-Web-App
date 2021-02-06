@@ -1,11 +1,12 @@
 using System;
+using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
     public class ToyBlockFactory
     {
         private readonly OrderRepository _orderRepository = new();
-        private readonly ReportGenerator _report;
+        private readonly ReportGenerator _reportGenerator;
         
         public ToyBlockFactory() : this(new PricingCalculator())
         {
@@ -13,7 +14,7 @@ namespace ToyBlockFactoryKata
         
         public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator) 
         {
-            _report = new ReportGenerator(priceCalculator);
+            _reportGenerator = new ReportGenerator(priceCalculator);
         }
         
         public Order CreateOrder(string customerName, string customerAddress)
@@ -21,7 +22,6 @@ namespace ToyBlockFactoryKata
             return new Order (customerName, customerAddress);
         }
         
-        //USED WHEN NO DATE SPECIFIED 
         public Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
         {
             return new Order (customerName, customerAddress, dueDate);
@@ -41,19 +41,31 @@ namespace ToyBlockFactoryKata
         public IReport GetInvoiceReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);
-            return _report.GenerateInvoice(requestedOrder);
+            return _reportGenerator.GenerateInvoice(requestedOrder);
         }
 
         public IReport GetCuttingListReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);
-            return _report.GenerateCuttingList(requestedOrder);
-        }
+            return _reportGenerator.GenerateCuttingList(requestedOrder);
+        } 
 
         public IReport GetPaintingReport(string orderId)
         {
             var requestedOrder = GetOrder(orderId);
-            return _report.GeneratePaintingReport(requestedOrder);
+            return _reportGenerator.GeneratePaintingReport(requestedOrder);
+        }
+
+        public List<IReport> GetCuttingListsByDate(DateTime date)
+        {
+            var orderRecords = _orderRepository.OrderRecords;
+            return _reportGenerator.FilterCuttingReportsByDate(date, orderRecords);
+        }
+
+        public List<IReport> GetPaintingReportsByDate(DateTime date)
+        {
+            var orderRecords = _orderRepository.OrderRecords;
+            return _reportGenerator.FilterPaintingReportsByDate(date, orderRecords);
         }
     }
 }

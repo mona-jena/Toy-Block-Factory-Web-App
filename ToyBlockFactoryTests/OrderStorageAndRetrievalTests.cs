@@ -1,6 +1,5 @@
 using System;
 using ToyBlockFactoryKata;
-using ToyBlockFactoryKataTests;
 using Xunit;
 
 namespace ToyBlockFactoryTests
