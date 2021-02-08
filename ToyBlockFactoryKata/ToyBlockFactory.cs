@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 
 namespace ToyBlockFactoryKata
 {
@@ -8,7 +10,7 @@ namespace ToyBlockFactoryKata
         private readonly OrderRepository _orderRepository = new();
         private readonly ReportGenerator _reportGenerator;
         
-        public ToyBlockFactory() : this(new PricingCalculator())
+        public ToyBlockFactory() : this(new PricingCalculator())     //understand how this works
         {
         }
         
@@ -35,8 +37,16 @@ namespace ToyBlockFactoryKata
         public Order GetOrder(string orderId)
         {
             var orderExists = _orderRepository.GetOrder(orderId, out var order); 
-            return order;
+            if(!orderExists)
+                throw new ArgumentException("This order does not exist!");
+            return order;       
         }
+
+        public bool OrderExists(string orderId)         //figure out what this for 
+        {
+            return _orderRepository.GetOrder(orderId, out _);
+        }
+
 
         public IReport GetInvoiceReport(string orderId)
         {

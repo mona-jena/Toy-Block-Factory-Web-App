@@ -130,6 +130,15 @@ namespace ToyBlockFactoryTests
             Assert.Equal(DateTime.Today.AddDays(7), order2.DueDate);
         }
 
+
+        [Fact]
+        public void InvalidOrderNumberReturnsNull()
+        {
+            var order = _toyBlockFactory.GetOrder("0003");
+            
+            Assert.Null(order);
+        }
+
         /*var block = new Block(Shape.Circle, Colour.Blue);
         block.Colour = Colour.Red;
         var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/

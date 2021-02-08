@@ -121,6 +121,7 @@ namespace ToyBlockFactoryTests
             
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
+            
             //read up on this
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
@@ -140,6 +141,7 @@ namespace ToyBlockFactoryTests
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
+            Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count);  //should this be in sep test?
             Assert.Equal(description, invoiceLine.Description);
             Assert.Equal(quantity, invoiceLine.Quantity);
             Assert.Equal(price, invoiceLine.Price);
@@ -179,11 +181,49 @@ namespace ToyBlockFactoryTests
             var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
 
             Assert.NotNull(tableRow);
-            Assert.NotNull(tableColumn);      
+            Assert.NotNull(tableColumn);  
+           // Assert.Equal(3, invoice.OrderTable.Count);
+            //Assert.Equal(3, invoice.OrderTable.);     //CHECK column count
             Assert.Equal(shape, tableRow.Shape);
             Assert.Equal(colour, tableColumn.MeasuredItem);
             Assert.Equal(quantity, tableColumn.Quantity);
         }
+        
+        [Theory]
+        [InlineData(Shape.Square, "Yellow", 1)]
+        [InlineData(Shape.Square, "Blue", 1)]
+        [InlineData(Shape.Circle, "Blue", 2)]
+        public void OnlyItemsInOrderAreListedInOrderTable(Shape shape, string colour, int quantity)
+        {
+            const string orderId = "0002";
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+
+            var tableRow = invoice.OrderTable.SingleOrDefault(l => l.Shape == shape);
+            var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
+
+            Assert.NotNull(tableRow);
+            Assert.NotNull(tableColumn);  
+            Assert.Equal(shape, tableRow.Shape);
+            Assert.Equal(colour, tableColumn.MeasuredItem);
+            Assert.Equal(quantity, tableColumn.Quantity);
+        }
+
+        [Fact]
+        public void TableRowsAndColumnsOnlyIncludeItemsUsedInOrder()
+        {
+            const string orderId = "0002";
+            
+            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            //var noOfRows = 2;
+            
+            Assert.Equal(new[] {Shape.Square, Shape.Circle}, invoice.OrderTable.Select(s => s.Shape));
+            //Assert.Equal(new[] {Colour.Square, Shape.Circle}, invoice.OrderTable.Select(s => s.Shape));
+            //Assert.Equal(noOfRows, invoice.OrderTable.Count);
+            //Assert.Equal(noOfColumns, invoice.OrderTable.Where(s => s.Shape == shape).Select(s => s.TableColumn).Count());     //CHECK column count
+
+        }
+        
+        
     }
 }
 
@@ -202,6 +242,10 @@ namespace ToyBlockFactoryTests
     "| Triangle | -   | 2    | -      |",
     "| Circle   | -   | 1    | 2      |",
     "\n",
+    
+    invoice.OrderTable.SelectMany(r=>r.TableColumn).Select(c=>c.MeasuredItem).Distinct();
+    invoice.OrderTable.Select(row=>row.Shape).Distinct();
+    
     "Squares 		        2 @ $1 ppi = $2",
     "Triangles		        2 @ $2 ppi = $4",
     "Circles			    3 @ $3 ppi = $9",
