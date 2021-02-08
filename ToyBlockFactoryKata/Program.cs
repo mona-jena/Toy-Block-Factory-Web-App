@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ToyBlockFactoryKata
+﻿namespace ToyBlockFactoryKata
 {
     internal class Program
     {

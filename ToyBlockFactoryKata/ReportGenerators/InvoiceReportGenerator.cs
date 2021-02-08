@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,16 +5,16 @@ namespace ToyBlockFactoryKata
 {
     internal class InvoiceReportGenerator : IReportGenerator
     {
-        private readonly IInvoiceCalculationStrategy _priceList; //change name 
+        private readonly IInvoiceCalculationStrategy _pricingCalculator;
 
-        internal InvoiceReportGenerator(IInvoiceCalculationStrategy priceList) 
+        internal InvoiceReportGenerator(IInvoiceCalculationStrategy pricingCalculator)
         {
-            _priceList = priceList;
+            _pricingCalculator = pricingCalculator;
         }
 
         public IReport GenerateReport(Order requestedOrder) //Should sep setup and getting part of report?
         {
-            var report = new InvoiceReport()
+            var report = new InvoiceReport
             {
                 ReportType = ReportType.Invoice,
                 Name = requestedOrder.Name,
@@ -24,16 +23,16 @@ namespace ToyBlockFactoryKata
                 OrderId = requestedOrder.OrderId
             };
             GenerateTable(report, requestedOrder);
-            var lineItems = _priceList.GenerateLineItems(requestedOrder);  //RENAME
-            report.LineItems.AddRange(lineItems);                  
-            
+            var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder); //RENAME
+            report.LineItems.AddRange(lineItems);
+
             return report;
         }
 
-        
+
         private void GenerateTable(InvoiceReport report, Order requestedOrder)
         {
-            foreach (Shape shape in ShapesUsedInOrder(requestedOrder))
+            foreach (var shape in ShapesUsedInOrder(requestedOrder))
                 report.OrderTable.Add(new TableRow(shape, RowItems(shape, requestedOrder)));
         }
 
@@ -46,20 +45,16 @@ namespace ToyBlockFactoryKata
         private List<TableColumn> RowItems(Shape shape, Order requestedOrder)
         {
             var rowItemQuantities = new List<TableColumn>();
-            foreach (Colour colour in requestedOrder.BlockList.Select(b=>b.Key.Colour).Distinct())
+            foreach (var colour in requestedOrder.BlockList.Select(b => b.Key.Colour).Distinct())
             {
                 var block = new Block(shape, colour);
                 if (requestedOrder.BlockList.ContainsKey(block))
                     rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
-                /*else
-                {
+                else
                     rowItemQuantities.Add(new TableColumn(colour.ToString(), 0));
-                }*/
             }
 
             return rowItemQuantities;
         }
-
-        
     }
 }

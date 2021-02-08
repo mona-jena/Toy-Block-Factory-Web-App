@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Microsoft.VisualBasic;
 using ToyBlockFactoryKata;
 using Xunit;
 
@@ -8,14 +7,14 @@ namespace ToyBlockFactoryTests
 {
     public class CuttingListReportGeneratorTests
     {
-        private readonly ToyBlockFactory _toyBlockFactory;
-        private readonly string _customerName;
         private readonly string _customerAddress;
+        private readonly string _customerName;
+        private readonly ToyBlockFactory _toyBlockFactory;
 
         public CuttingListReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
-            
+
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var dueDate = new DateTime(2019, 1, 19);
@@ -28,26 +27,26 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customerOrder);
-            
-            var customer2Name = "James Soho";                                        //setup from here for last test
-            var customer2Address = "34 Anzac Avenue, Auckland";                         //is it ok if no blocks??
+
+            var customer2Name = "James Soho"; //setup from here for last test
+            var customer2Address = "34 Anzac Avenue, Auckland"; //is it ok if no blocks??
             var order2DueDate = new DateTime(2019, 1, 19);
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, order2DueDate);
             _toyBlockFactory.SubmitOrder(customer2Order);
-            
+
             var customer3Name = "Alex Wright";
             var customer3Address = "101 South Road, Auckland";
             var order3DueDate = new DateTime(2020, 4, 19);
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address, order3DueDate);
             _toyBlockFactory.SubmitOrder(customer3Order);
-            
+
             var customer4Name = "Tom Night";
             var customer4Address = "23 Country Avenue, Hamilton";
             var order4DueDate = new DateTime(2019, 1, 19);
             var customer4Order = _toyBlockFactory.CreateOrder(customer4Name, customer4Address, order4DueDate);
             _toyBlockFactory.SubmitOrder(customer4Order);
         }
-        
+
         [Fact]
         public void IsCuttingList()
         {
@@ -97,7 +96,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(orderId, cuttingList.OrderId);
         }
-        
+
         [Theory]
         [InlineData(Shape.Square, 2)]
         [InlineData(Shape.Triangle, 2)]
@@ -105,7 +104,7 @@ namespace ToyBlockFactoryTests
         public void ReportGeneratesOrderTable(Shape shape, int quantity)
         {
             const string orderId = "0001";
-            
+
             var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
             var tableRow = cuttingList.OrderTable.SingleOrDefault(l => l.Shape == shape);
 
@@ -118,7 +117,7 @@ namespace ToyBlockFactoryTests
         public void CanFilterReportsByDueDate()
         {
             var filteredReports = _toyBlockFactory.GetCuttingListsByDate(new DateTime(2019, 1, 19));
-            
+
             Assert.Equal(3, filteredReports.Count);
             Assert.Equal("0001", filteredReports[0].OrderId);
             Assert.Equal(new DateTime(2019, 1, 19), filteredReports[0].DueDate);
@@ -127,6 +126,5 @@ namespace ToyBlockFactoryTests
             Assert.Equal("0004", filteredReports[2].OrderId);
             Assert.Equal(new DateTime(2019, 1, 19), filteredReports[2].DueDate);
         }
-        
     }
 }

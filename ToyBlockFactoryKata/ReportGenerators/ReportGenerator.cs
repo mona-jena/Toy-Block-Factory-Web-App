@@ -5,16 +5,16 @@ namespace ToyBlockFactoryKata
 {
     internal class ReportGenerator
     {
-        private readonly IReportGenerator _invoiceReportGenerator;
         private readonly IReportGenerator _cuttingReportGenerator = new CuttingListReportGenerator();
+        private readonly IReportGenerator _invoiceReportGenerator;
         private readonly IReportGenerator _paintingReportGenerator = new PaintingReportGenerator();
 
-        public ReportGenerator(IInvoiceCalculationStrategy priceCalculator)
+        public ReportGenerator(IInvoiceCalculationStrategy pricingCalculator)
         {
-            _invoiceReportGenerator = new InvoiceReportGenerator(priceCalculator);
+            _invoiceReportGenerator = new InvoiceReportGenerator(pricingCalculator);
         }
 
-        internal IReport GenerateInvoice(Order requestedOrder) 
+        internal IReport GenerateInvoice(Order requestedOrder)
         {
             return _invoiceReportGenerator.GenerateReport(requestedOrder);
         }
@@ -28,31 +28,26 @@ namespace ToyBlockFactoryKata
         {
             return _paintingReportGenerator.GenerateReport(requestedOrder);
         }
-                                //GenerateCuttingReportsByDueDate????
-        public List<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string,Order> orderRecords)
+
+        //GenerateCuttingReportsByDueDate????
+        public List<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
-            List<IReport> filteredReports = new List<IReport>();
+            var filteredReports = new List<IReport>();
             foreach (var order in orderRecords.Values)
-            {
                 if (order.DueDate == date)
                     filteredReports.Add(GenerateCuttingList(order));
-            }
 
             return filteredReports;
         }
 
-        public List<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string,Order> orderRecords)
+        public List<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
-            List<IReport> filteredReports = new List<IReport>();
+            var filteredReports = new List<IReport>();
             foreach (var order in orderRecords.Values)
-            {
                 if (order.DueDate == date)
                     filteredReports.Add(GeneratePaintingReport(order));
-            }
 
             return filteredReports;
         }
     }
-
-    
 }

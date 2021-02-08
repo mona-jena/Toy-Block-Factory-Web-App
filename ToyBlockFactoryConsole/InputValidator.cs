@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace ToyBlockFactoryConsole
 {
-    static class InputValidator
+    internal static class InputValidator
     {
         internal static string IfEmptyInput(string input)
         {
@@ -21,10 +21,8 @@ namespace ToyBlockFactoryConsole
 
         internal static DateTime ConvertToDateTime(string dateInput)
         {
-            if (DateTime.TryParse(dateInput, new CultureInfo("NZ"),DateTimeStyles.AssumeLocal, out var dueDate))
-            {
+            if (DateTime.TryParse(dateInput, new CultureInfo("NZ"), DateTimeStyles.AssumeLocal, out var dueDate))
                 return dueDate;
-            }
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Invalid date! Please enter again (eg 19 Jan 2021): ");

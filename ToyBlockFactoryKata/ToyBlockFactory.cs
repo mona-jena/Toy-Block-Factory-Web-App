@@ -1,52 +1,49 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Net;
 
 namespace ToyBlockFactoryKata
 {
     public class ToyBlockFactory
     {
-        private readonly OrderRepository _orderRepository = new();
+        private readonly OrderManagementSystem _orderManagementSystem = new();
         private readonly ReportGenerator _reportGenerator;
-        
-        public ToyBlockFactory() : this(new PricingCalculator())     //understand how this works
+
+        public ToyBlockFactory() : this(new PricingCalculator()) //understand how this works
         {
         }
-        
-        public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator) 
+
+        public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator)
         {
             _reportGenerator = new ReportGenerator(priceCalculator);
         }
-        
+
         public Order CreateOrder(string customerName, string customerAddress)
         {
-            return new Order (customerName, customerAddress);
+            return new(customerName, customerAddress);
         }
-        
+
         public Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
         {
-            return new Order (customerName, customerAddress, dueDate);
+            return new(customerName, customerAddress, dueDate);
         }
-        
+
         public string SubmitOrder(Order customerOrder)
-        { 
-            return _orderRepository.SubmitOrder(customerOrder); 
+        {
+            return _orderManagementSystem.SubmitOrder(customerOrder);
         }
 
         public Order GetOrder(string orderId)
         {
-            var orderExists = _orderRepository.GetOrder(orderId, out var order); 
-            if(!orderExists)
+            var orderExists = _orderManagementSystem.GetOrder(orderId, out var order);
+            if (!orderExists)
                 throw new ArgumentException("This order does not exist!");
-            return order;       
+            return order;
         }
 
-        public bool OrderExists(string orderId)         //figure out what this for 
+        public bool OrderExists(string orderId) //is this just for console? so then should test also use this?
         {
-            return _orderRepository.GetOrder(orderId, out _);
+            return _orderManagementSystem.GetOrder(orderId, out _);
         }
-
 
         public IReport GetInvoiceReport(string orderId)
         {
@@ -58,7 +55,7 @@ namespace ToyBlockFactoryKata
         {
             var requestedOrder = GetOrder(orderId);
             return _reportGenerator.GenerateCuttingList(requestedOrder);
-        } 
+        }
 
         public IReport GetPaintingReport(string orderId)
         {
@@ -68,13 +65,13 @@ namespace ToyBlockFactoryKata
 
         public List<IReport> GetCuttingListsByDate(DateTime date)
         {
-            var orderRecords = _orderRepository.OrderRecords;
+            var orderRecords = _orderManagementSystem.OrderRecords;
             return _reportGenerator.FilterCuttingReportsByDate(date, orderRecords);
         }
 
         public List<IReport> GetPaintingReportsByDate(DateTime date)
         {
-            var orderRecords = _orderRepository.OrderRecords;
+            var orderRecords = _orderManagementSystem.OrderRecords;
             return _reportGenerator.FilterPaintingReportsByDate(date, orderRecords);
         }
     }

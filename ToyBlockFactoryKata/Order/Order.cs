@@ -5,23 +5,23 @@ namespace ToyBlockFactoryKata
 {
     public record Order
     {
-        public string Name { get; }
-        public string Address { get; }
-        public string OrderId { get; init; }  //if i make this init, can't set in OrderGenerator
-        public Dictionary<Block, int> BlockList { get; } = new();
-        public DateTime DueDate { get; }
-
-        public Order(string customerName, string customerAddress) 
+        public Order(string customerName, string customerAddress)
             : this(customerName, customerAddress, DateTime.Today.AddDays(7))
         {
         }
-        
-        public Order(string customerName, string customerAddress, DateTime date) 
-        { 
+
+        public Order(string customerName, string customerAddress, DateTime date)
+        {
             Name = customerName;
             Address = customerAddress;
             DueDate = date;
         }
+
+        public string Name { get; }
+        public string Address { get; }
+        public string OrderId { get; init; } //if i make this init, can't set in OrderGenerator
+        public Dictionary<Block, int> BlockList { get; } = new();
+        public DateTime DueDate { get; }
 
         public void AddBlock(Shape shape, Colour colour)
         {

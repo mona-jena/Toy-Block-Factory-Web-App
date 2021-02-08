@@ -5,7 +5,6 @@ namespace ToyBlockFactoryKata
 {
     internal class PaintingReportGenerator : IReportGenerator
     {
-
         public IReport GenerateReport(Order requestedOrder)
         {
             var report = new Report

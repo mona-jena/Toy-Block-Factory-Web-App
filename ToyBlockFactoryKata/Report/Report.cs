@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
@@ -13,5 +12,4 @@ namespace ToyBlockFactoryKata
         public string OrderId { get; init; }
         public List<TableRow> OrderTable { get; } = new();
     }
-    
 }

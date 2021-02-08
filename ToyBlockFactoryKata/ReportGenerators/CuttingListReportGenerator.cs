@@ -6,8 +6,7 @@ namespace ToyBlockFactoryKata
 {
     internal class CuttingListReportGenerator : IReportGenerator
     {
-
-        public IReport GenerateReport(Order requestedOrder) 
+        public IReport GenerateReport(Order requestedOrder)
         {
             var report = new Report
             {
@@ -30,9 +29,7 @@ namespace ToyBlockFactoryKata
         private List<TableColumn> RowQuantity(Shape shape, Order requestedOrder)
         {
             var shapeQuantity = requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
-            return new List<TableColumn>{new("Qty", shapeQuantity)};
+            return new List<TableColumn> {new("Qty", shapeQuantity)};
         }
-        
     }
-    
 }

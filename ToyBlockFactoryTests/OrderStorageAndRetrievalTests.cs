@@ -22,7 +22,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customerOrder);
-            
+
             //uses default DateTime
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
@@ -54,7 +54,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void OrderContains1RedSquare()  //should I be clear on which order in const?
+        public void OrderContains1RedSquare() //should I be clear on which order in const?
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
@@ -118,12 +118,12 @@ namespace ToyBlockFactoryTests
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var order2 = _toyBlockFactory.GetOrder("0002");
-            
+
             Assert.Equal("0001", order.OrderId);
             Assert.Equal("David Rudd", order.Name); //SHOULD THIS BE STORED IN VARIABLES?
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
-            
+
             Assert.Equal("0002", order2.OrderId);
             Assert.Equal("Ryan Chen", order2.Name);
             Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
@@ -135,7 +135,7 @@ namespace ToyBlockFactoryTests
         public void InvalidOrderNumberReturnsNull()
         {
             var order = _toyBlockFactory.GetOrder("0003");
-            
+
             Assert.Null(order);
         }
 
@@ -144,9 +144,6 @@ namespace ToyBlockFactoryTests
         var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/
     }
 }
-
-
-
 
 
 /*
@@ -176,4 +173,3 @@ namespace ToyBlockFactoryTests
         "Red colour surcharge   1 @ $1 ppi = $1" +
         "\n" +
         "Total                  $16";*/
-

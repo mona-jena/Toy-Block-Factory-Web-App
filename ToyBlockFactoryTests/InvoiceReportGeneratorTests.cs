@@ -15,7 +15,7 @@ namespace ToyBlockFactoryTests
         public InvoiceReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
-            
+
             OrderWithAllShapeAndColoursIncluded();
             OrderWithNotAllVariationsUsed();
             EmptyOrderWithNoDate();
@@ -40,8 +40,8 @@ namespace ToyBlockFactoryTests
         private void OrderWithNotAllVariationsUsed()
         {
             var customer2Name = "Steve Richards";
-            var customer2Address = "102 Robin Street, Auckland";      
-            var customer2DueDate = new DateTime(2019, 2, 15);  
+            var customer2Address = "102 Robin Street, Auckland";
+            var customer2DueDate = new DateTime(2019, 2, 15);
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, customer2DueDate);
             customer2Order.AddBlock(Shape.Square, Colour.Yellow);
             customer2Order.AddBlock(Shape.Square, Colour.Blue);
@@ -54,7 +54,8 @@ namespace ToyBlockFactoryTests
         {
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
-            var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address); //check if default dueDate
+            var customer3Order =
+                _toyBlockFactory.CreateOrder(customer3Name, customer3Address); //check if default dueDate
             _toyBlockFactory.SubmitOrder(customer3Order);
         }
 
@@ -97,7 +98,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(_dueDate, invoice.DueDate);
         }
-        
+
 
         [Fact]
         public void ReportContainsOrderId()
@@ -108,20 +109,21 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(orderId, invoice.OrderId);
         }
-        
-        
+
+
         [Theory]
         [InlineData("Square", 2, 1, 2)]
         [InlineData("Circle", 3, 3, 9)]
         [InlineData("Red colour surcharge", 1, 1, 1)]
         [InlineData("Triangle", 2, 2, 4)]
-        public void LineItemsContainDetailsAboutEachOrderItem(string description, int quantity, decimal price, decimal total)
+        public void LineItemsContainDetailsAboutEachOrderItem(string description, int quantity, decimal price,
+            decimal total)
         {
             const string orderId = "0001";
-            
+
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
-            
+
             //read up on this
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine.Description);
@@ -129,7 +131,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(price, invoiceLine.Price);
             Assert.Equal(total, invoiceLine.Total);
         }
-        
+
         [Theory]
         [InlineData("Square", 2, 1, 2)]
         [InlineData("Circle", 2, 3, 6)]
@@ -141,7 +143,7 @@ namespace ToyBlockFactoryTests
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
-            Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count);  //should this be in sep test?
+            Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count); //should this be in sep test?
             Assert.Equal(description, invoiceLine.Description);
             Assert.Equal(quantity, invoiceLine.Quantity);
             Assert.Equal(price, invoiceLine.Price);
@@ -157,7 +159,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(16.00m, ((InvoiceReport) invoice).Total);
         }
-        
+
         [Fact]
         public void EmptyOrderReturnsEmptyLineItems()
         {
@@ -165,7 +167,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Empty(((InvoiceReport) invoice).LineItems);
         }
-        
+
         [Theory]
         [InlineData(Shape.Square, "Red", 1)]
         [InlineData(Shape.Square, "Yellow", 1)]
@@ -181,18 +183,18 @@ namespace ToyBlockFactoryTests
             var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
 
             Assert.NotNull(tableRow);
-            Assert.NotNull(tableColumn);  
-           // Assert.Equal(3, invoice.OrderTable.Count);
+            Assert.NotNull(tableColumn);
+            // Assert.Equal(3, invoice.OrderTable.Count);
             //Assert.Equal(3, invoice.OrderTable.);     //CHECK column count
             Assert.Equal(shape, tableRow.Shape);
             Assert.Equal(colour, tableColumn.MeasuredItem);
             Assert.Equal(quantity, tableColumn.Quantity);
         }
-        
+
         [Theory]
         [InlineData(Shape.Square, "Yellow", 1)]
         [InlineData(Shape.Square, "Blue", 1)]
-        [InlineData(Shape.Circle, "Blue", 2)]
+        [InlineData(Shape.Circle, "Blue", 2)] //NOT TRUE ANYMORE - RENAME?
         public void OnlyItemsInOrderAreListedInOrderTable(Shape shape, string colour, int quantity)
         {
             const string orderId = "0002";
@@ -202,7 +204,7 @@ namespace ToyBlockFactoryTests
             var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
 
             Assert.NotNull(tableRow);
-            Assert.NotNull(tableColumn);  
+            Assert.NotNull(tableColumn);
             Assert.Equal(shape, tableRow.Shape);
             Assert.Equal(colour, tableColumn.MeasuredItem);
             Assert.Equal(quantity, tableColumn.Quantity);
@@ -212,18 +214,18 @@ namespace ToyBlockFactoryTests
         public void TableRowsAndColumnsOnlyIncludeItemsUsedInOrder()
         {
             const string orderId = "0002";
-            
+
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
             //var noOfRows = 2;
-            
+
             Assert.Equal(new[] {Shape.Square, Shape.Circle}, invoice.OrderTable.Select(s => s.Shape));
+            // invoice.OrderTable.SelectMany(r=>r.TableColumn).Select(c=>c.MeasuredItem).Distinct();
+            // invoice.OrderTable.Select(row=>row.Shape).Distinct();
+
             //Assert.Equal(new[] {Colour.Square, Shape.Circle}, invoice.OrderTable.Select(s => s.Shape));
             //Assert.Equal(noOfRows, invoice.OrderTable.Count);
             //Assert.Equal(noOfColumns, invoice.OrderTable.Where(s => s.Shape == shape).Select(s => s.TableColumn).Count());     //CHECK column count
-
         }
-        
-        
     }
 }
 
