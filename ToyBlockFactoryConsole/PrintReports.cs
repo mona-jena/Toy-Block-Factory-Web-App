@@ -13,9 +13,7 @@ namespace ToyBlockFactoryConsole
                 "\n\n" +
                 "Name: " + report.Name + " Address: " + report.Address + " Due Date: " +
                 report.DueDate.ToString("dd/MM/yyyy") + " Order #: " + report.OrderId);
-
             
-
 
             var topRowLabels = report.OrderTable.SelectMany(l => l.TableColumn).Select(l => l.MeasuredItem).Distinct();
             Console.Write("|          ");
@@ -40,10 +38,6 @@ namespace ToyBlockFactoryConsole
                 Console.WriteLine();
             }
         }
-
-        private static void PrintCuttingTable()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
