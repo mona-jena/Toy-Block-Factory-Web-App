@@ -8,10 +8,6 @@ namespace ToyBlockFactoryKata
         private readonly OrderManagementSystem _orderManagementSystem = new();
         private readonly ReportGenerator _reportGenerator;
 
-        public ToyBlockFactory() : this(new PricingCalculator()) //understand how this works
-        {
-        }
-
         public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator)
         {
             _reportGenerator = new ReportGenerator(priceCalculator);
@@ -68,13 +64,13 @@ namespace ToyBlockFactoryKata
             return _reportGenerator.GeneratePaintingReport(requestedOrder);
         }
 
-        public List<IReport> GetCuttingListsByDate(DateTime date)
+        public IEnumerable<IReport> GetCuttingListsByDate(DateTime date)
         {
             var orderRecords = _orderManagementSystem.OrderRecords;
             return _reportGenerator.FilterCuttingReportsByDate(date, orderRecords);
         }
 
-        public List<IReport> GetPaintingReportsByDate(DateTime date)
+        public IEnumerable<IReport> GetPaintingReportsByDate(DateTime date)
         {
             var orderRecords = _orderManagementSystem.OrderRecords;
             return _reportGenerator.FilterPaintingReportsByDate(date, orderRecords);

@@ -149,7 +149,7 @@ namespace ToyBlockFactoryConsole
                         PrintReports.PrintReport(paintingReport);
                         break;
                     case 4:
-                        Program.Main();
+                        Program.Menu(toyBlockFactory);
                         break;
                     case 5:
                         Environment.Exit(0);
@@ -193,7 +193,8 @@ namespace ToyBlockFactoryConsole
                             cuttingFilterDate = InputValidator.ConvertToDateTime(cuttingReportDate);
 
                         var filteredCuttingLists = toyBlockFactory.GetCuttingListsByDate(cuttingFilterDate);
-                        foreach (var cuttingList in filteredCuttingLists) PrintReports.PrintReport(cuttingList);
+                        foreach (var cuttingList in filteredCuttingLists) 
+                            PrintReports.PrintReport(cuttingList);
                         break;
 
                     case 2:
@@ -209,7 +210,7 @@ namespace ToyBlockFactoryConsole
                         break;
 
                     case 3:
-                        Program.Main();
+                        Program.Menu(toyBlockFactory);
                         break;
 
                     case 4:

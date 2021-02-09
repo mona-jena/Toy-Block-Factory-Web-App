@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ToyBlockFactoryKata
 {
@@ -30,24 +31,14 @@ namespace ToyBlockFactoryKata
         }
 
         //GenerateCuttingReportsByDueDate????
-        public List<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
+        public IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
-            var filteredReports = new List<IReport>();
-            foreach (var order in orderRecords.Values)
-                if (order.DueDate == date)
-                    filteredReports.Add(GenerateCuttingList(order));
-
-            return filteredReports;
+            return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GenerateCuttingList(o.Value));
         }
 
-        public List<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
+        public IEnumerable<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
-            var filteredReports = new List<IReport>();
-            foreach (var order in orderRecords.Values)
-                if (order.DueDate == date)
-                    filteredReports.Add(GeneratePaintingReport(order));
-
-            return filteredReports;
+            return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GeneratePaintingReport(o.Value));
         }
     }
 }

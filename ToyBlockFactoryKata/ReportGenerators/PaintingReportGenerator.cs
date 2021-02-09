@@ -33,6 +33,8 @@ namespace ToyBlockFactoryKata
                 var block = new Block(shape, colour);
                 if (requestedOrder.BlockList.ContainsKey(block))
                     rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
+                else
+                    rowItemQuantities.Add(new TableColumn(colour.ToString(), 0));
             }
 
             return rowItemQuantities;

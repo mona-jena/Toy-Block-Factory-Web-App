@@ -181,42 +181,8 @@ namespace ToyBlockFactoryTests
             Assert.Equal(colour, tableColumn.MeasuredItem);
             Assert.Equal(quantity, tableColumn.Quantity);
         }
-
-        [Theory]
-        [InlineData(Shape.Square, "Yellow", 1)]
-        [InlineData(Shape.Square, "Blue", 1)]
-        [InlineData(Shape.Circle, "Blue", 2)] //NOT TRUE ANYMORE - RENAME?
-        public void OnlyItemsInOrderAreListedInOrderTable(Shape shape, string colour, int quantity)
-        {
-            const string orderId = "0002";
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-
-            var tableRow = invoice.OrderTable.SingleOrDefault(l => l.Shape == shape);
-            var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
-
-            Assert.NotNull(tableRow);
-            Assert.NotNull(tableColumn);
-            Assert.Equal(shape, tableRow.Shape);
-            Assert.Equal(colour, tableColumn.MeasuredItem);
-            Assert.Equal(quantity, tableColumn.Quantity);
-        }
-
-        [Fact] //ANY POINT TESTING THIS??
-        public void TableRowsAndColumnsOnlyIncludeItemsUsedInOrder()
-        {
-            const string orderId = "0002";
-
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
-            //var noOfRows = 2;
-
-            Assert.Equal(new[] {Shape.Square, Shape.Circle}, invoice.OrderTable.Select(s => s.Shape));
-            // invoice.OrderTable.SelectMany(r=>r.TableColumn).Select(c=>c.MeasuredItem).Distinct();
-            // invoice.OrderTable.Select(row=>row.Shape).Distinct();
-
-            //Assert.Equal(new[] {Colour.Square, Shape.Circle}, invoice.OrderTable.Select(s => s.Shape));
-            //Assert.Equal(noOfRows, invoice.OrderTable.Count);
-            //Assert.Equal(noOfColumns, invoice.OrderTable.Where(s => s.Shape == shape).Select(s => s.TableColumn).Count());     //CHECK column count
-        }
+        
+        
     }
 }
 

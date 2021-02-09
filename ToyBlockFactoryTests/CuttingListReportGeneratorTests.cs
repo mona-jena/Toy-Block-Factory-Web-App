@@ -126,7 +126,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CanFilterReportsByDueDate()
         {
-            var filteredReports = _toyBlockFactory.GetCuttingListsByDate(new DateTime(2019, 1, 19));
+            var filteredReports = _toyBlockFactory.GetCuttingListsByDate(new DateTime(2019, 1, 19)).ToList();
 
             Assert.Equal(3, filteredReports.Count);
             Assert.Equal("0001", filteredReports[0].OrderId);
