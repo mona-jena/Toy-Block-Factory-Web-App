@@ -10,6 +10,6 @@ namespace ToyBlockFactoryKata
         string Address { get; init; }
         DateTime DueDate { get; init; }
         string OrderId { get; init; }
-        List<TableRow> OrderTable { get; }
+        List<TableRow> OrderTable { get; }      //why did you decide to table like this?
     }
 }

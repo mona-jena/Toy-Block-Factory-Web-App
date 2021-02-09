@@ -22,13 +22,13 @@ namespace ToyBlockFactoryKata
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId
             };
+            
             GenerateTable(report, requestedOrder);
             var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder); //RENAME
             report.LineItems.AddRange(lineItems);
 
             return report;
         }
-
 
         private void GenerateTable(InvoiceReport report, Order requestedOrder)
         {

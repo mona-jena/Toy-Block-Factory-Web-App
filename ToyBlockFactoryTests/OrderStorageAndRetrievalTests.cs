@@ -12,6 +12,14 @@ namespace ToyBlockFactoryTests
         public OrderStorageAndRetrievalTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
+
+            OrderWithDateGiven();
+            OrderUsingDefaultDate();
+            EmptyOrder();
+        }
+        
+        private void OrderWithDateGiven()
+        {
             var orderDueDate = new DateTime(2019, 1, 19);
             var customerOrder = _toyBlockFactory
                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
@@ -23,8 +31,10 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customerOrder);
+        }
 
-            //uses default DateTime
+        private void OrderUsingDefaultDate()
+        {
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
@@ -41,8 +51,6 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             _toyBlockFactory.SubmitOrder(customerOrder2);
-
-            EmptyOrder();
         }
         
         private void EmptyOrder()
@@ -51,9 +59,11 @@ namespace ToyBlockFactoryTests
             var customer3Address = "13 Stokes Road, Auckland";
             _customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
         }
-
+        
+        
+        
         [Fact]
-        public void OrderWithNoBlocksShouldReturnEmptyOrderId()
+        public void OrderWithNoBlocksShouldNotBeAbleToBeSubmitted()
         {
             var orderId = _toyBlockFactory.SubmitOrder(_customer3Order);
             
@@ -157,10 +167,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Throws<ArgumentException>(() => _toyBlockFactory.GetOrder(nonExistingOrder));
         }
-
-        /*var block = new Block(Shape.Circle, Colour.Blue);
-        block.Colour = Colour.Red;
-        var block2 = block with {Name = "tom", Colour = Colour.Yellow};*/
+        
     }
 }
 
@@ -174,21 +181,4 @@ namespace ToyBlockFactoryTests
  * return order
  * give back invoice
  */
-
-/*var expectedInvoiceReport = 
-        "Your invoice report has been generated:" +
-        "\n" +
-        "Name: David Rudd Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2019 Order #: 0001" +
-        "\n" +
-        "|          | Red | Blue | Yellow |" +
-        "|----------|-----|------|--------|" +
-        "| Square   | 1   | -    | 1      |" +
-        "| Triangle | -   | 2    | -      |" +
-        "| Circle   | -   | 1    | 2      |" +
-        "\n" +
-        "Squares 		        2 @ $1 ppi = $2" +
-        "Triangles		        2 @ $2 ppi = $4" +
-        "Circles			    3 @ $3 ppi = $9" +
-        "Red colour surcharge   1 @ $1 ppi = $1" +
-        "\n" +
-        "Total                  $16";*/
+ 

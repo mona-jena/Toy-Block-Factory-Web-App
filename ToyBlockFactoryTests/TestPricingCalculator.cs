@@ -21,7 +21,7 @@ namespace ToyBlockFactoryTests
             };
         }
 
-        public List<LineItem> GenerateLineItems(Order requestedOrder)
+        public IEnumerable<LineItem> GenerateLineItems(Order requestedOrder)
         {
             _requestedOrder = requestedOrder;
             BlockListIterator();
@@ -51,8 +51,7 @@ namespace ToyBlockFactoryTests
         {
             foreach (var block in _requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
-
-        //condense these??
+        
         private void CalculateShapeQuantity(Shape shape, int value)
         {
             if (_shapeQuantities.TryAdd(shape, value)) return;

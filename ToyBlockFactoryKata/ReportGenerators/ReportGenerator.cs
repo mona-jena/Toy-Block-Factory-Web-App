@@ -30,7 +30,7 @@ namespace ToyBlockFactoryKata
             return _paintingReportGenerator.GenerateReport(requestedOrder);
         }
 
-        //GenerateCuttingReportsByDueDate????
+                                //GenerateCuttingReportsByDueDate????
         public IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
             return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GenerateCuttingList(o.Value));

@@ -16,12 +16,12 @@ namespace ToyBlockFactoryTests
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 
-            OrderWithAllShapeAndColoursIncluded();
+            OrderWithAllShapesAndColoursIncluded();
             OrderWithNotAllVariationsUsed();
             EmptyOrderWithNoDate();
         }
 
-        private void OrderWithAllShapeAndColoursIncluded()
+        private void OrderWithAllShapesAndColoursIncluded()
         {
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
@@ -59,6 +59,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customer3Order);
         }
 
+        
         [Fact]
         public void IsInvoice()
         {
@@ -182,7 +183,6 @@ namespace ToyBlockFactoryTests
             Assert.Equal(quantity, tableColumn.Quantity);
         }
         
-        
     }
 }
 
@@ -201,9 +201,6 @@ namespace ToyBlockFactoryTests
     "| Triangle | -   | 2    | -      |",
     "| Circle   | -   | 1    | 2      |",
     "\n",
-    
-    invoice.OrderTable.SelectMany(r=>r.TableColumn).Select(c=>c.MeasuredItem).Distinct();
-    invoice.OrderTable.Select(row=>row.Shape).Distinct();
     
     "Squares 		        2 @ $1 ppi = $2",
     "Triangles		        2 @ $2 ppi = $4",

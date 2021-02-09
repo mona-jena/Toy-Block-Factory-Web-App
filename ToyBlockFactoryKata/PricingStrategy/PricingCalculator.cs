@@ -20,7 +20,7 @@ namespace ToyBlockFactoryKata
             };
         }
 
-        public List<LineItem> GenerateLineItems(Order requestedOrder)
+        public IEnumerable<LineItem> GenerateLineItems(Order requestedOrder)
         {
             _requestedOrder = requestedOrder;
             BlockListIterator();
@@ -46,6 +46,7 @@ namespace ToyBlockFactoryKata
             return lineItems;
         }
 
+        
         private void BlockListIterator()
         {
             foreach (var block in _requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);

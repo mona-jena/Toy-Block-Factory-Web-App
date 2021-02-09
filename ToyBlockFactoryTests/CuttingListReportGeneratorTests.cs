@@ -57,6 +57,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customer4Order);
         }
 
+        
         [Fact]
         public void IsCuttingList()
         {

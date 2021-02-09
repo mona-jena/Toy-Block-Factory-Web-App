@@ -28,8 +28,8 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customerOrder);
 
-            var customer2Name = "James Sopo"; //setup from here for last test
-            var customer2Address = "34 Anzac Avenue, Auckland"; //is it ok if no blocks??
+            var customer2Name = "James Sopo"; 
+            var customer2Address = "34 Anzac Avenue, Auckland"; 
             var order2DueDate = new DateTime(2019, 1, 19);
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, order2DueDate);
             customer2Order.AddBlock(Shape.Triangle, Colour.Red);
