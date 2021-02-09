@@ -17,7 +17,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 
             OrderWithAllShapesAndColoursIncluded();
-            OrderWithNotAllVariationsUsed();
+            OrderWithNotAllVariationsIncluded();
         }
 
         private void OrderWithAllShapesAndColoursIncluded()
@@ -36,7 +36,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
-        private void OrderWithNotAllVariationsUsed()
+        private void OrderWithNotAllVariationsIncluded()
         {
             var customer2Name = "Steve Richards";
             var customer2Address = "102 Robin Street, Auckland";

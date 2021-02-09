@@ -49,7 +49,8 @@ namespace ToyBlockFactoryTests
 
         private void BlockListIterator()
         {
-            foreach (var block in _requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
+            foreach (var block in _requestedOrder.BlockList) 
+                CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
         
         private void CalculateShapeQuantity(Shape shape, int value)
