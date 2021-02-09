@@ -29,7 +29,12 @@ namespace ToyBlockFactoryKata
 
         public string SubmitOrder(Order customerOrder)
         {
-            return _orderManagementSystem.SubmitOrder(customerOrder);
+            if (customerOrder.BlockList.Count > 0)
+            {
+                return _orderManagementSystem.SubmitOrder(customerOrder);
+            }
+
+            return string.Empty;  
         }
 
         public Order GetOrder(string orderId)

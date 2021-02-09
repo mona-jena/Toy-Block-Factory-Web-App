@@ -55,7 +55,7 @@ namespace ToyBlockFactoryTests
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
             var customer3Order =
-                _toyBlockFactory.CreateOrder(customer3Name, customer3Address); //check if default dueDate
+                _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
             _toyBlockFactory.SubmitOrder(customer3Order);
         }
 
@@ -159,14 +159,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(16.00m, ((InvoiceReport) invoice).Total);
         }
-
-        [Fact]
-        public void EmptyOrderReturnsEmptyLineItems()
-        {
-            var invoice = _toyBlockFactory.GetInvoiceReport("0003");
-
-            Assert.Empty(((InvoiceReport) invoice).LineItems);
-        }
+        
 
         [Theory]
         [InlineData(Shape.Square, "Red", 1)]
@@ -184,8 +177,6 @@ namespace ToyBlockFactoryTests
 
             Assert.NotNull(tableRow);
             Assert.NotNull(tableColumn);
-            // Assert.Equal(3, invoice.OrderTable.Count);
-            //Assert.Equal(3, invoice.OrderTable.);     //CHECK column count
             Assert.Equal(shape, tableRow.Shape);
             Assert.Equal(colour, tableColumn.MeasuredItem);
             Assert.Equal(quantity, tableColumn.Quantity);
@@ -210,7 +201,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(quantity, tableColumn.Quantity);
         }
 
-        [Fact]
+        [Fact] //ANY POINT TESTING THIS??
         public void TableRowsAndColumnsOnlyIncludeItemsUsedInOrder()
         {
             const string orderId = "0002";

@@ -19,7 +19,7 @@ namespace ToyBlockFactoryKata
 
         public string Name { get; }
         public string Address { get; }
-        public string OrderId { get; init; } //if i make this init, can't set in OrderGenerator
+        public string OrderId { get; init; }
         public Dictionary<Block, int> BlockList { get; } = new();
         public DateTime DueDate { get; }
 

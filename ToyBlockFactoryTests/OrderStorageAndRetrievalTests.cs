@@ -7,6 +7,7 @@ namespace ToyBlockFactoryTests
     public class OrderStorageAndRetrievalTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
+        private Order _customer3Order;
 
         public OrderStorageAndRetrievalTests()
         {
@@ -40,7 +41,25 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             _toyBlockFactory.SubmitOrder(customerOrder2);
+
+            EmptyOrder();
         }
+        
+        private void EmptyOrder()
+        {
+            var customer3Name = "Tony Williams";
+            var customer3Address = "13 Stokes Road, Auckland";
+            _customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
+        }
+
+        [Fact]
+        public void OrderWithNoBlocksShouldReturnEmptyOrderId()
+        {
+            var orderId = _toyBlockFactory.SubmitOrder(_customer3Order);
+            
+            Assert.Equal(string.Empty, orderId);
+        }
+        
 
         [Fact]
         public void CanRetrieveOrderDetails()
@@ -54,7 +73,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void OrderContains1RedSquare() //should I be clear on which order in const?
+        public void OrderContains1RedSquare() //should I be clear by making orderId const?
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
@@ -132,11 +151,11 @@ namespace ToyBlockFactoryTests
 
 
         [Fact]
-        public void InvalidOrderNumberReturnsNull()
+        public void InvalidOrderNumberThrowsException()
         {
-            var order = _toyBlockFactory.GetOrder("0003");
+            const string nonExistingOrder = "0003";
 
-            Assert.Null(order);
+            Assert.Throws<ArgumentException>(() => _toyBlockFactory.GetOrder(nonExistingOrder));
         }
 
         /*var block = new Block(Shape.Circle, Colour.Blue);

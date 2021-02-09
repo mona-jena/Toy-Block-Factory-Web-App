@@ -28,26 +28,44 @@ namespace ToyBlockFactoryConsole
 
             Console.WriteLine();
 
+            var orderId = EnterBlockOrder(toyBlockFactory, order);
+
+            while (orderId == string.Empty)
+            {
+                Console.WriteLine("\nYou need to included blocks to create an order. Please try again.");
+                orderId = EnterBlockOrder(toyBlockFactory, order);
+            }
+
+            GetReport(toyBlockFactory, orderId);
+        }
+        
+
+
+        public static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)
+        {
             Console.Write("Please input the number of Red Squares: ");
             var redSquareInput = Console.ReadLine();
             var redSquares = 0;
             if (!string.IsNullOrEmpty(redSquareInput))
                 redSquares = InputValidator.IfValidInteger(redSquareInput);
-            for (var i = 0; i < redSquares; i++) order.AddBlock(Shape.Square, Colour.Red);
+            for (var i = 0; i < redSquares; i++) 
+                order.AddBlock(Shape.Square, Colour.Red);
 
             Console.Write("Please input the number of Blue Squares: ");
             var blueSquareInput = Console.ReadLine();
             var blueSquares = 0;
             if (!string.IsNullOrEmpty(blueSquareInput))
                 blueSquares = InputValidator.IfValidInteger(blueSquareInput);
-            for (var i = 0; i < blueSquares; i++) order.AddBlock(Shape.Square, Colour.Blue);
+            for (var i = 0; i < blueSquares; i++) 
+                order.AddBlock(Shape.Square, Colour.Blue);
 
             Console.Write("Please input the number of Yellow Squares: ");
             var yellowSquareInput = Console.ReadLine();
             var yellowSquares = 0;
             if (!string.IsNullOrEmpty(yellowSquareInput))
                 yellowSquares = InputValidator.IfValidInteger(yellowSquareInput);
-            for (var i = 0; i < yellowSquares; i++) order.AddBlock(Shape.Square, Colour.Yellow);
+            for (var i = 0; i < yellowSquares; i++) 
+                order.AddBlock(Shape.Square, Colour.Yellow);
 
             Console.WriteLine();
 
@@ -56,21 +74,24 @@ namespace ToyBlockFactoryConsole
             var redTriangles = 0;
             if (!string.IsNullOrEmpty(redTriangleInput))
                 redTriangles = InputValidator.IfValidInteger(redTriangleInput);
-            for (var i = 0; i < redTriangles; i++) order.AddBlock(Shape.Triangle, Colour.Red);
+            for (var i = 0; i < redTriangles; i++) 
+                order.AddBlock(Shape.Triangle, Colour.Red);
 
             Console.Write("Please input the number of Blue Triangles : ");
             var blueTriangleInput = Console.ReadLine();
             var blueTriangles = 0;
             if (!string.IsNullOrEmpty(blueTriangleInput))
                 blueTriangles = InputValidator.IfValidInteger(blueTriangleInput);
-            for (var i = 0; i < blueTriangles; i++) order.AddBlock(Shape.Triangle, Colour.Blue);
+            for (var i = 0; i < blueTriangles; i++) 
+                order.AddBlock(Shape.Triangle, Colour.Blue);
 
             Console.Write("Please input the number of Yellow Triangles: ");
             var yellowTriangleInput = Console.ReadLine();
             var yellowTriangles = 0;
             if (!string.IsNullOrEmpty(yellowTriangleInput))
                 yellowTriangles = InputValidator.IfValidInteger(yellowTriangleInput);
-            for (var i = 0; i < yellowTriangles; i++) order.AddBlock(Shape.Triangle, Colour.Yellow);
+            for (var i = 0; i < yellowTriangles; i++) 
+                order.AddBlock(Shape.Triangle, Colour.Yellow);
 
             Console.WriteLine();
 
@@ -79,26 +100,30 @@ namespace ToyBlockFactoryConsole
             var redCircles = 0;
             if (!string.IsNullOrEmpty(redCircleInput))
                 redCircles = InputValidator.IfValidInteger(redCircleInput);
-            for (var i = 0; i < redCircles; i++) order.AddBlock(Shape.Circle, Colour.Red);
+            for (var i = 0; i < redCircles; i++) 
+                order.AddBlock(Shape.Circle, Colour.Red);
 
             Console.Write("Please input the number of Blue Circles: ");
             var blueCircleInput = Console.ReadLine();
             var blueCircles = 0;
             if (!string.IsNullOrEmpty(blueCircleInput))
                 blueCircles = InputValidator.IfValidInteger(blueCircleInput);
-            for (var i = 0; i < blueCircles; i++) order.AddBlock(Shape.Circle, Colour.Blue);
+            for (var i = 0; i < blueCircles; i++) 
+                order.AddBlock(Shape.Circle, Colour.Blue);
 
             Console.Write("Please input the number of Yellow Circles: ");
             var yellowCircleInput = Console.ReadLine();
             var yellowCircles = 0;
             if (!string.IsNullOrEmpty(yellowCircleInput))
                 yellowCircles = InputValidator.IfValidInteger(yellowCircleInput);
-            for (var i = 0; i < yellowCircles; i++) order.AddBlock(Shape.Circle, Colour.Yellow);
+            for (var i = 0; i < yellowCircles; i++) 
+                order.AddBlock(Shape.Circle, Colour.Yellow);
 
-            var orderId = toyBlockFactory.SubmitOrder(order);
-
-            GetReport(toyBlockFactory, orderId);
+            return toyBlockFactory.SubmitOrder(order);
         }
+        
+        
+        
 
         public static void GetReport(ToyBlockFactory toyBlockFactory, string orderId)
         {
@@ -147,6 +172,7 @@ namespace ToyBlockFactoryConsole
             GetReport(toyBlockFactory, orderId);
         }
 
+        
         public static void GenerateReportsForADate(ToyBlockFactory toyBlockFactory)
         {
             var reportOption = 1;
@@ -192,5 +218,6 @@ namespace ToyBlockFactoryConsole
                 }
             }
         }
+        
     }
 }

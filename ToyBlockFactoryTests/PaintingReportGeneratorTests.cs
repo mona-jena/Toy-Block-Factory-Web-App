@@ -32,18 +32,28 @@ namespace ToyBlockFactoryTests
             var customer2Address = "34 Anzac Avenue, Auckland"; //is it ok if no blocks??
             var order2DueDate = new DateTime(2019, 1, 19);
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, order2DueDate);
+            customer2Order.AddBlock(Shape.Triangle, Colour.Red);
+            customer2Order.AddBlock(Shape.Square, Colour.Yellow);
+            customer2Order.AddBlock(Shape.Triangle, Colour.Blue);
             _toyBlockFactory.SubmitOrder(customer2Order);
 
             var customer3Name = "Alex Wright";
             var customer3Address = "101 South Road, Auckland";
             var order3DueDate = new DateTime(2020, 4, 19);
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address, order3DueDate);
+            customer3Order.AddBlock(Shape.Triangle, Colour.Blue);
+            customer3Order.AddBlock(Shape.Square, Colour.Yellow);
+            customer3Order.AddBlock(Shape.Circle, Colour.Blue);
+            customer3Order.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customer3Order);
 
             var customer4Name = "Tom Night";
             var customer4Address = "23 Country Avenue, Hamilton";
             var order4DueDate = new DateTime(2019, 1, 19);
             var customer4Order = _toyBlockFactory.CreateOrder(customer4Name, customer4Address, order4DueDate);
+            customer4Order.AddBlock(Shape.Circle, Colour.Yellow);
+            customer4Order.AddBlock(Shape.Circle, Colour.Yellow);
+            customer4Order.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customer4Order);
         }
 

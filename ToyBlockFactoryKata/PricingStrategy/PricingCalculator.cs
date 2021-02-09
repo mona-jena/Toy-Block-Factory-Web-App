@@ -51,7 +51,6 @@ namespace ToyBlockFactoryKata
             foreach (var block in _requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
 
-        //condense these??
         private void CalculateShapeQuantity(Shape shape, int value)
         {
             if (_shapeQuantities.TryAdd(shape, value)) return;
