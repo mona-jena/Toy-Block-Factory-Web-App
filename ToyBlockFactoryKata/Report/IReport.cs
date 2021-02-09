@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    public interface IReport
+    public interface IReport                //why use this interface?
     {
         ReportType ReportType { get; init; }
         string Name { get; init; }

@@ -39,8 +39,7 @@ namespace ToyBlockFactoryConsole
             GetReport(toyBlockFactory, orderId);
         }
         
-
-
+        
         public static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)
         {
             Console.Write("Please input the number of Red Squares: ");
@@ -123,8 +122,6 @@ namespace ToyBlockFactoryConsole
         }
         
         
-        
-
         public static void GetReport(ToyBlockFactory toyBlockFactory, string orderId)
         {
             var option = 1;
@@ -157,6 +154,7 @@ namespace ToyBlockFactoryConsole
                 }
             }
         }
+        
 
         public static void GetOrder(ToyBlockFactory toyBlockFactory)
         {

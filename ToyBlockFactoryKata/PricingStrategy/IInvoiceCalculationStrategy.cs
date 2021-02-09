@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata
 {
-    public interface IInvoiceCalculationStrategy
+    public interface IInvoiceCalculationStrategy            //why use this interface??
     {
-        IEnumerable<LineItem> GenerateLineItems(Order requestedOrder);
+        IEnumerable<LineItem> GenerateLineItems(Order requestedOrder);      
     }
 }

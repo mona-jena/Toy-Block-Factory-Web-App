@@ -61,7 +61,6 @@ namespace ToyBlockFactoryTests
         }
         
         
-        
         [Fact]
         public void OrderWithNoBlocksShouldNotBeAbleToBeSubmitted()
         {

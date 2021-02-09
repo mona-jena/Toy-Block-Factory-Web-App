@@ -8,12 +8,10 @@ namespace ToyBlockFactoryConsole
         internal static void Main()
         {
             Console.WriteLine("Welcome to the Toy Block Factory!\n");
-
             
             var toyBlockFactory = new ToyBlockFactory(new PricingCalculator());
 
             Menu(toyBlockFactory);
-
         }
 
         public static void Menu(ToyBlockFactory toyBlockFactory)

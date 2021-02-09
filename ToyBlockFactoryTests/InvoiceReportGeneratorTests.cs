@@ -18,7 +18,6 @@ namespace ToyBlockFactoryTests
 
             OrderWithAllShapesAndColoursIncluded();
             OrderWithNotAllVariationsUsed();
-            EmptyOrderWithNoDate();
         }
 
         private void OrderWithAllShapesAndColoursIncluded()
@@ -48,15 +47,6 @@ namespace ToyBlockFactoryTests
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             customer2Order.AddBlock(Shape.Circle, Colour.Blue);
             _toyBlockFactory.SubmitOrder(customer2Order);
-        }
-
-        private void EmptyOrderWithNoDate()
-        {
-            var customer3Name = "Tony Williams";
-            var customer3Address = "13 Stokes Road, Auckland";
-            var customer3Order =
-                _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
-            _toyBlockFactory.SubmitOrder(customer3Order);
         }
 
         
