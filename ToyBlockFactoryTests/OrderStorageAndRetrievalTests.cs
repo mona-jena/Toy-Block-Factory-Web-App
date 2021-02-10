@@ -20,7 +20,7 @@ namespace ToyBlockFactoryTests
         
         private void OrderWithDateGiven()
         {
-            var orderDueDate = new DateTime(2019, 1, 19);
+            var orderDueDate = new DateTime(2021, 1, 19);
             var customerOrder = _toyBlockFactory
                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
@@ -77,7 +77,7 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
-            Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
+            Assert.Equal(new DateTime(2021, 1, 19), order.DueDate);
             Assert.Equal("0001", order.OrderId);
         }
 
@@ -150,7 +150,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal("0001", order.OrderId);
             Assert.Equal("David Rudd", order.Name); //SHOULD THIS BE STORED IN VARIABLES?
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
-            Assert.Equal(new DateTime(2019, 1, 19), order.DueDate);
+            Assert.Equal(new DateTime(2021, 1, 19), order.DueDate);
 
             Assert.Equal("0002", order2.OrderId);
             Assert.Equal("Ryan Chen", order2.Name);

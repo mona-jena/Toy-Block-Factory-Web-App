@@ -8,12 +8,14 @@ namespace ToyBlockFactoryConsole
     {
         public static void PrintReport(IReport report)
         {
+            Console.WriteLine();
             Console.WriteLine(
                 "Your " + report.ReportType.ToString().ToLower() + " report has been generated:" +
                 "\n\n" +
                 "Name: " + report.Name + " Address: " + report.Address + " Due Date: " +
                 report.DueDate.ToString("dd/MM/yyyy") + " Order #: " + report.OrderId);
             
+            Console.WriteLine();
 
             var topRowLabels = report.OrderTable.SelectMany(l => l.TableColumn).Select(l => l.MeasuredItem).Distinct();
             Console.Write("|          ");
@@ -36,6 +38,17 @@ namespace ToyBlockFactoryConsole
                     Console.Write(column.Quantity.ToString().PadLeft(9) + " |");
                 }
                 Console.WriteLine();
+            }
+           
+            Console.WriteLine();
+
+            if (report.ReportType == ReportType.Invoice)
+            {
+                var lineItems = ((InvoiceReport) report).LineItems.Select(l => l);
+                foreach (var line in lineItems)
+                {
+                    Console.WriteLine(line.Description.PadRight(25) + line.Quantity + " @ $" + line.Price + " ppi = $" + line.Total);
+                }
             }
         }
         

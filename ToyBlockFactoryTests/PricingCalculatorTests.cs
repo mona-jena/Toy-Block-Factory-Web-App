@@ -14,7 +14,7 @@ namespace ToyBlockFactoryTests
         {
             _pricingCalculator = new PricingCalculator();
             var toyBlockFactory = new ToyBlockFactory(_pricingCalculator);
-            var orderDueDate = new DateTime(2019, 1, 19);
+            var orderDueDate = new DateTime(2021, 1, 19);
             _customerOrder = toyBlockFactory
                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
             _customerOrder.AddBlock(Shape.Square, Colour.Red);

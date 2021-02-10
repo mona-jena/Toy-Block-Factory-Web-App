@@ -24,7 +24,7 @@ namespace ToyBlockFactoryTests
         {
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
-            _dueDate = new DateTime(2019, 1, 19);
+            _dueDate = new DateTime(2021, 1, 19);
             var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress, _dueDate);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
@@ -40,7 +40,7 @@ namespace ToyBlockFactoryTests
         {
             var customer2Name = "Steve Richards";
             var customer2Address = "102 Robin Street, Auckland";
-            var customer2DueDate = new DateTime(2019, 2, 15);
+            var customer2DueDate = new DateTime(2021, 2, 15);
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, customer2DueDate);
             customer2Order.AddBlock(Shape.Square, Colour.Yellow);
             customer2Order.AddBlock(Shape.Square, Colour.Blue);

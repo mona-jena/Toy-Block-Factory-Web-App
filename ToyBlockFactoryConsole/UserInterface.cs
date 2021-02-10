@@ -76,7 +76,7 @@ namespace ToyBlockFactoryConsole
             for (var i = 0; i < redTriangles; i++) 
                 order.AddBlock(Shape.Triangle, Colour.Red);
 
-            Console.Write("Please input the number of Blue Triangles : ");
+            Console.Write("Please input the number of Blue Triangles: ");
             var blueTriangleInput = Console.ReadLine();
             var blueTriangles = 0;
             if (!string.IsNullOrEmpty(blueTriangleInput))

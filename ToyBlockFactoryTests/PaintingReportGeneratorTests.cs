@@ -17,7 +17,7 @@ namespace ToyBlockFactoryTests
 
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
-            var dueDate = new DateTime(2019, 1, 19);
+            var dueDate = new DateTime(2021, 1, 19);
             var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress, dueDate);
             customerOrder.AddBlock(Shape.Square, Colour.Red);
             customerOrder.AddBlock(Shape.Square, Colour.Yellow);
@@ -30,7 +30,7 @@ namespace ToyBlockFactoryTests
 
             var customer2Name = "James Sopo"; 
             var customer2Address = "34 Anzac Avenue, Auckland"; 
-            var order2DueDate = new DateTime(2019, 1, 19);
+            var order2DueDate = new DateTime(2021, 1, 19);
             var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, order2DueDate);
             customer2Order.AddBlock(Shape.Triangle, Colour.Red);
             customer2Order.AddBlock(Shape.Square, Colour.Yellow);
@@ -39,7 +39,7 @@ namespace ToyBlockFactoryTests
 
             var customer3Name = "Alex Wright";
             var customer3Address = "101 South Road, Auckland";
-            var order3DueDate = new DateTime(2020, 4, 19);
+            var order3DueDate = new DateTime(2021, 4, 21);
             var customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address, order3DueDate);
             customer3Order.AddBlock(Shape.Triangle, Colour.Blue);
             customer3Order.AddBlock(Shape.Square, Colour.Yellow);
@@ -49,7 +49,7 @@ namespace ToyBlockFactoryTests
 
             var customer4Name = "Tom Night";
             var customer4Address = "23 Country Avenue, Hamilton";
-            var order4DueDate = new DateTime(2019, 1, 19);
+            var order4DueDate = new DateTime(2021, 1, 19);
             var customer4Order = _toyBlockFactory.CreateOrder(customer4Name, customer4Address, order4DueDate);
             customer4Order.AddBlock(Shape.Circle, Colour.Yellow);
             customer4Order.AddBlock(Shape.Circle, Colour.Yellow);
@@ -94,7 +94,7 @@ namespace ToyBlockFactoryTests
 
             var paintingReport = _toyBlockFactory.GetPaintingReport(orderId);
 
-            Assert.Equal(new DateTime(2019, 1, 19), paintingReport.DueDate);
+            Assert.Equal(new DateTime(2021, 1, 19), paintingReport.DueDate);
         }
 
         [Fact]
@@ -131,15 +131,15 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CanFilterReportsByDueDate()
         {
-            var filteredReports = _toyBlockFactory.GetPaintingReportsByDate(new DateTime(2019, 1, 19)).ToList();
+            var filteredReports = _toyBlockFactory.GetPaintingReportsByDate(new DateTime(2021, 1, 19)).ToList();
 
             Assert.Equal(3, filteredReports.Count);
             Assert.Equal("0001", filteredReports[0].OrderId);
-            Assert.Equal(new DateTime(2019, 1, 19), filteredReports[0].DueDate);
+            Assert.Equal(new DateTime(2021, 1, 19), filteredReports[0].DueDate);
             Assert.Equal("0002", filteredReports[1].OrderId);
-            Assert.Equal(new DateTime(2019, 1, 19), filteredReports[1].DueDate);
+            Assert.Equal(new DateTime(2021, 1, 19), filteredReports[1].DueDate);
             Assert.Equal("0004", filteredReports[2].OrderId);
-            Assert.Equal(new DateTime(2019, 1, 19), filteredReports[2].DueDate);
+            Assert.Equal(new DateTime(2021, 1, 19), filteredReports[2].DueDate);
         }
     }
 }
