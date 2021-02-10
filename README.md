@@ -1,8 +1,4 @@
-# Toy-Block-Factory
-
-Kata Specs: https://github.com/MYOB-Technology/General_Developer/tree/main/katas/kata-toy-block-factory
-
-#  Toy Block Factory Kata
+#  Toy Block Factory
 
 There is a factory that makes toy blocks. The blocks come in three different shapes (square, circle and triangle) and in three different colours (red, blue and yellow)
 
