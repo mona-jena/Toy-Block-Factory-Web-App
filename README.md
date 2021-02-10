@@ -17,7 +17,7 @@ An order consists of a combination of shapes and colors. Below is an example of 
 
 ### Functionalities
 
-Factory has an order management system that should be able to enter a single order details.
+Factory has an order management system that should be able to enter single order details. It also has a Report Generator to generate reports. 
 
 This application can:
 - Take orders
