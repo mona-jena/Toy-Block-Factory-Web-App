@@ -42,6 +42,7 @@ namespace ToyBlockFactoryConsole
            
             Console.WriteLine();
 
+            
             if (report.ReportType == ReportType.Invoice)
             {
                 var lineItems = ((InvoiceReport) report).LineItems.Select(l => l);
@@ -49,7 +50,9 @@ namespace ToyBlockFactoryConsole
                 {
                     Console.WriteLine(line.Description.PadRight(25) + line.Quantity + " @ $" + line.Price + " ppi = $" + line.Total);
                 }
+                Console.WriteLine("\nTotal : $" + ((InvoiceReport) report).Total);
             }
+
         }
         
     }
