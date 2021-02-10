@@ -128,8 +128,8 @@ namespace ToyBlockFactoryTests
             var tableRow = cuttingList.OrderTable.SingleOrDefault(l => l.Shape == shape);
 
             Assert.NotNull(tableRow);
-            Assert.Equal(shape, tableRow.Shape);
-            Assert.Equal(quantity, tableRow.TableColumn[0].Quantity);
+            Assert.Equal(shape, tableRow?.Shape);
+            Assert.Equal(quantity, tableRow?.TableColumn[0].Quantity);
         }
 
         [Fact]

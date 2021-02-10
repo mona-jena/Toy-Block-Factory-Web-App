@@ -119,10 +119,10 @@ namespace ToyBlockFactoryTests
 
             //read up on this
             Assert.NotNull(invoiceLine);
-            Assert.Equal(description, invoiceLine.Description);
-            Assert.Equal(quantity, invoiceLine.Quantity);
-            Assert.Equal(price, invoiceLine.Price);
-            Assert.Equal(total, invoiceLine.Total);
+            Assert.Equal(description, invoiceLine?.Description);
+            Assert.Equal(quantity, invoiceLine?.Quantity);
+            Assert.Equal(price, invoiceLine?.Price);
+            Assert.Equal(total, invoiceLine?.Total);
         }
 
         [Theory]
@@ -137,10 +137,13 @@ namespace ToyBlockFactoryTests
 
             Assert.NotNull(invoiceLine);
             Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count); //should this be in sep test?
-            Assert.Equal(description, invoiceLine.Description);
-            Assert.Equal(quantity, invoiceLine.Quantity);
-            Assert.Equal(price, invoiceLine.Price);
-            Assert.Equal(total, invoiceLine.Total);
+            Assert.Equal(description, invoiceLine?.Description);
+            if (invoiceLine is not null)
+            {
+                Assert.Equal(quantity, invoiceLine.Quantity);
+                Assert.Equal(price, invoiceLine.Price);
+                Assert.Equal(total, invoiceLine.Total);
+            }
         }
 
         [Fact]
@@ -166,13 +169,13 @@ namespace ToyBlockFactoryTests
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
             var tableRow = invoice.OrderTable.SingleOrDefault(l => l.Shape == shape);
-            var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
+            var tableColumn = tableRow?.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
 
             Assert.NotNull(tableRow);
             Assert.NotNull(tableColumn);
-            Assert.Equal(shape, tableRow.Shape);
-            Assert.Equal(colour, tableColumn.MeasuredItem);
-            Assert.Equal(quantity, tableColumn.Quantity);
+            Assert.Equal(shape, tableRow?.Shape);
+            Assert.Equal(colour, tableColumn?.MeasuredItem);
+            Assert.Equal(quantity, tableColumn?.Quantity);
         }
         
     }

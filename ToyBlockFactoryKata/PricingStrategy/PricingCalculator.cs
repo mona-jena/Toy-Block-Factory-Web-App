@@ -10,7 +10,6 @@ namespace ToyBlockFactoryKata.PricingStrategy
         private const decimal RedCost = 1;
         private readonly Dictionary<Shape, decimal> _pricingList;
         private readonly Dictionary<Shape, int> _shapeQuantities = new();
-        private Order _requestedOrder;
 
         public PricingCalculator()
         {
@@ -24,8 +23,8 @@ namespace ToyBlockFactoryKata.PricingStrategy
 
         public IEnumerable<LineItem> GenerateLineItems(Order requestedOrder)
         {
-            _requestedOrder = requestedOrder;
-            BlockListIterator();
+            //_requestedOrder = requestedOrder;
+            BlockListIterator(requestedOrder);
 
             var lineItems = new List<LineItem>();
             foreach (var shape in _shapeQuantities)
@@ -49,9 +48,9 @@ namespace ToyBlockFactoryKata.PricingStrategy
         }
 
         
-        private void BlockListIterator()
+        private void BlockListIterator(Order requestedOrder)
         {
-            foreach (var block in _requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
+            foreach (var block in requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
 
         private void CalculateShapeQuantity(Shape shape, int value)

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
@@ -12,7 +11,6 @@ namespace ToyBlockFactoryTests
         private const decimal RedCost = 1;
         private readonly Dictionary<Shape, decimal> _pricingList;
         private readonly Dictionary<Shape, int> _shapeQuantities = new();
-        private Order _requestedOrder;
 
         public TestPricingCalculator()
         {
@@ -26,8 +24,8 @@ namespace ToyBlockFactoryTests
 
         public IEnumerable<LineItem> GenerateLineItems(Order requestedOrder)
         {
-            _requestedOrder = requestedOrder;
-            BlockListIterator();
+            //_requestedOrder = requestedOrder;
+            BlockListIterator(requestedOrder);
 
             var lineItems = new List<LineItem>();
             foreach (var shape in _shapeQuantities)
@@ -50,12 +48,12 @@ namespace ToyBlockFactoryTests
             return lineItems;
         }
 
-        private void BlockListIterator()
-        {
-            foreach (var block in _requestedOrder.BlockList) 
-                CalculateShapeQuantity(block.Key.Shape, block.Value);
-        }
         
+        private void BlockListIterator(Order requestedOrder)
+        {
+            foreach (var block in requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
+        }
+
         private void CalculateShapeQuantity(Shape shape, int value)
         {
             if (_shapeQuantities.TryAdd(shape, value)) return;

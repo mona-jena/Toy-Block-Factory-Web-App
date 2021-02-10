@@ -41,10 +41,10 @@ namespace ToyBlockFactoryTests
                 .SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
-            Assert.Equal(description, invoiceLine.Description);
-            Assert.Equal(quantity, invoiceLine.Quantity);
-            Assert.Equal(price, invoiceLine.Price);
-            Assert.Equal(total, invoiceLine.Total);
+            Assert.Equal(description, invoiceLine?.Description);
+            Assert.Equal(quantity, invoiceLine?.Quantity);
+            Assert.Equal(price, invoiceLine?.Price);
+            Assert.Equal(total, invoiceLine?.Total);
         }
     }
 }

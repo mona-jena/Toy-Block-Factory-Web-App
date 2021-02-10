@@ -126,13 +126,13 @@ namespace ToyBlockFactoryTests
             var cuttingList = _toyBlockFactory.GetPaintingReport(orderId);
 
             var tableRow = cuttingList.OrderTable.SingleOrDefault(l => l.Shape == shape);
-            var tableColumn = tableRow.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
+            var tableColumn = tableRow?.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
 
             Assert.NotNull(tableRow);
             Assert.NotNull(tableColumn);
-            Assert.Equal(shape, tableRow.Shape);
-            Assert.Equal(colour, tableColumn.MeasuredItem);
-            Assert.Equal(quantity, tableColumn.Quantity);
+            Assert.Equal(shape, tableRow?.Shape);
+            Assert.Equal(colour, tableColumn?.MeasuredItem);
+            Assert.Equal(quantity, tableColumn?.Quantity);
         }
 
         [Fact]
