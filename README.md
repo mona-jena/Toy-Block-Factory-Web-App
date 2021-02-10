@@ -2,7 +2,9 @@
 
 There is a factory that makes toy blocks. The blocks come in three different shapes (square, circle and triangle) and in three different colours (red, blue and yellow)
 
-The factory produces things per order. An order consists of a combination of shapes and colors. Below is an example of what an order would look like:  
+The factory does not keep any stock of blocks, instead blocks are produced per order. For example let's say the factory gets 3 orders in a day, the factory would make each order on it's own. 
+
+An order consists of a combination of shapes and colors. Below is an example of what an order would look like:  
 
 |          | Red | Blue | Yellow |  
 |----------|-----|------|--------|  
@@ -10,7 +12,7 @@ The factory produces things per order. An order consists of a combination of sha
 | Triangle | -   | 2    | -      |  
 | Circle   | -   | 1    | 2      |  
 
-The factory does not keep any stock of blocks, instead blocks are produced per order. For example let's say the factory gets 3 orders in a day, the factory would make each order on it's own.
+
 
 
 ### Functionalities
@@ -23,8 +25,8 @@ This application can:
 - Generating a Cutting List Report per order
 - Generating a Painting Report per order
 - Take bulk orders
-- Generate a Cutting List Report per day
-- Generate a Painting Report per day
+- Generate Cutting List Reports due on a particular date
+- Generate Painting Reports due on a particular date
 
 Everything will be done via the console.
 
@@ -58,7 +60,7 @@ Blocks have a fixed price which is determine by the shape. We have the following
 - Triangle blocks cost $2 
 - Circle blocks cost $3
 
-There is no additional charge for the colour unless the shape is in red, in which case we charge an additional $1 per shape in red.
+There is no additional charge for the colour unless the shape is in red, in which case we charge an additional $1 per shape surcharge is applied.
 
 ## Order details
 
