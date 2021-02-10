@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.PricingStrategy
 {
     public interface IInvoiceCalculationStrategy            //why use this interface??
     {

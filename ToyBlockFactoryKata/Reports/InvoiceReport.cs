@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.Reports
 {
     public record InvoiceReport : Report
     {

@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.PricingStrategy;
 using Xunit;
 
 namespace ToyBlockFactoryTests

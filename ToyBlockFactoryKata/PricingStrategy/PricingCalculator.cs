@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.PricingStrategy
 {
     public class PricingCalculator : IInvoiceCalculationStrategy
     {

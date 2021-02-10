@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.Orders
 {
     internal class OrderManagementSystem
     {

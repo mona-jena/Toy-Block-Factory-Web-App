@@ -1,5 +1,6 @@
 using System;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
 
 namespace ToyBlockFactoryConsole
 {

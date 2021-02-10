@@ -1,5 +1,6 @@
 using System;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -7,7 +8,7 @@ namespace ToyBlockFactoryTests
     public class OrderStorageAndRetrievalTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        private Order _customer3Order;
+        private readonly Order _customer3Order;
 
         public OrderStorageAndRetrievalTests()
         {
@@ -15,7 +16,7 @@ namespace ToyBlockFactoryTests
 
             OrderWithDateGiven();
             OrderWithNoDateProvided();
-            EmptyOrder();
+            _customer3Order = EmptyOrder();
         }
         
         private void OrderWithDateGiven()
@@ -40,24 +41,16 @@ namespace ToyBlockFactoryTests
             customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Square, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Red);
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Red);
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Red);
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
             _toyBlockFactory.SubmitOrder(customerOrder2);
         }
         
-        private void EmptyOrder()
+        private Order EmptyOrder()
         {
             var customer3Name = "Tony Williams";
             var customer3Address = "13 Stokes Road, Auckland";
-            _customer3Order = _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
+            return _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
         }
         
         
@@ -179,5 +172,6 @@ namespace ToyBlockFactoryTests
  * customer add new block each time - in the back blocks and dict of blocks will be created
  * return order
  * give back invoice
+ * https://github.com/monajena27/Toy-Block-Factory/blob/4376343c8965954f24456c58b8ba30f24a3f7e0d/ToyBlockFactoryTests/OrderManagementSystemTests.cs
  */
  

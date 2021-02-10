@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.Orders
 {
     public record Order
     {

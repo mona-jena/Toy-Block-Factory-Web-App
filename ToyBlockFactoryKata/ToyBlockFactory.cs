@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.PricingStrategy;
+using ToyBlockFactoryKata.ReportGenerators;
+using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata
 {

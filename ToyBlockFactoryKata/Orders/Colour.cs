@@ -1,4 +1,4 @@
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.Orders
 {
     public enum Colour
     {

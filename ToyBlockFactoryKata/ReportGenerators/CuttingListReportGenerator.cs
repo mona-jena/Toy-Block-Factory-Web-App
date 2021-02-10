@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class CuttingListReportGenerator : IReportGenerator
     {

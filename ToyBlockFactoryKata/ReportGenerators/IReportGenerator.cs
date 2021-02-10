@@ -1,4 +1,7 @@
-namespace ToyBlockFactoryKata
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
+
+namespace ToyBlockFactoryKata.ReportGenerators
 {
     public interface IReportGenerator
     {

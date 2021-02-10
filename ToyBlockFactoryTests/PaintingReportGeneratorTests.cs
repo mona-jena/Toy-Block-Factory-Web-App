@@ -1,20 +1,27 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 using Xunit;
 
 namespace ToyBlockFactoryTests
 {
     public class PaintingReportGeneratorTests
     {
-        private readonly string _customerAddress;
-        private readonly string _customerName;
+        private string _customerAddress = string.Empty;
+        private string _customerName = string.Empty;
         private readonly ToyBlockFactory _toyBlockFactory;
 
         public PaintingReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 
+            CreateListOfOrders();
+        }
+
+        private void CreateListOfOrders()
+        {
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var dueDate = new DateTime(2021, 1, 19);
@@ -27,7 +34,7 @@ namespace ToyBlockFactoryTests
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
             _toyBlockFactory.SubmitOrder(customerOrder);
-
+            
             var customer2Name = "James Sopo"; 
             var customer2Address = "34 Anzac Avenue, Auckland"; 
             var order2DueDate = new DateTime(2021, 1, 19);

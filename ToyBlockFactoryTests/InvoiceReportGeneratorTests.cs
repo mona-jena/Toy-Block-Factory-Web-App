@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -8,9 +10,9 @@ namespace ToyBlockFactoryTests
     public class InvoiceReportGeneratorTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        private string _customerAddress;
-        private string _customerName;
-        private DateTime _dueDate;
+        string _customerAddress = string.Empty;
+        string _customerName = string.Empty;
+        DateTime _dueDate;
 
         public InvoiceReportGeneratorTests()
         {

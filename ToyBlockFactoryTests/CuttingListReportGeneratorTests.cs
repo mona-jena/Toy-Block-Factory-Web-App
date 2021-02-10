@@ -1,20 +1,28 @@
 using System;
 using System.Linq;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 using Xunit;
 
 namespace ToyBlockFactoryTests
 {
     public class CuttingListReportGeneratorTests
     {
-        private readonly string _customerAddress;
-        private readonly string _customerName;
-        private readonly ToyBlockFactory _toyBlockFactory;
+        string _customerAddress = string.Empty;
+        string _customerName = string.Empty;
+        readonly ToyBlockFactory _toyBlockFactory;
 
         public CuttingListReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 
+            CreateListOfOrders();
+            
+        }
+
+        private void CreateListOfOrders()
+        {
             _customerName = "David Rudd";
             _customerAddress = "1 Bob Avenue, Auckland";
             var dueDate = new DateTime(2021, 1, 19);
@@ -57,7 +65,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customer4Order);
         }
 
-        
+
         [Fact]
         public void IsCuttingList()
         {

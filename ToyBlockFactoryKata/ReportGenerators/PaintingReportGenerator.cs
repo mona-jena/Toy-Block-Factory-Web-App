@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata
+namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class PaintingReportGenerator : IReportGenerator
     {
