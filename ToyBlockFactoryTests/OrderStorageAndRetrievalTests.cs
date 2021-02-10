@@ -151,6 +151,15 @@ namespace ToyBlockFactoryTests
             Assert.Equal(DateTime.Today.AddDays(7), order2.DueDate);
         }
 
+        [Fact]
+        public void ChecksIfOrderExists()
+        {
+            var order1 = _toyBlockFactory.OrderExists("0001");
+            var order3= _toyBlockFactory.OrderExists("0003");
+            
+            Assert.True(order1);
+            Assert.False(order3);
+        }
 
         [Fact]
         public void InvalidOrderNumberThrowsException()
