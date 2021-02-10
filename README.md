@@ -15,8 +15,9 @@ The factory does not keep any stock of blocks, instead blocks are produced per o
 
 ### Functionalities
 
-Factory has an order management system that should be able to enter a single order details, the application can:
+Factory has an order management system that should be able to enter a single order details.
 
+This application can:
 - Take orders
 - Generate an Invoice Report per order
 - Generating a Cutting List Report per order
