@@ -45,7 +45,7 @@ namespace ToyBlockFactoryKata
             return order;
         }
 
-        public bool OrderExists(string orderId) //is this just for console? so then should test also use this?
+        public bool OrderExists(string orderId) 
         {
             return _orderManagementSystem.GetOrder(orderId, out _);
         }

@@ -11,7 +11,7 @@ namespace ToyBlockFactoryKata.Orders
         {
             ++_orderNumber;
             var orderId = GetOrderNumber();
-            order = order with {OrderId = orderId}; //makes a copy of order and assigns orderID as of when this order is Submitted - so if someone changes it in order, it wont change here
+            order = order with {OrderId = orderId}; 
             OrderRecords.Add(order.OrderId, order);
             return orderId;
         }

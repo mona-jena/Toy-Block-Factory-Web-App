@@ -24,7 +24,6 @@ namespace ToyBlockFactoryTests
 
         public IEnumerable<LineItem> GenerateLineItems(Order requestedOrder)
         {
-            //_requestedOrder = requestedOrder;
             BlockListIterator(requestedOrder);
 
             var lineItems = new List<LineItem>();

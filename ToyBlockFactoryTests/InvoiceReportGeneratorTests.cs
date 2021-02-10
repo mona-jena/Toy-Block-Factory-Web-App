@@ -136,7 +136,7 @@ namespace ToyBlockFactoryTests
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
-            Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count); //should this be in sep test?
+            Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count); 
             Assert.Equal(description, invoiceLine?.Description);
             if (invoiceLine is not null)
             {
@@ -181,29 +181,10 @@ namespace ToyBlockFactoryTests
     }
 }
 
-/*var expectedInvoiceReport = new List<string>()
-{
-    "Your invoice report has been generated:",
-    "\n",
-    "Name: David Rudd ",
-    "Address: 1 Bob Avenue, Auckland ",
-    "Due Date: 19 Jan 2019 ",
-    "Order #: 0001,",
-    "\n",
-    "|          | Red | Blue | Yellow |",
-    "|----------|-----|------|--------|",
-    "| Square   | 1   | -    | 1      |",
-    "| Triangle | -   | 2    | -      |",
-    "| Circle   | -   | 1    | 2      |",
-    "\n",
-    
-    "Squares 		        2 @ $1 ppi = $2",
-    "Triangles		        2 @ $2 ppi = $4",
-    "Circles			    3 @ $3 ppi = $9",
-    "Red colour surcharge   1 @ $1 ppi = $1",
-    "\n",
-    "Total                  $16"
-};*/
+
+
+
+
 
 
 //string[,] invoiceLine2 = new string[Enum.GetNames(typeof(Colour)).Length,Enum.GetNames(typeof(Shape)).Length];

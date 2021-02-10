@@ -13,7 +13,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
         private readonly IReportGenerator _invoiceReportGenerator;
         private readonly IReportGenerator _paintingReportGenerator = new PaintingReportGenerator();
 
-        public ReportGenerator(IInvoiceCalculationStrategy pricingCalculator)
+        internal ReportGenerator(IInvoiceCalculationStrategy pricingCalculator)
         {
             _invoiceReportGenerator = new InvoiceReportGenerator(pricingCalculator);
         }
@@ -32,14 +32,13 @@ namespace ToyBlockFactoryKata.ReportGenerators
         {
             return _paintingReportGenerator.GenerateReport(requestedOrder);
         }
-
-                                //GenerateCuttingReportsByDueDate????
-        public IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
+        
+        internal IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
             return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GenerateCuttingList(o.Value));
         }
 
-        public IEnumerable<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
+        internal IEnumerable<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
             return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GeneratePaintingReport(o.Value));
         }

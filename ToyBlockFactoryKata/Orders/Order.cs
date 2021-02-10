@@ -23,6 +23,7 @@ namespace ToyBlockFactoryKata.Orders
         public Dictionary<Block, int> BlockList { get; } = new();
         public DateTime DueDate { get; }
 
+        
         public void AddBlock(Shape shape, Colour colour)
         {
             var block = new Block(shape, colour);

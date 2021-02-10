@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryKata.Reports
 {
-    public interface IReport                //why use this interface?
+    public interface IReport                
     {
         ReportType ReportType { get; init; }
         string Name { get; init; }
         string Address { get; init; }
         DateTime DueDate { get; init; }
         string OrderId { get; init; }
-        List<TableRow> OrderTable { get; }      //why did you decide to table like this?
+        List<TableRow> OrderTable { get; }      
     }
 }

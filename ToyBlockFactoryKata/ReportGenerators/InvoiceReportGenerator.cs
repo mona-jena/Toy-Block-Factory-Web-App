@@ -15,7 +15,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
             _pricingCalculator = pricingCalculator;
         }
 
-        public IReport GenerateReport(Order requestedOrder) //Should sep setup and getting part of report?
+        public IReport GenerateReport(Order requestedOrder)
         {
             var report = new InvoiceReport
             {
@@ -27,7 +27,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
             };
             
             GenerateTable(report, requestedOrder);
-            var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder); //RENAME
+            var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder);
             report.LineItems.AddRange(lineItems);
 
             return report;

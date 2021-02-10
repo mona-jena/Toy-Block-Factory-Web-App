@@ -75,7 +75,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void OrderContains1RedSquare() //should I be clear by making orderId const?
+        public void OrderContains1RedSquare() 
         {
             var order = _toyBlockFactory.GetOrder("0001");
             var block = new Block(Shape.Square, Colour.Red);
@@ -141,7 +141,7 @@ namespace ToyBlockFactoryTests
             var order2 = _toyBlockFactory.GetOrder("0002");
 
             Assert.Equal("0001", order.OrderId);
-            Assert.Equal("David Rudd", order.Name); //SHOULD THIS BE STORED IN VARIABLES?
+            Assert.Equal("David Rudd", order.Name);
             Assert.Equal("1 Bob Avenue, Auckland", order.Address);
             Assert.Equal(new DateTime(2021, 1, 19), order.DueDate);
 
