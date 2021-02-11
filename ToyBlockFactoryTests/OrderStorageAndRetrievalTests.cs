@@ -141,14 +141,7 @@ namespace ToyBlockFactoryTests
             var order2 = _toyBlockFactory.GetOrder("0002");
 
             Assert.Equal("0001", order.OrderId);
-            Assert.Equal("David Rudd", order.Name);
-            Assert.Equal("1 Bob Avenue, Auckland", order.Address);
-            Assert.Equal(new DateTime(2021, 1, 19), order.DueDate);
-
             Assert.Equal("0002", order2.OrderId);
-            Assert.Equal("Ryan Chen", order2.Name);
-            Assert.Equal("1 Mt Eden Road, Auckland", order2.Address);
-            Assert.Equal(DateTime.Today.AddDays(7), order2.DueDate);
         }
 
         [Fact]

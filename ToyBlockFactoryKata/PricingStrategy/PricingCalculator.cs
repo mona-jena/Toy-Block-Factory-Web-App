@@ -49,7 +49,8 @@ namespace ToyBlockFactoryKata.PricingStrategy
         
         private void BlockListIterator(Order requestedOrder)
         {
-            foreach (var block in requestedOrder.BlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
+            foreach (var block in requestedOrder.BlockList) 
+                CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
 
         private void CalculateShapeQuantity(Shape shape, int value)

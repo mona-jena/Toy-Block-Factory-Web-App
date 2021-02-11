@@ -109,15 +109,14 @@ namespace ToyBlockFactoryTests
         [InlineData("Circle", 3, 3, 9)]
         [InlineData("Red colour surcharge", 1, 1, 1)]
         [InlineData("Triangle", 2, 2, 4)]
-        public void LineItemsContainDetailsAboutEachOrderItem(string description, int quantity, decimal price,
+        public void LineItemsContainDetailsAboutEachOrderItem(string description, int quantity, decimal price, 
             decimal total)
         {
             const string orderId = "0001";
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
-
-            //read up on this
+            
             Assert.NotNull(invoiceLine);
             Assert.Equal(description, invoiceLine?.Description);
             Assert.Equal(quantity, invoiceLine?.Quantity);
@@ -138,12 +137,9 @@ namespace ToyBlockFactoryTests
             Assert.NotNull(invoiceLine);
             Assert.Equal(2, ((InvoiceReport) invoice).LineItems.Count); 
             Assert.Equal(description, invoiceLine?.Description);
-            if (invoiceLine is not null)
-            {
-                Assert.Equal(quantity, invoiceLine.Quantity);
-                Assert.Equal(price, invoiceLine.Price);
-                Assert.Equal(total, invoiceLine.Total);
-            }
+            Assert.Equal(quantity, invoiceLine?.Quantity);
+            Assert.Equal(price, invoiceLine?.Price);
+            Assert.Equal(total, invoiceLine?.Total);
         }
 
         [Fact]
