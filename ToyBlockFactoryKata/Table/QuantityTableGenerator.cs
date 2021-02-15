@@ -3,7 +3,7 @@ using System.Linq;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata.ReportGenerators
+namespace ToyBlockFactoryKata.Table
 {
     internal class QuantityTableGenerator : ITableGenerator
     {

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata.ReportGenerators
+namespace ToyBlockFactoryKata.Table
 {
     internal interface ITableGenerator
     {

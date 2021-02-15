@@ -1,6 +1,7 @@
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
+using ToyBlockFactoryKata.Table;
 
 namespace ToyBlockFactoryKata.ReportGenerators
 {

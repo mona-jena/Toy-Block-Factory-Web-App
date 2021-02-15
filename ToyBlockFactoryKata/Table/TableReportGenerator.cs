@@ -1,7 +1,8 @@
 using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.ReportGenerators;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata.ReportGenerators
+namespace ToyBlockFactoryKata.Table
 {
     internal class TableReportGenerator : IReportGenerator
     {
