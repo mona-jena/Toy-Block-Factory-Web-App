@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToyBlockFactoryKata.Orders;
@@ -13,7 +12,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
         {
             List<TableRow> table = new List<TableRow>();
             foreach (var shape in ShapesUsedInOrder(orderBlockList))
-                report.OrderTable.Add(new TableRow(shape, RowQuantity(shape, orderBlockList)));
+                table.Add(new TableRow(shape, RowQuantity(shape, orderBlockList)));
 
             return table;
         }
