@@ -9,9 +9,9 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class ReportGenerator
     {
-        private readonly IReportGenerator _cuttingReportGenerator = new CuttingListReportGenerator(new QuantityTableGenerator());
+        private readonly IReportGenerator _cuttingReportGenerator = new TableReportGenerator(new QuantityTableGenerator());
         private readonly IReportGenerator _invoiceReportGenerator;
-        private readonly IReportGenerator _paintingReportGenerator = new PaintingReportGenerator(new ColourTableGenerator());
+        private readonly IReportGenerator _paintingReportGenerator = new TableReportGenerator(new ColourTableGenerator());
 
         internal ReportGenerator(IInvoiceCalculationStrategy pricingCalculator)
         {

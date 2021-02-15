@@ -28,7 +28,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 OrderId = requestedOrder.OrderId
             };
             
-            var table = _tableGenerator.GenerateTable(report, requestedOrder);
+            var table = _tableGenerator.GenerateTable(report, requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
             var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder);

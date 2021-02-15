@@ -8,29 +8,29 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class ColourTableGenerator : ITableGenerator
     {
-        public IEnumerable<TableRow> GenerateTable(IReport report, Order requestedOrder)
+        public IEnumerable<TableRow> GenerateTable(IReport report, Dictionary<Block, int> orderBlockList)
         {
             List<TableRow> table = new List<TableRow>();
-            foreach (var shape in ShapesUsedInOrder(requestedOrder))
-                report.OrderTable.Add(new TableRow(shape, RowItems(shape, requestedOrder)));
+            foreach (var shape in ShapesUsedInOrder(orderBlockList))
+                report.OrderTable.Add(new TableRow(shape, RowItems(shape, orderBlockList)));
 
             return table;
         }
 
-        private IEnumerable<Shape> ShapesUsedInOrder(Order requestedOrder)
+        private IEnumerable<Shape> ShapesUsedInOrder(Dictionary<Block, int> orderBlockList)
         {
-            var shapesUsed = requestedOrder.BlockList.Keys.ToList();
+            var shapesUsed = orderBlockList.Keys.ToList();
             return shapesUsed.Select(item => item.Shape).Distinct();
         }
 
-        private List<TableColumn> RowItems(Shape shape, Order requestedOrder)
+        private List<TableColumn> RowItems(Shape shape, Dictionary<Block, int> orderBlockList)
         {
             var rowItemQuantities = new List<TableColumn>();
-            foreach (var colour in requestedOrder.BlockList.Select(b => b.Key.Colour).Distinct())
+            foreach (var colour in orderBlockList.Select(b => b.Key.Colour).Distinct())
             {
                 var block = new Block(shape, colour);
-                if (requestedOrder.BlockList.ContainsKey(block))
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
+                if (orderBlockList.ContainsKey(block))
+                    rowItemQuantities.Add(new TableColumn(colour.ToString(), orderBlockList[block]));
                 else
                     rowItemQuantities.Add(new TableColumn(colour.ToString(), 0));
             }
@@ -38,7 +38,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
             return rowItemQuantities;
         }
 
-       
+        
     }
 
     

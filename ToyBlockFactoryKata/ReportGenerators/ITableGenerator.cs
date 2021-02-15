@@ -6,6 +6,6 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal interface ITableGenerator
     {
-        IEnumerable<TableRow> GenerateTable(IReport report, Order requestedOrder);
+        IEnumerable<TableRow> GenerateTable(IReport report, Dictionary<Block, int> orderBlockList);
     }
 }

@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata.ReportGenerators
 {
-    internal class PaintingReportGenerator : IReportGenerator
+    internal class TableReportGenerator : IReportGenerator
     {
         private readonly ITableGenerator _tableGenerator;
 
-        public PaintingReportGenerator(ITableGenerator tableGenerator)
+        public TableReportGenerator(ITableGenerator tableGenerator)
         {
             _tableGenerator = tableGenerator;
         }
@@ -24,7 +22,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId
             };
-            var table = _tableGenerator.GenerateTable(report, requestedOrder);
+            var table = _tableGenerator.GenerateTable(report, requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
             return report;
