@@ -13,11 +13,11 @@ namespace ToyBlockFactoryKata.ReportGenerators
             _tableGenerator = tableGenerator;
         }
 
-        public IReport GenerateReport(Order requestedOrder)
+        public IReport GenerateReport(ReportType reportType, Order requestedOrder)
         {
             var report = new Report
             {
-                ReportType = ReportType.Painting,
+                ReportType = reportType,
                 Name = requestedOrder.Name,
                 Address = requestedOrder.Address,
                 DueDate = requestedOrder.DueDate,

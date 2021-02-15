@@ -21,17 +21,17 @@ namespace ToyBlockFactoryKata.ReportGenerators
 
         internal IReport GenerateInvoice(Order requestedOrder)
         {
-            return _invoiceReportGenerator.GenerateReport(requestedOrder);
+            return _invoiceReportGenerator.GenerateReport(ReportType.Invoice, requestedOrder);
         }
 
         internal IReport GenerateCuttingList(Order requestedOrder)
         {
-            return _cuttingReportGenerator.GenerateReport(requestedOrder);
+            return _cuttingReportGenerator.GenerateReport(ReportType.CuttingList, requestedOrder);
         }
 
         internal IReport GeneratePaintingReport(Order requestedOrder)
         {
-            return _paintingReportGenerator.GenerateReport(requestedOrder);
+            return _paintingReportGenerator.GenerateReport(ReportType.Painting, requestedOrder);
         }
         
         internal IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)

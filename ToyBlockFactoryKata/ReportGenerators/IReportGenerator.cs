@@ -5,6 +5,6 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal interface IReportGenerator
     {
-        IReport GenerateReport(Order requestedOrder);
+        IReport GenerateReport(ReportType reportType, Order requestedOrder);
     }
 }
