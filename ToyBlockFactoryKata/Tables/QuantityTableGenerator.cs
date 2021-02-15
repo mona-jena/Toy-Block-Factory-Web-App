@@ -8,7 +8,7 @@ namespace ToyBlockFactoryKata.Tables
     internal class QuantityTableGenerator : ITableGenerator
     {
 
-        public IEnumerable<TableRow> GenerateTable(IReport report, Dictionary<Block, int> orderBlockList)
+        public IEnumerable<TableRow> GenerateTable(Dictionary<Block, int> orderBlockList)
         {
             List<TableRow> table = new List<TableRow>();
             foreach (var shape in ShapesUsedInOrder(orderBlockList))
