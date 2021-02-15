@@ -22,6 +22,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId
             };
+            
             var table = _tableGenerator.GenerateTable(report, requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
