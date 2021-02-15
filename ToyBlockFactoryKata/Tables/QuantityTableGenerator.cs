@@ -10,7 +10,7 @@ namespace ToyBlockFactoryKata.Tables
 
         public IEnumerable<TableRow> GenerateTable(Dictionary<Block, int> orderBlockList)
         {
-            List<TableRow> table = new List<TableRow>();
+            var table = new List<TableRow>();
             foreach (var shape in ShapesUsedInOrder(orderBlockList))
                 table.Add(new TableRow(shape, RowQuantity(shape, orderBlockList)));
 
