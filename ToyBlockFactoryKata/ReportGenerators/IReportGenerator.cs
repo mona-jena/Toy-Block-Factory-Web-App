@@ -3,7 +3,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata.ReportGenerators
 {
-    public interface IReportGenerator
+    internal interface IReportGenerator
     {
         IReport GenerateReport(Order requestedOrder);
     }

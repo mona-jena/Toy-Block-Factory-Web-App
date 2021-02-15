@@ -7,7 +7,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
     {
         private readonly ITableGenerator _tableGenerator;
 
-        public TableReportGenerator(ITableGenerator tableGenerator)
+        internal TableReportGenerator(ITableGenerator tableGenerator)
         {
             _tableGenerator = tableGenerator;
         }

@@ -21,9 +21,9 @@ namespace ToyBlockFactoryKata.PricingStrategy
             };
         }
 
-        public IEnumerable<LineItem> GenerateLineItems(Order requestedOrder)
+        public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {
-            BlockListIterator(requestedOrder);
+            BlockListIterator(orderBlockList);
 
             var lineItems = new List<LineItem>();
             foreach (var shape in _shapeQuantities)
@@ -34,7 +34,7 @@ namespace ToyBlockFactoryKata.PricingStrategy
                     shape.Value * _pricingList[shape.Key])
                 );
 
-            var redQuantity = requestedOrder.BlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);
+            var redQuantity = orderBlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);
             if (redQuantity > 0)
                 lineItems.Add(new LineItem(
                     "Red colour surcharge",
@@ -47,9 +47,9 @@ namespace ToyBlockFactoryKata.PricingStrategy
         }
 
         
-        private void BlockListIterator(Order requestedOrder)
+        private void BlockListIterator(Dictionary<Block, int> orderBlockList)
         {
-            foreach (var block in requestedOrder.BlockList) 
+            foreach (var block in orderBlockList) 
                 CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
 

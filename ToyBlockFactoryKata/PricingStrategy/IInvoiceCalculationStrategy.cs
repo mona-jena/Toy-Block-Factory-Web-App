@@ -6,6 +6,6 @@ namespace ToyBlockFactoryKata.PricingStrategy
 {
     public interface IInvoiceCalculationStrategy         
     {
-        IEnumerable<LineItem> GenerateLineItems(Order requestedOrder);      
+        IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList);      
     }
 }

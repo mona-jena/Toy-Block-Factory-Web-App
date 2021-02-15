@@ -29,7 +29,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
             var table = _tableGenerator.GenerateTable(report, requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
-            var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder);
+            var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);
             report.LineItems.AddRange(lineItems);
 
             return report;
