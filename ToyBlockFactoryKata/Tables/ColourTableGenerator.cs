@@ -3,7 +3,7 @@ using System.Linq;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata.Table
+namespace ToyBlockFactoryKata.Tables
 {
     internal class ColourTableGenerator : ITableGenerator
     {
