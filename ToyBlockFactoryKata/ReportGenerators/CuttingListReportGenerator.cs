@@ -8,6 +8,13 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class CuttingListReportGenerator : IReportGenerator
     {
+        private readonly ITableGenerator _tableGenerator;
+
+        public CuttingListReportGenerator(ITableGenerator tableGenerator)
+        {
+            _tableGenerator = tableGenerator;
+        }
+        
         public IReport GenerateReport(Order requestedOrder)
         {
             var report = new Report
@@ -18,20 +25,12 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId
             };
-            GenerateTable(report, requestedOrder);
+            var table = _tableGenerator.GenerateTable(report, requestedOrder);
+            report.OrderTable.AddRange(table);
+            
             return report;
         }
 
-        private void GenerateTable(Report report, Order requestedOrder)
-        {
-            foreach (Shape shape in Enum.GetValues(typeof(Shape)))
-                report.OrderTable.Add(new TableRow(shape, RowQuantity(shape, requestedOrder)));
-        }
-
-        private List<TableColumn> RowQuantity(Shape shape, Order requestedOrder)
-        {
-            var shapeQuantity = requestedOrder.BlockList.Where(b => b.Key.Shape == shape).Sum(b => b.Value);
-            return new List<TableColumn> {new("Qty", shapeQuantity)};
-        }
+        
     }
 }

@@ -39,9 +39,9 @@ namespace ToyBlockFactoryConsole
 
             GetReport(toyBlockFactory, orderId);
         }
-        
-        
-        public static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)
+
+
+        private static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)
         {
             Console.Write("Please input the number of Red Squares: ");
             var redSquareInput = Console.ReadLine();

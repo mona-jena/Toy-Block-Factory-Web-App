@@ -9,10 +9,12 @@ namespace ToyBlockFactoryKata.ReportGenerators
     internal class InvoiceReportGenerator : IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _pricingCalculator;
+        private readonly ITableGenerator _tableGenerator;
 
-        internal InvoiceReportGenerator(IInvoiceCalculationStrategy pricingCalculator)
+        internal InvoiceReportGenerator(IInvoiceCalculationStrategy pricingCalculator, ITableGenerator tableGenerator)
         {
             _pricingCalculator = pricingCalculator;
+            _tableGenerator = tableGenerator;
         }
 
         public IReport GenerateReport(Order requestedOrder)
@@ -26,38 +28,15 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 OrderId = requestedOrder.OrderId
             };
             
-            GenerateTable(report, requestedOrder);
+            var table = _tableGenerator.GenerateTable(report, requestedOrder);
+            report.OrderTable.AddRange(table);
+            
             var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder);
             report.LineItems.AddRange(lineItems);
 
             return report;
         }
 
-        private void GenerateTable(InvoiceReport report, Order requestedOrder)
-        {
-            foreach (var shape in ShapesUsedInOrder(requestedOrder))
-                report.OrderTable.Add(new TableRow(shape, RowItems(shape, requestedOrder)));
-        }
-
-        private IEnumerable<Shape> ShapesUsedInOrder(Order requestedOrder)
-        {
-            var shapesUsed = requestedOrder.BlockList.Keys.ToList();
-            return shapesUsed.Select(item => item.Shape).Distinct();
-        }
-
-        private List<TableColumn> RowItems(Shape shape, Order requestedOrder)
-        {
-            var rowItemQuantities = new List<TableColumn>();
-            foreach (var colour in requestedOrder.BlockList.Select(b => b.Key.Colour).Distinct())
-            {
-                var block = new Block(shape, colour);
-                if (requestedOrder.BlockList.ContainsKey(block))
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
-                else
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), 0));
-            }
-
-            return rowItemQuantities;
-        }
+        
     }
 }

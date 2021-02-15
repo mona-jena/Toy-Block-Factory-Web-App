@@ -7,6 +7,13 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class PaintingReportGenerator : IReportGenerator
     {
+        private readonly ITableGenerator _tableGenerator;
+
+        public PaintingReportGenerator(ITableGenerator tableGenerator)
+        {
+            _tableGenerator = tableGenerator;
+        }
+
         public IReport GenerateReport(Order requestedOrder)
         {
             var report = new Report
@@ -17,29 +24,10 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId
             };
-            GenerateTable(report, requestedOrder);
+            var table = _tableGenerator.GenerateTable(report, requestedOrder);
+            report.OrderTable.AddRange(table);
+            
             return report;
-        }
-
-        private void GenerateTable(Report report, Order requestedOrder)
-        {
-            foreach (Shape shape in Enum.GetValues(typeof(Shape)))
-                report.OrderTable.Add(new TableRow(shape, RowItems(shape, requestedOrder)));
-        }
-
-        private List<TableColumn> RowItems(Shape shape, Order requestedOrder)
-        {
-            var rowItemQuantities = new List<TableColumn>();
-            foreach (Colour colour in Enum.GetValues(typeof(Colour)))
-            {
-                var block = new Block(shape, colour);
-                if (requestedOrder.BlockList.ContainsKey(block))
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), requestedOrder.BlockList[block]));
-                else
-                    rowItemQuantities.Add(new TableColumn(colour.ToString(), 0));
-            }
-
-            return rowItemQuantities;
         }
     }
 }
