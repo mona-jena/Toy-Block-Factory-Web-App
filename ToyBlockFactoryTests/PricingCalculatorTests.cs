@@ -37,7 +37,7 @@ namespace ToyBlockFactoryTests
         [InlineData("Red colour surcharge", 1, 1, 1)]
         public void CanCalculateAndGenerateInvoiceLines(string description, int quantity, decimal price, decimal total)
         {
-            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList)  //is it fine to expose blocklist here?
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList) 
                 .SingleOrDefault(l => l.Description == description);
 
             Assert.NotNull(invoiceLine);
