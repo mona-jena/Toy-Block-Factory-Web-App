@@ -8,7 +8,7 @@ namespace ToyBlockFactoryTests
     public class OrderStorageAndRetrievalTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        private readonly Order _customer3Order;
+        private readonly Order _emptyOrder;
 
         public OrderStorageAndRetrievalTests()
         {
@@ -16,7 +16,7 @@ namespace ToyBlockFactoryTests
 
             OrderWithDateGiven();
             OrderWithNoDateProvided();
-            _customer3Order = EmptyOrder();
+            _emptyOrder = EmptyOrder();
         }
         
         private void OrderWithDateGiven()
@@ -48,16 +48,14 @@ namespace ToyBlockFactoryTests
         
         private Order EmptyOrder()
         {
-            var customer3Name = "Tony Williams";
-            var customer3Address = "13 Stokes Road, Auckland";
-            return _toyBlockFactory.CreateOrder(customer3Name, customer3Address);
+            return _toyBlockFactory.CreateOrder("Tony Williams", "13 Stokes Road, Auckland");
         }
         
         
         [Fact]
         public void EmptyBlockOrderShouldNotBeAbleToBeSubmittedAndReturnEmptyId()
         {
-            var orderId = _toyBlockFactory.SubmitOrder(_customer3Order);
+            var orderId = _toyBlockFactory.SubmitOrder(_emptyOrder);
             
             Assert.Equal(string.Empty, orderId);
         }

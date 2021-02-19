@@ -10,10 +10,7 @@ namespace ToyBlockFactoryTests
     public class InvoiceReportGeneratorTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        string _customerAddress = string.Empty;
-        string _customerName = string.Empty;
-        DateTime _dueDate;
-
+        
         public InvoiceReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
@@ -21,6 +18,10 @@ namespace ToyBlockFactoryTests
             OrderWithAllShapesAndColoursIncluded();
             OrderWithNotAllVariationsIncluded();
         }
+        
+        string _customerName = string.Empty;
+        string _customerAddress = string.Empty;
+        DateTime _dueDate;
 
         private void OrderWithAllShapesAndColoursIncluded()
         {

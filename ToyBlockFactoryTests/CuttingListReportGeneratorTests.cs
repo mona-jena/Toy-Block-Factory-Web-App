@@ -9,10 +9,8 @@ namespace ToyBlockFactoryTests
 {
     public class CuttingListReportGeneratorTests
     {
-        string _customerAddress = string.Empty;
-        string _customerName = string.Empty;
         readonly ToyBlockFactory _toyBlockFactory;
-
+        
         public CuttingListReportGeneratorTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
@@ -20,7 +18,10 @@ namespace ToyBlockFactoryTests
             CreateListOfOrders();
             
         }
-
+        
+        string _customerName = string.Empty;
+        string _customerAddress = string.Empty;
+        
         private void CreateListOfOrders()
         {
             _customerName = "David Rudd";

@@ -7,19 +7,20 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class PaintingReportGeneratorTests
+    public class PaintingReportTests
     {
-        private string _customerAddress = string.Empty;
-        private string _customerName = string.Empty;
         private readonly ToyBlockFactory _toyBlockFactory;
 
-        public PaintingReportGeneratorTests()
+        public PaintingReportTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 
             CreateListOfOrders();
         }
 
+        private string _customerName = string.Empty;
+        private string _customerAddress = string.Empty;
+        
         private void CreateListOfOrders()
         {
             _customerName = "David Rudd";
