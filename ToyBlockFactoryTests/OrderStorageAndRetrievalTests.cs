@@ -153,6 +153,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
+        
         public void InvalidOrderNumberThrowsException()
         {
             const string nonExistingOrder = "0003";
