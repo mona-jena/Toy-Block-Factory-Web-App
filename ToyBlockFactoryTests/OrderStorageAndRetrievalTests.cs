@@ -162,16 +162,3 @@ namespace ToyBlockFactoryTests
         
     }
 }
-
-
-/*
- * new toyblock factory
- * new customer
- * system creates new order
- * get customer details
- * customer add new block each time - in the back blocks and dict of blocks will be created
- * return order
- * give back invoice
- * https://github.com/monajena27/Toy-Block-Factory/blob/4376343c8965954f24456c58b8ba30f24a3f7e0d/ToyBlockFactoryTests/OrderManagementSystemTests.cs
- */
- 
