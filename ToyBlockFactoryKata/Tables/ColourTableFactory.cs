@@ -5,7 +5,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata.Tables
 {
-    internal class ColourTableGenerator : ITableGenerator
+    internal class ColourTableFactory : ITableFactory
     {
         public IEnumerable<TableRow> GenerateTable(Dictionary<Block, int> orderBlockList)
         {

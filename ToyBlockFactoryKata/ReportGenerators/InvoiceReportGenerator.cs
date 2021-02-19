@@ -8,12 +8,12 @@ namespace ToyBlockFactoryKata.ReportGenerators
     internal class InvoiceReportGenerator : IReportGenerator
     {
         private readonly IInvoiceCalculationStrategy _pricingCalculator;
-        private readonly ITableGenerator _tableGenerator;
+        private readonly ITableFactory _tableFactory;
 
-        internal InvoiceReportGenerator(IInvoiceCalculationStrategy pricingCalculator, ITableGenerator tableGenerator)
+        internal InvoiceReportGenerator(IInvoiceCalculationStrategy pricingCalculator, ITableFactory tableFactory)
         {
             _pricingCalculator = pricingCalculator;
-            _tableGenerator = tableGenerator;
+            _tableFactory = tableFactory;
         }
 
         public IReport GenerateReport(ReportType reportType, Order requestedOrder)
@@ -27,7 +27,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 OrderId = requestedOrder.OrderId
             };
             
-            var table = _tableGenerator.GenerateTable(requestedOrder.BlockList);
+            var table = _tableFactory.GenerateTable(requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
             var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);

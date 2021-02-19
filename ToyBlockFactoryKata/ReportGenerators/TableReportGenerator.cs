@@ -6,11 +6,11 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class TableReportGenerator : IReportGenerator
     {
-        private readonly ITableGenerator _tableGenerator;
+        private readonly ITableFactory _tableFactory;
 
-        internal TableReportGenerator(ITableGenerator tableGenerator)
+        internal TableReportGenerator(ITableFactory tableFactory)
         {
-            _tableGenerator = tableGenerator;
+            _tableFactory = tableFactory;
         }
 
         public IReport GenerateReport(ReportType reportType, Order requestedOrder)
@@ -24,7 +24,7 @@ namespace ToyBlockFactoryKata.ReportGenerators
                 OrderId = requestedOrder.OrderId
             };
             
-            var table = _tableGenerator.GenerateTable(requestedOrder.BlockList);
+            var table = _tableFactory.GenerateTable(requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
             return report;
