@@ -19,37 +19,37 @@ namespace ToyBlockFactoryTests
             OrderWithNotAllVariationsIncluded();
         }
         
-        string _customerName = string.Empty;
-        string _customerAddress = string.Empty;
-        DateTime _dueDate;
+        string _david = string.Empty;
+        string _davidAddress = string.Empty;
+        DateTime _davidOrderDueDate;
 
         private void OrderWithAllShapesAndColoursIncluded()
         {
-            _customerName = "David Rudd";
-            _customerAddress = "1 Bob Avenue, Auckland";
-            _dueDate = new DateTime(2021, 1, 19);
-            var customerOrder = _toyBlockFactory.CreateOrder(_customerName, _customerAddress, _dueDate);
-            customerOrder.AddBlock(Shape.Square, Colour.Red);
-            customerOrder.AddBlock(Shape.Square, Colour.Yellow);
-            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            _toyBlockFactory.SubmitOrder(customerOrder);
+            _david = "David Rudd";
+            _davidAddress = "1 Bob Avenue, Auckland";
+            _davidOrderDueDate = new DateTime(2021, 1, 19);
+            var davidOrder = _toyBlockFactory.CreateOrder(_david, _davidAddress, _davidOrderDueDate);
+            davidOrder.AddBlock(Shape.Square, Colour.Red);
+            davidOrder.AddBlock(Shape.Square, Colour.Yellow);
+            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            davidOrder.AddBlock(Shape.Circle, Colour.Blue);
+            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            _toyBlockFactory.SubmitOrder(davidOrder);
         }
 
         private void OrderWithNotAllVariationsIncluded()
         {
-            var customer2Name = "Steve Richards";
-            var customer2Address = "102 Robin Street, Auckland";
-            var customer2DueDate = new DateTime(2021, 2, 15);
-            var customer2Order = _toyBlockFactory.CreateOrder(customer2Name, customer2Address, customer2DueDate);
-            customer2Order.AddBlock(Shape.Square, Colour.Yellow);
-            customer2Order.AddBlock(Shape.Square, Colour.Blue);
-            customer2Order.AddBlock(Shape.Circle, Colour.Blue);
-            customer2Order.AddBlock(Shape.Circle, Colour.Blue);
-            _toyBlockFactory.SubmitOrder(customer2Order);
+            var steve = "Steve Richards";
+            var steveAddress = "102 Robin Street, Auckland";
+            var steveOrderDueDate = new DateTime(2021, 2, 15);
+            var steveOrder = _toyBlockFactory.CreateOrder(steve, steveAddress, steveOrderDueDate);
+            steveOrder.AddBlock(Shape.Square, Colour.Yellow);
+            steveOrder.AddBlock(Shape.Square, Colour.Blue);
+            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
+            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
+            _toyBlockFactory.SubmitOrder(steveOrder);
         }
 
         
@@ -70,7 +70,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(_customerName, invoice.Name);
+            Assert.Equal(_david, invoice.Name);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(_customerAddress, invoice.Address);
+            Assert.Equal(_davidAddress, invoice.Address);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace ToyBlockFactoryTests
 
             var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
 
-            Assert.Equal(_dueDate, invoice.DueDate);
+            Assert.Equal(_davidOrderDueDate, invoice.DueDate);
         }
 
 
