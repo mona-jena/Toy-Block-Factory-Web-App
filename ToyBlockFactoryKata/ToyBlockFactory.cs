@@ -37,17 +37,17 @@ namespace ToyBlockFactoryKata
             return string.Empty;  
         }
 
+        public bool OrderExists(string orderId) 
+        {
+            return _orderManagementSystem.GetOrder(orderId, out _);
+        }
+        
         public Order GetOrder(string orderId)
         {
             var orderExists = _orderManagementSystem.GetOrder(orderId, out var order);
             if (!orderExists)
                 throw new ArgumentException("This order does not exist!");
             return order;
-        }
-
-        public bool OrderExists(string orderId) 
-        {
-            return _orderManagementSystem.GetOrder(orderId, out _);
         }
 
         public IReport GetInvoiceReport(string orderId)
