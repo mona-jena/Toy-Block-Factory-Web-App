@@ -4,7 +4,7 @@ using ToyBlockFactoryKata.Orders;
 
 namespace ToyBlockFactoryConsole
 {
-    public static class OrderInput
+    public static class OrderCollector
     {
         internal static void PlaceOrder(ToyBlockFactory toyBlockFactory)
         {

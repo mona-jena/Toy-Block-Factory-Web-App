@@ -17,7 +17,7 @@ namespace ToyBlockFactoryConsole
             switch (functionalityOption)
             {
                 case 1:
-                    OrderInput.PlaceOrder(toyBlockFactory);
+                    OrderCollector.PlaceOrder(toyBlockFactory);
                     break;
                 case 2:
                     GetOrder(toyBlockFactory);
