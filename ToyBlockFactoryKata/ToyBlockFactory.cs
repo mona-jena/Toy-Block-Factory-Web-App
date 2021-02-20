@@ -70,13 +70,13 @@ namespace ToyBlockFactoryKata
 
         public IEnumerable<IReport> GetCuttingListsByDate(DateTime date)
         {
-            var orderRecords = _orderManagementSystem.OrderRecords;
+            var orderRecords = _orderManagementSystem.orderRecords;
             return _reportGenerator.FilterCuttingReportsByDate(date, orderRecords);
         }
 
         public IEnumerable<IReport> GetPaintingReportsByDate(DateTime date)
         {
-            var orderRecords = _orderManagementSystem.OrderRecords;
+            var orderRecords = _orderManagementSystem.orderRecords;
             return _reportGenerator.FilterPaintingReportsByDate(date, orderRecords);
         }
     }
