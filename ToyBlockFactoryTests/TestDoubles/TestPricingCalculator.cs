@@ -20,7 +20,6 @@ namespace ToyBlockFactoryTests.TestDoubles
                     lineItems.Add((new LineItem("Circle", 2, 3, 6)));
                     break;
                 case 5:
-                    lineItems = new List<LineItem>();
                     lineItems.Add((new LineItem("Square", 2, 1, 2)));
                     lineItems.Add((new LineItem("Triangle", 2, 2, 4)));
                     lineItems.Add((new LineItem("Circle", 3, 3, 9)));
