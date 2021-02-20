@@ -37,7 +37,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal("Square", invoiceLine[0].Description);
             Assert.Equal("Triangle", invoiceLine[1].Description);
             Assert.Equal("Circle", invoiceLine[2].Description);
-            Assert.Equal("Red colour surcharge", invoiceLine[0].Description);
+            Assert.Equal("Red colour surcharge", invoiceLine[3].Description);
         }
         
         [Fact]
@@ -48,7 +48,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(2, invoiceLine[0].Quantity);
             Assert.Equal(2, invoiceLine[1].Quantity);
             Assert.Equal(3, invoiceLine[2].Quantity);
-            Assert.Equal(1, invoiceLine[0].Quantity);
+            Assert.Equal(1, invoiceLine[3].Quantity);
         }
         
         [Fact]
@@ -59,7 +59,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(1, invoiceLine[0].Price);
             Assert.Equal(2, invoiceLine[1].Price);
             Assert.Equal(3, invoiceLine[2].Price);
-            Assert.Equal(1, invoiceLine[0].Price);
+            Assert.Equal(1, invoiceLine[3].Price);
         }
         
         [Fact]
@@ -70,7 +70,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(2, invoiceLine[0].Total);
             Assert.Equal(4, invoiceLine[1].Total);
             Assert.Equal(9, invoiceLine[2].Total);
-            Assert.Equal(1, invoiceLine[0].Total);
+            Assert.Equal(1, invoiceLine[3].Total);
         }
        
     }

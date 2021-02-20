@@ -8,7 +8,7 @@ namespace ToyBlockFactoryTests.TestDoubles
 {
     public class TestPricingCalculator : IInvoiceCalculator
     {
-        
+         
         public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {
             List<LineItem> lineItems = new();
@@ -27,8 +27,9 @@ namespace ToyBlockFactoryTests.TestDoubles
                     break;
             }
 
-            return lineItems;
+            return lineItems;    
         }
         
     }
+    
 }
