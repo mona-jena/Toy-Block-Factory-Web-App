@@ -8,7 +8,7 @@ namespace ToyBlockFactoryConsole
     {
         internal static void PlaceOrder(ToyBlockFactory toyBlockFactory)
         {
-            Console.Write("Please input your Name: ");
+            Console.Write("\nPlease input your Name: ");
             var name = Console.ReadLine();
             name = CheckWhileEmpty(name);
 
@@ -24,8 +24,9 @@ namespace ToyBlockFactoryConsole
             
             Order order;
             if (dueDate != default) 
-                order = toyBlockFactory.CreateOrder(name, address);
-            order = toyBlockFactory.CreateOrder(name, address, dueDate);
+                order = toyBlockFactory.CreateOrder(name, address, dueDate);
+            order = toyBlockFactory.CreateOrder(name, address);
+            
 
             Console.WriteLine();
 

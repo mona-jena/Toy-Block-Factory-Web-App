@@ -9,7 +9,7 @@ namespace ToyBlockFactoryConsole
         public static void Menu(ToyBlockFactory toyBlockFactory)
         {
             Console.WriteLine(
-                "Would you like to [1] Place an order or [2] Get an existing order [3] Get reports due on a particular date?");
+                "Please choose an option: \n[1] Place an order \n[2] Get an existing order \n[3] Get reports due on a particular date?");
             Console.Write("Please input your choice: ");
             var functionalityOption = int.Parse(Console.ReadLine());
             switch (functionalityOption)
