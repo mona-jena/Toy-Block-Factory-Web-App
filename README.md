@@ -71,7 +71,7 @@ An order has a:
 - Order Number
 - List of the blocks in an order with their respective colors
 
-## Cutting & Painting Department Needs
+### Cutting & Painting Department Needs
 
 The factory cutting department and a painting department
 
@@ -79,7 +79,7 @@ Your cutting department has 3 groups, one that cuts squares, one that cuts circl
 
 You have a single painting department that paints all shapes but wants to have shapes grouped by color
 
-# Invoice Report
+## Invoice Report
 
 Name: Mark Pearl
 Address: 1 Bob Avenue, Auckland
@@ -119,7 +119,7 @@ Red color surcharge	1 @ $1 ppi = $1
 Total : $16
 ~~~
 
-# Cutting List Report
+## Cutting List Report
 
 Name: Mark Pearl
 Address: 1 Bob Avenue, Auckland
@@ -148,7 +148,7 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 
 ~~~
 
-# Painting Report
+## Painting Report
 
 Name: Mark Pearl
 Address: 1 Bob Avenue, Auckland
@@ -176,7 +176,7 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 
 ------------------------------------------------------------------------------------------------------------
 
-## Run program: 
+# Run program: 
 
 #### 1. Clone this repo to your local machine:
 ~~~
