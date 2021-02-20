@@ -71,7 +71,7 @@ An order has a:
 - Order Number
 - List of the blocks in an order with their respective colors
 
-## Cutting & Painting Department Needs
+### Cutting & Painting Department Needs
 
 The factory cutting department and a painting department
 
@@ -176,7 +176,7 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 
 ------------------------------------------------------------------------------------------------------------
 
-## Run program: 
+# Run program: 
 
 #### 1. Clone this repo to your local machine:
 ~~~
