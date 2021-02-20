@@ -24,13 +24,13 @@ namespace ToyBlockFactoryConsole
 
 
             Order order;
-            if (dueDate != default) order = toyBlockFactory.CreateOrder(name, address);
+            if (dueDate != default) 
+                order = toyBlockFactory.CreateOrder(name, address);
             order = toyBlockFactory.CreateOrder(name, address, dueDate);
 
             Console.WriteLine();
 
             var orderId = EnterBlockOrder(toyBlockFactory, order);
-
             while (orderId == string.Empty)
             {
                 Console.WriteLine("\nYou need to included blocks to create an order. Please try again.");
@@ -56,55 +56,18 @@ namespace ToyBlockFactoryConsole
 
         private static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)
         {
-            Console.Write("Please input the number of Red Squares: ");
-            var redSquareInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(redSquareInput); i++)
-                order.AddBlock(Shape.Square, Colour.Red);
-
-            Console.Write("Please input the number of Blue Squares: ");
-            var blueSquareInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(blueSquareInput); i++)
-                order.AddBlock(Shape.Square, Colour.Blue);
-
-            Console.Write("Please input the number of Yellow Squares: ");
-            var yellowSquareInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(yellowSquareInput); i++)
-                order.AddBlock(Shape.Square, Colour.Yellow);
-
-            Console.WriteLine();
-
-            Console.Write("Please input the number of Red Triangles: ");
-            var redTriangleInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(redTriangleInput); i++)
-                order.AddBlock(Shape.Triangle, Colour.Red);
-
-            Console.Write("Please input the number of Blue Triangles: ");
-            var blueTriangleInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(blueTriangleInput); i++)
-                order.AddBlock(Shape.Triangle, Colour.Blue);
-
-            Console.Write("Please input the number of Yellow Triangles: ");
-            var yellowTriangleInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(yellowTriangleInput); i++)
-                order.AddBlock(Shape.Triangle, Colour.Yellow);
-
-            Console.WriteLine();
-
-            Console.Write("Please input the number of Red Circles: ");
-            var redCircleInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(redCircleInput); i++)
-                order.AddBlock(Shape.Circle, Colour.Red);
-
-            Console.Write("Please input the number of Blue Circles: ");
-            var blueCircleInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(blueCircleInput); i++)
-                order.AddBlock(Shape.Circle, Colour.Blue);
-
-            Console.Write("Please input the number of Yellow Circles: ");
-            var yellowCircleInput = Console.ReadLine();
-            for (var i = 0; i < BlockQuantity(yellowCircleInput); i++)
-                order.AddBlock(Shape.Circle, Colour.Yellow);
-
+            foreach (var shape in Enum.GetValues(typeof(Shape)))
+            {
+                foreach (var colour in Enum.GetValues(typeof(Colour)))
+                {
+                    Console.Write("Please input the number of " + colour + " " + shape + ": ");
+                    var input = Console.ReadLine();
+                    for (var i = 0; i < BlockQuantity(input); i++)
+                        order.AddBlock((Shape)shape, (Colour)colour);
+                }
+                Console.WriteLine();
+            }
+            
             return toyBlockFactory.SubmitOrder(order);
         }
 

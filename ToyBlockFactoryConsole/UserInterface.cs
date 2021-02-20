@@ -4,7 +4,6 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryConsole
 {
-    
     public static class UserInterface
     {
         public static void Menu(ToyBlockFactory toyBlockFactory)
@@ -123,6 +122,5 @@ namespace ToyBlockFactoryConsole
             return filterDate;
         }
 
-        
     }
 }
