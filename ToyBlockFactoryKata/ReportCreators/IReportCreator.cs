@@ -1,9 +1,9 @@
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata.ReportGenerators
+namespace ToyBlockFactoryKata.ReportCreators
 {
-    internal interface IReportGenerator
+    internal interface IReportCreator
     {
         IReport GenerateReport(ReportType reportType, Order requestedOrder);
     }

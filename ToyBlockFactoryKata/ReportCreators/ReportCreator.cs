@@ -6,17 +6,17 @@ using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryKata.Tables;
 
-namespace ToyBlockFactoryKata.ReportGenerators
+namespace ToyBlockFactoryKata.ReportCreators
 {
-    internal class ReportGenerator
+    internal class ReportCreator
     {
-        private readonly IReportGenerator _cuttingReportGenerator = new TableReportGenerator(new QuantityTableFactory());
-        private readonly IReportGenerator _invoiceReportGenerator;
-        private readonly IReportGenerator _paintingReportGenerator = new TableReportGenerator(new ColourTableFactory());
+        private readonly IReportCreator _cuttingReportCreator = new TableReportCreator(new QuantityTableFactory());
+        private readonly IReportCreator _invoiceReportCreator;
+        private readonly IReportCreator _paintingReportCreator = new TableReportCreator(new ColourTableFactory());
 
-        internal ReportGenerator(IInvoiceCalculator pricingCalculator)
+        internal ReportCreator(IInvoiceCalculator pricingCalculator)
         {
-            _invoiceReportGenerator = new InvoiceReportGenerator(pricingCalculator, new ColourTableFactory());
+            _invoiceReportCreator = new InvoiceReportCreator(pricingCalculator, new ColourTableFactory());
         }
         
         public IReport GenerateReport(Order requestedOrder, ReportType reportType)
@@ -60,17 +60,17 @@ namespace ToyBlockFactoryKata.ReportGenerators
 
         private IReport GenerateInvoice(Order requestedOrder)
         {
-            return _invoiceReportGenerator.GenerateReport(ReportType.Invoice, requestedOrder);
+            return _invoiceReportCreator.GenerateReport(ReportType.Invoice, requestedOrder);
         }
 
         private IReport GenerateCuttingList(Order requestedOrder)
         {
-            return _cuttingReportGenerator.GenerateReport(ReportType.CuttingList, requestedOrder);
+            return _cuttingReportCreator.GenerateReport(ReportType.CuttingList, requestedOrder);
         }
 
         private IReport GeneratePaintingReport(Order requestedOrder)
         {
-            return _paintingReportGenerator.GenerateReport(ReportType.Painting, requestedOrder);
+            return _paintingReportCreator.GenerateReport(ReportType.Painting, requestedOrder);
         }
 
         private IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
