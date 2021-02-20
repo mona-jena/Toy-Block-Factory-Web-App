@@ -178,7 +178,7 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 
 # Instructions: 
 
-1. Clone the repo to your local machine:
+1. Clone this repo to your local machine:
         https://github.com/monajena27/Toy-Block-Factory.git
 
 2. Navigate to the ToyBlockFactoryConsole folder.
