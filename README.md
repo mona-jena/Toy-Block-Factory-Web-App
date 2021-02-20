@@ -181,8 +181,8 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 #### Clone this repo to your local machine:
         https://github.com/monajena27/Toy-Block-Factory.git
 
-### Navigate to the ToyBlockFactoryConsole folder.
+#### Navigate to the ToyBlockFactoryConsole folder.
 
-### In your terminal type command: ```dotnet run```
+#### In your terminal type command: ```dotnet run```
 
 
