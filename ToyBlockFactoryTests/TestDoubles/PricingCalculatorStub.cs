@@ -9,27 +9,21 @@ namespace ToyBlockFactoryTests.TestDoubles
     public class PricingCalculatorStub : IInvoiceCalculator
     {
 
-        public PricingCalculatorStub()
-        {
-            
-        }
-         
         public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {
             List<LineItem> lineItems = new();
-            
-            switch (orderBlockList.Count)
+
+            if (orderBlockList.Count == 3)
             {
-                case 3:
-                    lineItems.Add((new LineItem("Square", 2, 1, 2)));
-                    lineItems.Add((new LineItem("Circle", 2, 3, 6)));
-                    break;
-                case 5:
-                    lineItems.Add((new LineItem("Square", 2, 1, 2)));
-                    lineItems.Add((new LineItem("Triangle", 2, 2, 4)));
-                    lineItems.Add((new LineItem("Circle", 3, 3, 9)));
-                    lineItems.Add((new LineItem("Red colour surcharge", 1, 1, 1)));
-                    break;
+                lineItems.Add((new LineItem("Square", 2, 1, 2)));
+                lineItems.Add((new LineItem("Circle", 2, 3, 6)));
+            }
+            else if (orderBlockList.Count == 5)
+            {
+                lineItems.Add((new LineItem("Square", 2, 1, 2)));
+                lineItems.Add((new LineItem("Triangle", 2, 2, 4)));
+                lineItems.Add((new LineItem("Circle", 3, 3, 9)));
+                lineItems.Add((new LineItem("Red colour surcharge", 1, 1, 1)));
             }
 
             return lineItems;    
