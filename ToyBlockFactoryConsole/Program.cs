@@ -12,27 +12,7 @@ namespace ToyBlockFactoryConsole
             
             var toyBlockFactory = new ToyBlockFactory(new PricingCalculator());
 
-            Menu(toyBlockFactory);
-        }
-
-        public static void Menu(ToyBlockFactory toyBlockFactory)
-        {
-            Console.WriteLine(
-                "Would you like to [1] Place an order or [2] Get an existing order [3] Get reports due on a particular date?");
-            Console.Write("Please input your choice: ");
-            var functionalityOption = int.Parse(Console.ReadLine());
-            switch (functionalityOption)
-            {
-                case 1:
-                    UserInterface.PlaceOrder(toyBlockFactory);
-                    break;
-                case 2:
-                    UserInterface.GetOrder(toyBlockFactory);
-                    break;
-                case 3:
-                    UserInterface.GenerateReportsForADate(toyBlockFactory);
-                    break;
-            }
+            UserInterface.Menu(toyBlockFactory);
         }
     }
 }

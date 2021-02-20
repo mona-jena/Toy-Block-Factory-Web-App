@@ -5,7 +5,7 @@ namespace ToyBlockFactoryConsole
 {
     internal static class InputValidator
     {
-        internal static string IfEmptyInput(string input)
+        internal static string AskUserWhileEmpty(string input)
         {
             while (string.IsNullOrEmpty(input))
             {

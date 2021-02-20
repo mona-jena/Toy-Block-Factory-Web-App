@@ -6,15 +6,35 @@ namespace ToyBlockFactoryConsole
 {
     public static class UserInterface
     {
+        public static void Menu(ToyBlockFactory toyBlockFactory)
+        {
+            Console.WriteLine(
+                "Would you like to [1] Place an order or [2] Get an existing order [3] Get reports due on a particular date?");
+            Console.Write("Please input your choice: ");
+            var functionalityOption = int.Parse(Console.ReadLine());
+            switch (functionalityOption)
+            {
+                case 1:
+                    PlaceOrder(toyBlockFactory);
+                    break;
+                case 2:
+                    GetOrder(toyBlockFactory);
+                    break;
+                case 3:
+                    GenerateReportsForADate(toyBlockFactory);
+                    break;
+            }
+        }
+        
         public static void PlaceOrder(ToyBlockFactory toyBlockFactory)
         {
             Console.Write("Please input your Name: ");
             var name = Console.ReadLine();
-            name = InputValidator.IfEmptyInput(name);
+            name = InputValidator.AskUserWhileEmpty(name);
 
             Console.Write("Please input your Address: ");
             var address = Console.ReadLine();
-            address = InputValidator.IfEmptyInput(address);
+            address = InputValidator.AskUserWhileEmpty(address);
 
             Console.Write("Please input your Due Date: ");
             var dateInput = Console.ReadLine();
@@ -39,89 +59,69 @@ namespace ToyBlockFactoryConsole
 
             GetReport(toyBlockFactory, orderId);
         }
-
+        
 
         private static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)
         {
             Console.Write("Please input the number of Red Squares: ");
             var redSquareInput = Console.ReadLine();
-            var redSquares = 0;
-            if (!string.IsNullOrEmpty(redSquareInput))
-                redSquares = InputValidator.IfValidInteger(redSquareInput);
-            for (var i = 0; i < redSquares; i++) 
+            for (var i = 0; i < BlockQuantity(redSquareInput); i++) 
                 order.AddBlock(Shape.Square, Colour.Red);
 
             Console.Write("Please input the number of Blue Squares: ");
             var blueSquareInput = Console.ReadLine();
-            var blueSquares = 0;
-            if (!string.IsNullOrEmpty(blueSquareInput))
-                blueSquares = InputValidator.IfValidInteger(blueSquareInput);
-            for (var i = 0; i < blueSquares; i++) 
+            for (var i = 0; i < BlockQuantity(blueSquareInput); i++) 
                 order.AddBlock(Shape.Square, Colour.Blue);
 
             Console.Write("Please input the number of Yellow Squares: ");
             var yellowSquareInput = Console.ReadLine();
-            var yellowSquares = 0;
-            if (!string.IsNullOrEmpty(yellowSquareInput))
-                yellowSquares = InputValidator.IfValidInteger(yellowSquareInput);
-            for (var i = 0; i < yellowSquares; i++) 
+            for (var i = 0; i < BlockQuantity(yellowSquareInput); i++) 
                 order.AddBlock(Shape.Square, Colour.Yellow);
 
             Console.WriteLine();
 
             Console.Write("Please input the number of Red Triangles: ");
             var redTriangleInput = Console.ReadLine();
-            var redTriangles = 0;
-            if (!string.IsNullOrEmpty(redTriangleInput))
-                redTriangles = InputValidator.IfValidInteger(redTriangleInput);
-            for (var i = 0; i < redTriangles; i++) 
+            for (var i = 0; i < BlockQuantity(redTriangleInput); i++) 
                 order.AddBlock(Shape.Triangle, Colour.Red);
 
             Console.Write("Please input the number of Blue Triangles: ");
             var blueTriangleInput = Console.ReadLine();
-            var blueTriangles = 0;
-            if (!string.IsNullOrEmpty(blueTriangleInput))
-                blueTriangles = InputValidator.IfValidInteger(blueTriangleInput);
-            for (var i = 0; i < blueTriangles; i++) 
+            for (var i = 0; i < BlockQuantity(blueTriangleInput); i++) 
                 order.AddBlock(Shape.Triangle, Colour.Blue);
 
             Console.Write("Please input the number of Yellow Triangles: ");
             var yellowTriangleInput = Console.ReadLine();
-            var yellowTriangles = 0;
-            if (!string.IsNullOrEmpty(yellowTriangleInput))
-                yellowTriangles = InputValidator.IfValidInteger(yellowTriangleInput);
-            for (var i = 0; i < yellowTriangles; i++) 
+            for (var i = 0; i < BlockQuantity(yellowTriangleInput); i++) 
                 order.AddBlock(Shape.Triangle, Colour.Yellow);
 
             Console.WriteLine();
 
             Console.Write("Please input the number of Red Circles: ");
             var redCircleInput = Console.ReadLine();
-            var redCircles = 0;
-            if (!string.IsNullOrEmpty(redCircleInput))
-                redCircles = InputValidator.IfValidInteger(redCircleInput);
-            for (var i = 0; i < redCircles; i++) 
+            for (var i = 0; i < BlockQuantity(redCircleInput); i++) 
                 order.AddBlock(Shape.Circle, Colour.Red);
 
             Console.Write("Please input the number of Blue Circles: ");
             var blueCircleInput = Console.ReadLine();
-            var blueCircles = 0;
-            if (!string.IsNullOrEmpty(blueCircleInput))
-                blueCircles = InputValidator.IfValidInteger(blueCircleInput);
-            for (var i = 0; i < blueCircles; i++) 
+            for (var i = 0; i < BlockQuantity(blueCircleInput); i++) 
                 order.AddBlock(Shape.Circle, Colour.Blue);
 
             Console.Write("Please input the number of Yellow Circles: ");
             var yellowCircleInput = Console.ReadLine();
-            var yellowCircles = 0;
-            if (!string.IsNullOrEmpty(yellowCircleInput))
-                yellowCircles = InputValidator.IfValidInteger(yellowCircleInput);
-            for (var i = 0; i < yellowCircles; i++) 
+            for (var i = 0; i < BlockQuantity(yellowCircleInput); i++) 
                 order.AddBlock(Shape.Circle, Colour.Yellow);
 
             return toyBlockFactory.SubmitOrder(order);
         }
         
+        private static int BlockQuantity(string input)
+        {
+            var block = 0;
+            if (!string.IsNullOrEmpty(input))
+                block = InputValidator.IfValidInteger(input);
+            return block;
+        }
         
         public static void GetReport(ToyBlockFactory toyBlockFactory, string orderId)
         {
@@ -147,7 +147,7 @@ namespace ToyBlockFactoryConsole
                         PrintReports.PrintReport(paintingReport);
                         break;
                     case 4:
-                        Program.Menu(toyBlockFactory);
+                        Menu(toyBlockFactory);
                         break;
                     case 5:
                         Environment.Exit(0);
@@ -185,31 +185,19 @@ namespace ToyBlockFactoryConsole
                 switch (reportOption)
                 {
                     case 1:
-                        Console.Write("For which date would you like cutting list for: ");
-                        var cuttingReportDate = Console.ReadLine();
-                        DateTime cuttingFilterDate = default;
-                        if (!string.IsNullOrEmpty(cuttingReportDate))
-                            cuttingFilterDate = InputValidator.ConvertToDateTime(cuttingReportDate);
-
-                        var filteredCuttingLists = toyBlockFactory.GetCuttingListsByDate(cuttingFilterDate);
+                        var filteredCuttingLists = toyBlockFactory.GetCuttingListsByDate(GetDateInput());
                         foreach (var cuttingList in filteredCuttingLists) 
                             PrintReports.PrintReport(cuttingList);
                         break;
 
                     case 2:
-                        Console.Write("For which date would you like painting list for: ");
-                        var paintingReportDate = Console.ReadLine();
-                        DateTime paintingFilterDate = default;
-                        if (!string.IsNullOrEmpty(paintingReportDate))
-                            paintingFilterDate = InputValidator.ConvertToDateTime(paintingReportDate);
-
-                        var filteredPaintingReports = toyBlockFactory.GetPaintingReportsByDate(paintingFilterDate);
+                        var filteredPaintingReports = toyBlockFactory.GetPaintingReportsByDate(GetDateInput());
                         foreach (var paintingReport in filteredPaintingReports)
                             PrintReports.PrintReport(paintingReport);
                         break;
 
                     case 3:
-                        Program.Menu(toyBlockFactory);
+                        Menu(toyBlockFactory);
                         break;
 
                     case 4:
@@ -218,6 +206,18 @@ namespace ToyBlockFactoryConsole
                 }
             }
         }
+
+        private static DateTime GetDateInput()
+        {
+            Console.Write("Which date would you like to filter for: ");
+            var reportDate = Console.ReadLine();
+            DateTime filterDate = default;
+            if (!string.IsNullOrEmpty(reportDate))
+                filterDate = InputValidator.ConvertToDateTime(reportDate);
+
+            return filterDate;
+        }
+
         
     }
 }
