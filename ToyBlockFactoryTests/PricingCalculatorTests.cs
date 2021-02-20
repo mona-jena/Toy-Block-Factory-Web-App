@@ -9,24 +9,15 @@ namespace ToyBlockFactoryTests
 {
     public class PricingCalculatorTests
     {
-        private readonly Order _customerOrder;
+        private Order _customerOrder;
         private readonly PricingCalculator _pricingCalculator;
 
         public PricingCalculatorTests()
         {
             _pricingCalculator = new PricingCalculator();
             var toyBlockFactory = new ToyBlockFactory(_pricingCalculator);
-            var orderDueDate = new DateTime(2021, 1, 19);
-            _customerOrder = toyBlockFactory
-                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
-            _customerOrder.AddBlock(Shape.Square, Colour.Red);
-            _customerOrder.AddBlock(Shape.Square, Colour.Yellow);
-            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            toyBlockFactory.SubmitOrder(_customerOrder);
+
+            _customerOrder = CustomerOrder(toyBlockFactory);
         }
 
         [Fact]
@@ -73,5 +64,21 @@ namespace ToyBlockFactoryTests
             Assert.Equal(1, invoiceLine[3].Total);
         }
        
+        
+        private Order CustomerOrder(ToyBlockFactory toyBlockFactory)
+        {
+            var orderDueDate = new DateTime(2021, 1, 19);
+            _customerOrder = toyBlockFactory
+                .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
+            _customerOrder.AddBlock(Shape.Square, Colour.Red);
+            _customerOrder.AddBlock(Shape.Square, Colour.Yellow);
+            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Blue);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            toyBlockFactory.SubmitOrder(_customerOrder);
+            return _customerOrder;
+        }
     }
 }
