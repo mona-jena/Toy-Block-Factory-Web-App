@@ -1,6 +1,7 @@
 using System;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryConsole
 {
@@ -53,15 +54,15 @@ namespace ToyBlockFactoryConsole
                 switch (option)
                 {
                     case 1:
-                        var invoiceReport = toyBlockFactory.GetInvoiceReport(orderId);
+                        var invoiceReport = toyBlockFactory.GetReport(orderId, ReportType.Invoice);
                         ReportPrinter.PrintReport(invoiceReport);
                         break;
                     case 2:
-                        var cuttingListReport = toyBlockFactory.GetCuttingListReport(orderId);
+                        var cuttingListReport = toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
                         ReportPrinter.PrintReport(cuttingListReport);
                         break;
                     case 3:
-                        var paintingReport = toyBlockFactory.GetPaintingReport(orderId);
+                        var paintingReport = toyBlockFactory.GetReport(orderId, ReportType.Painting);
                         ReportPrinter.PrintReport(paintingReport);
                         break;
                     case 4:
@@ -89,14 +90,14 @@ namespace ToyBlockFactoryConsole
                 {
                     case 1:
                         var cuttingReportDate = GetDateInput();
-                        var filteredCuttingLists = toyBlockFactory.GetCuttingListsByDate(cuttingReportDate);
+                        var filteredCuttingLists = toyBlockFactory.GetReportsByDate(cuttingReportDate, ReportType.CuttingList);
                         foreach (var cuttingList in filteredCuttingLists) 
                             ReportPrinter.PrintReport(cuttingList);
                         break;
 
                     case 2:
                         var paintingReportDate = GetDateInput();
-                        var filteredPaintingReports = toyBlockFactory.GetPaintingReportsByDate(paintingReportDate);
+                        var filteredPaintingReports = toyBlockFactory.GetReportsByDate(paintingReportDate, ReportType.Painting);
                         foreach (var paintingReport in filteredPaintingReports)
                             ReportPrinter.PrintReport(paintingReport);
                         break;

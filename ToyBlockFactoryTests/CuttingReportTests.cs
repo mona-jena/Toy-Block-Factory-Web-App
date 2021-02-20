@@ -25,7 +25,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
             Assert.Equal(ReportType.CuttingList, cuttingList.ReportType);
         }
@@ -37,7 +37,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
             Assert.Equal(_david, cuttingList.Name);
         }
@@ -50,7 +50,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
             Assert.Equal(_davidAddress, cuttingList.Address);
         }
@@ -60,7 +60,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
             Assert.Equal(new DateTime(2021, 1, 19), cuttingList.DueDate);
         }
@@ -70,7 +70,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
             Assert.Equal(orderId, cuttingList.OrderId);
         }
@@ -83,7 +83,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
             var tableRow = cuttingList.OrderTable.SingleOrDefault(l => l.Shape == shape);
 
             Assert.NotNull(tableRow);
@@ -94,7 +94,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CanFilterReportsByDueDate()
         {
-            var filteredReports = _toyBlockFactory.GetCuttingListsByDate(new DateTime(2021, 1, 19)).ToList();
+            var filteredReports = _toyBlockFactory.GetReportsByDate(new DateTime(2021, 1, 19), ReportType.CuttingList).ToList();
 
             Assert.Equal(3, filteredReports.Count);
             Assert.Equal("0001", filteredReports[0].OrderId);

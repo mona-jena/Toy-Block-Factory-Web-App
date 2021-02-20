@@ -50,34 +50,18 @@ namespace ToyBlockFactoryKata
             return order;
         }
 
-        public IReport GetInvoiceReport(string orderId)
+        public IReport GetReport(string orderId, ReportType reportType)
         {
             var requestedOrder = GetOrder(orderId);
-            return _reportGenerator.GenerateInvoice(requestedOrder);
+            return _reportGenerator.GenerateReport(requestedOrder, reportType);
         }
-
-        public IReport GetCuttingListReport(string orderId)
-        {
-            var requestedOrder = GetOrder(orderId);
-            return _reportGenerator.GenerateCuttingList(requestedOrder);
-        }
-
-        public IReport GetPaintingReport(string orderId)
-        {
-            var requestedOrder = GetOrder(orderId);
-            return _reportGenerator.GeneratePaintingReport(requestedOrder);
-        }
-
-        public IEnumerable<IReport> GetCuttingListsByDate(DateTime date)
+        
+        
+        public IEnumerable<IReport> GetReportsByDate(DateTime date, ReportType reportType)
         {
             var orderRecords = _orderManagementSystem.orderRecords;
-            return _reportGenerator.FilterCuttingReportsByDate(date, orderRecords);
+            return _reportGenerator.FilterReportsByDate(date, orderRecords, reportType);
         }
-
-        public IEnumerable<IReport> GetPaintingReportsByDate(DateTime date)
-        {
-            var orderRecords = _orderManagementSystem.orderRecords;
-            return _reportGenerator.FilterPaintingReportsByDate(date, orderRecords);
-        }
+        
     }
 }

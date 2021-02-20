@@ -26,7 +26,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(ReportType.Invoice, invoice.ReportType);
         }
@@ -39,7 +39,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(_david, invoice.Name);
         }
@@ -52,7 +52,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(_davidAddress, invoice.Address);
         }
@@ -63,7 +63,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(_davidOrderDueDate, invoice.DueDate);
         }
@@ -74,7 +74,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(orderId, invoice.OrderId);
         }
@@ -90,7 +90,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
             
             Assert.NotNull(invoiceLine);
@@ -106,7 +106,7 @@ namespace ToyBlockFactoryTests
         public void OnlyItemsInOrderAreListedInLineItems(string description, int quantity, decimal price, decimal total)
         {
             const string orderId = "0002";
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             var invoiceLine = ((InvoiceReport) invoice).LineItems.SingleOrDefault(l => l.Description == description);
 
@@ -123,7 +123,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(16.00m, ((InvoiceReport) invoice).Total);
         }
@@ -138,7 +138,7 @@ namespace ToyBlockFactoryTests
         public void ReportGeneratesOrderTable(Shape shape, string colour, int quantity)
         {
             const string orderId = "0001";
-            var invoice = _toyBlockFactory.GetInvoiceReport(orderId);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             var tableRow = invoice.OrderTable.SingleOrDefault(l => l.Shape == shape);
             var tableColumn = tableRow?.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);

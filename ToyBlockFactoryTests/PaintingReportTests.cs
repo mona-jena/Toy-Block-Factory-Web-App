@@ -25,7 +25,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var paintingReport = _toyBlockFactory.GetPaintingReport(orderId);
+            var paintingReport = _toyBlockFactory.GetReport(orderId, ReportType.Painting);
 
             Assert.Equal(ReportType.Painting, paintingReport.ReportType);
         }
@@ -37,7 +37,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var paintingReport = _toyBlockFactory.GetPaintingReport(orderId);
+            var paintingReport = _toyBlockFactory.GetReport(orderId, ReportType.Painting);
 
             Assert.Equal(_david, paintingReport.Name);
         }
@@ -49,7 +49,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var paintingReport = _toyBlockFactory.GetPaintingReport(orderId);
+            var paintingReport = _toyBlockFactory.GetReport(orderId, ReportType.Painting);
 
             Assert.Equal(_davidAddress, paintingReport.Address);
         }
@@ -59,7 +59,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var paintingReport = _toyBlockFactory.GetPaintingReport(orderId);
+            var paintingReport = _toyBlockFactory.GetReport(orderId, ReportType.Painting);
 
             Assert.Equal(new DateTime(2021, 1, 19), paintingReport.DueDate);
         }
@@ -69,7 +69,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var paintingReport = _toyBlockFactory.GetPaintingReport(orderId);
+            var paintingReport = _toyBlockFactory.GetReport(orderId, ReportType.Painting);
 
             Assert.Equal(orderId, paintingReport.OrderId);
         }
@@ -83,7 +83,7 @@ namespace ToyBlockFactoryTests
         public void ReportGeneratesOrderTable(Shape shape, string colour, int quantity)
         {
             const string orderId = "0001";
-            var cuttingList = _toyBlockFactory.GetPaintingReport(orderId);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.Painting);
 
             var tableRow = cuttingList.OrderTable.SingleOrDefault(l => l.Shape == shape);
             var tableColumn = tableRow?.TableColumn.SingleOrDefault(l => l.MeasuredItem == colour);
@@ -98,7 +98,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CanFilterReportsByDueDate()
         {
-            var filteredReports = _toyBlockFactory.GetPaintingReportsByDate(new DateTime(2021, 1, 19)).ToList();
+            var filteredReports = _toyBlockFactory.GetReportsByDate(new DateTime(2021, 1, 19), ReportType.Painting).ToList();
 
             Assert.Equal(3, filteredReports.Count);
             Assert.Equal("0001", filteredReports[0].OrderId);
