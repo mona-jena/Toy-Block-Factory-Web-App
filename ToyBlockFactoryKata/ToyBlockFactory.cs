@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
-using ToyBlockFactoryKata.ReportCreators;
 using ToyBlockFactoryKata.Reports;
+using ToyBlockFactoryKata.ReportSystem;
 
 namespace ToyBlockFactoryKata
 {

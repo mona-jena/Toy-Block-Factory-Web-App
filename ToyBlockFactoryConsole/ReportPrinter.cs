@@ -12,8 +12,8 @@ namespace ToyBlockFactoryConsole
             Console.WriteLine(
                 "Your " + report.ReportType.ToString().ToLower() + " report has been generated:" +
                 "\n\n" +
-                "Name: " + report.Name + " Address: " + report.Address + " Due Date: " +
-                report.DueDate.ToString("dd/MM/yyyy") + " Order #: " + report.OrderId);
+                "Name: " + report.Name + "  Address: " + report.Address + "  Due Date: " +
+                report.DueDate.ToString("dd/MM/yyyy") + "  Order #: " + report.OrderId);
             
             Console.WriteLine();
 

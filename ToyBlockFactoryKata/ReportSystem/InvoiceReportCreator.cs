@@ -3,7 +3,7 @@ using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryKata.Tables;
 
-namespace ToyBlockFactoryKata.ReportCreators
+namespace ToyBlockFactoryKata.ReportSystem
 {
     internal class InvoiceReportCreator : IReportCreator
     {
