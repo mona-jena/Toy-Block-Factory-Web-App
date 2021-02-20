@@ -10,11 +10,11 @@ namespace ToyBlockFactoryConsole
         {
             Console.Write("Please input your Name: ");
             var name = Console.ReadLine();
-            name = InputValidator.AskUserWhileEmpty(name);
+            name = IfEmpty(name);
 
             Console.Write("Please input your Address: ");
             var address = Console.ReadLine();
-            address = InputValidator.AskUserWhileEmpty(address);
+            address = IfEmpty(address);
 
             Console.Write("Please input your Due Date: ");
             var dateInput = Console.ReadLine();
@@ -38,6 +38,20 @@ namespace ToyBlockFactoryConsole
             }
 
             UserInterface.GetReport(toyBlockFactory, orderId);
+        }
+
+        private static string IfEmpty(string input)
+        {
+            while (string.IsNullOrEmpty(input))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("This field can't be empty! Please enter again: ");
+                Console.ResetColor();
+
+                input = Console.ReadLine();
+            }
+
+            return input;
         }
 
         private static string EnterBlockOrder(ToyBlockFactory toyBlockFactory, Order order)

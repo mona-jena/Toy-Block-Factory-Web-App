@@ -14,7 +14,7 @@ namespace ToyBlockFactoryTests
 
         public PaintingReportTests()
         {
-            _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
+            _toyBlockFactory = new ToyBlockFactory(new PricingCalculatorStub());
 
             CreateListOfOrders();
         }

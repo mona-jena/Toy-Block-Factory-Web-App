@@ -5,20 +5,7 @@ namespace ToyBlockFactoryConsole
 {
     internal static class InputValidator
     {
-        internal static string AskUserWhileEmpty(string input)
-        {
-            while (string.IsNullOrEmpty(input))
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write("This field can't be empty! Please enter again: ");
-                Console.ResetColor();
-
-                input = Console.ReadLine();
-            }
-
-            return input;
-        }
-
+        
         internal static DateTime ConvertToDateTime(string dateInput)
         {
             if (DateTime.TryParse(dateInput, new CultureInfo("NZ"), DateTimeStyles.AssumeLocal, out var dueDate))

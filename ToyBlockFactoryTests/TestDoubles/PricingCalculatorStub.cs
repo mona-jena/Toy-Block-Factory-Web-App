@@ -6,8 +6,13 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryTests.TestDoubles
 {
-    public class TestPricingCalculator : IInvoiceCalculator
+    public class PricingCalculatorStub : IInvoiceCalculator
     {
+
+        public PricingCalculatorStub()
+        {
+            
+        }
          
         public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {

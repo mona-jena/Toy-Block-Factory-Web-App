@@ -13,7 +13,7 @@ namespace ToyBlockFactoryTests
 
         public OrderStorageAndRetrievalTests()
         {
-            _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
+            _toyBlockFactory = new ToyBlockFactory(new PricingCalculatorStub());
 
             OrderWithDateGiven();
             OrderWithNoDateProvided();

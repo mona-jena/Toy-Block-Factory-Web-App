@@ -14,7 +14,7 @@ namespace ToyBlockFactoryTests
 
         public InvoiceReportTests()
         {
-            _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
+            _toyBlockFactory = new ToyBlockFactory(new PricingCalculatorStub());
 
             OrderWithAllShapesAndColoursIncluded();
             OrderWithNotAllVariationsIncluded();
