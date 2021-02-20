@@ -3,6 +3,7 @@ using System.Linq;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
+using ToyBlockFactoryTests.TestDoubles;
 using Xunit;
 
 namespace ToyBlockFactoryTests
@@ -10,6 +11,9 @@ namespace ToyBlockFactoryTests
     public class InvoiceReportTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
+        string _david = string.Empty;
+        string _davidAddress = string.Empty;
+        DateTime _davidOrderDueDate;
         
         public InvoiceReportTests()
         {
@@ -18,41 +22,8 @@ namespace ToyBlockFactoryTests
             OrderWithAllShapesAndColoursIncluded();
             OrderWithNotAllVariationsIncluded();
         }
-        
-        string _david = string.Empty;
-        string _davidAddress = string.Empty;
-        DateTime _davidOrderDueDate;
 
-        private void OrderWithAllShapesAndColoursIncluded()
-        {
-            _david = "David Rudd";
-            _davidAddress = "1 Bob Avenue, Auckland";
-            _davidOrderDueDate = new DateTime(2021, 1, 19);
-            var davidOrder = _toyBlockFactory.CreateOrder(_david, _davidAddress, _davidOrderDueDate);
-            davidOrder.AddBlock(Shape.Square, Colour.Red);
-            davidOrder.AddBlock(Shape.Square, Colour.Yellow);
-            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            davidOrder.AddBlock(Shape.Circle, Colour.Blue);
-            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            _toyBlockFactory.SubmitOrder(davidOrder);
-        }
 
-        private void OrderWithNotAllVariationsIncluded()
-        {
-            var steve = "Steve Richards";
-            var steveAddress = "102 Robin Street, Auckland";
-            var steveOrderDueDate = new DateTime(2021, 2, 15);
-            var steveOrder = _toyBlockFactory.CreateOrder(steve, steveAddress, steveOrderDueDate);
-            steveOrder.AddBlock(Shape.Square, Colour.Yellow);
-            steveOrder.AddBlock(Shape.Square, Colour.Blue);
-            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
-            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
-            _toyBlockFactory.SubmitOrder(steveOrder);
-        }
-
-        
         [Fact]
         public void IsInvoice()
         {
@@ -173,6 +144,36 @@ namespace ToyBlockFactoryTests
             Assert.Equal(shape, tableRow?.Shape);
             Assert.Equal(colour, tableColumn?.MeasuredItem);
             Assert.Equal(quantity, tableColumn?.Quantity);
+        }
+        
+        
+        private void OrderWithAllShapesAndColoursIncluded()
+        {
+            _david = "David Rudd";
+            _davidAddress = "1 Bob Avenue, Auckland";
+            _davidOrderDueDate = new DateTime(2021, 1, 19);
+            var davidOrder = _toyBlockFactory.CreateOrder(_david, _davidAddress, _davidOrderDueDate);
+            davidOrder.AddBlock(Shape.Square, Colour.Red);
+            davidOrder.AddBlock(Shape.Square, Colour.Yellow);
+            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
+            davidOrder.AddBlock(Shape.Circle, Colour.Blue);
+            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            _toyBlockFactory.SubmitOrder(davidOrder);
+        }
+
+        private void OrderWithNotAllVariationsIncluded()
+        {
+            var steve = "Steve Richards";
+            var steveAddress = "102 Robin Street, Auckland";
+            var steveOrderDueDate = new DateTime(2021, 2, 15);
+            var steveOrder = _toyBlockFactory.CreateOrder(steve, steveAddress, steveOrderDueDate);
+            steveOrder.AddBlock(Shape.Square, Colour.Yellow);
+            steveOrder.AddBlock(Shape.Square, Colour.Blue);
+            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
+            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
+            _toyBlockFactory.SubmitOrder(steveOrder);
         }
         
     }

@@ -4,7 +4,7 @@ using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryTests
+namespace ToyBlockFactoryTests.TestDoubles
 {
     public class TestPricingCalculator : IInvoiceCalculationStrategy
     {
