@@ -8,55 +8,28 @@ namespace ToyBlockFactoryTests.TestDoubles
 {
     public class TestPricingCalculator : IInvoiceCalculator
     {
-        private const decimal RedCost = 1;
-        private readonly Dictionary<Shape, decimal> _pricingList;
-        private readonly Dictionary<Shape, int> _shapeQuantities = new();
-
-        public TestPricingCalculator()
-        {
-            _pricingList = new Dictionary<Shape, decimal>
-            {
-                {Shape.Square, 1},
-                {Shape.Triangle, 2},
-                {Shape.Circle, 3}
-            };
-        }
-
+        
         public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {
-            BlockListIterator(orderBlockList);
-
-            var lineItems = new List<LineItem>();
-            foreach (var shape in _shapeQuantities)
-                lineItems.Add(new LineItem(
-                    shape.Key.ToString(),
-                    shape.Value,
-                    _pricingList[shape.Key],
-                    shape.Value * _pricingList[shape.Key])
-                );
-
-            var redQuantity = orderBlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);
-            if (redQuantity > 0)
-                lineItems.Add(new LineItem(
-                    "Red colour surcharge",
-                    redQuantity,
-                    RedCost,
-                    redQuantity * RedCost)
-                );
+            List<LineItem> lineItems = new();
+            
+            switch (orderBlockList.Count)
+            {
+                case 3:
+                    lineItems.Add((new LineItem("Square", 2, 1, 2)));
+                    lineItems.Add((new LineItem("Circle", 2, 3, 6)));
+                    break;
+                case 5:
+                    lineItems = new List<LineItem>();
+                    lineItems.Add((new LineItem("Square", 2, 1, 2)));
+                    lineItems.Add((new LineItem("Triangle", 2, 2, 4)));
+                    lineItems.Add((new LineItem("Circle", 3, 3, 9)));
+                    lineItems.Add((new LineItem("Red colour surcharge", 1, 1, 1)));
+                    break;
+            }
 
             return lineItems;
         }
-
         
-        private void BlockListIterator(Dictionary<Block, int> orderBlockList)
-        {
-            foreach (var block in orderBlockList) CalculateShapeQuantity(block.Key.Shape, block.Value);
-        }
-
-        private void CalculateShapeQuantity(Shape shape, int value)
-        {
-            if (_shapeQuantities.TryAdd(shape, value)) return;
-            _shapeQuantities[shape] += value;
-        }
     }
 }

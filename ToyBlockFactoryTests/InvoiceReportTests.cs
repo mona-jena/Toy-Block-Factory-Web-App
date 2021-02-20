@@ -30,8 +30,9 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(ReportType.Invoice, invoice.ReportType);
         }
-        
-        string _david = string.Empty;
+
+
+        private string _david = string.Empty;
 
         [Fact]
         public void ReportContainsCustomerName()
@@ -43,7 +44,8 @@ namespace ToyBlockFactoryTests
             Assert.Equal(_david, invoice.Name);
         }
 
-        string _davidAddress = string.Empty;
+
+        private string _davidAddress = string.Empty;
         
         [Fact]
         public void ReportContainsCustomerAddress()
@@ -55,7 +57,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(_davidAddress, invoice.Address);
         }
 
-        DateTime _davidOrderDueDate;
+        private DateTime _davidOrderDueDate;
         [Fact]
         public void ReportContainsOrderDueDate()
         {
