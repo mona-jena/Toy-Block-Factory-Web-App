@@ -5,7 +5,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryConsole
 {
-    internal static class PrintReports
+    internal static class ReportPrinter
     {
         public static void PrintReport(IReport report)
         {
