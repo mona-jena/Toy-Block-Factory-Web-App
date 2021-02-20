@@ -7,11 +7,11 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class InvoiceReportGeneratorTests
+    public class InvoiceReportTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
         
-        public InvoiceReportGeneratorTests()
+        public InvoiceReportTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 

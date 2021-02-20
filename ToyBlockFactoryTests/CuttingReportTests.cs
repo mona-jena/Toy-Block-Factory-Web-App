@@ -7,11 +7,11 @@ using Xunit;
 
 namespace ToyBlockFactoryTests
 {
-    public class CuttingListReportGeneratorTests
+    public class CuttingReportTests
     {
         readonly ToyBlockFactory _toyBlockFactory;
         
-        public CuttingListReportGeneratorTests()
+        public CuttingReportTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
 
@@ -20,14 +20,14 @@ namespace ToyBlockFactoryTests
         }
         
         string _david = string.Empty;
-        string _davidsAddress = string.Empty;
+        string _davidAddress = string.Empty;
         
         private void CreateListOfOrders()
         {
             _david = "David Rudd";
-            _davidsAddress = "1 Bob Avenue, Auckland";
+            _davidAddress = "1 Bob Avenue, Auckland";
             var davidOrderDueDate = new DateTime(2021, 1, 19);
-            var davidOrder = _toyBlockFactory.CreateOrder(_david, _davidsAddress, davidOrderDueDate);
+            var davidOrder = _toyBlockFactory.CreateOrder(_david, _davidAddress, davidOrderDueDate);
             davidOrder.AddBlock(Shape.Square, Colour.Red);
             davidOrder.AddBlock(Shape.Square, Colour.Yellow);
             davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
@@ -94,7 +94,7 @@ namespace ToyBlockFactoryTests
 
             var cuttingList = _toyBlockFactory.GetCuttingListReport(orderId);
 
-            Assert.Equal(_davidsAddress, cuttingList.Address);
+            Assert.Equal(_davidAddress, cuttingList.Address);
         }
 
         [Fact]

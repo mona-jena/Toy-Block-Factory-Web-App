@@ -29,22 +29,49 @@ namespace ToyBlockFactoryTests
             toyBlockFactory.SubmitOrder(_customerOrder);
         }
 
-
-        [Theory]
-        [InlineData("Square", 2, 1, 2)]
-        [InlineData("Triangle", 2, 2, 4)]
-        [InlineData("Circle", 3, 3, 9)]
-        [InlineData("Red colour surcharge", 1, 1, 1)]
-        public void CanCalculateAndGenerateInvoiceLines(string description, int quantity, decimal price, decimal total)
+        [Fact]
+        public void ContainsLineItemDescription()
         {
-            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList) 
-                .SingleOrDefault(l => l.Description == description);
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
 
-            Assert.NotNull(invoiceLine);
-            Assert.Equal(description, invoiceLine?.Description);
-            Assert.Equal(quantity, invoiceLine?.Quantity);
-            Assert.Equal(price, invoiceLine?.Price);
-            Assert.Equal(total, invoiceLine?.Total);
+            Assert.Equal("Square", invoiceLine[0].Description);
+            Assert.Equal("Triangle", invoiceLine[1].Description);
+            Assert.Equal("Circle", invoiceLine[2].Description);
+            Assert.Equal("Red colour surcharge", invoiceLine[0].Description);
         }
+        
+        [Fact]
+        public void ContainsLineItemQuantity()
+        {
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+
+            Assert.Equal(2, invoiceLine[0].Quantity);
+            Assert.Equal(2, invoiceLine[1].Quantity);
+            Assert.Equal(3, invoiceLine[2].Quantity);
+            Assert.Equal(1, invoiceLine[0].Quantity);
+        }
+        
+        [Fact]
+        public void ContainsLineItemPrice()
+        {
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+
+            Assert.Equal(1, invoiceLine[0].Price);
+            Assert.Equal(2, invoiceLine[1].Price);
+            Assert.Equal(3, invoiceLine[2].Price);
+            Assert.Equal(1, invoiceLine[0].Price);
+        }
+        
+        [Fact]
+        public void CalculatesLineItemTotal()
+        {
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+
+            Assert.Equal(2, invoiceLine[0].Total);
+            Assert.Equal(4, invoiceLine[1].Total);
+            Assert.Equal(9, invoiceLine[2].Total);
+            Assert.Equal(1, invoiceLine[0].Total);
+        }
+       
     }
 }
