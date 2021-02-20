@@ -183,6 +183,6 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 
 2. Navigate to the ToyBlockFactoryConsole folder.
 
-3. In terminal run command: ```dotnet run```
+3. In your terminal type command: ```dotnet run```
 
 
