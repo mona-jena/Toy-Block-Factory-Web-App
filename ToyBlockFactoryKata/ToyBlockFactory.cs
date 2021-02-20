@@ -12,7 +12,7 @@ namespace ToyBlockFactoryKata
         private readonly OrderManagementSystem _orderManagementSystem = new();
         private readonly ReportGenerator _reportGenerator;
 
-        public ToyBlockFactory(IInvoiceCalculationStrategy priceCalculator)
+        public ToyBlockFactory(IInvoiceCalculator priceCalculator)
         {
             _reportGenerator = new ReportGenerator(priceCalculator);
         }

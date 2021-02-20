@@ -5,7 +5,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata.PricingStrategy
 {
-    public class PricingCalculator : IInvoiceCalculationStrategy
+    public class PricingCalculator : IInvoiceCalculator
     {
         private const decimal RedCost = 1;
         private readonly Dictionary<Shape, decimal> _pricingList;

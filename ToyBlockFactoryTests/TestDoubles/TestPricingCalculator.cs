@@ -6,7 +6,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryTests.TestDoubles
 {
-    public class TestPricingCalculator : IInvoiceCalculationStrategy
+    public class TestPricingCalculator : IInvoiceCalculator
     {
         private const decimal RedCost = 1;
         private readonly Dictionary<Shape, decimal> _pricingList;

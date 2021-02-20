@@ -7,10 +7,10 @@ namespace ToyBlockFactoryKata.ReportGenerators
 {
     internal class InvoiceReportGenerator : IReportGenerator
     {
-        private readonly IInvoiceCalculationStrategy _pricingCalculator;
+        private readonly IInvoiceCalculator _pricingCalculator;
         private readonly ITableFactory _tableFactory;
 
-        internal InvoiceReportGenerator(IInvoiceCalculationStrategy pricingCalculator, ITableFactory tableFactory)
+        internal InvoiceReportGenerator(IInvoiceCalculator pricingCalculator, ITableFactory tableFactory)
         {
             _pricingCalculator = pricingCalculator;
             _tableFactory = tableFactory;
@@ -35,7 +35,6 @@ namespace ToyBlockFactoryKata.ReportGenerators
 
             return report;
         }
-
         
     }
 }
