@@ -11,8 +11,6 @@ namespace ToyBlockFactoryTests
     public class PaintingReportTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        private string _david = string.Empty;
-        private string _davidAddress = string.Empty;
 
         public PaintingReportTests()
         {
@@ -32,6 +30,8 @@ namespace ToyBlockFactoryTests
             Assert.Equal(ReportType.Painting, paintingReport.ReportType);
         }
 
+        private string _david = string.Empty;
+        
         [Fact]
         public void ReportContainsCustomerName()
         {
@@ -42,6 +42,8 @@ namespace ToyBlockFactoryTests
             Assert.Equal(_david, paintingReport.Name);
         }
 
+        private string _davidAddress = string.Empty;
+        
         [Fact]
         public void ReportContainsCustomerAddress()
         {

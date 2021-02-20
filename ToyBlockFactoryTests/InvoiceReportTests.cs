@@ -11,10 +11,7 @@ namespace ToyBlockFactoryTests
     public class InvoiceReportTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
-        string _david = string.Empty;
-        string _davidAddress = string.Empty;
-        DateTime _davidOrderDueDate;
-        
+
         public InvoiceReportTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
@@ -33,6 +30,8 @@ namespace ToyBlockFactoryTests
 
             Assert.Equal(ReportType.Invoice, invoice.ReportType);
         }
+        
+        string _david = string.Empty;
 
         [Fact]
         public void ReportContainsCustomerName()
@@ -44,6 +43,8 @@ namespace ToyBlockFactoryTests
             Assert.Equal(_david, invoice.Name);
         }
 
+        string _davidAddress = string.Empty;
+        
         [Fact]
         public void ReportContainsCustomerAddress()
         {
@@ -54,6 +55,7 @@ namespace ToyBlockFactoryTests
             Assert.Equal(_davidAddress, invoice.Address);
         }
 
+        DateTime _davidOrderDueDate;
         [Fact]
         public void ReportContainsOrderDueDate()
         {
@@ -185,20 +187,3 @@ namespace ToyBlockFactoryTests
 
 
 
-//string[,] invoiceLine2 = new string[Enum.GetNames(typeof(Colour)).Length,Enum.GetNames(typeof(Shape)).Length];
-/*string[,] invoiceLine = new string[4, 4];
-invoiceLine[1, 0] = "Red";
-invoiceLine[2, 0] = "Blue";
-invoiceLine[3, 0] = "Yellow";
-invoiceLine[0, 1] = "Square";
-invoiceLine[1, 1] = "1";
-invoiceLine[2, 1] = "-";
-invoiceLine[3, 1] = "1";
-invoiceLine[0, 2] = "Triangle";
-invoiceLine[1, 2] = "-";
-invoiceLine[2, 2] = "2";
-invoiceLine[3, 2] = "-";
-invoiceLine[0, 3] = "Circle";
-invoiceLine[1, 3] = "-";
-invoiceLine[2, 3] = "1";
-invoiceLine[3, 3] = "2";*/
