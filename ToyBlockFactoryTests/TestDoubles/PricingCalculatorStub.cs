@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;

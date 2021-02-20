@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryConsole

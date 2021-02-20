@@ -10,11 +10,11 @@ namespace ToyBlockFactoryConsole
         {
             Console.Write("Please input your Name: ");
             var name = Console.ReadLine();
-            name = IfEmpty(name);
+            name = CheckWhileEmpty(name);
 
             Console.Write("Please input your Address: ");
             var address = Console.ReadLine();
-            address = IfEmpty(address);
+            address = CheckWhileEmpty(address);
 
             Console.Write("Please input your Due Date: ");
             var dateInput = Console.ReadLine();
@@ -40,7 +40,7 @@ namespace ToyBlockFactoryConsole
             UserInterface.GetReport(toyBlockFactory, orderId);
         }
 
-        private static string IfEmpty(string input)
+        private static string CheckWhileEmpty(string input)
         {
             while (string.IsNullOrEmpty(input))
             {
