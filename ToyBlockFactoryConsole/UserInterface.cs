@@ -26,7 +26,7 @@ namespace ToyBlockFactoryConsole
             }
         }
         
-        public static void PlaceOrder(ToyBlockFactory toyBlockFactory)
+        private static void PlaceOrder(ToyBlockFactory toyBlockFactory)
         {
             Console.Write("Please input your Name: ");
             var name = Console.ReadLine();
@@ -123,7 +123,7 @@ namespace ToyBlockFactoryConsole
             return block;
         }
         
-        public static void GetReport(ToyBlockFactory toyBlockFactory, string orderId)
+        private static void GetReport(ToyBlockFactory toyBlockFactory, string orderId)
         {
             var option = 1;
             while (option != 4)
@@ -172,7 +172,7 @@ namespace ToyBlockFactoryConsole
         }
 
         
-        public static void GenerateReportsForADate(ToyBlockFactory toyBlockFactory)
+        private static void GenerateReportsForADate(ToyBlockFactory toyBlockFactory)
         {
             var reportOption = 1;
             while (reportOption != 3)
@@ -185,13 +185,15 @@ namespace ToyBlockFactoryConsole
                 switch (reportOption)
                 {
                     case 1:
-                        var filteredCuttingLists = toyBlockFactory.GetCuttingListsByDate(GetDateInput());
+                        var cuttingReportDate = GetDateInput();
+                        var filteredCuttingLists = toyBlockFactory.GetCuttingListsByDate(cuttingReportDate);
                         foreach (var cuttingList in filteredCuttingLists) 
                             PrintReports.PrintReport(cuttingList);
                         break;
 
                     case 2:
-                        var filteredPaintingReports = toyBlockFactory.GetPaintingReportsByDate(GetDateInput());
+                        var paintingReportDate = GetDateInput();
+                        var filteredPaintingReports = toyBlockFactory.GetPaintingReportsByDate(paintingReportDate);
                         foreach (var paintingReport in filteredPaintingReports)
                             PrintReports.PrintReport(paintingReport);
                         break;
@@ -210,10 +212,10 @@ namespace ToyBlockFactoryConsole
         private static DateTime GetDateInput()
         {
             Console.Write("Which date would you like to filter for: ");
-            var reportDate = Console.ReadLine();
+            var userSpecifiedDate = Console.ReadLine();
             DateTime filterDate = default;
-            if (!string.IsNullOrEmpty(reportDate))
-                filterDate = InputValidator.ConvertToDateTime(reportDate);
+            if (!string.IsNullOrEmpty(userSpecifiedDate))
+                filterDate = InputValidator.ConvertToDateTime(userSpecifiedDate);
 
             return filterDate;
         }
