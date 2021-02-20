@@ -10,10 +10,8 @@ namespace ToyBlockFactoryTests
 {
     public class CuttingReportTests
     {
-        readonly ToyBlockFactory _toyBlockFactory;
-        string _david = string.Empty;
-        string _davidAddress = string.Empty;
-        
+        private readonly ToyBlockFactory _toyBlockFactory;
+
         public CuttingReportTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new TestPricingCalculator());
@@ -32,6 +30,8 @@ namespace ToyBlockFactoryTests
             Assert.Equal(ReportType.CuttingList, cuttingList.ReportType);
         }
 
+        string _david = string.Empty;
+        
         [Fact]
         public void ReportContainsCustomerName()
         {
@@ -42,6 +42,9 @@ namespace ToyBlockFactoryTests
             Assert.Equal(_david, cuttingList.Name);
         }
 
+        
+        string _davidAddress = string.Empty;
+        
         [Fact]
         public void ReportContainsCustomerAddress()
         {
