@@ -79,7 +79,7 @@ Your cutting department has 3 groups, one that cuts squares, one that cuts circl
 
 You have a single painting department that paints all shapes but wants to have shapes grouped by color
 
-## Invoice Report
+# Invoice Report
 
 Name: Mark Pearl
 Address: 1 Bob Avenue, Auckland
@@ -119,7 +119,7 @@ Red color surcharge	1 @ $1 ppi = $1
 Total : $16
 ~~~
 
-## Cutting List Report
+# Cutting List Report
 
 Name: Mark Pearl
 Address: 1 Bob Avenue, Auckland
@@ -148,7 +148,7 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 
 
 ~~~
 
-## Painting Report
+# Painting Report
 
 Name: Mark Pearl
 Address: 1 Bob Avenue, Auckland
