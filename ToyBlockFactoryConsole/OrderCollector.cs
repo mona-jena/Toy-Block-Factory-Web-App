@@ -21,8 +21,7 @@ namespace ToyBlockFactoryConsole
             DateTime dueDate = default;
             if (!string.IsNullOrEmpty(dateInput))
                 dueDate = InputValidator.ConvertToDateTime(dateInput);
-
-
+            
             Order order;
             if (dueDate != default) 
                 order = toyBlockFactory.CreateOrder(name, address);
@@ -33,7 +32,7 @@ namespace ToyBlockFactoryConsole
             var orderId = EnterBlockOrder(toyBlockFactory, order);
             while (orderId == string.Empty)
             {
-                Console.WriteLine("\nYou need to included blocks to create an order. Please try again.");
+                Console.WriteLine("\nYou need to add blocks to create an order. Please try again.");
                 orderId = EnterBlockOrder(toyBlockFactory, order);
             }
 
