@@ -20,7 +20,7 @@ namespace ToyBlockFactoryConsole
             var topRowLabels = report.OrderTable.SelectMany(l => l.TableColumn).Select(l => l.MeasuredItem).Distinct();
             String s = "|          ";
             foreach (var label in topRowLabels)
-                s += String.Format("| {0,8} ", label);
+                s += $"| {label,8} ";
             
             s += "|\n";
             for (var i =0; i <= topRowLabels.Count(); i++)
@@ -31,10 +31,10 @@ namespace ToyBlockFactoryConsole
             
             foreach (var row in report.OrderTable)
             {
-                s += String.Format("| {0,-8} |", row.Shape.ToString());
+                s += $"| {row.Shape.ToString(),-8} |";
                 foreach (var column in row.TableColumn)
                 {
-                    s += String.Format(" {0,8} |", column.Quantity.ToString());
+                    s += $" {column.Quantity.ToString(),8} |";
                 }
                 s += "\n";
             }
@@ -52,7 +52,7 @@ namespace ToyBlockFactoryConsole
             var lineItems = ((InvoiceReport) report).LineItems.Select(l => l);
             foreach (var line in lineItems)
             {
-                l += String.Format("{0,-25} ", line.Description);
+                l += $"{line.Description,-25} ";
                 l += line.Quantity + " @ $" + line.Price + " ppi = $" + line.Total + "\n";
             }
 
