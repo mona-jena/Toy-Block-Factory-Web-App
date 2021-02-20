@@ -18,41 +18,46 @@ namespace ToyBlockFactoryConsole
             Console.WriteLine();
 
             var topRowLabels = report.OrderTable.SelectMany(l => l.TableColumn).Select(l => l.MeasuredItem).Distinct();
-            Console.Write("|          ");
-            foreach (var label in topRowLabels) 
-                Console.Write("| " + label.PadRight(9));
+            String s = "|          ";
+            foreach (var label in topRowLabels)
+                s += String.Format("| {0,8} ", label);
             
-            Console.WriteLine("|");
+            s += "|\n";
             for (var i =0; i <= topRowLabels.Count(); i++)
             {
-                Console.Write("|----------");
+                s += "|----------";
             }
-            Console.WriteLine("|");
+            s += "|\n";
             
             foreach (var row in report.OrderTable)
             {
-                Console.Write("| " +  row.Shape.ToString().PadRight(9) + "|");
-
+                s += String.Format("| {0,-8} |", row.Shape.ToString());
                 foreach (var column in row.TableColumn)
                 {
-                    Console.Write(column.Quantity.ToString().PadLeft(9) + " |");
+                    s += String.Format(" {0,8} |", column.Quantity.ToString());
                 }
-                Console.WriteLine();
+                s += "\n";
             }
-           
-            Console.WriteLine();
+            Console.WriteLine($"{s}");
 
             
             if (report.ReportType == ReportType.Invoice)
+                PrintLineItems(report);
+            
+        }
+        
+        private static void PrintLineItems(IReport report)
+        {
+            String l = "";
+            var lineItems = ((InvoiceReport) report).LineItems.Select(l => l);
+            foreach (var line in lineItems)
             {
-                var lineItems = ((InvoiceReport) report).LineItems.Select(l => l);
-                foreach (var line in lineItems)
-                {
-                    Console.WriteLine(line.Description.PadRight(25) + line.Quantity + " @ $" + line.Price + " ppi = $" + line.Total);
-                }
-                Console.WriteLine("\nTotal : $" + ((InvoiceReport) report).Total);
+                l += String.Format("{0,-25} ", line.Description);
+                l += line.Quantity + " @ $" + line.Price + " ppi = $" + line.Total + "\n";
             }
 
+            l += "\nTotal : $" + ((InvoiceReport) report).Total;
+            Console.WriteLine($"{l}");
         }
         
     }
