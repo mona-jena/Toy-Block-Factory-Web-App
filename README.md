@@ -86,11 +86,11 @@ Address: 1 Bob Avenue, Auckland &nbsp;
 Due Date: 11 Feb 2021 &nbsp;
 Order #: 0001 
 
-|          | Red | Blue | Yellow |
-|----------|-----|------|--------|
-| Square   | 1   | -    | 1      |
-| Triangle | -   | 2    | -      |
-| Circle   | -   | 1    | 2      |
+|          |      Red |   Yellow |     Blue |
+|----------|----------|----------|----------|
+| Square   |        1 |        1 |        - |
+| Triangle |        - |        - |        2 |
+| Circle   |        - |        2 |        1 |
 
 Squares 		2 @ $1 ppi = $2  
 Triangles		2 @ $2 ppi = $4  
@@ -107,9 +107,9 @@ Name: Mark Pearl  Address: 1 Bob Avenue, Auckland  Due Date: 11/02/2021  Order #
 
 |          |      Red |   Yellow |     Blue |
 |----------|----------|----------|----------|
-| Square   |        1 |        1 |        0 |
-| Triangle |        0 |        0 |        2 |
-| Circle   |        0 |        2 |        1 |
+| Square   |        1 |        1 |        - |
+| Triangle |        - |        - |        2 |
+| Circle   |        - |        2 |        1 |
 
 Square                    2 @ $1 ppi = $2
 Triangle                  2 @ $2 ppi = $4
@@ -155,11 +155,11 @@ Address: 1 Bob Avenue, Auckland &nbsp;
 Due Date: 11 Feb 2021 &nbsp;
 Order #: 0001
 
-|          | Red | Blue | Yellow |
-|----------|-----|------|--------|
-| Square   | 1   | -    | 1      |
-| Triangle | -   | 2    | -      |
-| Circle   | -   | 1    | 2      |
+|          |      Red |   Yellow |     Blue |
+|----------|----------|----------|----------|
+| Square   |        1 |        1 |        - |
+| Triangle |        - |        - |        2 |
+| Circle   |        - |        2 |        1 |
 
 ### Example
 ~~~
@@ -169,9 +169,9 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 11/02/2021 Order #: 0
 
 |          |      Red |   Yellow |     Blue |
 |----------|----------|----------|----------|
-| Square   |        1 |        1 |        0 |
-| Triangle |        0 |        0 |        2 |
-| Circle   |        0 |        2 |        1 |
+| Square   |        1 |        1 |        - |
+| Triangle |        - |        - |        2 |
+| Circle   |        - |        2 |        1 |
 
 ~~~
 
