@@ -1,7 +1,7 @@
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
-namespace ToyBlockFactoryKata.ReportSystem
+namespace ToyBlockFactoryKata.ReportCreators
 {
     internal interface IReportCreator
     {

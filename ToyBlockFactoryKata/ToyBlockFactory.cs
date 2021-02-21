@@ -2,19 +2,19 @@ using System;
 using System.Collections.Generic;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
+using ToyBlockFactoryKata.ReportCreators;
 using ToyBlockFactoryKata.Reports;
-using ToyBlockFactoryKata.ReportSystem;
 
 namespace ToyBlockFactoryKata
 {
     public class ToyBlockFactory
     {
         private readonly OrderManagementSystem _orderManagementSystem = new();
-        private readonly ReportCreator _reportCreator;
+        private readonly ReportSystem _reportSystem;
 
         public ToyBlockFactory(IInvoiceCalculator priceCalculator)
         {
-            _reportCreator = new ReportCreator(priceCalculator);
+            _reportSystem = new ReportSystem(priceCalculator);
         }
 
         public Order CreateOrder(string customerName, string customerAddress)
@@ -53,14 +53,14 @@ namespace ToyBlockFactoryKata
         public IReport GetReport(string orderId, ReportType reportType)
         {
             var requestedOrder = GetOrder(orderId);
-            return _reportCreator.GenerateReport(requestedOrder, reportType);
+            return _reportSystem.GenerateReport(requestedOrder, reportType);
         }
         
         
         public IEnumerable<IReport> GetReportsByDate(DateTime date, ReportType reportType)
         {
             var orderRecords = _orderManagementSystem.orderRecords;
-            return _reportCreator.FilterReportsByDate(date, orderRecords, reportType);
+            return _reportSystem.FilterReportsByDate(date, orderRecords, reportType);
         }
         
     }

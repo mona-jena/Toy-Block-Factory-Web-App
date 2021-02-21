@@ -6,15 +6,15 @@ using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryKata.Tables;
 
-namespace ToyBlockFactoryKata.ReportSystem
+namespace ToyBlockFactoryKata.ReportCreators
 {
-    internal class ReportCreator
+    internal class ReportSystem
     {
         private readonly IReportCreator _cuttingReportCreator = new TableReportCreator(new QuantityTableFactory());
         private readonly IReportCreator _invoiceReportCreator;
         private readonly IReportCreator _paintingReportCreator = new TableReportCreator(new ColourTableFactory());
 
-        internal ReportCreator(IInvoiceCalculator pricingCalculator)
+        internal ReportSystem(IInvoiceCalculator pricingCalculator)
         {
             _invoiceReportCreator = new InvoiceReportCreator(pricingCalculator, new ColourTableFactory());
         }

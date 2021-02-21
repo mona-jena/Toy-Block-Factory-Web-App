@@ -2,7 +2,7 @@ using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryKata.Tables;
 
-namespace ToyBlockFactoryKata.ReportSystem
+namespace ToyBlockFactoryKata.ReportCreators
 {
     internal class TableReportCreator : IReportCreator
     {
