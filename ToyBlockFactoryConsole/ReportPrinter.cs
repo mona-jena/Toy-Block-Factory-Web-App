@@ -34,7 +34,10 @@ namespace ToyBlockFactoryConsole
                 s += $"| {row.Shape.ToString(),-8} |";
                 foreach (var column in row.TableColumn)
                 {
-                    s += $" {column.Quantity.ToString(),8} |";
+                    if (column.Quantity > 0)
+                        s += $" {column.Quantity.ToString(),8} |";
+                    else
+                        s += $" {"-",8} |";
                 }
                 s += "\n";
             }
