@@ -92,10 +92,10 @@ Order #: 0001
 | Triangle |        - |        - |        2 |
 | Circle   |        - |        2 |        1 |
 
-Squares 		2 @ $1 ppi = $2  
-Triangles		2 @ $2 ppi = $4  
-Circles			3 @ $3 ppi = $9  
-Red color surcharge	1 @ $1 ppi = $1  
+Square                    2 @ $1 ppi = $2
+Triangle                  2 @ $2 ppi = $4
+Circle                    3 @ $3 ppi = $9
+Red colour surcharge      1 @ $1 ppi = $1
 
 Total : $16
 
