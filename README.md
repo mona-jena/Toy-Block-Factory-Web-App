@@ -136,7 +136,7 @@ Order #: 0001
 ### Example 
 
 ~~~
-Your cutting list has been generated:
+Your cutting list report has been generated:
 
 Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 11/02/2021 Order #: 0001
 
