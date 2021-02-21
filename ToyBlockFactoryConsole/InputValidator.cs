@@ -21,7 +21,8 @@ namespace ToyBlockFactoryConsole
 
         internal static int IfValidInteger(string input)
         {
-            if (int.TryParse(input, out var num)) return num;
+            if (int.TryParse(input, out var num)) 
+                return num;
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("Invalid integer! Please enter again: ");
