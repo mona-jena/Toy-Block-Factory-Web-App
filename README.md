@@ -17,7 +17,7 @@ An order consists of a combination of shapes and colors. Below is an example of 
 
 ### Functionalities
 
-Factory has an order management system that should be able to enter single order details. It also has a Report Generator to generate reports. 
+Factory has an Order Management System that is able to take in single order details at a time. It also has a Report System to generate reports. 
 
 This application can:
 - Take orders
@@ -36,7 +36,7 @@ Welcome to the Toy Block Factory!
 
 Please input your Name: Mark Pearl  
 Please input your Address: 1 Bob Avenue, Auckland
-Please input your Due Date: 19 Jan 2021
+Please input your Due Date: 11 Jan 2021
 
 Please input the number of Red Squares: 1
 Please input the number of Blue Squares: 
@@ -60,7 +60,7 @@ Blocks have a fixed price which is determine by the shape. We have the following
 - Triangle blocks cost $2 
 - Circle blocks cost $3
 
-There is no additional charge for the colour unless the shape is in red, in which case we charge an additional $1 per shape surcharge is applied.
+Red colour blocks are charged an additional $1 per shape surcharge, other colours have no surcharges applied.
 
 ## Order details
 
@@ -71,7 +71,7 @@ An order has a:
 - Order Number
 - List of the blocks in an order with their respective colors
 
-### Cutting & Painting Department Needs
+## Cutting & Painting Department Needs
 
 The factory cutting department and a painting department
 
@@ -81,10 +81,10 @@ You have a single painting department that paints all shapes but wants to have s
 
 # Invoice Report
 
-Name: Mark Pearl
-Address: 1 Bob Avenue, Auckland
-Due Date: 19 Jan 2021
-Order #: 0001
+Name: Mark Pearl &nbsp;
+Address: 1 Bob Avenue, Auckland &nbsp;
+Due Date: 11 Feb 2021 &nbsp;
+Order #: 0001 
 
 |          | Red | Blue | Yellow |
 |----------|-----|------|--------|
@@ -103,27 +103,28 @@ Total : $16
 ~~~
 Your invoice report has been generated:
 
-Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 0001
+Name: Mark Pearl  Address: 1 Bob Avenue, Auckland  Due Date: 11/02/2021  Order #: 0001
 
-|          | Red | Blue | Yellow |
-|----------|-----|------|--------|
-| Square   | 1   | -    | 1      |
-| Triangle | -   | 2    | -      |
-| Circle   | -   | 1    | 2      |
+|          |      Red |   Yellow |     Blue |
+|----------|----------|----------|----------|
+| Square   |        1 |        1 |        0 |
+| Triangle |        0 |        0 |        2 |
+| Circle   |        0 |        2 |        1 |
 
-Squares 		2 @ $1 ppi = $2  
-Triangles		2 @ $2 ppi = $4  
-Circles			3 @ $3 ppi = $9  
-Red color surcharge	1 @ $1 ppi = $1 
+Square                    2 @ $1 ppi = $2
+Triangle                  2 @ $2 ppi = $4
+Circle                    3 @ $3 ppi = $9
+Red colour surcharge      1 @ $1 ppi = $1
 
 Total : $16
+
 ~~~
 
 # Cutting List Report
 
-Name: Mark Pearl
-Address: 1 Bob Avenue, Auckland
-Due Date: 19 Jan 2021
+Name: Mark Pearl &nbsp;
+Address: 1 Bob Avenue, Auckland &nbsp;
+Due Date: 11 Feb 2021 &nbsp;
 Order #: 0001
 
 |          | Qty |
@@ -137,22 +138,21 @@ Order #: 0001
 ~~~
 Your cutting list has been generated:
 
-Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 0001
+Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 11/02/2021 Order #: 0001
 
-|          | Qty |
-|----------|-----|
-| Square   | 2   |
-| Triangle | 2   |
-| Circle   | 3   |
-
+|          |      Qty |
+|----------|----------|
+| Square   |        2 |
+| Triangle |        2 |
+| Circle   |        3 |
 
 ~~~
 
 # Painting Report
 
-Name: Mark Pearl
-Address: 1 Bob Avenue, Auckland
-Due Date: 19 Jan 2021
+Name: Mark Pearl &nbsp;
+Address: 1 Bob Avenue, Auckland &nbsp;
+Due Date: 11 Feb 2021 &nbsp;
 Order #: 0001
 
 |          | Red | Blue | Yellow |
@@ -165,13 +165,14 @@ Order #: 0001
 ~~~
 Your painting report has been generated:
 
-Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 19 Jan 2021 Order #: 0001
+Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 11/02/2021 Order #: 0001
 
-|          | Red | Blue | Yellow |
-|----------|-----|------|--------|
-| Square   | 1   | -    | 1      |
-| Triangle | -   | 2    | -      |
-| Circle   | -   | 1    | 2      |
+|          |      Red |   Yellow |     Blue |
+|----------|----------|----------|----------|
+| Square   |        1 |        1 |        0 |
+| Triangle |        0 |        0 |        2 |
+| Circle   |        0 |        2 |        1 |
+
 ~~~
 
 ------------------------------------------------------------------------------------------------------------
