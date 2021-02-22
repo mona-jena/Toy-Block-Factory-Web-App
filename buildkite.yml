@@ -1,6 +1,7 @@
 ---
 steps:
   - label: 'do not panic :cherry_blossom::whale:'
-    command: 'echo hello, engineer'
+    command: 
+      - 'docker build -t tbf -f ./App/Dockerfile .'
     agents:
       queue: grace-lab
