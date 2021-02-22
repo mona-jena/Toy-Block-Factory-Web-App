@@ -21,7 +21,7 @@ namespace ToyBlockFactoryConsole
                     GetOrder(toyBlockFactory);
                     break;
                 case 3:
-                    GenerateReportsForADate(toyBlockFactory);
+                    GetReportsForADate(toyBlockFactory);
                     break;
             }
         }
@@ -74,7 +74,7 @@ namespace ToyBlockFactoryConsole
         }
         
         
-        private static void GenerateReportsForADate(ToyBlockFactory toyBlockFactory)
+        private static void GetReportsForADate(ToyBlockFactory toyBlockFactory)
         {
             var reportOption = 1;
             while (reportOption != 3)
