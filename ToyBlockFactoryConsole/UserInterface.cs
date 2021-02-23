@@ -17,6 +17,7 @@ namespace ToyBlockFactoryConsole
                 case 1:
                     OrderCollector.PlaceOrder(toyBlockFactory);
                     break;
+                
                 case 2:
                     GetOrder(toyBlockFactory);
                     break;
