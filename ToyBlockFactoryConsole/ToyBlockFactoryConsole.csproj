@@ -5,6 +5,10 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DebugType>none</DebugType>
+    </PropertyGroup>
+
     <ItemGroup>
       <ProjectReference Include="..\ToyBlockFactoryKata\ToyBlockFactoryKata.csproj" />
     </ItemGroup>
