@@ -1,7 +1,7 @@
 ---
 steps:
   - label: 'do not panic :cherry_blossom::whale:'
-    command: 'docker build -f ./App/Dockerfile.test .''
+    command: 'docker build -f ./App/Dockerfile.test .'
     agents:
       queue: grace-lab
   - label: 'mona second step'
