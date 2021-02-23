@@ -1,10 +1,11 @@
 ---
 steps:
-  - label: 'do not panic :cherry_blossom::whale:'
+  - label: 'test panic :cherry_blossom::whale:'
     command: 'docker build -f ./Dockerfile.test .'
     agents:
       queue: grace-lab
-  - label: 'mona second step'
+  - wait 
+  - label: 'make dockerimage with tbf'
     command:
       - 'docker build -t tbf -f ./Dockerfile .'
     agents:
