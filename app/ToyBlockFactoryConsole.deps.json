@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "ToyBlockFactoryConsole/1.0.0": {
+        "dependencies": {
+          "ToyBlockFactoryKata": "1.0.0"
+        },
+        "runtime": {
+          "ToyBlockFactoryConsole.dll": {}
+        }
+      },
+      "ToyBlockFactoryKata/1.0.0": {
+        "runtime": {
+          "ToyBlockFactoryKata.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ToyBlockFactoryConsole/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ToyBlockFactoryKata/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
