@@ -7,6 +7,5 @@ steps:
   - label: 'mona\'s second step'
     command: 
       - 'docker build -t tbf -f ./App/Dockerfile .'
-      - 'docker run -i --rm tbf'    #why do I need to remove?
     agents:
       queue: grace-lab
