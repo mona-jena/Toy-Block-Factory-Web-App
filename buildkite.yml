@@ -3,6 +3,6 @@ steps:
   - label: 'do not panic :cherry_blossom::whale:'
     command: 
       - 'docker build -t tbf -f ./App/Dockerfile .'
-      - 'docker run -i tbf'    #why do I need to remove?
+      - 'docker run -i --rm tbf'    #why do I need to remove?
     agents:
       queue: grace-lab
