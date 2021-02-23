@@ -25,7 +25,7 @@ namespace ToyBlockFactoryTests
         {
             var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
 
-            Assert.Equal("Square", invoiceLine[0].Description);
+            Assert.Equal("WRONG", invoiceLine[0].Description);
             Assert.Equal("Triangle", invoiceLine[1].Description);
             Assert.Equal("Circle", invoiceLine[2].Description);
             Assert.Equal("Red colour surcharge", invoiceLine[3].Description);
