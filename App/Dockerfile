@@ -6,5 +6,4 @@ RUN dotnet publish -c release -o /app
 FROM mcr.microsoft.com/dotnet/runtime:5.0 
 WORKDIR /app
 COPY --from=build /app ./
-ENTRYPOINT ["docker", "run"]
-RUN ["/bin/bash", "-c", "echo hello"]
+ENTRYPOINT ["tbf", "run"]
