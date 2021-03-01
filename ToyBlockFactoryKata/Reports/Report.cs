@@ -10,6 +10,6 @@ namespace ToyBlockFactoryKata.Reports
         public string Address { get; init; }
         public DateTime DueDate { get; init; }
         public string OrderId { get; init; }
-        public List<TableRow> OrderTable { get; } = new();
+        public List<TableRow> OrderTable { get; init; } = new();
     }
 }

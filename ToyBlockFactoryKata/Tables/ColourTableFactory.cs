@@ -7,7 +7,7 @@ namespace ToyBlockFactoryKata.Tables
 {
     internal class ColourTableFactory : ITableFactory
     {
-        public IEnumerable<TableRow> GenerateTable(Dictionary<Block, int> orderBlockList)
+        public List<TableRow> GenerateTable(Dictionary<Block, int> orderBlockList)
         {
             var table = new List<TableRow>();
             foreach (var shape in ShapesUsedInOrder(orderBlockList))

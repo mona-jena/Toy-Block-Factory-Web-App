@@ -27,26 +27,22 @@ namespace ToyBlockFactoryKata.ReportCreators
                 Address = requestedOrder.Address,
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId,
+                OrderTable = GetTable(requestedOrder),
                 LineItems = GetLineItems(requestedOrder),
-                /*var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);
-                report.LineItems.AddRange(lineItems);*/
                 Total = GetLineItems(requestedOrder).Sum(item => item.Total)
             };
             
-            var table = _tableFactory.GenerateTable(requestedOrder.BlockList);
-            report.OrderTable.AddRange(table);
-            
-            /*var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);
-            report.LineItems.AddRange(lineItems);*/
-
-            //report.Total = report.LineItems.Sum(item => item.Total);
-
             return report;
         }
 
         private List<LineItem> GetLineItems(Order requestedOrder)
         {
             return _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);
+        }
+        
+        private List<TableRow> GetTable(Order requestedOrder)
+        {
+            return _tableFactory.GenerateTable(requestedOrder.BlockList);
         }
         
         
