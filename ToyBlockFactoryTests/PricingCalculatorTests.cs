@@ -23,7 +23,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void ContainsLineItemDescription()
         {
-            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder).ToList();
 
             Assert.Equal("Square", invoiceLine[0].Description);
             Assert.Equal("Triangle", invoiceLine[1].Description);
@@ -34,7 +34,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void ContainsLineItemQuantity()
         {
-            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder).ToList();
 
             Assert.Equal(2, invoiceLine[0].Quantity);
             Assert.Equal(2, invoiceLine[1].Quantity);
@@ -45,7 +45,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void ContainsLineItemPrice()
         {
-            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder).ToList();
 
             Assert.Equal(1, invoiceLine[0].Price);
             Assert.Equal(2, invoiceLine[1].Price);
@@ -56,7 +56,7 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void CalculatesLineItemTotal()
         {
-            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder.BlockList).ToList();
+            var invoiceLine = _pricingCalculator.GenerateLineItems(_customerOrder).ToList();
 
             Assert.Equal(2, invoiceLine[0].Total);
             Assert.Equal(4, invoiceLine[1].Total);

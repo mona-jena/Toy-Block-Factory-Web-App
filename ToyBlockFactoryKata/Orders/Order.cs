@@ -5,6 +5,8 @@ namespace ToyBlockFactoryKata.Orders
 {
     public record Order
     {
+        internal Dictionary<Shape, int> shapeQuantities { get; }
+        
         public Order(string customerName, string customerAddress)
             : this(customerName, customerAddress, DateTime.Today.AddDays(7))
         {
@@ -32,5 +34,17 @@ namespace ToyBlockFactoryKata.Orders
             else
                 BlockList.Add(block, 1);
         }
+        
+        private void BlockListIterator(Dictionary<Block, int> orderBlockList)
+        {
+            foreach (var block in orderBlockList) 
+                CalculateShapeQuantity(block.Key.Shape, block.Value);
+        }
+
+        private void CalculateShapeQuantity(Shape shape, int value)
+        {
+            if (shapeQuantities.TryAdd(shape, value)) return;
+            shapeQuantities[shape] += value;
+        } 
     }
 }

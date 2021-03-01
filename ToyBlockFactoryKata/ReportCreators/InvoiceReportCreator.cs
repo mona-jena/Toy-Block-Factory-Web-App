@@ -37,14 +37,13 @@ namespace ToyBlockFactoryKata.ReportCreators
 
         private List<LineItem> GetLineItems(Order requestedOrder)
         {
-            return _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);
+            return _pricingCalculator.GenerateLineItems(requestedOrder);
         }
         
         private List<TableRow> GetTable(Order requestedOrder)
         {
             return _tableFactory.GenerateTable(requestedOrder.BlockList);
         }
-        
         
     }
 }

@@ -9,7 +9,7 @@ namespace ToyBlockFactoryKata.PricingStrategy
     {
         private const decimal RedCost = 1;
         private readonly Dictionary<Shape, decimal> _pricingList;
-        private readonly Dictionary<Shape, int> _shapeQuantities = new();
+        
 
         public PricingCalculator()
         {
@@ -21,12 +21,12 @@ namespace ToyBlockFactoryKata.PricingStrategy
             };
         }
 
-        public List<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
+        public List<LineItem> GenerateLineItems(Order order)
         {
-            BlockListIterator(orderBlockList);
+            //BlockListIterator(orderBlockList);
 
             var lineItems = new List<LineItem>();
-            foreach (var shape in _shapeQuantities)
+            foreach (var shape in order.shapeQuantities)
                 lineItems.Add(new LineItem(
                     shape.Key.ToString(),
                     shape.Value,
@@ -34,7 +34,7 @@ namespace ToyBlockFactoryKata.PricingStrategy
                     shape.Value * _pricingList[shape.Key])
                 );
 
-            var redQuantity = orderBlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);
+            var redQuantity = order.BlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);
             if (redQuantity > 0)
                 lineItems.Add(new LineItem(
                     "Red colour surcharge",
@@ -47,16 +47,6 @@ namespace ToyBlockFactoryKata.PricingStrategy
         }
 
         
-        private void BlockListIterator(Dictionary<Block, int> orderBlockList)
-        {
-            foreach (var block in orderBlockList) 
-                CalculateShapeQuantity(block.Key.Shape, block.Value);
-        }
-
-        private void CalculateShapeQuantity(Shape shape, int value)
-        {
-            if (_shapeQuantities.TryAdd(shape, value)) return;
-            _shapeQuantities[shape] += value;
-        }
+       
     }
 }

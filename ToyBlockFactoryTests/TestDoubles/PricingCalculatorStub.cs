@@ -8,16 +8,16 @@ namespace ToyBlockFactoryTests.TestDoubles
     public class PricingCalculatorStub : IInvoiceCalculator
     {
 
-        public List<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
+        public List<LineItem> GenerateLineItems(Order requestedOrder)
         {
             List<LineItem> lineItems = new();
 
-            if (orderBlockList.Count == 3)
+            if (requestedOrder.BlockList.Count == 3)
             {
                 lineItems.Add((new LineItem("Square", 2, 1, 2)));
                 lineItems.Add((new LineItem("Circle", 2, 3, 6)));
             }
-            else if (orderBlockList.Count == 5)
+            else if (requestedOrder.BlockList.Count == 5)
             {
                 lineItems.Add((new LineItem("Square", 2, 1, 2)));
                 lineItems.Add((new LineItem("Triangle", 2, 2, 4)));
