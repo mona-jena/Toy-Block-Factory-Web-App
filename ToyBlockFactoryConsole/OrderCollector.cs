@@ -31,9 +31,6 @@ namespace ToyBlockFactoryConsole
             {
                 order = toyBlockFactory.CreateOrder(name, address);
             }
-                
-            
-            
 
             Console.WriteLine();
 

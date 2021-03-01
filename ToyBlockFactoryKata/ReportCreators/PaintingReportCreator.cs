@@ -29,5 +29,6 @@ namespace ToyBlockFactoryKata.ReportCreators
             
             return report;
         }
+        
     }
 }

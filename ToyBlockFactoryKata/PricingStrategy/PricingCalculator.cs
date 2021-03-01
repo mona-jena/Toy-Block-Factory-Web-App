@@ -21,7 +21,7 @@ namespace ToyBlockFactoryKata.PricingStrategy
             };
         }
 
-        public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
+        public List<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {
             BlockListIterator(orderBlockList);
 

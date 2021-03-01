@@ -8,7 +8,7 @@ namespace ToyBlockFactoryTests.TestDoubles
     public class PricingCalculatorStub : IInvoiceCalculator
     {
 
-        public IEnumerable<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
+        public List<LineItem> GenerateLineItems(Dictionary<Block, int> orderBlockList)
         {
             List<LineItem> lineItems = new();
 

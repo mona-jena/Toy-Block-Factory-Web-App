@@ -82,9 +82,6 @@ namespace ToyBlockFactoryKata.ReportCreators
         {
             return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GeneratePaintingReport(o.Value));
         }
-
         
     }
-
-    
 }
