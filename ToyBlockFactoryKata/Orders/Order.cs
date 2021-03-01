@@ -17,6 +17,7 @@ namespace ToyBlockFactoryKata.Orders
             Name = customerName;
             Address = customerAddress;
             DueDate = date;
+            BlockListIterator();
         }
 
         public string Name { get; }
@@ -35,9 +36,9 @@ namespace ToyBlockFactoryKata.Orders
                 BlockList.Add(block, 1);
         }
         
-        private void BlockListIterator(Dictionary<Block, int> orderBlockList)
+        private void BlockListIterator()
         {
-            foreach (var block in orderBlockList) 
+            foreach (var block in BlockList) 
                 CalculateShapeQuantity(block.Key.Shape, block.Value);
         }
 
