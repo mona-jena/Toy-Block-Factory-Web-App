@@ -8,7 +8,7 @@ namespace ToyBlockFactoryConsole
         
         internal static DateTime ConvertToDateTime(string dateInput)
         {
-            if (DateTime.TryParse(dateInput, new CultureInfo("NZ"), DateTimeStyles.AssumeLocal, out var dueDate))
+            if (DateTime.TryParse(dateInput, new CultureInfo("en-NZ"), DateTimeStyles.AssumeLocal, out var dueDate))
                 return dueDate;
 
             Console.ForegroundColor = ConsoleColor.Red;
