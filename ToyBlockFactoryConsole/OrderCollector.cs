@@ -23,9 +23,16 @@ namespace ToyBlockFactoryConsole
                 dueDate = InputValidator.ConvertToDateTime(dateInput);
             
             Order order;
-            if (dueDate < DateTime.Today) 
+            if (dueDate >= DateTime.Today)
+            {
                 order = toyBlockFactory.CreateOrder(name, address, dueDate);
-            order = toyBlockFactory.CreateOrder(name, address);
+            }
+            else
+            {
+                order = toyBlockFactory.CreateOrder(name, address);
+            }
+                
+            
             
 
             Console.WriteLine();
