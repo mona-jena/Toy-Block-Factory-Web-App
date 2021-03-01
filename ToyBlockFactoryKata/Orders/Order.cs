@@ -5,8 +5,8 @@ namespace ToyBlockFactoryKata.Orders
 {
     public record Order
     {
-        internal Dictionary<Shape, int> shapeQuantities { get; } = new();
-        
+        private Dictionary<Shape, int> _shapeQuantities = new();
+
         public Order(string customerName, string customerAddress)
             : this(customerName, customerAddress, DateTime.Today.AddDays(7))
         {
@@ -17,7 +17,6 @@ namespace ToyBlockFactoryKata.Orders
             Name = customerName;
             Address = customerAddress;
             DueDate = date;
-            BlockListIterator();
         }
 
         public string Name { get; }
@@ -36,16 +35,32 @@ namespace ToyBlockFactoryKata.Orders
                 BlockList.Add(block, 1);
         }
         
-        private void BlockListIterator()
+        /*private void BlockListIterator()
         {
             foreach (var block in BlockList) 
                 CalculateShapeQuantity(block.Key.Shape, block.Value);
-        }
+        }*/
 
-        private void CalculateShapeQuantity(Shape shape, int value)
+        internal Dictionary<Shape, int> shapeQuantities 
         {
-            if (shapeQuantities.TryAdd(shape, value)) return;
-            shapeQuantities[shape] += value;
+            get
+            {
+                foreach (var block in BlockList)
+                {
+                    if (_shapeQuantities.TryAdd(block.Key.Shape, block.Value)) continue;
+                    _shapeQuantities[block.Key.Shape] += block.Value;
+                }
+                return _shapeQuantities;
+            }
+           
         } 
+        /*private void CalculateShapeQuantity()
+        {
+            foreach (var block in BlockList)
+            {
+                if (shapeQuantities.TryAdd(block.Key.Shape, block.Value)) return;
+                shapeQuantities[block.Key.Shape] += block.Value;
+            }
+        } */
     }
 }
