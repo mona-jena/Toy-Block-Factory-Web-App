@@ -5,7 +5,7 @@ namespace ToyBlockFactoryKata.Orders
 {
     public record Order
     {
-        internal Dictionary<Shape, int> shapeQuantities { get; }
+        internal Dictionary<Shape, int> shapeQuantities { get; } = new();
         
         public Order(string customerName, string customerAddress)
             : this(customerName, customerAddress, DateTime.Today.AddDays(7))
