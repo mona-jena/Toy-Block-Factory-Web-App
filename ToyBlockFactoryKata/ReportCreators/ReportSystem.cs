@@ -10,9 +10,9 @@ namespace ToyBlockFactoryKata.ReportCreators
 {
     internal class ReportSystem
     {
-        private readonly IReportCreator _cuttingReportCreator = new TableReportCreator(new QuantityTableFactory());
+        private readonly IReportCreator _cuttingReportCreator = new CuttingReportCreator(new QuantityTableFactory());
         private readonly IReportCreator _invoiceReportCreator;
-        private readonly IReportCreator _paintingReportCreator = new TableReportCreator(new ColourTableFactory());
+        private readonly IReportCreator _paintingReportCreator = new PaintingReportCreator(new ColourTableFactory());
 
         internal ReportSystem(IInvoiceCalculator pricingCalculator)
         {
@@ -60,17 +60,17 @@ namespace ToyBlockFactoryKata.ReportCreators
 
         private IReport GenerateInvoice(Order requestedOrder)
         {
-            return _invoiceReportCreator.GenerateReport(ReportType.Invoice, requestedOrder);
+            return _invoiceReportCreator.GenerateReport(requestedOrder);
         }
 
         private IReport GenerateCuttingList(Order requestedOrder)
         {
-            return _cuttingReportCreator.GenerateReport(ReportType.CuttingList, requestedOrder);
+            return _cuttingReportCreator.GenerateReport(requestedOrder);
         }
 
         private IReport GeneratePaintingReport(Order requestedOrder)
         {
-            return _paintingReportCreator.GenerateReport(ReportType.Painting, requestedOrder);
+            return _paintingReportCreator.GenerateReport(requestedOrder);
         }
 
         private IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
@@ -85,4 +85,6 @@ namespace ToyBlockFactoryKata.ReportCreators
 
         
     }
+
+    
 }

@@ -18,12 +18,12 @@ namespace ToyBlockFactoryConsole
 
             Console.Write("Please input your Due Date: ");
             var dateInput = Console.ReadLine();
-            DateTime dueDate = default;
+            DateTime dueDate = DateTime.Today;
             if (!string.IsNullOrEmpty(dateInput))
                 dueDate = InputValidator.ConvertToDateTime(dateInput);
             
             Order order;
-            if (dueDate != default) 
+            if (dueDate < DateTime.Today) 
                 order = toyBlockFactory.CreateOrder(name, address, dueDate);
             order = toyBlockFactory.CreateOrder(name, address);
             

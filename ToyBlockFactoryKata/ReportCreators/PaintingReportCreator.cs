@@ -4,20 +4,20 @@ using ToyBlockFactoryKata.Tables;
 
 namespace ToyBlockFactoryKata.ReportCreators
 {
-    internal class TableReportCreator : IReportCreator
+    internal class PaintingReportCreator : IReportCreator
     {
         private readonly ITableFactory _tableFactory;
 
-        internal TableReportCreator(ITableFactory tableFactory)
+        internal PaintingReportCreator(ITableFactory tableFactory)
         {
             _tableFactory = tableFactory;
         }
 
-        public IReport GenerateReport(ReportType reportType, Order requestedOrder)
+        public IReport GenerateReport(Order requestedOrder)
         {
             var report = new Report
             {
-                ReportType = reportType,
+                ReportType = ReportType.Painting,
                 Name = requestedOrder.Name,
                 Address = requestedOrder.Address,
                 DueDate = requestedOrder.DueDate,

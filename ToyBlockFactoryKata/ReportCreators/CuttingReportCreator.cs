@@ -1,26 +1,22 @@
 using ToyBlockFactoryKata.Orders;
-using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryKata.Tables;
 
 namespace ToyBlockFactoryKata.ReportCreators
 {
-    internal class InvoiceReportCreator : IReportCreator
+    internal class CuttingReportCreator : IReportCreator
     {
-        private readonly IInvoiceCalculator _pricingCalculator;
         private readonly ITableFactory _tableFactory;
 
-        internal InvoiceReportCreator(IInvoiceCalculator pricingCalculator, ITableFactory tableFactory)
+        public CuttingReportCreator(ITableFactory tableFactory)
         {
-            _pricingCalculator = pricingCalculator;
             _tableFactory = tableFactory;
         }
-
         public IReport GenerateReport(Order requestedOrder)
         {
-            var report = new InvoiceReport
+            var report = new Report
             {
-                ReportType = ReportType.Invoice,
+                ReportType = ReportType.CuttingList,
                 Name = requestedOrder.Name,
                 Address = requestedOrder.Address,
                 DueDate = requestedOrder.DueDate,
@@ -30,11 +26,7 @@ namespace ToyBlockFactoryKata.ReportCreators
             var table = _tableFactory.GenerateTable(requestedOrder.BlockList);
             report.OrderTable.AddRange(table);
             
-            var lineItems = _pricingCalculator.GenerateLineItems(requestedOrder.BlockList);
-            report.LineItems.AddRange(lineItems);
-
             return report;
         }
-        
     }
 }
