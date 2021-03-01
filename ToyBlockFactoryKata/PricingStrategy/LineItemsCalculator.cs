@@ -5,13 +5,13 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata.PricingStrategy
 {
-    public class PricingCalculator : IInvoiceCalculator
+    public class LineItemsCalculator : IInvoiceCalculator
     {
         private const decimal RedCost = 1;
         private readonly Dictionary<Shape, decimal> _pricingList;
         
 
-        public PricingCalculator()
+        public LineItemsCalculator()
         {
             _pricingList = new Dictionary<Shape, decimal>
             {
@@ -23,8 +23,6 @@ namespace ToyBlockFactoryKata.PricingStrategy
 
         public List<LineItem> GenerateLineItems(Order order)
         {
-            //BlockListIterator(orderBlockList);
-
             var lineItems = new List<LineItem>();
             foreach (var shape in order.shapeQuantities)
                 lineItems.Add(new LineItem(
@@ -45,8 +43,6 @@ namespace ToyBlockFactoryKata.PricingStrategy
 
             return lineItems;
         }
-
-        
        
     }
 }

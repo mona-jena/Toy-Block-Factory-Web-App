@@ -16,7 +16,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory = new ToyBlockFactory(new PricingCalculatorStub());
 
             OrderWithDateGiven();
-            OrderWithNoDateProvided();
+            OrderWithNoDateGiven();
             _emptyOrder = EmptyOrder();
         }
 
@@ -143,7 +143,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
-        private void OrderWithNoDateProvided()
+        private void OrderWithNoDateGiven()
         {
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");

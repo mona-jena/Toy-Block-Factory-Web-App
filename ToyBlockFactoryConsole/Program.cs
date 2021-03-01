@@ -10,7 +10,7 @@ namespace ToyBlockFactoryConsole
         {
             Console.WriteLine("Welcome to the Toy Block Factory!\n");
             
-            var toyBlockFactory = new ToyBlockFactory(new PricingCalculator());
+            var toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
 
             UserInterface.Menu(toyBlockFactory);
         }
