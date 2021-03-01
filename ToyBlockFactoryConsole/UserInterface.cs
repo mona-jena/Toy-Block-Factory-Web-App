@@ -68,6 +68,7 @@ namespace ToyBlockFactoryConsole
                         ReportPrinter.PrintReport(paintingReport);
                         break;
                     case 4:
+                        Console.WriteLine();
                         Menu(toyBlockFactory);
                         break;
                     case 5:
@@ -105,6 +106,7 @@ namespace ToyBlockFactoryConsole
                         break;
 
                     case 3:
+                        Console.WriteLine();
                         Menu(toyBlockFactory);
                         break;
 
