@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.PricingStrategy;
@@ -9,12 +8,12 @@ namespace ToyBlockFactoryKata.ReportCreators
 {
     internal class InvoiceReportCreator : IReportCreator
     {
-        private readonly IInvoiceCalculator _pricingCalculator;
+        private readonly IInvoiceCalculator _lineItemsCalculator;
         private readonly ITableFactory _tableFactory;
 
-        internal InvoiceReportCreator(IInvoiceCalculator pricingCalculator, ITableFactory tableFactory)
+        internal InvoiceReportCreator(IInvoiceCalculator lineItemsCalculator, ITableFactory tableFactory)
         {
-            _pricingCalculator = pricingCalculator;
+            _lineItemsCalculator = lineItemsCalculator;
             _tableFactory = tableFactory;
         }
 
@@ -28,8 +27,9 @@ namespace ToyBlockFactoryKata.ReportCreators
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId,
                 OrderTable = _tableFactory.GenerateTable(requestedOrder.BlockList),
-                LineItems = _pricingCalculator.GenerateLineItems(requestedOrder),
-                Total = CalculateTotal(requestedOrder)
+                Total = CalculateTotal(requestedOrder),
+                LineItems = _lineItemsCalculator.GenerateLineItems(requestedOrder)
+                
             };
             
             return report;
@@ -37,7 +37,7 @@ namespace ToyBlockFactoryKata.ReportCreators
 
         private decimal CalculateTotal(Order requestedOrder)
         {
-            return _pricingCalculator.GenerateLineItems(requestedOrder).Sum(item => item.Total);
+            return _lineItemsCalculator.GenerateLineItems(requestedOrder).Sum(item => item.Total);
         }
         
     }
