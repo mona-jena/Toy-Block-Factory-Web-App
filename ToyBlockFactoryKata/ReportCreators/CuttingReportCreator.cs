@@ -21,11 +21,12 @@ namespace ToyBlockFactoryKata.ReportCreators
                 Name = requestedOrder.Name,
                 Address = requestedOrder.Address,
                 DueDate = requestedOrder.DueDate,
-                OrderId = requestedOrder.OrderId
+                OrderId = requestedOrder.OrderId,
+                OrderTable = _tableFactory.GenerateTable(requestedOrder.BlockList)
             };
             
-            var table = _tableFactory.GenerateTable(requestedOrder.BlockList);
-            report.OrderTable.AddRange(table);
+            /*var table = _tableFactory.GenerateTable(requestedOrder.BlockList);
+            report.OrderTable.AddRange(table);*/
             
             return report;
         }

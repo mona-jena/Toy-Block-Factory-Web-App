@@ -27,22 +27,17 @@ namespace ToyBlockFactoryKata.ReportCreators
                 Address = requestedOrder.Address,
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId,
-                OrderTable = GetTable(requestedOrder),
-                LineItems = GetLineItems(requestedOrder),
-                Total = GetLineItems(requestedOrder).Sum(item => item.Total)
+                OrderTable = _tableFactory.GenerateTable(requestedOrder.BlockList),
+                LineItems = _pricingCalculator.GenerateLineItems(requestedOrder),
+                Total = CalculateTotal(requestedOrder)
             };
             
             return report;
         }
 
-        private List<LineItem> GetLineItems(Order requestedOrder)
+        private decimal CalculateTotal(Order requestedOrder)
         {
-            return _pricingCalculator.GenerateLineItems(requestedOrder);
-        }
-        
-        private List<TableRow> GetTable(Order requestedOrder)
-        {
-            return _tableFactory.GenerateTable(requestedOrder.BlockList);
+            return _pricingCalculator.GenerateLineItems(requestedOrder).Sum(item => item.Total);
         }
         
     }
