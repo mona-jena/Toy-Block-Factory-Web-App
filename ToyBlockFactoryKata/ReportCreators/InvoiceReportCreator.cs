@@ -27,9 +27,8 @@ namespace ToyBlockFactoryKata.ReportCreators
                 DueDate = requestedOrder.DueDate,
                 OrderId = requestedOrder.OrderId,
                 OrderTable = _tableFactory.GenerateTable(requestedOrder.BlockList),
-                Total = CalculateTotal(requestedOrder),
-                LineItems = _lineItemsCalculator.GenerateLineItems(requestedOrder)
-                
+                LineItems = _lineItemsCalculator.GenerateLineItems(requestedOrder),
+                Total = CalculateTotal(requestedOrder)
             };
             
             return report;
