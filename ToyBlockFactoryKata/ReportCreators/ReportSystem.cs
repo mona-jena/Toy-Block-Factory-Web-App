@@ -40,7 +40,7 @@ namespace ToyBlockFactoryKata.ReportCreators
             return report;
         }
         
-        public IEnumerable<IReport> FilterReportsByDate(DateTime date, Dictionary<string,Order> orderRecords, ReportType reportType)
+        internal IEnumerable<IReport> FilterReportsByDate(DateTime date, Dictionary<string,Order> orderRecords, ReportType reportType)
         {
             IEnumerable<IReport> reports;
             switch (reportType)

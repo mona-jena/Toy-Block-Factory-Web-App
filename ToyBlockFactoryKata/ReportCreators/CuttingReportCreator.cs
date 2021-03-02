@@ -8,10 +8,11 @@ namespace ToyBlockFactoryKata.ReportCreators
     {
         private readonly ITableFactory _tableFactory;
 
-        public CuttingReportCreator(ITableFactory tableFactory)
+        internal CuttingReportCreator(ITableFactory tableFactory)
         {
             _tableFactory = tableFactory;
         }
+        
         public IReport GenerateReport(Order requestedOrder)
         {
             var report = new Report
