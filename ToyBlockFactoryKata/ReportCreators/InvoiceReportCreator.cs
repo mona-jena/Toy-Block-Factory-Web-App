@@ -8,10 +8,10 @@ namespace ToyBlockFactoryKata.ReportCreators
 {
     internal class InvoiceReportCreator : IReportCreator
     {
-        private readonly IInvoiceCalculator _lineItemsCalculator;
+        private readonly ILineItemsCalculator _lineItemsCalculator;
         private readonly ITableFactory _tableFactory;
 
-        internal InvoiceReportCreator(IInvoiceCalculator lineItemsCalculator, ITableFactory tableFactory)
+        internal InvoiceReportCreator(ILineItemsCalculator lineItemsCalculator, ITableFactory tableFactory)
         {
             _lineItemsCalculator = lineItemsCalculator;
             _tableFactory = tableFactory;

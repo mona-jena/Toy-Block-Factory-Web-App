@@ -4,7 +4,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryKata.PricingStrategy
 {
-    public interface IInvoiceCalculator         
+    public interface ILineItemsCalculator         
     {
         List<LineItem> GenerateLineItems(Order requestedOrder);      
     }

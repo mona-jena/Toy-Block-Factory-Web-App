@@ -5,7 +5,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryTests.TestDoubles
 {
-    public class PricingCalculatorStub : IInvoiceCalculator
+    public class LineItemsCalculatorStub : ILineItemsCalculator
     {
 
         public List<LineItem> GenerateLineItems(Order requestedOrder)
