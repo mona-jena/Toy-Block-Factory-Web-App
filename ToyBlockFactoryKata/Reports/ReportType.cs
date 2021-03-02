@@ -6,4 +6,4 @@ namespace ToyBlockFactoryKata.Reports
         CuttingList,
         Painting
     }
-}
+}     

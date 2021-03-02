@@ -23,21 +23,7 @@ namespace ToyBlockFactoryKata.Orders
         public Dictionary<Block, int> BlockList { get; } = new();
         public DateTime DueDate { get; }
         
-        private readonly Dictionary<Shape, int> _shapeQuantities = new();
-        
-        internal Dictionary<Shape, int> shapeQuantities
-        {
-            get
-            {
-                foreach (var block in BlockList)
-                {
-                    if (_shapeQuantities.TryAdd(block.Key.Shape, block.Value)) continue;
-                    _shapeQuantities[block.Key.Shape] += block.Value;
-                }
-
-                return _shapeQuantities;
-            }
-        }
+       
         
         public void AddBlock(Shape shape, Colour colour)
         {
@@ -46,7 +32,33 @@ namespace ToyBlockFactoryKata.Orders
                 BlockList[block] = ++blockQuantity;
             else
                 BlockList.Add(block, 1);
+            
+            AddShapeQuantity(block.Shape);
+        }
+        //could generate after each block is added??
+        
+        internal Dictionary<Shape, int> shapeQuantities { get; } = new();
+
+        private void AddShapeQuantity(Shape blockShape)
+        {
+            if (shapeQuantities.TryGetValue(blockShape, out var shapeQuantity))
+                shapeQuantities[blockShape] = ++shapeQuantity;
+            else
+                shapeQuantities.Add(blockShape, 1);
         }
         
+        /*internal Dictionary<Shape, int> shapeQuantities
+        {
+            get
+            {
+                foreach (var block in BlockList)
+                {
+                    if (shapeQuantities.TryAdd(block.Key.Shape, block.Value)) continue;
+                    shapeQuantities[block.Key.Shape] += block.Value;
+                }
+
+                return shapeQuantities;
+            }
+        }*/
     }
 }

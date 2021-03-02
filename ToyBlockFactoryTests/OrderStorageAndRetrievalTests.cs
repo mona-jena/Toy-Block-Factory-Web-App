@@ -21,7 +21,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void EmptyBlockOrderShouldNotBeAbleToBeSubmittedAndReturnEmptyId()
+        public void EmptyBlockOrderShouldNotBeAbleToBeSubmitted_AndReturnEmptyId()
         {
             var orderId = _toyBlockFactory.SubmitOrder(_emptyOrder);
             
