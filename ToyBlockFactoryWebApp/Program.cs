@@ -8,11 +8,11 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    
     class Program
     {
-        private static ToyBlockFactory _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
-        static Order _order = null;
+        private static ToyBlockFactory _toyBlockFactory = new (new LineItemsCalculator());
+        static Order _order;
+        
         static void Main(string[] args)
         {
             string[] prefixes = {"http://localhost:3000/"};
@@ -37,11 +37,8 @@ namespace ToyBlockFactoryWebApp
             while (true)
             {
                 HttpListenerContext context = listener.GetContext();        //HTTP REQUEST
-
-               HandleRequest(context);
-               
+                HandleRequest(context);
             }
-           
             
             listener.Stop();
         }
@@ -50,7 +47,7 @@ namespace ToyBlockFactoryWebApp
         {
             // desc the request - HttpMethod string, UserAgent string, and request body data 
             HttpListenerRequest request = context.Request;
-            var order = PostCustomerDetails(request);
+            var order = CollectCustomerDetails(request);
             order.AddBlock(Shape.Square, Colour.Blue);
             order.AddBlock(Shape.Square, Colour.Yellow);
             order.AddBlock(Shape.Square, Colour.Blue);
@@ -66,10 +63,8 @@ namespace ToyBlockFactoryWebApp
             
         }
 
-        public static Order PostCustomerDetails(HttpListenerRequest request)
+        public static Order CollectCustomerDetails(HttpListenerRequest request)
         {
-            // if (request.HttpMethod == "POST")
-            // {
             if (!request.HasEntityBody)
             {
                 Console.WriteLine("No client data was sent with the request.");
@@ -91,16 +86,13 @@ namespace ToyBlockFactoryWebApp
             if (request.RawUrl == "/order" && request.HttpMethod == "POST")
             {
                 var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(bodyString);
-               
                 _order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
             }
-            else if(request.RawUrl == "/order" && request.HttpMethod == "GET")
+            else if (request.RawUrl == "/order" && request.HttpMethod == "GET")
             {
                 var orderId = request.QueryString.Get("orderId");
                 _order = _toyBlockFactory.GetOrder(orderId);
             }
-
-           
             
             Console.WriteLine("End of client data:");
                 
@@ -108,33 +100,27 @@ namespace ToyBlockFactoryWebApp
             reader.Close();
 
             return _order;
-            //}
         }
 
         private static void SendResponse(HttpListenerContext context, Object order)
         {
             // object that will be sent to the client in response to the client's request
             HttpListenerResponse response = context.Response;
-            //CustomerDetailsResponse(response, toyBlockFactory);
             
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = 201;
-
-            //var order = new Order("Mona", "30 sylvia rd", DateTime.Today);
             
             // converts order to JSON string
-            //var orderString = JsonSerializer.Serialize(order);
             string responseString = JsonSerializer.Serialize(order);
             // Get a response stream and write the response to it.
             byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
-            System.IO.Stream output = response.OutputStream;
+            var output = response.OutputStream;
             // prints out response 
             output.Write(buffer, 0, buffer.Length);
             
             output.Close();
         }
 
-        
     }
 }
