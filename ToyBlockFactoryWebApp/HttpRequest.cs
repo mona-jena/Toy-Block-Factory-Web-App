@@ -6,14 +6,18 @@ namespace ToyBlockFactoryWebApp
 {
     class HttpRequest
     {
-        private string Method { get; }
+        public string Method { get; }
+        public string? Url { get; }
         public string Body { get; }
 
         public HttpRequest(HttpListenerRequest request)
         {
             Method = request.HttpMethod;
+            Url = request.RawUrl;
             Body = GetRequestBody(request);
         }
+
+        
 
         public string GetRequestBody(HttpListenerRequest request)
         {

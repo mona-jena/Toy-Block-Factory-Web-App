@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using System.Net;
 using System.Text.Json;
 using ToyBlockFactoryKata;
@@ -52,20 +51,12 @@ namespace ToyBlockFactoryWebApp
 
             var orderCollector = new OrderDetailsCollector(_order, _toyBlockFactory);
             var order = orderCollector.CreateOrder(request);
-            order.AddBlock(Shape.Square, Colour.Blue);
-            order.AddBlock(Shape.Square, Colour.Yellow);
-            order.AddBlock(Shape.Square, Colour.Blue);
             var orderId = _toyBlockFactory.SubmitOrder(order);
             if (order != null)
             {
                 SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
             }
         }
-
-        public record NewOrderDTO(string Name, string Address)
-        {
-        }
-        
 
         private static void SendResponse(HttpListenerResponse response, Object order)
         {
