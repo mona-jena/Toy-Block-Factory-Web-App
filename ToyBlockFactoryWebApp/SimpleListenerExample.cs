@@ -48,14 +48,25 @@ namespace ToyBlockFactoryWebApp
         {
             // desc the request - HttpMethod string, UserAgent string, and request body data 
             HttpListenerRequest request = context.Request;
-
             var orderCollector = new OrderDetailsCollector(_order, _toyBlockFactory);
-            var order = orderCollector.CreateOrder(request);
-            var orderId = _toyBlockFactory.SubmitOrder(order);
-            if (order != null)
+            
+            if (request.HttpMethod == "POST")
             {
-                SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
+                var order = orderCollector.CreateOrder(request);
+                var orderId = _toyBlockFactory.SubmitOrder(order);
+                Console.WriteLine("order submitted: " + orderId);
+                if (order != null)
+                {
+                    SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
+                }
             }
+            else if (request.HttpMethod == "GET" && context.Request.HasEntityBody)
+            {
+                var order = orderCollector.CreateOrder(request);
+                SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
+            }
+            
+            
         }
 
         private static void SendResponse(HttpListenerResponse response, Object order)

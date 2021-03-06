@@ -17,8 +17,6 @@ namespace ToyBlockFactoryWebApp
             Body = GetRequestBody(request);
         }
 
-        
-
         public string GetRequestBody(HttpListenerRequest request)
         {
             var body = request.InputStream;

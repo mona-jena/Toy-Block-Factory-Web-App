@@ -1,8 +1,10 @@
 using System;
 using System.Net;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -35,10 +37,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Start of client data:");
             Console.WriteLine(httpRequest.Body);
             
-            HandleRequest(request, httpRequest.Body);
-            _order.AddBlock(Shape.Square, Colour.Blue);
-            _order.AddBlock(Shape.Square, Colour.Yellow);
-            _order.AddBlock(Shape.Square, Colour.Blue);
+            HandleRequest(request, httpRequest);
             
             Console.WriteLine("End of client data:");
 
@@ -50,16 +49,19 @@ namespace ToyBlockFactoryWebApp
         }
         
         
-        public void HandleRequest(HttpListenerRequest request, string requestBody)
+        public void HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest)
         {
-            if (request.RawUrl == "/order" && request.HttpMethod == "POST")
+            if (httpRequest.Url == "/order" && httpRequest.Method == "POST")
             {
-                var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody);
+                var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
                 _order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
+                _order.AddBlock(Shape.Square, Colour.Blue);
+                _order.AddBlock(Shape.Square, Colour.Yellow);
+                _order.AddBlock(Shape.Square, Colour.Blue);
             }
-            else if (request.RawUrl == "/order" && request.HttpMethod == "GET")
+            else if (listenerRequest.Url.AbsolutePath == "/order" && httpRequest.Method == "GET")
             {
-                var orderId = request.QueryString.Get("orderId");
+                var orderId = listenerRequest.QueryString.Get("orderid");
                 Console.WriteLine(orderId);
                 _order = _toyBlockFactory.GetOrder(orderId);
             }
