@@ -70,7 +70,6 @@ namespace ToyBlockFactoryWebApp
         private static void SendResponse(HttpListenerResponse response, Object order)
         {
             //var httpResponse = new HttpResponse(response, order);
-            
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = 201;
 

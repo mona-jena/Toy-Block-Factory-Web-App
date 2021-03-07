@@ -19,6 +19,7 @@ steps:
   - wait
   - label: 'make dockerimage for web app'
     command: 
-      - 'docker build -f ./Dockerfile.web .'
+      - 'docker build -f ./Dockerfile.web . -t webapp'
+      - 'docker run -p 80:3000 webapp' ##what's source port?
     agents:
       queue: grace-lab
