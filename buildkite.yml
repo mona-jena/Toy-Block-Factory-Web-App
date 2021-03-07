@@ -16,7 +16,7 @@ steps:
           region: "ap-southeast-2"
     agents:
       queue: grace-lab
-  -wait
+  - wait
   - label: 'make dockerimage for web app'
     command: 
       - 'docker build -t webapp -f ./Dockerfile.web'
