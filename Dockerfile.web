@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build 
-WORKDIR /webapp
-COPY *WebApp.csproj ./
+WORKDIR /source
+COPY ./ /source
 RUN dotnet publish -c release -o /release
 
 FROM mcr.microsoft.com/dotnet/runtime:5.0 
