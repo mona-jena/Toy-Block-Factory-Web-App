@@ -19,6 +19,6 @@ steps:
   - wait
   - label: 'make dockerimage for web app'
     command: 
-      - 'docker build -f ./Dockerfile.web'
+      - 'docker build -f ./Dockerfile.web .'
     agents:
       queue: grace-lab
