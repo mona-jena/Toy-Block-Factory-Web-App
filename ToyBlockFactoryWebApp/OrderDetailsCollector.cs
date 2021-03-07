@@ -19,7 +19,7 @@ namespace ToyBlockFactoryWebApp
             _toyBlockFactory = toyBlockFactory;
         }
 
-        public Order CreateOrder(HttpListenerRequest request)
+        public Order ProcessRequest(HttpListenerRequest request)
         {
             var httpRequest = new HttpRequest(request);
             if (!request.HasEntityBody)
@@ -51,7 +51,8 @@ namespace ToyBlockFactoryWebApp
         
         public void HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest)
         {
-            if (httpRequest.Url == "/order" && httpRequest.Method == "POST")
+            var url = listenerRequest.Url.AbsolutePath;
+            if (url == "/order" && httpRequest.Method == "POST")
             {
                 var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
                 _order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
@@ -59,9 +60,9 @@ namespace ToyBlockFactoryWebApp
                 _order.AddBlock(Shape.Square, Colour.Yellow);
                 _order.AddBlock(Shape.Square, Colour.Blue);
             }
-            else if (listenerRequest.Url.AbsolutePath == "/order" && httpRequest.Method == "GET")
+            else if (url == "/order" && httpRequest.Method == "GET")
             {
-                var orderId = listenerRequest.QueryString.Get("orderid");
+                var orderId = listenerRequest.QueryString.Get("orderId");
                 Console.WriteLine(orderId);
                 _order = _toyBlockFactory.GetOrder(orderId);
             }

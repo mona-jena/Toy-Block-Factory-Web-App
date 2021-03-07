@@ -7,7 +7,6 @@ namespace ToyBlockFactoryWebApp
     {
         public int StatusCode { get; }
         
-        
         public HttpResponse(HttpListenerResponse response, Object order)
         {
             StatusCode = response.StatusCode;

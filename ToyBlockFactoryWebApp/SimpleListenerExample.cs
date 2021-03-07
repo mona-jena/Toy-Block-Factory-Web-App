@@ -49,10 +49,10 @@ namespace ToyBlockFactoryWebApp
             // desc the request - HttpMethod string, UserAgent string, and request body data 
             HttpListenerRequest request = context.Request;
             var orderCollector = new OrderDetailsCollector(_order, _toyBlockFactory);
+            var order = orderCollector.ProcessRequest(request);
             
             if (request.HttpMethod == "POST")
             {
-                var order = orderCollector.CreateOrder(request);
                 var orderId = _toyBlockFactory.SubmitOrder(order);
                 Console.WriteLine("order submitted: " + orderId);
                 if (order != null)
@@ -60,18 +60,16 @@ namespace ToyBlockFactoryWebApp
                     SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
                 }
             }
-            else if (request.HttpMethod == "GET" && context.Request.HasEntityBody)
+            else if (request.HttpMethod == "GET")
             {
-                var order = orderCollector.CreateOrder(request);
                 SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
             }
-            
             
         }
 
         private static void SendResponse(HttpListenerResponse response, Object order)
         {
-            var httpResponse = new HttpResponse(response, order);
+            //var httpResponse = new HttpResponse(response, order);
             
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = 201;

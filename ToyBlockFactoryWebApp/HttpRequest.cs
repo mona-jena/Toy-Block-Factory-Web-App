@@ -7,7 +7,7 @@ namespace ToyBlockFactoryWebApp
     class HttpRequest
     {
         public string Method { get; }
-        public string? Url { get; }
+        public string Url { get; }
         public string Body { get; }
 
         public HttpRequest(HttpListenerRequest request)
