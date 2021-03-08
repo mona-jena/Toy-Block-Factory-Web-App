@@ -7,7 +7,7 @@ steps:
   - wait 
   - label: 'make dockerimage with tbf'
     command:
-      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app .'
+      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app .' #is it getting from current directory in my VM?
       - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app'
     plugins:
       - ecr#v2.3.0:
@@ -19,7 +19,7 @@ steps:
   - wait
   - label: 'make dockerimage for web app'
     command: 
-      - 'docker build -f ./Dockerfile.web . -t webapp'
+      - 'docker build -t webapp ./Dockerfile.web .'
       - 'docker run -p 3000:80 webapp' ##what's source port?
     agents:
       queue: grace-lab
