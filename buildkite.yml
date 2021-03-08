@@ -1,7 +1,7 @@
 ---
 steps:
   - label: 'test panic :cherry_blossom::whale:'
-    command: 'docker build -f ./Dockerfile.test .'
+    command: 'docker build -f ./Dockerfile.test .' #why don't we run the tests?
     agents:
       queue: grace-lab
   - wait 
@@ -20,6 +20,6 @@ steps:
   - label: 'make dockerimage for web app'
     command: 
       - 'docker build -f ./Dockerfile.web . -t webapp'
-      - 'docker run -p 80:3000 webapp' ##what's source port?
+      - 'docker run -p 3000:80 webapp' ##what's source port?
     agents:
       queue: grace-lab

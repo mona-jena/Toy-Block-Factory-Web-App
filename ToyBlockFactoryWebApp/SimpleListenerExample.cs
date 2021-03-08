@@ -62,7 +62,10 @@ namespace ToyBlockFactoryWebApp
             }
             else if (request.HttpMethod == "GET")
             {
-                SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
+                if (order != null)
+                {
+                    SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
+                }
             }
             
         }
