@@ -12,7 +12,7 @@ namespace ToyBlockFactoryWebApp
     {
         static void Main(string[] args)
         {
-            string[] prefixes = {"http://localhost:3000/"};
+            string[] prefixes = {"http://*:3000/"};
             var simpleListenerExample = new SimpleListenerExample(prefixes);
         }
     }

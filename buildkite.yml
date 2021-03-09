@@ -7,7 +7,7 @@ steps:
   - wait 
   - label: 'make dockerimage with tbf'
     command:
-      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app .'
+      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app .' #is it finding app in current dir of VM?
       - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app'
     plugins:
       - ecr#v2.3.0:
@@ -15,11 +15,11 @@ steps:
           account_ids: "138666658526"
           region: "ap-southeast-2"
     agents:
-      queue: grace-lab
+      queue: grace-lab 
   - wait
   - label: 'make dockerimage for web app'
     command: 
       - 'docker build -f ./Dockerfile.web . -t webapp'
-      - 'docker run -p 3000:80 webapp' ##what's source port?
+      - 'docker run -d -p 3000:80 webapp' ##what's source port? #why do you need to run on detached mode?
     agents:
       queue: grace-lab

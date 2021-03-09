@@ -68,10 +68,16 @@ namespace ToyBlockFactoryTests
         [Fact]
         public void ReportContainsOrderId()
         {
+            // ARRANGE
+            ToyBlockFactory toyBlockFactory = ToyBlockFactoryFixture.create();
+            Order toyBlockFactory.GetOrders();
+
             const string orderId = "0001";
 
+            // ACT
             var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
+            // ASSERT
             Assert.Equal(orderId, cuttingList.OrderId);
         }
 

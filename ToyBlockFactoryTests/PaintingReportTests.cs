@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryTests.TestDoubles;
 using Xunit;
@@ -14,7 +15,7 @@ namespace ToyBlockFactoryTests
 
         public PaintingReportTests()
         {
-            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculatorStub());
+            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
 
             CreateListOfOrders();
         }

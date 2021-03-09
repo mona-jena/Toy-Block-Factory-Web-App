@@ -8,17 +8,23 @@ namespace ToyBlockFactoryKata.PricingStrategy
     public class LineItemsCalculator : ILineItemsCalculator
     {
         private const decimal RedCost = 1;
-        private readonly Dictionary<Shape, decimal> _pricingList;
+
+        private readonly Dictionary<Shape, decimal> _pricingList = new()
+        {
+            {Shape.Square, 1},
+            {Shape.Triangle, 2},
+            {Shape.Circle, 3}
+        };
         
 
         public LineItemsCalculator()
         {
-            _pricingList = new Dictionary<Shape, decimal>
-            {
-                {Shape.Square, 1},
-                {Shape.Triangle, 2},
-                {Shape.Circle, 3}
-            };
+            // _pricingList = new Dictionary<Shape, decimal>
+            // {
+            //     {Shape.Square, 1},
+            //     {Shape.Triangle, 2},
+            //     {Shape.Circle, 3}
+            // };
         }
 
         public List<LineItem> GenerateLineItems(Order order)

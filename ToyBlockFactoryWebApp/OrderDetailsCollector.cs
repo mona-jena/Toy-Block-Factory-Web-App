@@ -22,22 +22,19 @@ namespace ToyBlockFactoryWebApp
         public Order ProcessRequest(HttpListenerRequest request)
         {
             var httpRequest = new HttpRequest(request);
-            if (!request.HasEntityBody)
-            {
-                Console.WriteLine("No client data was sent with the request.");
-                return null;
-            }
             
-            if (request.ContentType != null)
-            {
-                Console.WriteLine("Client data content type {0}", request.ContentType);
-            }
-
-            Console.WriteLine("Client data content length {0}", request.ContentLength64);
             Console.WriteLine("Start of client data:");
             Console.WriteLine(httpRequest.Body);
+
+            try
+            {
+                HandleRequest(request, httpRequest);
+            }
+            catch
+            {
+                Console.WriteLine("catch an error");
+            }
             
-            HandleRequest(request, httpRequest);
             
             Console.WriteLine("End of client data:");
 
