@@ -30,12 +30,12 @@ namespace ToyBlockFactoryKata.PricingStrategy
         public List<LineItem> GenerateLineItems(Order order)
         {
             var lineItems = new List<LineItem>();
-            foreach (var shape in order.shapeQuantities)
+            foreach (var shapeQuantity in order.shapeQuantities)
                 lineItems.Add(new LineItem(
-                    shape.Key.ToString(),
-                    shape.Value,
-                    _pricingList[shape.Key],
-                    shape.Value * _pricingList[shape.Key])
+                    shapeQuantity.Key.ToString(),
+                    shapeQuantity.Value,
+                    _pricingList[shapeQuantity.Key],
+                    shapeQuantity.Value * _pricingList[shapeQuantity.Key])
                 );
 
             var redQuantity = order.BlockList.Where(b => b.Key.Colour == Colour.Red).Sum(b => b.Value);

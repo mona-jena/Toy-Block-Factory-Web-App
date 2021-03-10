@@ -70,7 +70,7 @@ namespace ToyBlockFactoryTests
         {
             // ARRANGE
             ToyBlockFactory toyBlockFactory = ToyBlockFactoryFixture.create();
-            Order toyBlockFactory.GetOrders();
+            //Order toyBlockFactory.GetOrders();   //so you don't have to rely on knowing orderId
 
             const string orderId = "0001";
 

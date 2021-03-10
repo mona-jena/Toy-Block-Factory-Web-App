@@ -10,35 +10,30 @@ namespace ToyBlockFactoryWebApp
 {
     class OrderDetailsCollector
     {
-        private Order _order;
         private readonly ToyBlockFactory _toyBlockFactory;
 
-        public OrderDetailsCollector(Order order, ToyBlockFactory toyBlockFactory)
+        public OrderDetailsCollector(ToyBlockFactory toyBlockFactory)
         {
-            _order = order;
             _toyBlockFactory = toyBlockFactory;
         }
 
-        public Order ProcessRequest(HttpListenerRequest request)
+        public Order ProcessRequest(HttpListenerRequest request, Order order)
         {
             var httpRequest = new HttpRequest(request);
             
             Console.WriteLine("Start of client data:");
             Console.WriteLine(httpRequest.Body);
-
             try
             {
-                HandleRequest(request, httpRequest);
+                HandleRequest(request, httpRequest, order);
             }
-            catch
+            catch (ArgumentException e)
             {
-                Console.WriteLine("catch an error");
+                Console.WriteLine("catch an error"); //THROW AN ERROR CODE
             }
-            
-            
             Console.WriteLine("End of client data:");
 
-            return _order;
+            return order;
         }
         
         public record NewOrderDTO(string Name, string Address)
@@ -46,22 +41,22 @@ namespace ToyBlockFactoryWebApp
         }
         
         
-        public void HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest)
+        public void HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest, Order order)
         {
             var url = listenerRequest.Url.AbsolutePath;
             if (url == "/order" && httpRequest.Method == "POST")
             {
                 var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
-                _order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
-                _order.AddBlock(Shape.Square, Colour.Blue);
-                _order.AddBlock(Shape.Square, Colour.Yellow);
-                _order.AddBlock(Shape.Square, Colour.Blue);
+                order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
+                order.AddBlock(Shape.Square, Colour.Blue);
+                order.AddBlock(Shape.Square, Colour.Yellow);
+                order.AddBlock(Shape.Square, Colour.Blue);
             }
             else if (url == "/order" && httpRequest.Method == "GET")
             {
                 var orderId = listenerRequest.QueryString.Get("orderId");
                 Console.WriteLine(orderId);
-                _order = _toyBlockFactory.GetOrder(orderId);
+                order = _toyBlockFactory.GetOrder(orderId); //RETURN ORDER!!!
             }
         }
         
