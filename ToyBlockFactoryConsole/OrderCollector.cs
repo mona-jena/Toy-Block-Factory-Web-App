@@ -67,7 +67,7 @@ namespace ToyBlockFactoryConsole
                     Console.Write("Please input the number of " + colour + " " + shape + ": ");
                     var input = Console.ReadLine();
                     for (var i = 0; i < BlockQuantity(input); i++)
-                        order.AddBlock((Shape)shape, (Colour)colour);
+                        order.AddBlock((Shape)shape, (Colour)colour, 1);
                 }
                 Console.WriteLine();
             }

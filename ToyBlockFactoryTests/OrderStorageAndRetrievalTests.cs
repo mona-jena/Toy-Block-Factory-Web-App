@@ -133,13 +133,13 @@ namespace ToyBlockFactoryTests
             var orderDueDate = new DateTime(2021, 1, 19);
             var customerOrder = _toyBlockFactory
                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
-            customerOrder.AddBlock(Shape.Square, Colour.Red);
-            customerOrder.AddBlock(Shape.Square, Colour.Yellow);
-            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            customerOrder.AddBlock(Shape.Square, Colour.Red, 1);
+            customerOrder.AddBlock(Shape.Square, Colour.Yellow, 1);
+            customerOrder.AddBlock(Shape.Triangle, Colour.Blue, 1);
+            customerOrder.AddBlock(Shape.Triangle, Colour.Blue, 1);
+            customerOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            customerOrder.AddBlock(Shape.Circle, Colour.Yellow, 1);
+            customerOrder.AddBlock(Shape.Circle, Colour.Yellow, 1);
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
@@ -147,11 +147,11 @@ namespace ToyBlockFactoryTests
         {
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
-            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow);
-            customerOrder2.AddBlock(Shape.Square, Colour.Blue);
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
-            customerOrder2.AddBlock(Shape.Circle, Colour.Blue);
+            customerOrder2.AddBlock(Shape.Triangle, Colour.Yellow, 1);
+            customerOrder2.AddBlock(Shape.Square, Colour.Blue, 1);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue, 1);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue, 1);
+            customerOrder2.AddBlock(Shape.Circle, Colour.Blue, 1);
             _toyBlockFactory.SubmitOrder(customerOrder2);
         }
         

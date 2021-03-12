@@ -1,0 +1,74 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment       #how many pods to run, which app to run
+metadata:
+  name: "mona-deployment"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "mona"
+  template:
+    metadata:
+      labels:
+        app: "mona"
+        repo: "mona-app"
+    spec:
+      containers:               #docker run 
+        - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
+          name: mona-tbf
+          ports:
+            - containerPort: 3000
+
+# This is an example of a service - a logical grouping of pods
+---
+apiVersion: v1
+kind: Service               #groups the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pods and send the traffic to that pod
+metadata:
+  name: "mona-service"
+  labels:
+    app: "mona"
+    repo: "mona-app"
+  annotations:
+    prometheus.io/scrape: "true"
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    app: "mona" 
+
+# This is an example of an ingress - a way to forward traffic to
+# your services and provide SSL termination.
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress      #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
+metadata:
+  name: "mona-ingress"
+  labels:
+    app: "mona"
+    repo: "mona-app"
+  annotations:
+    # This annotation will trigger the cluster to provision a TLS certificate which will
+    # be stored in the specified secretName below.
+    # NOTE: The secret will be:
+    # - CREATED if it doesn't exist
+    #       OR
+    # - UPDATED if it already exists (ie. the existing certificate in the secret WILL BE OVERWRITTEN!!!)
+    "kubernetes.io/tls-acme": "true"
+spec:
+  rules:
+    - host: "mona.svc.platform.myobdev.com"
+      http:
+        paths:
+          - backend:
+              serviceName: "mona-service"
+              servicePort: 80
+            path: /
+  tls:    #gives certificate given by https
+    - hosts:
+        - "mona.svc.platform.myobdev.com"
+      # WARNING: DO NOT use the same secret for more than one ingress
+      # to ensure misconfiguration of one ingress does not affect any other ingresses
+      secretName: "mona-tls"

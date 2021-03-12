@@ -1,12 +1,10 @@
-#let's compile and build an image
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build 
-COPY ./ /source
 WORKDIR /source
+EXPOSE 3000
+COPY ./ /source
 RUN dotnet publish -c release -o /release
 
-#create an image to run
-FROM mcr.microsoft.com/dotnet/runtime:5.0 
-WORKDIR /app
+FROM mcr.microsoft.com/dotnet/runtime:5.0
+WORKDIR /webapp
 COPY --from=build /release ./
-ENTRYPOINT ["dotnet", "ToyBlockFactoryConsole.dll"]
-                                  
+ENTRYPOINT ["dotnet", "ToyBlockFactoryWebApp.dll"]

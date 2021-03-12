@@ -26,13 +26,13 @@ namespace ToyBlockFactoryKata.Orders
         internal Dictionary<Shape, int> shapeQuantities { get; } = new();
 
 
-        public void AddBlock(Shape shape, Colour colour)
+        public void AddBlock(Shape shape, Colour colour, int quantity)
         {
             var block = new Block(shape, colour);
-            if (BlockList.TryGetValue(block, out var quantity))
-                BlockList[block] = ++quantity;
+            if (BlockList.ContainsKey(block))
+                BlockList[block] += quantity;
             else
-                BlockList.Add(block, 1);
+                BlockList.Add(block, quantity);
 
             AddShapeQuantity(block.Shape);
         }

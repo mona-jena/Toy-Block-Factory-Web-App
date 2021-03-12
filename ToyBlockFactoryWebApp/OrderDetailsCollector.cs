@@ -48,9 +48,9 @@ namespace ToyBlockFactoryWebApp
             {
                 var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
                 order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
-                order.AddBlock(Shape.Square, Colour.Blue);
-                order.AddBlock(Shape.Square, Colour.Yellow);
-                order.AddBlock(Shape.Square, Colour.Blue);
+                order.AddBlock(Shape.Square, Colour.Blue, 1);
+                order.AddBlock(Shape.Square, Colour.Yellow, 1);
+                order.AddBlock(Shape.Square, Colour.Blue, 1);
             }
             else if (url == "/order" && httpRequest.Method == "GET")
             {

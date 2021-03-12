@@ -70,13 +70,13 @@ namespace ToyBlockFactoryTests
             var orderDueDate = new DateTime(2021, 1, 19);
             _customerOrder = toyBlockFactory
                 .CreateOrder("David Rudd", "1 Bob Avenue, Auckland", orderDueDate);
-            _customerOrder.AddBlock(Shape.Square, Colour.Red);
-            _customerOrder.AddBlock(Shape.Square, Colour.Yellow);
-            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Blue);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            _customerOrder.AddBlock(Shape.Square, Colour.Red, 1);
+            _customerOrder.AddBlock(Shape.Square, Colour.Yellow, 1);
+            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue, 1);
+            _customerOrder.AddBlock(Shape.Triangle, Colour.Blue, 1);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow, 1);
+            _customerOrder.AddBlock(Shape.Circle, Colour.Yellow, 1);
             toyBlockFactory.SubmitOrder(_customerOrder);
             return _customerOrder;
         }

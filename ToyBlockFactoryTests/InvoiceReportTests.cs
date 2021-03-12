@@ -26,7 +26,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
+            var invoice = ToyBlockFactoryFixture.create().GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(ReportType.Invoice, invoice.ReportType);
         }
@@ -157,13 +157,13 @@ namespace ToyBlockFactoryTests
             _davidAddress = "1 Bob Avenue, Auckland";
             _davidOrderDueDate = new DateTime(2021, 1, 19);
             var davidOrder = _toyBlockFactory.CreateOrder(_david, _davidAddress, _davidOrderDueDate);
-            davidOrder.AddBlock(Shape.Square, Colour.Red);
-            davidOrder.AddBlock(Shape.Square, Colour.Yellow);
-            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            davidOrder.AddBlock(Shape.Triangle, Colour.Blue);
-            davidOrder.AddBlock(Shape.Circle, Colour.Blue);
-            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
-            davidOrder.AddBlock(Shape.Circle, Colour.Yellow);
+            davidOrder.AddBlock(Shape.Square, Colour.Red, 1);
+            davidOrder.AddBlock(Shape.Square, Colour.Yellow, 1);
+            davidOrder.AddBlock(Shape.Triangle, Colour.Blue, 1);
+            davidOrder.AddBlock(Shape.Triangle, Colour.Blue, 1);
+            davidOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            davidOrder.AddBlock(Shape.Circle, Colour.Yellow, 1);
+            davidOrder.AddBlock(Shape.Circle, Colour.Yellow, 1);
             _toyBlockFactory.SubmitOrder(davidOrder);
         }
 
@@ -173,10 +173,10 @@ namespace ToyBlockFactoryTests
             var steveAddress = "102 Robin Street, Auckland";
             var steveOrderDueDate = new DateTime(2021, 2, 15);
             var steveOrder = _toyBlockFactory.CreateOrder(steve, steveAddress, steveOrderDueDate);
-            steveOrder.AddBlock(Shape.Square, Colour.Yellow);
-            steveOrder.AddBlock(Shape.Square, Colour.Blue);
-            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
-            steveOrder.AddBlock(Shape.Circle, Colour.Blue);
+            steveOrder.AddBlock(Shape.Square, Colour.Yellow, 1);
+            steveOrder.AddBlock(Shape.Square, Colour.Blue, 1);
+            steveOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            steveOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
             _toyBlockFactory.SubmitOrder(steveOrder);
         }
         
