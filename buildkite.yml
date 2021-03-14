@@ -16,6 +16,12 @@ steps:
           region: "ap-southeast-2"
     agents:
       queue: grace-lab 
+  - wait
+  - label: 'deploy on jupiter'
+    command: 'kubectl apply -f deployment.yml -n fma'
+    agents:
+      queue: europa-preprod-fma
+
   - block
   - label: 'make dockerimage for web app'
     command: 
