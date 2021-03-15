@@ -20,7 +20,7 @@ spec:
           name: mona-tbf
           ports:
             - containerPort: 3000
-              - hostPort: 3000
+              hostPort: 3000
 
 # This is an example of a service - a logical grouping of pods
 ---
