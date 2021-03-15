@@ -1,6 +1,6 @@
 ---
 steps:
-  - label: 'test panic :cherry_blossom::whale:'
+  - label: ':cherry_blossom::whale: test panic'
     command: 'docker build -f ./Dockerfile.test .' #why don't we run the tests?
     agents:
       queue: grace-lab
@@ -17,13 +17,13 @@ steps:
     agents:
       queue: grace-lab 
   - wait
-  - label: 'deploy on jupiter'
+  - label: ':k8s: deploy on jupiter'
     command: 'kubectl apply -f deployment.yml -n fma'
     agents:
       queue: europa-preprod-fma
 
   - block
-  - label: 'make dockerimage for web app :k8s:'
+  - label: 'make dockerimage for web app'
     command: 
       - 'docker build -f ./Dockerfile.web . -t webapp'
       - 'docker run -d -p 3000:80 webapp' ##what's source port? #why do you need to run on detached mode?
