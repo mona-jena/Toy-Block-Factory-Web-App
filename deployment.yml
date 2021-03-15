@@ -17,7 +17,7 @@ spec:
         repo: "mona-app"
     spec:
       containers:               #docker run 
-        - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(imageTag)"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
+        - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:89"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
           name: mona-tbf
           ports:
             - containerPort: 3000
@@ -80,8 +80,3 @@ spec:
       # to ensure misconfiguration of one ingress does not affect any other ingresses
       secretName: "mona-tls"
 
-parameters:
-  - name: "imageTag"
-    description: "Docker image tag"
-    required: true
-    parameterType: "string"
