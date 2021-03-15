@@ -65,7 +65,7 @@ spec:
           - backend:
               serviceName: "mona-service"
               servicePort: 80
-            path: /app
+            path: /order
   tls:    #gives certificate given by https
     - hosts:
         - "mona.svc.platform.myobdev.com"
