@@ -17,11 +17,11 @@ spec:
         repo: "mona-app"
     spec:
       containers:               #docker run 
-        - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:90"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
+        - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:91"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
           name: mona-tbf
           ports:
             - containerPort: 3000
-              hostPort: 3000
+       
 
 # This is an example of a service - a logical grouping of pods
 ---
