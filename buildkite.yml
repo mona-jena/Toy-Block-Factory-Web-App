@@ -5,7 +5,7 @@ steps:
     agents:
       queue: grace-lab
   - wait 
-  - label: 'make dockerimage with tbf'
+  - label: ':ec2: make dockerimage with tbf'
     command:
       - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app .' #is it finding app in current dir of VM?
       - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app'
