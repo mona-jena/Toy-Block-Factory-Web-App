@@ -23,7 +23,7 @@ steps:
       queue: europa-preprod-fma
 
   - block
-  - label: 'make dockerimage for web app'
+  - label: 'make dockerimage for web app :k8s:'
     command: 
       - 'docker build -f ./Dockerfile.web . -t webapp'
       - 'docker run -d -p 3000:80 webapp' ##what's source port? #why do you need to run on detached mode?
