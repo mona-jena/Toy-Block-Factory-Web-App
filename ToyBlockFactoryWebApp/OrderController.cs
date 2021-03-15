@@ -8,11 +8,11 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    class OrderDetailsCollector
+    class OrderController
     {
         private readonly ToyBlockFactory _toyBlockFactory;
 
-        public OrderDetailsCollector(ToyBlockFactory toyBlockFactory)
+        public OrderController(ToyBlockFactory toyBlockFactory)
         {
             _toyBlockFactory = toyBlockFactory;
         }
@@ -25,7 +25,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine(httpRequest.Body);
             try
             {
-                HandleRequest(request, httpRequest, order);
+                order = HandleRequest(request, httpRequest, order);
             }
             catch (ArgumentException e)
             {
@@ -41,7 +41,7 @@ namespace ToyBlockFactoryWebApp
         }
         
         
-        public void HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest, Order order)
+        public Order HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest, Order order)
         {
             var url = listenerRequest.Url.AbsolutePath;
             if (url == "/order" && httpRequest.Method == "POST")
@@ -51,13 +51,17 @@ namespace ToyBlockFactoryWebApp
                 order.AddBlock(Shape.Square, Colour.Blue, 1);
                 order.AddBlock(Shape.Square, Colour.Yellow, 1);
                 order.AddBlock(Shape.Square, Colour.Blue, 1);
+                return order;
             }
             else if (url == "/order" && httpRequest.Method == "GET")
             {
                 var orderId = listenerRequest.QueryString.Get("orderId");
                 Console.WriteLine(orderId);
                 order = _toyBlockFactory.GetOrder(orderId); //RETURN ORDER!!!
+                return order;
             }
+
+            throw new ApplicationException("bad url");
         }
         
     }

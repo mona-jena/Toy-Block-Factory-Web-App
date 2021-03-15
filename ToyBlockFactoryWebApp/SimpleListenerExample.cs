@@ -48,7 +48,7 @@ namespace ToyBlockFactoryWebApp
         {
             // desc the request - HttpMethod string, UserAgent string, and request body data 
             HttpListenerRequest request = context.Request;
-            var orderCollector = new OrderDetailsCollector(_toyBlockFactory);
+            var orderCollector = new OrderController(_toyBlockFactory);
             var order = orderCollector.ProcessRequest(request, _order);
             
             if (request.HttpMethod == "POST")

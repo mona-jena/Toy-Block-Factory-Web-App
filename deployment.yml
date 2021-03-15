@@ -37,8 +37,8 @@ metadata:
     prometheus.io/scrape: "true"
 spec:
   ports:
-    - port: 80
-      targetPort: 3000
+    - port: 80            # standard port for http / k8s is listening on this port and directs traffic to port 3000
+      targetPort: 3000    #equivalent to postman
   selector:
     app: "mona" 
 
