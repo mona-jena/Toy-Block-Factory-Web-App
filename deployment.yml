@@ -16,7 +16,7 @@ spec:
         app: "mona"
         repo: "mona-app"
     spec:
-      containers:               #docker run 
+      containers:               # docker run 
         - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:91"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
           name: mona-tbf
           ports:
@@ -26,7 +26,7 @@ spec:
 # This is an example of a service - a logical grouping of pods
 ---
 apiVersion: v1
-kind: Service               #groups the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pods and send the traffic to that pod
+kind: Service             # the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pod and sends the traffic to that pod
 metadata:
   name: "mona-service"
   namespace: "fma"
@@ -38,18 +38,17 @@ metadata:
 spec:
   ports:
     - port: 80            # standard port for http / k8s is listening on this port and directs traffic to port 3000
-      targetPort: 3000    #equivalent to postman
+      targetPort: 3000    # equivalent to postman
   selector:
     app: "mona" 
 
+
+
 # This is an example of an ingress - a way to forward traffic to
 # your services and provide SSL termination.
-
-
-
 ---
 apiVersion: networking.k8s.io/v1beta1
-kind: Ingress      #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
+kind: Ingress             #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
 metadata:
   name: "mona-ingress"
   namespace: "fma"
