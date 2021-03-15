@@ -18,7 +18,7 @@ steps:
       queue: grace-lab 
   - wait
   - label: ':k8s: deploy on jupiter'
-    command: 'ktmpl $(pwd)/deployment.yml --parameter imageTag ${BUILDKITE_BUILD_NUMBER} | kubectl apply -f -' 
+    command: 'ktmpl $(pwd)/deployment.yml --parameter imageTag $(BUILDKITE_BUILD_NUMBER) | kubectl apply -f -' 
     agents:
       queue: europa-preprod-fma
 
