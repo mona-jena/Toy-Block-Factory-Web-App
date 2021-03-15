@@ -4,7 +4,6 @@ apiVersion: apps/v1
 kind: Deployment       #how many pods to run, which app to run
 metadata:
   name: "mona-deployment"
-  namespace: "mona-app"
 spec:
   replicas: 2
   selector:
@@ -62,11 +61,11 @@ spec:
   rules:
     - host: "mona.svc.platform.myobdev.com"
       http:
-        paths:
+        paths: 
           - backend:
               serviceName: "mona-service"
               servicePort: 80
-            path: /
+            path: /app
   tls:    #gives certificate given by https
     - hosts:
         - "mona.svc.platform.myobdev.com"
