@@ -29,6 +29,7 @@ apiVersion: v1
 kind: Service               #groups the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pods and send the traffic to that pod
 metadata:
   name: "mona-service"
+  namespace: "fma"
   labels:
     app: "mona"
     repo: "mona-app"
@@ -43,11 +44,15 @@ spec:
 
 # This is an example of an ingress - a way to forward traffic to
 # your services and provide SSL termination.
+
+
+
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress      #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
 metadata:
   name: "mona-ingress"
+  namespace: "fma"
   labels:
     app: "mona"
     repo: "mona-app"
