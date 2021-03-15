@@ -7,8 +7,8 @@ steps:
   - wait 
   - label: ':ec2: make dockerimage with tbf'
     command:
-      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app .' #is it finding app in current dir of VM?
-      - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app'
+      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(BUILDKITE_BUILD_NUMBER) .' #is it finding app in current dir of VM?
+      - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(BUILDKITE_BUILD_NUMBER)'
     plugins:
       - ecr#v2.3.0:
           login: true
@@ -18,7 +18,7 @@ steps:
       queue: grace-lab 
   - wait
   - label: ':k8s: deploy on jupiter'
-    command: 'kubectl apply -f deployment.yml -n fma'
+    command: 'ktmpl $(pwd)/deployment.yml --parameter imageTag ${BUILDKITE_BUILD_NUMBER} | kubectl apply -f -' 
     agents:
       queue: europa-preprod-fma
 
