@@ -19,7 +19,6 @@ steps:
   - wait
   - label: ':k8s: deploy on jupiter'
     command: 'kubectl apply -f deployment.yml -n fma'
-
     agents:
       queue: europa-preprod-fma
 
@@ -27,6 +26,6 @@ steps:
   - label: 'make dockerimage for web app'
     command: 
       - 'docker build -f ./Dockerfile.web . -t webapp'
-      - 'docker run -d -p 3000:80 webapp' ##what's source port? #why do you need to run on detached mode?
+      - 'docker run -d -p 3000:3000 webapp' ##what's source port? #why do you need to run on detached mode?
     agents:
       queue: grace-lab

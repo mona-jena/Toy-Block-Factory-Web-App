@@ -53,11 +53,11 @@ namespace ToyBlockFactoryWebApp
                 order.AddBlock(Shape.Square, Colour.Blue, 1);
                 return order;
             }
-            else if (url == "/order" && httpRequest.Method == "GET")
+            if (url == "/order" && httpRequest.Method == "GET")
             {
                 var orderId = listenerRequest.QueryString.Get("orderId");
                 Console.WriteLine(orderId);
-                order = _toyBlockFactory.GetOrder(orderId); //RETURN ORDER!!!
+                order = _toyBlockFactory.GetOrder(orderId); 
                 return order;
             }
 

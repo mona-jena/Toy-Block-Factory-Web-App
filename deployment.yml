@@ -1,81 +1,94 @@
-
 ---
-apiVersion: apps/v1
-kind: Deployment       #how many pods to run, which app to run
+kind: "Template"
+apiVersion: "v1"
 metadata:
-  name: "mona-deployment"
-  namespace: "fma"
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: "mona"
-  template:
-    metadata:
-      labels:
+  name: "Deployment"
+  annotations:
+    description: "Kubernetes Deployment Template"
+labels:
+  template: "Deployment"
+objects:
+  
+- apiVersion: apps/v1
+  kind: Deployment       #how many pods to run, which app to run
+  metadata:
+    name: "mona-deployment"
+    namespace: "fma"
+  spec:
+    replicas: 2
+    selector:
+      matchLabels:
         app: "mona"
-        repo: "mona-app"
-    spec:
-      containers:               # docker run 
-        - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:91"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
-          name: mona-tbf
-          ports:
-            - containerPort: 3000
+    template:
+      metadata:
+        labels:
+          app: "mona"
+          repo: "mona-app"
+      spec:
+        containers:               # docker run 
+          - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(imagetag)"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
+            name: mona-tbf
+            ports:
+              - containerPort: 3000
        
 
 # This is an example of a service - a logical grouping of pods
----
-apiVersion: v1
-kind: Service             # the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pod and sends the traffic to that pod
-metadata:
-  name: "mona-service"
-  namespace: "fma"
-  labels:
-    app: "mona"
-    repo: "mona-app"
-  annotations:
-    prometheus.io/scrape: "true"
-spec:
-  ports:
-    - port: 80            # standard port for http / k8s is listening on this port and directs traffic to port 3000
-      targetPort: 3000    # equivalent to postman
-  selector:
-    app: "mona" 
 
+- apiVersion: v1
+  kind: Service             # the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pod and sends the traffic to that pod
+  metadata:
+    name: "mona-service"
+    namespace: "fma"
+    labels:
+      app: "mona"
+      repo: "mona-app"
+    annotations:
+      prometheus.io/scrape: "true"
+  spec:
+    ports:
+      - port: 80            # standard port for http / k8s is listening on this port and directs traffic to port 3000
+        targetPort: 3000    # equivalent to postman
+    selector:
+      app: "mona" 
 
 
 # This is an example of an ingress - a way to forward traffic to
 # your services and provide SSL termination.
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress             #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
-metadata:
-  name: "mona-ingress"
-  namespace: "fma"
-  labels:
-    app: "mona"
-    repo: "mona-app"
-  annotations:
-    # This annotation will trigger the cluster to provision a TLS certificate which will
-    # be stored in the specified secretName below.
-    # NOTE: The secret will be:
-    # - CREATED if it doesn't exist
-    #       OR
-    # - UPDATED if it already exists (ie. the existing certificate in the secret WILL BE OVERWRITTEN!!!)
-    "kubernetes.io/tls-acme": "true"
-spec:
-  rules:
-    - host: "mona.svc.platform.myobdev.com"
-      http:
-        paths: 
-          - backend:
-              serviceName: "mona-service"
-              servicePort: 80
-            path: /
-  tls:    #gives certificate given by https
-    - hosts:
-        - "mona.svc.platform.myobdev.com"
-      # WARNING: DO NOT use the same secret for more than one ingress
-      # to ensure misconfiguration of one ingress does not affect any other ingresses
-      secretName: "mona-tls"
 
+- apiVersion: networking.k8s.io/v1beta1
+  kind: Ingress             #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
+  metadata:
+    name: "mona-ingress"
+    namespace: "fma"
+    labels:
+      app: "mona"
+      repo: "mona-app"
+    annotations:
+      # This annotation will trigger the cluster to provision a TLS certificate which will
+      # be stored in the specified secretName below.
+      # NOTE: The secret will be:
+      # - CREATED if it doesn't exist
+      #       OR
+      # - UPDATED if it already exists (ie. the existing certificate in the secret WILL BE OVERWRITTEN!!!)
+      "kubernetes.io/tls-acme": "true"
+  spec:
+    rules:
+      - host: "mona.svc.platform.myobdev.com"
+        http:
+          paths: 
+            - backend:
+                serviceName: "mona-service"
+                servicePort: 80
+              path: /
+    tls:                  #gives certificate given by https
+      - hosts:
+          - "mona.svc.platform.myobdev.com"
+        # WARNING: DO NOT use the same secret for more than one ingress
+        # to ensure misconfiguration of one ingress does not affect any other ingresses
+        secretName: "mona-tls"
+
+
+parameters:
+  - name : "imagetag"
+    parameterType : "string"
+    required: true
