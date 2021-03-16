@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
@@ -38,10 +39,29 @@ namespace ToyBlockFactoryWebApp
             while (true)
             {
                 HttpListenerContext context = _httpListener.GetContext(); //HTTP REQUEST
-                HandleRequest(context);
+                //HandleRequest(context);
+                QuickVersion(context);
             }
 
             _httpListener.Stop();
+        }
+
+        private void QuickVersion(HttpListenerContext context)
+        {
+            HttpListenerRequest request = context.Request;
+            if (request.RawUrl == "/health" && request.HttpMethod == "GET")
+            {
+                context.Response.StatusCode = 200;
+                
+                string responseString = "{\"status\": \"ok\"}";
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+               // context.Response.ContentLength64 = buffer.Length;
+                var output = context.Response.OutputStream;
+                output.Write(buffer, 0, buffer.Length);
+                output.Close();
+
+                // return new HttpResponseMessage(HttpStatusCode.Accepted);
+            }
         }
 
         private static void HandleRequest(HttpListenerContext context)

@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using ToyBlockFactoryKata;
@@ -30,6 +31,9 @@ namespace ToyBlockFactoryWebApp
             catch (ArgumentException e)
             {
                 Console.WriteLine("catch an error"); //THROW AN ERROR CODE
+                // var http = new HttpStatusCode();
+                // http = HttpStatusCode.BadRequest;
+                // return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
             Console.WriteLine("End of client data:");
 
