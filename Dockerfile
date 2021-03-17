@@ -7,4 +7,5 @@ RUN dotnet publish -c release -o /release
 FROM mcr.microsoft.com/dotnet/runtime:5.0
 WORKDIR /webapp
 COPY --from=build /release ./
-ENTRYPOINT ["dotnet", "ToyBlockFactoryWebApp.dll"]
+#execute this when we go docker run, everything before this is executed at build time
+ENTRYPOINT ["dotnet", "ToyBlockFactoryWebApp.dll"]   

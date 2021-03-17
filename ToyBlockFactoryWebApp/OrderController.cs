@@ -1,11 +1,8 @@
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
-using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {

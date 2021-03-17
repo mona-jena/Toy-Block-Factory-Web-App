@@ -1,6 +1,5 @@
 using System;
 using System.Net;
-using System.Net.Http;
 using System.Text.Json;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
@@ -27,7 +26,7 @@ namespace ToyBlockFactoryWebApp
             Start();
         }
 
-        public void Start()
+        private void Start()
         {
             foreach (string s in _uri)
             {
@@ -39,29 +38,37 @@ namespace ToyBlockFactoryWebApp
             while (true)
             {
                 HttpListenerContext context = _httpListener.GetContext(); //HTTP REQUEST
-                //HandleRequest(context);
-                QuickVersion(context);
+                try 
+                {
+                    var request = context.Request;
+                    if (request.RawUrl == "/health" && request.HttpMethod == "GET")
+                    {
+                        HealthCheck(request, context.Response);
+                    }
+                    else if (request.RawUrl == "/order" && request.HttpMethod == "POST")
+                    {
+                        HandleRequest(context);
+                    }
+                }
+                catch
+                {
+                    context.Response.StatusCode = 500;
+                    context.Response.Close();
+                }
             }
 
             _httpListener.Stop();
         }
 
-        private void QuickVersion(HttpListenerContext context)
+        private void HealthCheck(HttpListenerRequest request, HttpListenerResponse response)
         {
-            HttpListenerRequest request = context.Request;
-            if (request.RawUrl == "/health" && request.HttpMethod == "GET")
-            {
-                context.Response.StatusCode = 200;
+            response.StatusCode = 200;
                 
-                string responseString = "{\"status\": \"ok\"}";
-                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
-               // context.Response.ContentLength64 = buffer.Length;
-                var output = context.Response.OutputStream;
-                output.Write(buffer, 0, buffer.Length);
-                output.Close();
-
-                // return new HttpResponseMessage(HttpStatusCode.Accepted);
-            }
+            string responseString = "{\"status\": \"ok\"}";
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            var output = response.OutputStream;
+            output.Write(buffer, 0, buffer.Length);
+            output.Close();
         }
 
         private static void HandleRequest(HttpListenerContext context)
