@@ -13,7 +13,8 @@ namespace ToyBlockFactoryWebApp
         static void Main(string[] args)
         {
             string[] prefixes = {"http://*:3000/"};
-            var simpleListenerExample = new SimpleListenerExample(prefixes);
+            ToyBlockFactory toyBlockFactory = new (new LineItemsCalculator());
+            var server = new ToyServer(prefixes, toyBlockFactory);
         }
     }
 }
