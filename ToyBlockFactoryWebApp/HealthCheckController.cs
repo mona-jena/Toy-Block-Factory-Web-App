@@ -2,7 +2,7 @@ using System.Net;
 
 namespace ToyBlockFactoryWebApp
 {
-    class HealthCheckController
+    public class HealthCheckController
     {
         public void HealthCheck(HttpListenerRequest request, HttpListenerResponse response)
         {

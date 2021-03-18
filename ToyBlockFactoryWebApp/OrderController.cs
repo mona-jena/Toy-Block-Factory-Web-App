@@ -1,9 +1,9 @@
 using System;
 using System.Net;
 using System.Text.Json;
-using System.Threading;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
+using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
@@ -12,16 +12,16 @@ namespace ToyBlockFactoryWebApp
     {
         private static ToyBlockFactory _toyBlockFactory;
 
-        public OrderController(ToyBlockFactory toyBlockFactory)
+        public OrderController()
         {
-            _toyBlockFactory = toyBlockFactory;
+            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
         }
 
         public record NewOrderDTO(string Name, string Address)
         {
         }
         
-        public static void Post(HttpListenerContext context)
+        public void Post(HttpListenerContext context)
         {
             var httpRequest = new HttpRequest(context.Request);
             Console.WriteLine("Start of client data:");
@@ -33,11 +33,11 @@ namespace ToyBlockFactoryWebApp
             order.AddBlock(Shape.Square, Colour.Yellow, 1);
             order.AddBlock(Shape.Square, Colour.Blue, 1);
             
-            var orderId = ToyServer._toyBlockFactory.SubmitOrder(order);
+            var orderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("order submitted: " + orderId);
-            if (order != null)
-            {                                                   //RETURN REPORT STRAIGHT AWAY? //ASK TO CHOOSE?
-                ToyServer.SendResponse(context.Response, ToyServer._toyBlockFactory.GetReport(orderId, ReportType.Invoice));
+            if (orderId != null)
+            {                                                   //RETURN REPORT STRAIGHT AWAY?    //ASK TO CHOOSE?
+                ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
             }
             Console.WriteLine("End of client data:");
         }
@@ -53,8 +53,9 @@ namespace ToyBlockFactoryWebApp
             var order = _toyBlockFactory.GetOrder(orderId); 
             if (order != null)
             {
-                ToyServer.SendResponse(context.Response, ToyServer._toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
+                ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
             }
+            Console.WriteLine("End of client data:");
         }
         
         

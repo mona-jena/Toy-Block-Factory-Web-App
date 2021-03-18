@@ -2,13 +2,15 @@ using System.Net;
 
 namespace ToyBlockFactoryWebApp
 {
-    class Router
+    public class Router
     {
-        private HealthCheckController _healthCheckController;
+        private readonly HealthCheckController _healthCheckController;
+        private readonly OrderController _orderController;
 
         public Router(HealthCheckController healthCheckController)
         {
             _healthCheckController = healthCheckController;
+            _orderController = new OrderController();
         }
 
         public void ReadRequests(HttpListenerRequest request, HttpListenerContext context)
@@ -19,7 +21,11 @@ namespace ToyBlockFactoryWebApp
             }
             else if (request.RawUrl == "/order" && request.HttpMethod == "POST")
             {
-                OrderController.Post(context);
+                _orderController.Post(context); //BAD TO GIVE IT THE WHOLE CONTEXT???
+            }
+            else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "GET")
+            {
+                _orderController.Get(context); //BAD TO GIVE IT THE WHOLE CONTEXT???
             }
             
         }

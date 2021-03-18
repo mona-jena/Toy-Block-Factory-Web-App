@@ -24,9 +24,9 @@ namespace ToyBlockFactoryWebApp
             _uri = prefixes;
             _toyBlockFactory = toyBlockFactory;
             _httpListener = new HttpListener();
-            Start();
             _healthCheckController = new HealthCheckController();
             _router = new Router(_healthCheckController);
+            Start();
         }
 
         private void Start()
