@@ -32,7 +32,7 @@ objects:
               - containerPort: 3000
        
 
-# This is an example of a service - a logical grouping of pods
+# This is an example of a service - a logical grouping of pods - so we can access all worker nodes even if they get updated
 
 - apiVersion: v1
   kind: Service             # the 2 replicas (puts it one address) and just sends the request to a worker inside the cluster - picks a pod and sends the traffic to that pod

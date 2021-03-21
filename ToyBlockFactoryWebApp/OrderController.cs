@@ -1,24 +1,30 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
-using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    class OrderController
+    public class OrderController
     {
         private static ToyBlockFactory _toyBlockFactory;
 
-        public OrderController()
+        public OrderController(ToyBlockFactory toyBlockFactory)
         {
-            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
+            _toyBlockFactory = toyBlockFactory;
         }
 
-        public record NewOrderDTO(string Name, string Address)
+        public record BlockDTO(Colour Colour, Shape Shape, int Quantity)
         {
+            
+        }
+        
+        public record NewOrderDTO(string Name, string Address, List<BlockDTO> BlockList) 
+        {
+            
         }
         
         public void Post(HttpListenerContext context)
@@ -27,11 +33,14 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Start of client data:");
             Console.WriteLine(httpRequest.Body);
             
+            //var blockList = JsonSerializer.Deserialize<List<BlockDTO>>(httpRequest.Body.Substring(2));
+            //var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body.Substring(0,2));
             var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
             var order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
-            order.AddBlock(Shape.Square, Colour.Blue, 1);
-            order.AddBlock(Shape.Square, Colour.Yellow, 1);
-            order.AddBlock(Shape.Square, Colour.Blue, 1);
+            foreach (var block in customerDetails.BlockList)
+            {
+                order.AddBlock(block.Shape, block.Colour, block.Quantity);
+            }
             
             var orderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("order submitted: " + orderId);
@@ -58,70 +67,5 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data:");
         }
         
-        
-        
-        /*public Order ProcessRequest(HttpListenerRequest request, Order order)
-        {
-            var httpRequest = new HttpRequest(request);
-            Console.WriteLine("Start of client data:");
-            Console.WriteLine(httpRequest.Body);
-            
-            order = HandleRequest(request, httpRequest, order);
-            
-            Console.WriteLine("End of client data:");
-
-            return order;
-        }
-        
-        
-        
-        
-        public Order HandleRequest(HttpListenerRequest listenerRequest, HttpRequest httpRequest, Order order)
-        {
-            var url = listenerRequest.Url.AbsolutePath;
-            if (url == "/order" && httpRequest.Method == "POST")
-            {
-                var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
-                order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
-                order.AddBlock(Shape.Square, Colour.Blue, 1);
-                order.AddBlock(Shape.Square, Colour.Yellow, 1);
-                order.AddBlock(Shape.Square, Colour.Blue, 1);
-                return order;
-            }
-            if (url == "/order" && httpRequest.Method == "GET")
-            {
-                var orderId = listenerRequest.QueryString.Get("orderId");
-                Console.WriteLine(orderId);
-                order = _toyBlockFactory.GetOrder(orderId); 
-                return order;
-            }
-
-            throw new ApplicationException("bad url");
-        }
-
-        public static void HandleRequest(HttpListenerContext context)
-        {
-            // desc the request - HttpMethod string, UserAgent string, and request body data 
-            HttpListenerRequest request = context.Request;
-            var orderCollector = new OrderController(ToyServer._toyBlockFactory);
-            var order = orderCollector.ProcessRequest(request, ToyServer._order);
-
-            if (request.HttpMethod == "POST")
-            {
-                var orderId = ToyServer._toyBlockFactory.SubmitOrder(order);
-                Console.WriteLine("order submitted: " + orderId);
-                if (order != null)
-                {
-                    ToyServer.SendResponse(context.Response, ToyServer._toyBlockFactory.GetReport(orderId, ReportType.Invoice));
-                }
-            }
-            else if (request.HttpMethod == "GET")
-            {
-                if (order != null)
-                {
-                    ToyServer.SendResponse(context.Response, ToyServer._toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
-                }
-            }
-        }*/
     }
 }

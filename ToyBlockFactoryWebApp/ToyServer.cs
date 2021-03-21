@@ -11,9 +11,9 @@ namespace ToyBlockFactoryWebApp
     {
         private readonly HttpListener _httpListener;
         private readonly string[] _uri;
-        public static ToyBlockFactory _toyBlockFactory;
         public readonly HealthCheckController _healthCheckController;
         private readonly Router _router;
+        private OrderController _orderController;
 
         public ToyServer(string[] prefixes, ToyBlockFactory toyBlockFactory)
         {
@@ -22,10 +22,10 @@ namespace ToyBlockFactoryWebApp
                 throw new ArgumentException("prefixes");
             }
             _uri = prefixes;
-            _toyBlockFactory = toyBlockFactory;
             _httpListener = new HttpListener();
             _healthCheckController = new HealthCheckController();
-            _router = new Router(_healthCheckController);
+            _orderController = new OrderController(toyBlockFactory);
+            _router = new Router(_healthCheckController, _orderController);
             Start();
         }
 

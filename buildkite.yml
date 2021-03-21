@@ -1,10 +1,10 @@
 ---
 steps:
-  - label: ':cherry_blossom::whale: test panic'
-    command: 'docker build -f ./Dockerfile.test .' 
-    agents:
-      queue: grace-lab
-  - wait 
+  #- label: ':cherry_blossom::whale: test panic'
+   # command: 'docker build -f ./Dockerfile.test .' 
+   # agents:
+    #  queue: grace-lab
+  #- wait 
   - label: ':ec2: make dockerimage with tbf'
     command:
       - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER} .' #is it finding app in current dir of VM?

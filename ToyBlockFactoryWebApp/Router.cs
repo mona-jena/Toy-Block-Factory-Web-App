@@ -1,4 +1,5 @@
 using System.Net;
+using ToyBlockFactoryKata;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -7,10 +8,10 @@ namespace ToyBlockFactoryWebApp
         private readonly HealthCheckController _healthCheckController;
         private readonly OrderController _orderController;
 
-        public Router(HealthCheckController healthCheckController)
+        public Router(HealthCheckController healthCheckController, OrderController orderController)
         {
             _healthCheckController = healthCheckController;
-            _orderController = new OrderController();
+            _orderController = orderController;
         }
 
         public void ReadRequests(HttpListenerRequest request, HttpListenerContext context)
