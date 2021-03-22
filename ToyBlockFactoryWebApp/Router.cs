@@ -32,6 +32,10 @@ namespace ToyBlockFactoryWebApp
             {
                 _orderController.Get(context); 
             }
+            else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "PUT")
+            {
+                _orderController.Put(context); 
+            }
             
         }
     }

@@ -110,6 +110,23 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data:");
         }
 
-        
+
+        public void Put(HttpListenerContext context)
+        {
+            var httpRequest = new HttpRequest(context.Request);
+            Console.WriteLine("Start of client data:");
+            Console.WriteLine(httpRequest.Body);
+            var orderId = context.Request.QueryString.Get("orderId");
+            Console.WriteLine("Put " + orderId);
+            var order = _toyBlockFactory.GetOrder(orderId);
+            var submittedOrderId = _toyBlockFactory.SubmitOrder(order);
+            Console.WriteLine(submittedOrderId);
+            if (submittedOrderId == orderId)
+            {
+                ToyServer.SendResponse(context.Response, submittedOrderId);
+            }
+            Console.WriteLine("End of client data:");
+            
+        }
     }
 }
