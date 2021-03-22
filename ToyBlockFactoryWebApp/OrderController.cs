@@ -29,16 +29,15 @@ namespace ToyBlockFactoryWebApp
             
         }*/
         
-        public record NewOrderDTO(string Name, string Address) 
-        {
-            
-        }
-        
         public record BlockOrderDTO(List<BlockDTO> Order) 
         {
             
         }
-
+        
+        public record NewOrderDTO(string Name, string Address) 
+        {
+            
+        }
         
         public void PostAddBlock(HttpListenerContext context)
         {
@@ -71,44 +70,46 @@ namespace ToyBlockFactoryWebApp
                 
             ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
         
-        // var orderId = _toyBlockFactory.SubmitOrder(order);
-        // Console.WriteLine("order submitted: " + orderId);
-        Console.WriteLine("End of client data:");
-        /*if (orderId != null)
-        {                                                   //RETURN REPORT STRAIGHT AWAY?    //ASK TO CHOOSE?
-            ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
-        }*/
+            // var orderId = _toyBlockFactory.SubmitOrder(order);
+            // Console.WriteLine("order submitted: " + orderId);
+            Console.WriteLine("End of client data:");
+            /*if (orderId != null)
+            {                                                   //RETURN REPORT STRAIGHT AWAY?    //ASK TO CHOOSE?
+                ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
+            }*/
             
-    }
+        }
         
-    public void Post(HttpListenerContext context)
-    {
-    var httpRequest = new HttpRequest(context.Request);
-    Console.WriteLine("Start of client data:");
-    Console.WriteLine(httpRequest.Body);
-    var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
-    var orderId = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
-    Console.WriteLine("order created: " + orderId);
-    Console.WriteLine("End of client data:");
-    ToyServer.SendResponse(context.Response, orderId);
-    }
+        public void Post(HttpListenerContext context)
+        {
+            var httpRequest = new HttpRequest(context.Request);
+            Console.WriteLine("Start of client data:");
+            Console.WriteLine(httpRequest.Body);
+            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
+            var orderId = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
+            Console.WriteLine("order created: " + orderId);
+            Console.WriteLine("End of client data:");
+            ToyServer.SendResponse(context.Response, orderId);
+        }
 
-    public void Get(HttpListenerContext context)
-    {
-    var httpRequest = new HttpRequest(context.Request);
-    Console.WriteLine("Start of client data:");
-    Console.WriteLine(httpRequest.Body);
+        public void Get(HttpListenerContext context)
+        {
+            var httpRequest = new HttpRequest(context.Request);
+            Console.WriteLine("Start of client data:");
+            Console.WriteLine(httpRequest.Body);
             
-    var orderId = context.Request.QueryString.Get("orderId");
-    Console.WriteLine("Get " + orderId);
-    var order = _toyBlockFactory.GetOrder(orderId); 
-        if (order != null)
-    {
-        ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, ReportType.Invoice));
-    }
-    Console.WriteLine("End of client data:");
-    }
+            var orderId = context.Request.QueryString.Get("orderId");
+            Console.WriteLine("Get " + orderId);
+            var reportType = (ReportType) Enum.Parse(typeof(ReportType),context.Request.QueryString.Get("ReportType"));
+            Console.WriteLine("Get " + reportType);
+            var order = _toyBlockFactory.GetOrder(orderId); 
+            if (order != null)
+            {
+                ToyServer.SendResponse(context.Response, _toyBlockFactory.GetReport(order.OrderId, reportType));
+            }
+            Console.WriteLine("End of client data:");
+        }
 
         
-}
+    }
 }

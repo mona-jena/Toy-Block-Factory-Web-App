@@ -28,7 +28,7 @@ namespace ToyBlockFactoryWebApp
             {
                 _orderController.PostAddBlock(context); 
             }
-            else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "GET")
+            else if (request.Url.AbsolutePath == "/report" && request.HttpMethod == "GET")
             {
                 _orderController.Get(context); 
             }
