@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
@@ -22,7 +23,7 @@ namespace ToyBlockFactoryWebApp
             
         }
         
-        public record NewOrderDTO(string Name, string Address, List<BlockDTO> BlockList) 
+        public record NewOrderDTO(string Name, string Address, List<BlockDTO> Order) 
         {
             
         }
@@ -33,11 +34,18 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Start of client data:");
             Console.WriteLine(httpRequest.Body);
             
-            //var blockList = JsonSerializer.Deserialize<List<BlockDTO>>(httpRequest.Body.Substring(2));
-            //var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body.Substring(0,2));
-            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body);
+            var options = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                    new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+                }
+            };
+
+            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(httpRequest.Body, options);
             var order = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address);
-            foreach (var block in customerDetails.BlockList)
+
+            foreach (var block in customerDetails.Order)
             {
                 order.AddBlock(block.Shape, block.Colour, block.Quantity);
             }
