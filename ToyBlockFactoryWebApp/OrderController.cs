@@ -128,5 +128,19 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data:");
             
         }
+
+        public void Delete(HttpListenerContext context)
+        {
+            var httpRequest = new HttpRequest(context.Request);
+            Console.WriteLine("Start of client data:");
+            Console.WriteLine(httpRequest.Body);
+            var orderId = context.Request.QueryString.Get("orderId");
+            Console.WriteLine("Delete " + orderId);
+            _toyBlockFactory.DeleteOrder(orderId);
+            if (_toyBlockFactory.OrderExists(orderId) == false)
+            {
+                ToyServer.SendResponse(context.Response, orderId);      //WHAT SHOULD IT RETURN??
+            }
+        }
     }
 }

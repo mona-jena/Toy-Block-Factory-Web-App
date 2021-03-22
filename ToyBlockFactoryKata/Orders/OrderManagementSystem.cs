@@ -15,6 +15,7 @@ namespace ToyBlockFactoryKata.Orders
             /*++_orderId;
             var orderId = GetOrderNumber();
             order = order with {OrderId = orderId};*/
+            tempOrderRecords.Remove(order.OrderId);
             orderRecords.Add(order.OrderId, order);
             return order.OrderId;
         }
@@ -39,6 +40,15 @@ namespace ToyBlockFactoryKata.Orders
         {
             var formattedOrderNumber = _orderId.ToString().PadLeft(4, '0');
             return formattedOrderNumber;
+        }
+
+        public void DeleteOrder(string orderId)
+        {
+            --_orderId;
+            if (GetOrder(orderId, out _))
+            {
+                tempOrderRecords.Remove(orderId);
+            }
         }
     }
 }

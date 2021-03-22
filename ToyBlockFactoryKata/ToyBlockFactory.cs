@@ -50,6 +50,11 @@ namespace ToyBlockFactoryKata
             return order;
         }
 
+        public void DeleteOrder(string orderId)
+        {
+            _orderManagementSystem.DeleteOrder(orderId);
+        }
+
         public IReport GetReport(string orderId, ReportType reportType)
         {
             var requestedOrder = GetOrder(orderId);

@@ -36,7 +36,10 @@ namespace ToyBlockFactoryWebApp
             {
                 _orderController.Put(context); 
             }
-            
+            else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "DELETE")
+            {
+                _orderController.Delete(context); 
+            }
         }
     }
 }
