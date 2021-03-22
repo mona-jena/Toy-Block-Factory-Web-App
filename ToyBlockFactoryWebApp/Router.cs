@@ -22,11 +22,15 @@ namespace ToyBlockFactoryWebApp
             }
             else if (request.RawUrl == "/order" && request.HttpMethod == "POST")
             {
-                _orderController.Post(context); //BAD TO GIVE IT THE WHOLE CONTEXT???
+                _orderController.Post(context); 
+            }
+            else if (request.Url.AbsolutePath == "/addblock" && request.HttpMethod == "POST")
+            {
+                _orderController.PostAddBlock(context); 
             }
             else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "GET")
             {
-                _orderController.Get(context); //BAD TO GIVE IT THE WHOLE CONTEXT???
+                _orderController.Get(context); 
             }
             
         }

@@ -16,8 +16,8 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculatorStub());
 
             OrderWithDateGiven();
-            OrderWithNoDateGiven();
-            _emptyOrder = EmptyOrder();
+            /*OrderWithNoDateGiven();
+            _emptyOrder = EmptyOrder();*/
         }
 
         [Fact]
@@ -143,7 +143,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
-        private void OrderWithNoDateGiven()
+        /*private void OrderWithNoDateGiven()
         {
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
@@ -159,6 +159,7 @@ namespace ToyBlockFactoryTests
         {
             return _toyBlockFactory.CreateOrder("Tony Williams", "13 Stokes Road, Auckland");
         }
+        */
         
     }
 }

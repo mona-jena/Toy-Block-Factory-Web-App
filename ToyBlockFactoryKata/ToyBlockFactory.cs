@@ -17,9 +17,9 @@ namespace ToyBlockFactoryKata
             _reportSystem = new ReportSystem(priceCalculator);
         }
 
-        public Order CreateOrder(string customerName, string customerAddress)
+        public string CreateOrder(string customerName, string customerAddress)  //WEB APP
         {
-            return new(customerName, customerAddress);
+            return _orderManagementSystem.CreateOrder(customerName, customerAddress);
         }
 
         public Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 
 namespace ToyBlockFactoryKata.Orders
 {
@@ -6,19 +7,32 @@ namespace ToyBlockFactoryKata.Orders
     {
         private int _orderId;
         internal Dictionary<string, Order> orderRecords { get; } = new();
+        
+        internal Dictionary<string, Order> tempOrderRecords { get; } = new();
 
         internal string SubmitOrder(Order order)
         {
+            /*++_orderId;
+            var orderId = GetOrderNumber();
+            order = order with {OrderId = orderId};*/
+            orderRecords.Add(order.OrderId, order);
+            return order.OrderId;
+        }
+
+        internal string CreateOrder(string customerName, string customerAddress)
+        {
+            var order = new Order(customerName, customerAddress);
             ++_orderId;
             var orderId = GetOrderNumber();
             order = order with {OrderId = orderId};
-            orderRecords.Add(order.OrderId, order);
+            tempOrderRecords.Add(order.OrderId, order);
             return orderId;
         }
 
         internal bool GetOrder(string orderId, out Order order)
         {
-            return orderRecords.TryGetValue(orderId, out order);
+            //return orderRecords.TryGetValue(orderId, out order);
+            return tempOrderRecords.TryGetValue(orderId, out order);
         }
 
         private string GetOrderNumber()

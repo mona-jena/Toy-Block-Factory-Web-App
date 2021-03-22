@@ -22,7 +22,7 @@ namespace ToyBlockFactoryConsole
             if (!string.IsNullOrEmpty(dateInput))
                 dueDate = InputValidator.ConvertToDateTime(dateInput);
             
-            Order order;
+            /*Order order;
             if (dueDate >= DateTime.Today)
             {
                 order = toyBlockFactory.CreateOrder(name, address, dueDate);
@@ -41,7 +41,7 @@ namespace ToyBlockFactoryConsole
                 orderId = EnterBlockOrder(toyBlockFactory, order);
             }
 
-            UserInterface.GetReport(toyBlockFactory, orderId);
+            UserInterface.GetReport(toyBlockFactory, orderId);*/
         }
 
         private static string CheckWhileEmpty(string input)
