@@ -17,14 +17,15 @@ namespace ToyBlockFactoryKata
             _reportSystem = new ReportSystem(priceCalculator);
         }
 
-        public string CreateOrder(string customerName, string customerAddress)  //WEB APP
+        public Order CreateOrder(string customerName, string customerAddress)  //WEB APP
         {
             return _orderManagementSystem.CreateOrder(customerName, customerAddress);
         }
 
+        
         public Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
         {
-            return new(customerName, customerAddress, dueDate);
+            return _orderManagementSystem.CreateOrder(customerName, customerAddress);
         }
 
         public string SubmitOrder(Order customerOrder)
@@ -61,10 +62,9 @@ namespace ToyBlockFactoryKata
             return _reportSystem.GenerateReport(requestedOrder, reportType);
         }
         
-        
         public IEnumerable<IReport> GetReportsByDate(DateTime date, ReportType reportType)
         {
-            var orderRecords = _orderManagementSystem.orderRecords;
+            var orderRecords = _orderManagementSystem.orderRecords; //FILTER INSIDE OMS
             return _reportSystem.FilterReportsByDate(date, orderRecords, reportType);
         }
         

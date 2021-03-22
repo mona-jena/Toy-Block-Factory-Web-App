@@ -1,5 +1,8 @@
+using System;
+using System.IO;
 using System.Net;
-using ToyBlockFactoryKata;
+using System.Text;
+using System.Text.Json;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -13,33 +16,74 @@ namespace ToyBlockFactoryWebApp
             _healthCheckController = healthCheckController;
             _orderController = orderController;
         }
+        
+        public string GetRequestBody(HttpListenerRequest request)
+        {
+            Console.WriteLine("Start of client data:");
+            var body = request.InputStream;
+            var encoding = request.ContentEncoding;
+            var reader = new StreamReader(body, encoding);
+            string bodyString = reader.ReadToEnd();
+            body.Close();
+            reader.Close();
+            return bodyString;
+        }
 
         public void ReadRequests(HttpListenerRequest request, HttpListenerContext context)
         {
-            if (request.RawUrl == "/health" && request.HttpMethod == "GET")
+            var requestBody = GetRequestBody(request);
+            switch (request.Url.AbsolutePath)
             {
-                _healthCheckController.HealthCheck(request, context.Response);
-            }
-            else if (request.RawUrl == "/order" && request.HttpMethod == "POST")
-            {
-                _orderController.Post(context); 
-            }
-            else if (request.Url.AbsolutePath == "/addblock" && request.HttpMethod == "POST")
-            {
-                _orderController.PostAddBlock(context); 
-            }
-            else if (request.Url.AbsolutePath == "/report" && request.HttpMethod == "GET")
-            {
-                _orderController.Get(context); 
-            }
-            else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "PUT")
-            {
-                _orderController.Put(context); 
-            }
-            else if (request.Url.AbsolutePath == "/order" && request.HttpMethod == "DELETE")
-            {
-                _orderController.Delete(context); 
+                case "/health" when request.HttpMethod == "GET":
+                    var healthMessage = _healthCheckController.HealthCheck();
+                    SendResponse(context.Response, HttpStatusCode.Accepted, healthMessage);
+                    break;
+                case "/order" when request.HttpMethod == "POST":
+                    var orderId = _orderController.Post(requestBody);
+                    SendResponse(context.Response, HttpStatusCode.Accepted, orderId);
+                    break;
+                case "/addblock" when request.HttpMethod == "POST":
+                    var postResult = _orderController.PostAddBlock(request.QueryString, requestBody);
+                    SendResponse(context.Response, HttpStatusCode.Accepted, postResult);
+                    break;
+                case "/report" when request.HttpMethod == "GET":
+                    var getResult = _orderController.Get(request.QueryString, requestBody);
+                    SendResponse(context.Response, HttpStatusCode.Accepted, getResult);
+                    break;
+                case "/order" when request.HttpMethod == "PUT":
+                    var ifSubmitted = _orderController.Put(request.QueryString, requestBody);
+                    if (!ifSubmitted)
+                    {
+                        SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    }
+                    SendResponse(context.Response, HttpStatusCode.Accepted);
+                    break;
+                case "/order" when request.HttpMethod == "DELETE":
+                    var ifDeleted = _orderController.Delete(request.QueryString, requestBody);
+                    if (!ifDeleted)
+                    {
+                        SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    }
+                    SendResponse(context.Response, HttpStatusCode.Accepted);
+                    break;
             }
         }
+
+        public static void SendResponse(HttpListenerResponse response, HttpStatusCode statusCode, object @object = null)
+        {
+            //var httpResponse = new HttpResponse(response, order);
+            response.Headers.Set("Server", "mona's-server");
+            response.StatusCode = (int) statusCode;
+
+            string responseString = JsonSerializer.Serialize(@object);
+            byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+            response.ContentLength64 = buffer.Length;
+            var output = response.OutputStream;
+            output.Write(buffer, 0, buffer.Length);
+            output.Close();
+        }
+        
+        
+        
     }
 }

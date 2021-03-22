@@ -5,18 +5,18 @@ namespace ToyBlockFactoryKata.Orders
 {
     public record Order
     {
-        public Order(string customerName, string customerAddress)
-            : this(customerName, customerAddress, DateTime.Today.AddDays(7))
-        {
-        }
 
-        public Order(string customerName, string customerAddress, DateTime date)
+        public Order(string customerName, string customerAddress, DateTime date, string orderId)
         {
             Name = customerName;
             Address = customerAddress;
             DueDate = date;
+            OrderId = orderId;
         }
 
+        public bool isDeleted { get; }
+        
+        public bool isSubmitted { get; set; }
         public string Name { get; }
         public string Address { get; }
         public string OrderId { get; init; }

@@ -26,7 +26,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var invoice = ToyBlockFactoryFixture.create().GetReport(orderId, ReportType.Invoice);
+            var invoice = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
 
             Assert.Equal(ReportType.Invoice, invoice.ReportType);
         }

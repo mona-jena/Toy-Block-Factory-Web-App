@@ -57,22 +57,6 @@ namespace ToyBlockFactoryWebApp
 
             _httpListener.Stop();
         }
-
-
-        public static void SendResponse(HttpListenerResponse response, Object order)
-            {
-                //var httpResponse = new HttpResponse(response, order);
-                response.Headers.Set("Server", "mona's-server");
-                response.StatusCode = 201;
-
-                string responseString = JsonSerializer.Serialize(order);
-                byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-                response.ContentLength64 = buffer.Length;
-                var output = response.OutputStream;
-                output.Write(buffer, 0, buffer.Length);
-                output.Close();
-            }
-            
-        }
+    }
     
 }

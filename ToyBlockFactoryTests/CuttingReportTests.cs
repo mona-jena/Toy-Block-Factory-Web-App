@@ -25,7 +25,7 @@ namespace ToyBlockFactoryTests
         {
             const string orderId = "0001";
 
-            var cuttingList = ToyBlockFactoryFixture.create().GetReport(orderId, ReportType.CuttingList);
+            var cuttingList = _toyBlockFactory.GetReport(orderId, ReportType.CuttingList);
 
             Assert.Equal(ReportType.CuttingList, cuttingList.ReportType);
         }
@@ -69,7 +69,7 @@ namespace ToyBlockFactoryTests
         public void ReportContainsOrderId()
         {
             // ARRANGE
-            ToyBlockFactory toyBlockFactory = ToyBlockFactoryFixture.create();
+            ToyBlockFactory toyBlockFactory = _toyBlockFactory;
             //Order toyBlockFactory.GetOrders();   //so you don't have to rely on knowing orderId
 
             const string orderId = "0001";

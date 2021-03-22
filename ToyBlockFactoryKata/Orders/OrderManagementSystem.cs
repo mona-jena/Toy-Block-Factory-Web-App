@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -8,32 +9,35 @@ namespace ToyBlockFactoryKata.Orders
         private int _orderId;
         internal Dictionary<string, Order> orderRecords { get; } = new();
         
-        internal Dictionary<string, Order> tempOrderRecords { get; } = new();
-
         internal string SubmitOrder(Order order)
         {
             /*++_orderId;
             var orderId = GetOrderNumber();
             order = order with {OrderId = orderId};*/
-            tempOrderRecords.Remove(order.OrderId);
-            orderRecords.Add(order.OrderId, order);
+            
+            order.isSubmitted = true;
             return order.OrderId;
         }
 
-        internal string CreateOrder(string customerName, string customerAddress)
+        internal Order CreateOrder(string customerName, string customerAddress)
         {
-            var order = new Order(customerName, customerAddress);
+            return CreateOrder(customerName, customerAddress, DateTime.Today.AddDays(7));
+        }
+        
+        internal Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
+        {
             ++_orderId;
             var orderId = GetOrderNumber();
-            order = order with {OrderId = orderId};
-            tempOrderRecords.Add(order.OrderId, order);
-            return orderId;
+            var order = new Order(customerName, customerAddress, dueDate, orderId);
+            
+            //order = order with {OrderId = orderId};
+            orderRecords.Add(order.OrderId, order);
+            return order;
         }
 
         internal bool GetOrder(string orderId, out Order order)
         {
-            //return orderRecords.TryGetValue(orderId, out order);
-            return tempOrderRecords.TryGetValue(orderId, out order);
+            return orderRecords.TryGetValue(orderId, out order);
         }
 
         private string GetOrderNumber()
@@ -44,10 +48,9 @@ namespace ToyBlockFactoryKata.Orders
 
         public void DeleteOrder(string orderId)
         {
-            --_orderId;
-            if (GetOrder(orderId, out _))
+            if (GetOrder(orderId, out var order) && !order.isSubmitted)
             {
-                tempOrderRecords.Remove(orderId);
+                orderRecords.Remove(order.OrderId);
             }
         }
     }
