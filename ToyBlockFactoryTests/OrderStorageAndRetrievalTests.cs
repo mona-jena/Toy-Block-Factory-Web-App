@@ -10,7 +10,7 @@ namespace ToyBlockFactoryTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
         private readonly Order _emptyOrder;
-        private Order _unsubmittedOrder;
+        private readonly Order _unsubmittedOrder;
 
         public OrderStorageAndRetrievalTests()
         {

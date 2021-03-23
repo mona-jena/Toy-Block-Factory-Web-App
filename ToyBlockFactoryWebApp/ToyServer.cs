@@ -45,6 +45,7 @@ namespace ToyBlockFactoryWebApp
                 {
                     var request = context.Request;
                     _router.ReadRequests(request, context);
+                    Console.WriteLine($"Received request from {request.Url}");
                 }
                 catch (Exception e)
                 {

@@ -14,7 +14,7 @@ namespace ToyBlockFactoryWebApp
         {
             string[] prefixes = {"http://*:3000/"};
             ToyBlockFactory toyBlockFactory = new (new LineItemsCalculator());
-            var server = new ToyServer(prefixes, toyBlockFactory);
+            var toyServer = new ToyServer(prefixes, toyBlockFactory);
         }
     }
 }

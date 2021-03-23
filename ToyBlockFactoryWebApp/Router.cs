@@ -16,8 +16,8 @@ namespace ToyBlockFactoryWebApp
             _healthCheckController = healthCheckController;
             _orderController = orderController;
         }
-        
-        public string GetRequestBody(HttpListenerRequest request)
+
+        private string GetRequestBody(HttpListenerRequest request)
         {
             Console.WriteLine("Start of client data:");
             var body = request.InputStream;
@@ -32,6 +32,7 @@ namespace ToyBlockFactoryWebApp
         public void ReadRequests(HttpListenerRequest request, HttpListenerContext context)
         {
             var requestBody = GetRequestBody(request);
+            Console.WriteLine(requestBody);
             switch (request.Url.AbsolutePath)
             {
                 case "/health" when request.HttpMethod == "GET":
@@ -43,24 +44,24 @@ namespace ToyBlockFactoryWebApp
                     SendResponse(context.Response, HttpStatusCode.Accepted, orderId);
                     break;
                 case "/addblock" when request.HttpMethod == "POST":
-                    var postResult = _orderController.PostAddBlock(request.QueryString, requestBody);
-                    SendResponse(context.Response, HttpStatusCode.Accepted, postResult);
+                    _orderController.PostAddBlock(request.QueryString, requestBody);
+                    SendResponse(context.Response, HttpStatusCode.Accepted);
                     break;
                 case "/report" when request.HttpMethod == "GET":
-                    var getResult = _orderController.Get(request.QueryString, requestBody);
-                    SendResponse(context.Response, HttpStatusCode.Accepted, getResult);
+                    var report = _orderController.Get(request.QueryString);
+                    SendResponse(context.Response, HttpStatusCode.Accepted, report);
                     break;
                 case "/order" when request.HttpMethod == "PUT":
-                    var ifSubmitted = _orderController.Put(request.QueryString, requestBody);
-                    if (!ifSubmitted)
+                    var submitted = _orderController.Put(request.QueryString);
+                    if (!submitted)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
                     SendResponse(context.Response, HttpStatusCode.Accepted);
                     break;
                 case "/order" when request.HttpMethod == "DELETE":
-                    var ifDeleted = _orderController.Delete(request.QueryString, requestBody);
-                    if (!ifDeleted)
+                    var deleted = _orderController.Delete(request.QueryString);
+                    if (!deleted)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
@@ -69,11 +70,11 @@ namespace ToyBlockFactoryWebApp
             }
         }
 
-        public static void SendResponse(HttpListenerResponse response, HttpStatusCode statusCode, object @object = null)
+        private static void SendResponse(HttpListenerResponse response, HttpStatusCode statusCode, Object @object = null)
         {
+            Console.WriteLine("End of client data.");
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = (int) statusCode;
-
             string responseString = JsonSerializer.Serialize(@object);
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
@@ -81,8 +82,6 @@ namespace ToyBlockFactoryWebApp
             output.Write(buffer, 0, buffer.Length);
             output.Close();
         }
-        
-        
         
     }
 }

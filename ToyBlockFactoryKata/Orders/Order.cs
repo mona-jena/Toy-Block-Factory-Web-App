@@ -18,10 +18,9 @@ namespace ToyBlockFactoryKata.Orders
         public bool IsSubmitted { get; set; }
         public string Name { get; }
         public string Address { get; }
-        public string OrderId { get; init; }
+        public string OrderId { get; }
         public Dictionary<Block, int> BlockList { get; } = new();
         public DateTime DueDate { get; }
-
         internal Dictionary<Shape, int> shapeQuantities { get; } = new();
 
 
