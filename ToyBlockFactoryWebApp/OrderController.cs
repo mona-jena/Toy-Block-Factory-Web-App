@@ -54,11 +54,14 @@ namespace ToyBlockFactoryWebApp
             
             Console.WriteLine("Blocks added to order " + orderId + ": ");
             if (orderId != null)
+            {
                 foreach (var block in orderDetails.Order)
                 {
                     order.AddBlock(block.Shape, block.Colour, block.Quantity);
                     Console.WriteLine("{0} {1} {2}", block.Quantity, block.Colour, block.Shape);
                 }
+            }
+                
         }
 
         public IReport Get(NameValueCollection queryString)

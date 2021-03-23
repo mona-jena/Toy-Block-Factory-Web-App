@@ -75,12 +75,12 @@ namespace ToyBlockFactoryKata.ReportCreators
 
         private IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
-            return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GenerateCuttingList(o.Value));
+            return orderRecords.Select(o => GenerateCuttingList(o.Value));
         }
 
         private IEnumerable<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
         {
-            return orderRecords.Where(o => o.Value.DueDate == date).Select(o => GeneratePaintingReport(o.Value));
+            return orderRecords.Select(o => GeneratePaintingReport(o.Value));
         }
         
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ToyBlockFactoryKata.Orders
 {
@@ -46,6 +47,12 @@ namespace ToyBlockFactoryKata.Orders
                 order.IsDeleted = true;
                 orderRecords.Remove(order.OrderId);
             }
+        }
+
+        internal Dictionary<string, Order> FilteredOrders(DateTime dueDate)
+        {
+            var orders = orderRecords.Where(o => o.Value.DueDate == dueDate);
+            return orders.ToDictionary(order => order.Key, order => order.Value);
         }
     }
 }
