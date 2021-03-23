@@ -71,7 +71,6 @@ namespace ToyBlockFactoryWebApp
 
         public static void SendResponse(HttpListenerResponse response, HttpStatusCode statusCode, object @object = null)
         {
-            //var httpResponse = new HttpResponse(response, order);
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = (int) statusCode;
 

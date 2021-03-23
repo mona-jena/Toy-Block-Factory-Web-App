@@ -8,16 +8,6 @@ namespace ToyBlockFactoryKata.Orders
     {
         private int _orderId;
         internal Dictionary<string, Order> orderRecords { get; } = new();
-        
-        internal string SubmitOrder(Order order)
-        {
-            /*++_orderId;
-            var orderId = GetOrderNumber();
-            order = order with {OrderId = orderId};*/
-            
-            order.isSubmitted = true;
-            return order.OrderId;
-        }
 
         internal Order CreateOrder(string customerName, string customerAddress)
         {
@@ -29,8 +19,6 @@ namespace ToyBlockFactoryKata.Orders
             ++_orderId;
             var orderId = GetOrderNumber();
             var order = new Order(customerName, customerAddress, dueDate, orderId);
-            
-            //order = order with {OrderId = orderId};
             orderRecords.Add(order.OrderId, order);
             return order;
         }
@@ -39,6 +27,12 @@ namespace ToyBlockFactoryKata.Orders
         {
             return orderRecords.TryGetValue(orderId, out order);
         }
+        
+        internal string SubmitOrder(Order order)
+        {
+            order.IsSubmitted = true;
+            return order.OrderId;
+        }
 
         private string GetOrderNumber()
         {
@@ -46,10 +40,11 @@ namespace ToyBlockFactoryKata.Orders
             return formattedOrderNumber;
         }
 
-        public void DeleteOrder(string orderId)
+        internal void DeleteOrder(string orderId)
         {
-            if (GetOrder(orderId, out var order) && !order.isSubmitted)
+            if (GetOrder(orderId, out var order) && !order.IsSubmitted)
             {
+                order.IsDeleted = true;
                 orderRecords.Remove(order.OrderId);
             }
         }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Drawing;
-using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
@@ -20,19 +18,16 @@ namespace ToyBlockFactoryWebApp
             _toyBlockFactory = toyBlockFactory;
         }
 
-        public record BlockDTO(Colour Colour, Shape Shape, int Quantity)
-        {
-            
-        }
-
-        public record BlockOrderDTO(List<BlockDTO> Order) 
-        {
-            
-        }
-        
         public record NewOrderDTO(string Name, string Address) 
         {
-            
+        }
+        
+        public record BlockOrderDTO(List<BlockDTO> Order) 
+        {
+        }
+        
+        public record BlockDTO(Colour Colour, Shape Shape, int Quantity)
+        {
         }
         
         public IReport PostAddBlock(NameValueCollection queryString, string requestBody)
@@ -49,8 +44,6 @@ namespace ToyBlockFactoryWebApp
             
             var orderDetails = JsonSerializer.Deserialize<BlockOrderDTO>(requestBody, options);
             
-            //if (context.Request.UrlReferrer.AbsolutePath == "/order")  //NECESSARY??
-            
             var orderId = queryString.Get("orderId");
             var order = _toyBlockFactory.GetOrder(orderId);
             if (orderId != null)
@@ -63,7 +56,6 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data:");
             
             return _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
-            
         }
         
         public string Post(string requestBody)
@@ -98,9 +90,7 @@ namespace ToyBlockFactoryWebApp
             {
                 return false;
             }
-
             return true;
-
         }
 
         public bool Delete(NameValueCollection queryString, string requestBody)

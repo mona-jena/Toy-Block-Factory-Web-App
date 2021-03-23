@@ -10,14 +10,16 @@ namespace ToyBlockFactoryTests
     {
         private readonly ToyBlockFactory _toyBlockFactory;
         private readonly Order _emptyOrder;
+        private Order _unsubmittedOrder;
 
         public OrderStorageAndRetrievalTests()
         {
             _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculatorStub());
 
             OrderWithDateGiven();
-            /*OrderWithNoDateGiven();
-            _emptyOrder = EmptyOrder();*/
+            OrderWithNoDateGiven();
+            _emptyOrder = EmptyOrder();
+            _unsubmittedOrder = OrderNotSubmitted();
         }
 
         [Fact]
@@ -113,19 +115,29 @@ namespace ToyBlockFactoryTests
         public void ChecksIfOrderExists()
         {
             var order1 = _toyBlockFactory.OrderExists("0001");
-            var order3 = _toyBlockFactory.OrderExists("0003");
+            var order3 = _toyBlockFactory.OrderExists("0004");
             
             Assert.True(order1);
             Assert.False(order3);
         }
 
         [Fact]
-        
         public void InvalidOrderNumberThrowsException()
         {
-            const string nonExistingOrder = "0003";
+            const string nonExistingOrder = "xxxx";
 
             Assert.Throws<ArgumentException>(() => _toyBlockFactory.GetOrder(nonExistingOrder));
+        }
+
+        [Fact]
+        public void OrdersNotSubmittedCanBeDeleted()
+        {
+            var deletedOrder = _unsubmittedOrder.OrderId;
+            
+            _toyBlockFactory.DeleteOrder(deletedOrder);
+
+            Assert.Throws<ArgumentException>(() => _toyBlockFactory.GetOrder(deletedOrder));
+            Assert.True(_unsubmittedOrder.IsDeleted);
         }
         
         private void OrderWithDateGiven()
@@ -143,7 +155,7 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.SubmitOrder(customerOrder);
         }
 
-        /*private void OrderWithNoDateGiven()
+        private void OrderWithNoDateGiven()
         {
             var customerOrder2 = _toyBlockFactory
                 .CreateOrder("Ryan Chen", "1 Mt Eden Road, Auckland");
@@ -159,7 +171,18 @@ namespace ToyBlockFactoryTests
         {
             return _toyBlockFactory.CreateOrder("Tony Williams", "13 Stokes Road, Auckland");
         }
-        */
+        
+        private Order OrderNotSubmitted()
+        {
+            var unsubmittedOrder = _toyBlockFactory
+                .CreateOrder("Tom Knight", "20 Stokes Road, Auckland");
+            unsubmittedOrder.AddBlock(Shape.Triangle, Colour.Yellow, 1);
+            unsubmittedOrder.AddBlock(Shape.Square, Colour.Blue, 1);
+            unsubmittedOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            unsubmittedOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            unsubmittedOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            return unsubmittedOrder;
+        }
         
     }
 }

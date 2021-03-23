@@ -25,7 +25,7 @@ namespace ToyBlockFactoryKata
         
         public Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
         {
-            return _orderManagementSystem.CreateOrder(customerName, customerAddress);
+            return _orderManagementSystem.CreateOrder(customerName, customerAddress, dueDate);
         }
 
         public string SubmitOrder(Order customerOrder)
