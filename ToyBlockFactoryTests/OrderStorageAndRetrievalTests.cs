@@ -115,7 +115,7 @@ namespace ToyBlockFactoryTests
         public void ChecksIfOrderExists()
         {
             var order1 = _toyBlockFactory.OrderExists("0001");
-            var order3 = _toyBlockFactory.OrderExists("0004");
+            var order3 = _toyBlockFactory.OrderExists("0010");
             
             Assert.True(order1);
             Assert.False(order3);
