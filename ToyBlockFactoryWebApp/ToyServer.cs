@@ -1,9 +1,6 @@
 using System;
 using System.Net;
-using System.Text;
-using System.Text.Json;
 using ToyBlockFactoryKata;
-using ToyBlockFactoryKata.Orders;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -44,8 +41,8 @@ namespace ToyBlockFactoryWebApp
                 try
                 {
                     var request = context.Request;
+                    Console.WriteLine($"\nReceived request from: {request.Url.PathAndQuery}");
                     _router.ReadRequests(request, context);
-                    Console.WriteLine($"Received request from {request.Url}");
                 }
                 catch (Exception e)
                 {

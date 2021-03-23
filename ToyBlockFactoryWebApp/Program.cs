@@ -1,10 +1,5 @@
-﻿using System;
-using System.Net;
-using System.Text.Json;
-using ToyBlockFactoryKata;
-using ToyBlockFactoryKata.Orders;
+﻿using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.PricingStrategy;
-using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
