@@ -7,7 +7,7 @@ namespace ToyBlockFactoryKata.Orders
     internal class OrderManagementSystem
     {
         private int _orderId;
-        internal Dictionary<string, Order> orderRecords { get; } = new();
+        private Dictionary<string, Order> orderRecords { get; } = new();
 
         internal Order CreateOrder(string customerName, string customerAddress)
         {
@@ -49,7 +49,7 @@ namespace ToyBlockFactoryKata.Orders
             }
         }
 
-        internal Dictionary<string, Order> FilteredOrders(DateTime dueDate)
+        internal Dictionary<string, Order> FilterOrders(DateTime dueDate)
         {
             var orders = orderRecords.Where(o => o.Value.DueDate == dueDate);
             return orders.ToDictionary(order => order.Key, order => order.Value);
