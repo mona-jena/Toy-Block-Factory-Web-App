@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -61,7 +62,7 @@ namespace ToyBlockFactoryWebApp
                 case "/order" when request.HttpMethod == "PUT":
                     var submitted = _orderController.Put(request.QueryString);
                     if (!submitted) SendResponse(context.Response, HttpStatusCode.BadRequest);
-                    else SendResponse(context.Response, HttpStatusCode.Accepted);
+                    else SendResponse(context.Response, HttpStatusCode.Accepted); //RETURNS NULL IS FINE?
                     break;
                 
                 case "/report" when request.HttpMethod == "GET":
@@ -77,14 +78,19 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data.");
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = (int) statusCode;
-            
-            string responseString = JsonSerializer.Serialize(@object);
+            var options = new JsonSerializerOptions
+            {
+                Converters = {new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)}
+            };
+            string responseString = JsonSerializer.Serialize(@object, options);
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
             var output = response.OutputStream;
             output.Write(buffer, 0, buffer.Length);
             output.Close();
         }
+        
+      
 
     }
 }
