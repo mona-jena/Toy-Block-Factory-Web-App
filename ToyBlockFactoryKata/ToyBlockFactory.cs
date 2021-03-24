@@ -60,8 +60,6 @@ namespace ToyBlockFactoryKata
             return _reportSystem.GenerateReport(requestedOrder, reportType);
         }
         
-        
-        //FILTER INSIDE OMS!!!!!
         public IEnumerable<IReport> GetReportsByDate(DateTime date, ReportType reportType)
         {
             var orderRecords = _orderManagementSystem.FilterOrders(date); 

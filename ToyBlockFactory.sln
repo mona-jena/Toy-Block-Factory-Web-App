@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyBlockFactoryConsole", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyBlockFactoryWebApp", "ToyBlockFactoryWebApp\ToyBlockFactoryWebApp.csproj", "{8D347E01-8B70-472F-B4C3-E948A691E5D2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyBlockFactoryWebAppTests", "ToyBlockFactoryWebAppTests\ToyBlockFactoryWebAppTests.csproj", "{9D503108-7C9C-45D8-BCE6-478B6432D06B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,9 @@ Global
 		{8D347E01-8B70-472F-B4C3-E948A691E5D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D347E01-8B70-472F-B4C3-E948A691E5D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D347E01-8B70-472F-B4C3-E948A691E5D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D503108-7C9C-45D8-BCE6-478B6432D06B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D503108-7C9C-45D8-BCE6-478B6432D06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D503108-7C9C-45D8-BCE6-478B6432D06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D503108-7C9C-45D8-BCE6-478B6432D06B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

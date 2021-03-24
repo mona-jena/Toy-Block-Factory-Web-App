@@ -39,33 +39,34 @@ namespace ToyBlockFactoryWebApp
                     var healthMessage = _healthCheckController.HealthCheck();
                     SendResponse(context.Response, HttpStatusCode.Accepted, healthMessage);
                     break;
+                
                 case "/order" when request.HttpMethod == "POST":
                     var orderId = _orderController.Post(requestBody);
-                    SendResponse(context.Response, HttpStatusCode.Accepted, orderId);
+                    if (orderId == null) SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    else SendResponse(context.Response, HttpStatusCode.Accepted, orderId);
                     break;
+                
                 case "/addblock" when request.HttpMethod == "POST":
                     _orderController.PostAddBlock(request.QueryString, requestBody);
                     SendResponse(context.Response, HttpStatusCode.Accepted);
                     break;
-                case "/report" when request.HttpMethod == "GET":
-                    var report = _orderController.Get(request.QueryString);
-                    SendResponse(context.Response, HttpStatusCode.Accepted, report);
-                    break;
-                case "/order" when request.HttpMethod == "PUT":
-                    var submitted = _orderController.Put(request.QueryString);
-                    if (!submitted)
-                    {
-                        SendResponse(context.Response, HttpStatusCode.BadRequest);
-                    }
-                    SendResponse(context.Response, HttpStatusCode.Accepted);
-                    break;
+                
                 case "/order" when request.HttpMethod == "DELETE":
                     var deleted = _orderController.Delete(request.QueryString);
-                    if (!deleted)
-                    {
-                        SendResponse(context.Response, HttpStatusCode.BadRequest);
-                    }
-                    SendResponse(context.Response, HttpStatusCode.Accepted);
+                    if (!deleted) SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    else SendResponse(context.Response, HttpStatusCode.Accepted);
+                    break;
+                
+                case "/order" when request.HttpMethod == "PUT":
+                    var submitted = _orderController.Put(request.QueryString);
+                    if (!submitted) SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    else SendResponse(context.Response, HttpStatusCode.Accepted);
+                    break;
+                
+                case "/report" when request.HttpMethod == "GET":
+                    var report = _orderController.Get(request.QueryString);
+                    if (report == null) SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    else SendResponse(context.Response, HttpStatusCode.Accepted, report);
                     break;
             }
         }
@@ -75,6 +76,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data.");
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = (int) statusCode;
+            
             string responseString = JsonSerializer.Serialize(@object);
             byte[] buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;

@@ -1,0 +1,23 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "By Mona to access ECR for Toy Block Factory image"
+Resources:
+  MyRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: "mona-app-cloudformation"
+      RepositoryPolicyText:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: "allow-kubes-read-only"
+            Effect: Allow
+            Principal:
+              AWS:
+                - "arn:aws:iam::967276157215:root"
+                - "arn:aws:iam::428235295317:root"
+            Action:
+              - "ecr:BatchCheckLayerAvailability"
+              - "ecr:BatchGetImage"
+              - "ecr:GetDownloadUrlForLayer"
+
+
