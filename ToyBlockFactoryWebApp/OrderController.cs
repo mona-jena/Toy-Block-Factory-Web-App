@@ -9,7 +9,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    public class OrderController
+    public class OrderController : IController
     {
         private static ToyBlockFactory _toyBlockFactory;
 

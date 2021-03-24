@@ -4,7 +4,7 @@ using ToyBlockFactoryKata;
 
 namespace ToyBlockFactoryWebApp
 {
-    class ToyServer
+    public class ToyServer
     {
         private readonly HttpListener _httpListener;
         private readonly string[] _uri;

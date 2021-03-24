@@ -9,9 +9,9 @@ namespace ToyBlockFactoryWebApp
     public class Router
     {
         private readonly HealthCheckController _healthCheckController;
-        private readonly OrderController _orderController;
+        private readonly IController _orderController;
 
-        public Router(HealthCheckController healthCheckController, OrderController orderController)
+        public Router(HealthCheckController healthCheckController, IController orderController)
         {
             _healthCheckController = healthCheckController;
             _orderController = orderController;
@@ -85,6 +85,6 @@ namespace ToyBlockFactoryWebApp
             output.Write(buffer, 0, buffer.Length);
             output.Close();
         }
-        
+
     }
 }
