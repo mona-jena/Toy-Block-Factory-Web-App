@@ -1,11 +1,12 @@
+using System.Net;
 using Xunit;
 
 namespace ToyBlockFactoryWebAppTests
 {
-    public class UnitTest1
+    public class HttpRequestTests
     {
         [Fact]
-        public void Test1()
+        public void HandlePostRequests()
         {
             
         }

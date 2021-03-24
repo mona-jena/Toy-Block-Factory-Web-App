@@ -29,8 +29,9 @@ namespace ToyBlockFactoryWebApp
             return bodyString;
         }
 
-        public void ReadRequests(HttpListenerRequest request, HttpListenerContext context)
+        public void ReadRequests(HttpListenerContext context)
         {
+            var request = context.Request;
             var requestBody = GetRequestBody(request);
             Console.WriteLine(requestBody);
             switch (request.Url.AbsolutePath)

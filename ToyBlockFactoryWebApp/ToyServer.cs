@@ -40,9 +40,9 @@ namespace ToyBlockFactoryWebApp
                 HttpListenerContext context = _httpListener.GetContext(); 
                 try
                 {
-                    var request = context.Request;
-                    Console.WriteLine($"\nReceived request from: {request.Url.PathAndQuery}");
-                    _router.ReadRequests(request, context);
+                    //var request = context.Request;
+                    Console.WriteLine($"\nReceived request from: {context.Request.Url.PathAndQuery}");
+                    _router.ReadRequests(context);
                 }
                 catch (Exception e)
                 {
