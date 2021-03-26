@@ -1,13 +1,13 @@
 ---
 steps:
-  - label: ':cherry_blossom::whale: test panic'
+  - label: ':cherry_blossom::whale: run tests'
     command: 'docker build -f ./Dockerfile.test .' 
     agents:
       queue: grace-lab
   - wait 
-  - label: ':ec2: make dockerimage with tbf'
+  - label: ':ec2: make dockerimage with tbf' #runs ecr
     command:
-      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER} .' #is it finding app in current dir of VM?
+      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER} .' 
       - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER}' #pushing latest image to ecr
     plugins:
       - ecr#v2.3.0:

@@ -25,7 +25,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Created order: " + orderId);
             return orderId;
         }
-
+        
         private record NewOrderDTO(string Name, string Address)
         {
         }

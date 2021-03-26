@@ -1,4 +1,5 @@
-﻿using ToyBlockFactoryKata;
+﻿using System;
+using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.PricingStrategy;
 
 namespace ToyBlockFactoryWebApp
@@ -7,9 +8,11 @@ namespace ToyBlockFactoryWebApp
     {
         static void Main(string[] args)
         {
-            string[] prefixes = {"http://*:3000/"};
+            var port = Environment.GetEnvironmentVariable("MONA_PORT");
+            string[] prefixes = {$"http://*:{port}/"};
             ToyBlockFactory toyBlockFactory = new (new LineItemsCalculator());
             var toyServer = new ToyServer(prefixes, toyBlockFactory);
+            
         }
     }
 }

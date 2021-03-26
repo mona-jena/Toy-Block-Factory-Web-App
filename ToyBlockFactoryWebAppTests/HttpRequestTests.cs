@@ -1,3 +1,4 @@
+using System.Collections.Specialized;
 using System.Net.Http;
 using System.Threading.Tasks;
 using ToyBlockFactoryKata;
@@ -10,26 +11,27 @@ namespace ToyBlockFactoryWebAppTests
     public class HttpRequestTests
     {
         private readonly Router _router;
-        static readonly HttpClient _client = new HttpClient();
+        static readonly HttpClient _client = new();
+        private ToyServer _toyServer;
 
         public HttpRequestTests()
         {
-            string[] prefixes = {"http://*:3000/"};
-            ToyBlockFactory toyBlockFactory = new (new LineItemsCalculator());
-            var toyServer = new ToyServer(prefixes, toyBlockFactory);
-            _router = new Router(new HealthCheckController(), new OrderController(toyBlockFactory));
-            
+            Task.Run(() =>
+            {
+                string[] prefixes = {"http://*:3000/"};
+                ToyBlockFactory toyBlockFactory = new(new LineItemsCalculator());
+                _toyServer = new ToyServer(prefixes, toyBlockFactory);
+            });
         }
         
         
         [Fact]
         public async Task HandlesGetRequest()
         {
-            HttpResponseMessage response = await _client.GetAsync("http://*:3000/report");
+            HttpResponseMessage response = await _client.GetAsync("http://localhost:3000/health");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
-            
-            
+        
         }
     }
 }
