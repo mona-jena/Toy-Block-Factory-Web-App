@@ -6,7 +6,7 @@ steps:
       queue: grace-lab
   - wait
   - label: 'run ecr'
-    command: 'aws cloudformation deploy --template-file ecr.yml --stack-name mona-ecr' #FIX
+    command: 'aws cloudformation deploy --template-file ecr.yml --stack-name mona-ecr --no-fail-on-empty-changeset' #FIX
     agents:
       queue: grace-lab
   - wait 
