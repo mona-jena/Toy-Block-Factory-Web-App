@@ -56,7 +56,7 @@ objects:
 # your services and provide SSL termination.
 
 - apiVersion: networking.k8s.io/v1beta1
-  kind: Ingress             #forward traffic from outside world into a service --> sends the request to the server to talk to our app 
+  kind: Ingress             #forward traffic from outside world into a service so users can talk to it--> sends the request to the service to talk to our app --> serv then picks one of the pods to send traffic there
   metadata:
     name: "mona-ingress"
     namespace: "fma"
@@ -77,8 +77,8 @@ objects:
         http:
           paths: 
             - backend:
-                serviceName: "mona-service"
-                servicePort: 80
+                serviceName: "mona-service"     #so it can route to the service defined above 
+                servicePort: 80                 # send traffic to port 80
               path: /
     tls:                  #gives certificate given by https
       - hosts:
