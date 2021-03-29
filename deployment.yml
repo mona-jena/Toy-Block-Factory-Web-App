@@ -88,6 +88,34 @@ objects:
         secretName: "mona-tls"
 
 
+- apiVersion: autoscaling/v2beta1
+  kind: HorizontalPodAutoscaler
+  metadata:
+    name: "mona-autoscaler"
+    namespace: "fma"
+    labels:
+      app: "mona"
+      repo: "mona-app"
+  spec:
+    scaleTargetRef:
+      # reference the deployment that this HPA will scale up and down
+      apiVersion: apps/v1
+      kind: Deployment
+      name: "mona-deployment"
+    # make sure this is at least 3, as that is the minimum replicas Managed Infrastructure team recommend to be running for an app
+    minReplicas: 1
+    maxReplicas: 5
+    metrics:
+      - type: External
+        external:
+          name: jupiter_http_requests_per_second
+          targetAverageUtilization: 10
+          metricSelector:
+            matchLabels:
+              # the key here is the Metric Selector from the table above and the value is the name of your Ingress you want to scale against
+              ingress: mona-ingress
+            
+
 parameters:
   - name : "imagetag"
     parameterType : "string"

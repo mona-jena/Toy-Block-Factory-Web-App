@@ -1,8 +1,8 @@
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace ToyBlockFactoryWebAppTests
@@ -18,17 +18,19 @@ namespace ToyBlockFactoryWebAppTests
 
 
         [Fact]
-        public async Task AppIsAbleToBeDeployed()
-        {
+        public async Task AppIsAbleToBeDeployed()       //TODO:DEPLOYED -> too technical?
+        { 
             HttpResponseMessage response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             response.EnsureSuccessStatusCode();
+            var statusCode = response.StatusCode;
             string responseBody = await response.Content.ReadAsStringAsync();
 
-            Assert.Equal("{\"status\": \"ok\"}", responseBody); //FIX ACTUAL!!
+            Assert.Equal("Accepted", statusCode.ToString());
+            Assert.Equal("{\"status\": \"ok\"}", responseBody); //TODO:FIX ACTUAL!!
         }
 
         [Fact]
-        public async Task CanSendSubmitOrder_AndGetBackOrderId()
+        public async Task CanSendSubmitOrder_AndGetOrderId()
         {
             var request = _toyBlockOrdersFixture.CreateOrderRequest();
             
@@ -43,17 +45,17 @@ namespace ToyBlockFactoryWebAppTests
         }
         
         [Fact]
-        public async Task CanAddBlocksToOrder_AndGetBackOrderDetails()
+        public async Task CanAddBlocksToOrder()
         {
             var request = _toyBlockOrdersFixture.CreateOrderRequest();
             var orderRequest = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
             
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
+            body.EnsureSuccessStatusCode();     //TODO:DO I NEED THIS??
             var statusCode = body.StatusCode;
-            body.EnsureSuccessStatusCode();     //DO I NEED THIS??
             _toyBlockOrdersFixture.Dispose();
-                                                //SHOULD I BE RETURNING SOMETHING? Or is this enough to show it worked?
+            //TODO:SHOULD I BE RETURNING SOMETHING? Or is this enough to show it worked?
                                                 
             Assert.Equal("Accepted", statusCode.ToString());
         }
@@ -65,13 +67,107 @@ namespace ToyBlockFactoryWebAppTests
             var orderRequest = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
-
-            var deleteOrder = _toyBlockOrdersFixture.Client.DeleteAsync("http://localhost:3000/order?orderId=0001");
-            var statusCode = body.StatusCode;
-            body.EnsureSuccessStatusCode();     //DO I NEED THIS??
+           
+            var deletedOrder = _toyBlockOrdersFixture.Client.DeleteAsync("http://localhost:3000/order?orderId=0001").Result;
+            body.EnsureSuccessStatusCode();     //TODO:DO I NEED THIS??
+            var statusCode = deletedOrder.StatusCode;
             _toyBlockOrdersFixture.Dispose();
             
             Assert.Equal("Accepted", statusCode.ToString());
         }
+
+        [Fact]
+        public async Task CanSubmitOrder()
+        {
+            var request = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderRequest = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
+            var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
+            var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
+
+            var putContent = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+            var submittedOrder = _toyBlockOrdersFixture.Client.PutAsync("http://localhost:3000/order?orderid=0001", putContent).Result;
+            var statusCode = submittedOrder.StatusCode;
+            
+            Assert.Equal("Accepted", statusCode.ToString());
+        }
+
+        [Fact]
+        public async Task CanGetReport()
+        {
+            var request = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderRequest = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
+            var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
+            var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
+
+            HttpResponseMessage order = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/report?orderid=0001&ReportType=Invoice");
+            order.EnsureSuccessStatusCode();
+            var statusCode = order.StatusCode;
+            string responseBody = await order.Content.ReadAsStringAsync();
+            _toyBlockOrdersFixture.Dispose();
+
+            Assert.Equal("Accepted", statusCode.ToString());
+            Assert.Equal(InvoiceReport(), responseBody);
+        }
+    
+        private string InvoiceReport(){
+            return 
+            "{"+
+                "\"LineItems\":["+
+                    "{"+
+                        "\"Description\":\"Square\","+
+                        "\"Quantity\":2,"+
+                        "\"Price\":1,"+
+                        "\"Total\":2"+
+                    "},"+
+                    "{"+
+                        "\"Description\":\"Triangle\","+
+                        "\"Quantity\":5,"+
+                        "\"Price\":2,"+
+                        "\"Total\":10"+
+                    "},"+
+                    "{"+
+                        "\"Description\":\"Red colour surcharge\","+
+                        "\"Quantity\":2,"+
+                        "\"Price\":1," +
+                        "\"Total\":2"+
+                    "}"+
+                "],"+
+                "\"Total\":14,"+
+                "\"ReportType\":\"invoice\","+
+                "\"Name\":\"Mona\","+
+                "\"Address\":\"30 Symonds Rd\","+
+                "\"DueDate\":\"2021-04-05T00:00:00+12:00\","+
+                "\"OrderId\":\"0001\","+
+                "\"OrderTable\":["+
+                    "{"+
+                        "\"Shape\":\"square\","+
+                        "\"TableColumn\":["+
+                            "{"+
+                                "\"MeasuredItem\":\"Red\","+
+                                "\"Quantity\":2"+
+                            "},"+
+                            "{"+
+                                "\"MeasuredItem\":\"Yellow\","+
+                                "\"Quantity\":0"+
+                            "}"+
+                        "]"+
+                    "},"+
+                    "{"+
+                        "\"Shape\":\"triangle\","+
+                        "\"TableColumn\":["+
+                            "{"+
+                                "\"MeasuredItem\":\"Red\","+
+                                "\"Quantity\":0"+
+                            "},"+
+                            "{"+
+                                "\"MeasuredItem\":\"Yellow\","+
+                                "\"Quantity\":5"+
+                            "}"+
+                        "]"+
+                    "}"+
+                "]"+
+            "}";
+        }
+        
     }
 }

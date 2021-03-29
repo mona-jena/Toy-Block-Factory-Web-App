@@ -6,7 +6,7 @@ namespace ToyBlockFactoryWebApp
     {
         public string HealthCheck()
         {
-            return "{\"status\": \"ok\"}";
+            return "{\"status\": \"ok\"}";  //TODO: FIX
         }
     }
 }

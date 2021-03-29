@@ -1,19 +1,17 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryWebApp;
-using Xunit;
 
 namespace ToyBlockFactoryWebAppTests
 {
     public class ToyBlockOrdersFixture : IDisposable
     {
-        private readonly Router _router;
+        private readonly Router _router;    
         public readonly HttpClient Client = new();
         private ToyServer _toyServer;
         private ToyBlockFactory _toyBlockFactory;
@@ -67,21 +65,7 @@ namespace ToyBlockFactoryWebAppTests
         public void Dispose()
         {
             _toyBlockFactory = null;
-            // ... clean up test data from the database ...
         }
         
     }
-
-    public class MyDatabaseTests : IClassFixture<ToyBlockOrdersFixture>
-    {
-        ToyBlockOrdersFixture fixture;
-
-        public MyDatabaseTests(ToyBlockOrdersFixture fixture)
-        {
-            this.fixture = fixture;
-        }
-
-        // ... write tests, using fixture.Db to get access to the SQL Server ...
-    }
-    
 }

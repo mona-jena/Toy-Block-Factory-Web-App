@@ -50,7 +50,7 @@ namespace ToyBlockFactoryWebApp
                 
                 case "/addblock" when request.HttpMethod == "POST":
                     _orderController.PostAddBlock(request.QueryString, requestBody);
-                    SendResponse(context.Response, HttpStatusCode.Accepted);
+                    SendResponse(context.Response, HttpStatusCode.Accepted); 
                     break;
                 
                 case "/order" when request.HttpMethod == "DELETE":
@@ -62,7 +62,7 @@ namespace ToyBlockFactoryWebApp
                 case "/order" when request.HttpMethod == "PUT":
                     var submitted = _orderController.Put(request.QueryString);
                     if (!submitted) SendResponse(context.Response, HttpStatusCode.BadRequest);
-                    else SendResponse(context.Response, HttpStatusCode.Accepted); //RETURNS NULL IS FINE?
+                    else SendResponse(context.Response, HttpStatusCode.Accepted); //TODO:RETURNS NULL IS FINE?
                     break;
                 
                 case "/report" when request.HttpMethod == "GET":
