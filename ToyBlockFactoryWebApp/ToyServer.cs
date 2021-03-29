@@ -26,7 +26,7 @@ namespace ToyBlockFactoryWebApp
             Start();
         }
 
-        private void Start()
+        public void Start()
         {
             foreach (string s in _uri)
             {

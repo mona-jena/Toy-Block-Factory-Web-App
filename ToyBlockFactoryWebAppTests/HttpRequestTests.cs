@@ -3,35 +3,24 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
-using ToyBlockFactoryKata;
-using ToyBlockFactoryKata.PricingStrategy;
-using ToyBlockFactoryWebApp;
 using Xunit;
 
 namespace ToyBlockFactoryWebAppTests
 {
     public class HttpRequestTests
     {
-        private readonly Router _router;
-        static readonly HttpClient _client = new();
-        private ToyServer _toyServer;
+        private readonly ToyBlockOrdersFixture _toyBlockOrdersFixture;
 
         public HttpRequestTests()
         {
-            Task.Run(() =>
-            {
-                string[] prefixes = {"http://*:3000/"};
-                ToyBlockFactory toyBlockFactory = new(new LineItemsCalculator());
-                _toyServer = new ToyServer(prefixes, toyBlockFactory);
-            });
-            //Have Start() 
+            _toyBlockOrdersFixture = new ToyBlockOrdersFixture();
         }
 
 
         [Fact]
         public async Task AppIsAbleToBeDeployed()
         {
-            HttpResponseMessage response = await _client.GetAsync("http://localhost:3000/health");
+            HttpResponseMessage response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
 
@@ -39,18 +28,15 @@ namespace ToyBlockFactoryWebAppTests
         }
 
         [Fact]
-        public async Task CanSendSubmitOrderRequest_AndGetBackOrderId()
+        public async Task CanSendSubmitOrder_AndGetBackOrderId()
         {
-            var requestBody = 
-                "{\"Name\": \"Mona\"," +
-                "\"Address\": \"30 Symonds Rd\" }";
-            var buffer = Encoding.UTF8.GetBytes(requestBody);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var body = _client.PostAsync("http://localhost:3000/order", byteContent).Result;
+            var request = _toyBlockOrdersFixture.CreateOrderRequest();
+            
+            var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
+            body.EnsureSuccessStatusCode();
             var statusCode = body.StatusCode;
-            body.EnsureSuccessStatusCode();     //DO I NEED THIS??
             string responseBody = await body.Content.ReadFromJsonAsync<string>();
+            _toyBlockOrdersFixture.Dispose();
             
             Assert.Equal("Accepted", statusCode.ToString()); 
             Assert.Equal("0001", responseBody); 
@@ -59,32 +45,33 @@ namespace ToyBlockFactoryWebAppTests
         [Fact]
         public async Task CanAddBlocksToOrder_AndGetBackOrderDetails()
         {
-            //NEED TO ADD ORDER- /order  FIRST
-            var requestBody =
-                "{" +
-                    "\"Order\":[" +
-                        "{" +
-                            "\"Colour\":\"Red\"," +
-                            "\"Shape\":\"Square\"," +
-                            "\"Quantity\":2" +
-                        "}," +
-                        "{" +
-                            "\"Colour\":\"Yellow\"," +
-                            "\"Shape\":\"Triangle\"," +
-                            "\"Quantity\":5" +
-                        "}" +
-                    "]" +
-                "}";
-            var buffer = Encoding.UTF8.GetBytes(requestBody);
-            var byteContent = new ByteArrayContent(buffer);
-            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            var body = _client.PostAsync("http://localhost:3000/addblock?orderId=0001", byteContent).Result;
+            var request = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderRequest = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
+            
+            var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
+            var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
             var statusCode = body.StatusCode;
             body.EnsureSuccessStatusCode();     //DO I NEED THIS??
-            string responseBody = await body.Content.ReadFromJsonAsync<string>();
+            _toyBlockOrdersFixture.Dispose();
+                                                //SHOULD I BE RETURNING SOMETHING? Or is this enough to show it worked?
+                                                
+            Assert.Equal("Accepted", statusCode.ToString());
+        }
+
+        [Fact]
+        public async Task CanDeleteOrder()
+        {
+            var request = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderRequest = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request).Result;
+            var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
+            var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
+
+            var deleteOrder = _toyBlockOrdersFixture.Client.DeleteAsync("http://localhost:3000/order?orderId=0001");
+            var statusCode = body.StatusCode;
+            body.EnsureSuccessStatusCode();     //DO I NEED THIS??
+            _toyBlockOrdersFixture.Dispose();
             
-            Assert.Equal("Accepted", statusCode.ToString()); 
-            Assert.Equal("0001", responseBody); 
+            Assert.Equal("Accepted", statusCode.ToString());
         }
     }
 }
