@@ -39,7 +39,7 @@ namespace ToyBlockFactoryWebApp
             {
                 case "/health" when request.HttpMethod == "GET":
                     var healthMessage = _healthCheckController.HealthCheck();
-                    SendResponse(context.Response, HttpStatusCode.Accepted, healthMessage);
+                    SendResponse(context.Response, HttpStatusCode.OK, healthMessage);
                     break;
                 
                 case "/order" when request.HttpMethod == "POST":
