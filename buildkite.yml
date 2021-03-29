@@ -1,7 +1,7 @@
 ---
 steps:
   - label: ':cherry_blossom::whale: run tests'
-    command: 'docker build -f ./Dockerfile.test .' 
+    command: './bin/test.sh' 
     agents:
       queue: grace-lab
   - wait
