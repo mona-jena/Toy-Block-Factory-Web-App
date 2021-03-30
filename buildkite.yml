@@ -26,8 +26,3 @@ steps:
     command: './bin/deploy.sh ${BUILDKITE_BUILD_NUMBER}'
     agents:
       queue: europa-preprod-fma
-  - wait
-  - label: 'auto scaler'
-    command: './hpa.yml'
-    agents:
-        queue: europa-preprod-fma
