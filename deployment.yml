@@ -107,13 +107,15 @@ objects:
     maxReplicas: 5
     metrics:
       - type: External
-        external:
-          name: jupiter_http_requests_per_second
-          targetAverageUtilization: 10
-          metricSelector:
-            matchLabels:
-              # the key here is the Metric Selector from the table above and the value is the name of your Ingress you want to scale against
-              ingress: mona-ingress
+          external:
+            # this is the Metric Name from the table above
+            metricName: jupiter_http_requests_per_second
+            # this says that if the average number of requests per second over the last 5 minutes is greater than 10, then scale up
+            targetAverageValue: 10
+            metricSelector:
+              matchLabels:
+                # the key here is the Metric Selector from the table above and the value is the name of your Ingress you want to scale against
+                ingress: mona-ingress
             
 
 parameters:
