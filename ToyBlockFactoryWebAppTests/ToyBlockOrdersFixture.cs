@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryWebApp;
+using Xunit.Sdk;
 
 namespace ToyBlockFactoryWebAppTests
 {
@@ -13,17 +16,17 @@ namespace ToyBlockFactoryWebAppTests
     {
         private readonly Router _router;    
         public readonly HttpClient Client = new();
-        private ToyServer _toyServer;
+        public ToyServer _toyServer;
         private ToyBlockFactory _toyBlockFactory;
 
         public ToyBlockOrdersFixture()
         {
-            Task.Run(() =>
-            {
-                string[] prefixes = {"http://*:3000/"};
-                _toyBlockFactory = new(new LineItemsCalculator());
-                _toyServer = new ToyServer(prefixes, _toyBlockFactory);
-            });
+            //xunit will kill task when tests finish running
+            
+            //string[] prefixes = {"http://*:3000/"};
+            _toyBlockFactory = new(new LineItemsCalculator());
+            //_toyServer = new ToyServer(prefixes, _toyBlockFactory);
+           // _toyServer.Start();*/
         }
 
         public ByteArrayContent CreateOrderRequest()
@@ -42,18 +45,18 @@ namespace ToyBlockFactoryWebAppTests
         {
             var requestBody =
                 "{" +
-                    "\"Order\":[" +
-                        "{" +
-                            "\"Colour\":\"Red\"," +
-                            "\"Shape\":\"Square\"," +
-                            "\"Quantity\":2" +
-                        "}," +
-                        "{" +
-                            "\"Colour\":\"Yellow\"," +
-                            "\"Shape\":\"Triangle\"," +
-                            "\"Quantity\":5" +
-                        "}" +
-                    "]" +
+                "\"Order\":[" +
+                "{" +
+                "\"Colour\":\"Red\"," +
+                "\"Shape\":\"Square\"," +
+                "\"Quantity\":2" +
+                "}," +
+                "{" +
+                "\"Colour\":\"Yellow\"," +
+                "\"Shape\":\"Triangle\"," +
+                "\"Quantity\":5" +
+                "}" +
+                "]" +
                 "}";
             var buffer = Encoding.UTF8.GetBytes(requestBody);
             var byteContent = new ByteArrayContent(buffer);
@@ -64,7 +67,7 @@ namespace ToyBlockFactoryWebAppTests
 
         public void Dispose()
         {
-            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
+         
         }
         
     }

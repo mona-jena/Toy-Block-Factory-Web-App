@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using ToyBlockFactoryKata;
 
 namespace ToyBlockFactoryWebApp
@@ -23,7 +24,7 @@ namespace ToyBlockFactoryWebApp
             _healthCheckController = new HealthCheckController();
             _orderController = new OrderController(toyBlockFactory);
             _router = new Router(_healthCheckController, _orderController);
-            Start();
+            //Start();
         }
 
         public void Start()
@@ -35,24 +36,27 @@ namespace ToyBlockFactoryWebApp
             _httpListener.Start();
             Console.WriteLine("Listening...");
 
-            while (true)
+            Task.Run(() =>
             {
-                HttpListenerContext context = _httpListener.GetContext(); 
-                try
+                while (true)
                 {
-                    //var request = context.Request;
-                    Console.WriteLine($"\nReceived request from: {context.Request.Url.PathAndQuery}");
-                    _router.ReadRequests(context);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine(e.StackTrace);
-                    context.Response.StatusCode = 500;
-                    context.Response.Close();
-                }
-            }
+                    HttpListenerContext context = _httpListener.GetContext();
+                    try
+                    {
+                        //var request = context.Request;
+                        Console.WriteLine($"\nReceived request from: {context.Request.Url.PathAndQuery}");
+                        _router.ReadRequests(context);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.WriteLine(e.StackTrace);
+                        context.Response.StatusCode = 500;
+                        context.Response.Close();
+                    }
 
+                }
+            });
             _httpListener.Stop();
         }
     }
