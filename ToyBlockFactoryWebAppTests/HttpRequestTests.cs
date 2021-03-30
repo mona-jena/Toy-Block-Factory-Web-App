@@ -31,7 +31,7 @@ namespace ToyBlockFactoryWebAppTests
         }
 
         [Fact]
-        public async Task CanSendSubmitOrder_AndGetOrderId()
+        public async Task CanCreateOrder_AndGetOrderId()
         {
             var request = _toyBlockOrdersFixture.CreateOrderRequest();
             
