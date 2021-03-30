@@ -1,4 +1,4 @@
-/*using System.Net;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
@@ -27,7 +27,7 @@ namespace ToyBlockFactoryWebAppTests
             string responseBody = await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal("{\"status\":\"ok\"}", responseBody); //TODO:FIX ACTUAL!!
+            Assert.Equal("{\"status\":\"ok\"}", responseBody); //TODO:don't test literal string?!!
         }
 
         [Fact]
@@ -41,7 +41,7 @@ namespace ToyBlockFactoryWebAppTests
             string responseBody = await body.Content.ReadFromJsonAsync<string>();
             _toyBlockOrdersFixture.Dispose();
             
-            Assert.Equal("Accepted", statusCode.ToString()); 
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.Equal("0001", responseBody); 
         }
         
@@ -58,7 +58,7 @@ namespace ToyBlockFactoryWebAppTests
             _toyBlockOrdersFixture.Dispose();
             //TODO:SHOULD I BE RETURNING SOMETHING? Or is this enough to show it worked?
                                                 
-            Assert.Equal("Accepted", statusCode.ToString());
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
         }
 
         [Fact]
@@ -74,10 +74,10 @@ namespace ToyBlockFactoryWebAppTests
             var statusCode = deletedOrder.StatusCode;
             _toyBlockOrdersFixture.Dispose();
             
-            Assert.Equal("Accepted", statusCode.ToString());
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
         }
 
-        /*[Fact]
+        [Fact]
         public async Task CanSubmitOrder()
         {
             var request = _toyBlockOrdersFixture.CreateOrderRequest();
@@ -85,14 +85,15 @@ namespace ToyBlockFactoryWebAppTests
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/addblock?orderId=0001", blockOrderRequest).Result;
 
-            var putContent = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+            var putContent = new StringContent(await JsonConvert.SerializeObjectAsync(body), Encoding.UTF8, "application/json");
             var submittedOrder = _toyBlockOrdersFixture.Client.PutAsync("http://localhost:3000/order?orderid=0001", putContent).Result;
             var statusCode = submittedOrder.StatusCode;
+            _toyBlockOrdersFixture.Dispose();
             
-            Assert.Equal("Accepted", statusCode.ToString());
-        }#1#
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
+        }
 
-        /*[Fact]
+        [Fact]
         public async Task CanGetReport()
         {
             var request = _toyBlockOrdersFixture.CreateOrderRequest();
@@ -106,9 +107,9 @@ namespace ToyBlockFactoryWebAppTests
             string responseBody = await order.Content.ReadAsStringAsync();
             _toyBlockOrdersFixture.Dispose();
         
-            Assert.Equal("Accepted", statusCode.ToString());
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.Equal(InvoiceReport(), responseBody);
-        }#1#
+        }
     
         private string InvoiceReport(){
             return 
@@ -171,4 +172,4 @@ namespace ToyBlockFactoryWebAppTests
         }
         
     }
-}*/
+}
