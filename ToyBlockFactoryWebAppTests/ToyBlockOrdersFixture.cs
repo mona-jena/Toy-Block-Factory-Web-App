@@ -64,7 +64,7 @@ namespace ToyBlockFactoryWebAppTests
 
         public void Dispose()
         {
-            _toyBlockFactory = null;
+            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
         }
         
     }
