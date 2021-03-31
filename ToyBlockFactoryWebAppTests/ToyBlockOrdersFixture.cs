@@ -1,14 +1,10 @@
 using System;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryWebApp;
-using Xunit.Sdk;
 
 namespace ToyBlockFactoryWebAppTests
 {
@@ -16,15 +12,15 @@ namespace ToyBlockFactoryWebAppTests
     {
         private readonly Router _router;    
         public readonly HttpClient Client = new();
-        public ToyServer _toyServer;
-        private ToyBlockFactory _toyBlockFactory;
+        public readonly ToyServer ToyServer;
+        private readonly ToyBlockFactory _toyBlockFactory;
 
         public ToyBlockOrdersFixture()
         {
             string[] prefixes = {"http://+:3000/"};
             _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
-            _toyServer = new ToyServer(prefixes, _toyBlockFactory);
-            _toyServer.Start();
+            ToyServer = new ToyServer(prefixes, _toyBlockFactory);
+            ToyServer.Start();
         }
 
         public ByteArrayContent CreateOrderRequest()

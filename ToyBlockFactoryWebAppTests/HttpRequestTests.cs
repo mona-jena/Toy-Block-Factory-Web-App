@@ -22,9 +22,9 @@ namespace ToyBlockFactoryWebAppTests
         [Fact]
         public async Task AppIsAbleToBeDeployed()       //TODO: "DEPLOYED" -> too technical?
         { 
-            HttpResponseMessage response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
+            var response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             var statusCode = response.StatusCode;
-            string responseBody = await response.Content.ReadAsStringAsync();
+            var responseBody = await response.Content.ReadAsStringAsync();
             
             Assert.Equal(HttpStatusCode.OK, statusCode);
             Assert.Equal("{\"status\":\"ok\"}", responseBody); //TODO:don't test literal string?!!
@@ -37,7 +37,7 @@ namespace ToyBlockFactoryWebAppTests
             
             var requestBody = await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request);
             var statusCode = requestBody.StatusCode;
-            string responseBody = await requestBody.Content.ReadFromJsonAsync<string>();
+            var responseBody = await requestBody.Content.ReadFromJsonAsync<string>();
 
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.NotNull(responseBody);
@@ -90,7 +90,7 @@ namespace ToyBlockFactoryWebAppTests
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
         }
 
-        [Fact]
+        /*[Fact]
         public async Task CanGetReport()
         {
             var orderRequest = _toyBlockOrdersFixture.CreateOrderRequest();
@@ -99,13 +99,13 @@ namespace ToyBlockFactoryWebAppTests
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
         
-            HttpResponseMessage order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/report?orderid={orderNumber}&ReportType=Invoice");
+            var order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/report?orderid={orderNumber}&ReportType=Invoice");
             var statusCode = order.StatusCode;
-            string responseBody = await order.Content.ReadAsStringAsync();
+            var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.Equal(InvoiceReport(), responseBody);
-        }
+        }*/
     
         private string InvoiceReport(){
             return 
