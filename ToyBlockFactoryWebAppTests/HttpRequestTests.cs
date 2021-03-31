@@ -13,7 +13,7 @@ namespace ToyBlockFactoryWebAppTests
 {
     public class HttpRequestTests
     {
-        private readonly ToyBlockOrdersFixture _toyBlockOrdersFixture = new ToyBlockOrdersFixture();
+        private readonly ToyBlockOrdersFixture _toyBlockOrdersFixture = new();
 
         public HttpRequestTests()
         {

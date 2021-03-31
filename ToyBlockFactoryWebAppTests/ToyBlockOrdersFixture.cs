@@ -45,18 +45,18 @@ namespace ToyBlockFactoryWebAppTests
         {
             var requestBody =
                 "{" +
-                "\"Order\":[" +
-                "{" +
-                "\"Colour\":\"Red\"," +
-                "\"Shape\":\"Square\"," +
-                "\"Quantity\":2" +
-                "}," +
-                "{" +
-                "\"Colour\":\"Yellow\"," +
-                "\"Shape\":\"Triangle\"," +
-                "\"Quantity\":5" +
-                "}" +
-                "]" +
+                    "\"Order\":[" +
+                    "{" +
+                        "\"Colour\":\"Red\"," +
+                        "\"Shape\":\"Square\"," +
+                        "\"Quantity\":2" +
+                    "}," +
+                    "{" +
+                        "\"Colour\":\"Yellow\"," +
+                        "\"Shape\":\"Triangle\"," +
+                        "\"Quantity\":5" +
+                    "}" +
+                    "]" +
                 "}";
             var buffer = Encoding.UTF8.GetBytes(requestBody);
             var byteContent = new ByteArrayContent(buffer);
