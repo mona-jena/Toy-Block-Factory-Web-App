@@ -21,12 +21,10 @@ namespace ToyBlockFactoryWebAppTests
 
         public ToyBlockOrdersFixture()
         {
-            //xunit will kill task when tests finish running
-            
-            //string[] prefixes = {"http://*:3000/"};
-            _toyBlockFactory = new(new LineItemsCalculator());
-            //_toyServer = new ToyServer(prefixes, _toyBlockFactory);
-           // _toyServer.Start();*/
+            string[] prefixes = {"http://+:3000/"};
+            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
+            _toyServer = new ToyServer(prefixes, _toyBlockFactory);
+            _toyServer.Start();
         }
 
         public ByteArrayContent CreateOrderRequest()

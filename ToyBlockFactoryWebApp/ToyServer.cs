@@ -57,7 +57,7 @@ namespace ToyBlockFactoryWebApp
 
                 }
             });
-            _httpListener.Stop();
+            // _httpListener.Stop(); **** this line was killing it for you, it meant that you stopped the listener as soon as it started
         }
     }
     
