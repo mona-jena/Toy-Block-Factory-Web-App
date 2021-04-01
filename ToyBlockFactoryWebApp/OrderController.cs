@@ -84,7 +84,7 @@ namespace ToyBlockFactoryWebApp
             var orderId = queryString.Get("orderId");
             var reportType = (ReportType) Enum.Parse(typeof(ReportType), queryString.Get("ReportType"));
             Console.WriteLine("Get " + reportType + " Report for order: " + orderId);
-            var order = _toyBlockFactory.GetOrder(orderId);
+            var order = _toyBlockFactory.GetReport(orderId, reportType);
             
             return _toyBlockFactory.GetReport(order.OrderId, reportType);
         }

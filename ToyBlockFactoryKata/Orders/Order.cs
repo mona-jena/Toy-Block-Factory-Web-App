@@ -32,15 +32,15 @@ namespace ToyBlockFactoryKata.Orders
             else
                 BlockList.Add(block, quantity);
 
-            AddShapeQuantity(block.Shape);
+            AddShapeQuantity(block.Shape, quantity);
         }
 
-        private void AddShapeQuantity(Shape blockShape)
+        private void AddShapeQuantity(Shape blockShape, int blockQuantity)
         {
-            if (shapeQuantities.TryGetValue(blockShape, out var quantity))
-                shapeQuantities[blockShape] = ++quantity;
+            if (shapeQuantities.TryGetValue(blockShape, out _))
+                shapeQuantities[blockShape] += blockQuantity;
             else
-                shapeQuantities.Add(blockShape, 1);
+                shapeQuantities.Add(blockShape, blockQuantity);
         }
     }
 }

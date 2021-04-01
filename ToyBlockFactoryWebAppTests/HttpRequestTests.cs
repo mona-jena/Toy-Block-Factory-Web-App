@@ -90,7 +90,7 @@ namespace ToyBlockFactoryWebAppTests
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
         }
 
-        /*[Fact]
+        [Fact]
         public async Task CanGetReport()
         {
             var orderRequest = _toyBlockOrdersFixture.CreateOrderRequest();
@@ -105,7 +105,7 @@ namespace ToyBlockFactoryWebAppTests
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.Equal(InvoiceReport(), responseBody);
-        }*/
+        }
     
         private string InvoiceReport(){
             return 
