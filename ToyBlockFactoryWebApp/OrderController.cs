@@ -18,16 +18,16 @@ namespace ToyBlockFactoryWebApp
             _toyBlockFactory = toyBlockFactory;
         }
 
+        private record NewOrderDTO(string Name, string Address)
+        {
+        }
+        
         public string Post(string requestBody)
         {
             var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody);
             var orderId = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId;
             Console.WriteLine("Created order: " + orderId);
             return orderId;
-        }
-        
-        private record NewOrderDTO(string Name, string Address)
-        {
         }
 
         private record BlockOrderDTO(List<BlockDTO> Order)

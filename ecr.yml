@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "By Mona to access ECR for Toy Block Factory image"
+Description: "Access ECR to get app image"
 Resources:
   MyRepository:
     Type: AWS::ECR::Repository
