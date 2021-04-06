@@ -2,10 +2,8 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryWebApp
 {
-    public partial class OrderController
+    internal record BlockOrderDTO(List<BlockDTO> Order)
     {
-        private record BlockOrderDTO(List<BlockDTO> Order)
-        {
-        }
     }
+    
 }

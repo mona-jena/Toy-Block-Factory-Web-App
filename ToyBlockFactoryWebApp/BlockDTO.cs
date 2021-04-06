@@ -2,10 +2,8 @@ using ToyBlockFactoryKata.Orders;
 
 namespace ToyBlockFactoryWebApp
 {
-    public partial class OrderController
+    internal record BlockDTO(Colour Colour, Shape Shape, int Quantity)
     {
-        private record BlockDTO(Colour Colour, Shape Shape, int Quantity)
-        {
-        }
     }
+    
 }

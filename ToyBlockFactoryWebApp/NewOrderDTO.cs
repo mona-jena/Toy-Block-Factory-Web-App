@@ -2,10 +2,8 @@ using System;
 
 namespace ToyBlockFactoryWebApp
 {
-    public partial class OrderController
+    internal record NewOrderDTO(string Name, string Address, DateTime? DueDate = null)
     {
-        private record NewOrderDTO(string Name, string Address, DateTime? DueDate = null)
-        {
-        }
     }
+    
 }

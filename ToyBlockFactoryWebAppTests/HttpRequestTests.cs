@@ -21,7 +21,7 @@ namespace ToyBlockFactoryWebAppTests
 
 
         [Fact]
-        public async Task AppIsAbleToBeDeployed()       //TODO: "DEPLOYED" -> too technical?
+        public async Task AppIsAbleToBeAccessedViaWeb()       //TODO: "DEPLOYED" -> too technical?
         { 
             var response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             var statusCode = response.StatusCode;
@@ -105,7 +105,7 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Equal(File.ReadAllText("InvoiceReport.txt"), responseBody);
+            Assert.Equal(await File.ReadAllTextAsync("InvoiceReport.txt"), responseBody);
         }
         
         

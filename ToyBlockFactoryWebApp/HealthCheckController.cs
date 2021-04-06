@@ -4,14 +4,9 @@ namespace ToyBlockFactoryWebApp
 {
     public class HealthCheckController
     {
-        public record Health(string status)
+        public HealthDTO HealthCheck()
         {
-            
-        }
-        
-        public Health HealthCheck()
-        {
-            var health = new Health("ok");
+            var health = new HealthDTO("ok");
             return health;
         }
     }

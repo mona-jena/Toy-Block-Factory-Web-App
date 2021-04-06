@@ -68,9 +68,7 @@ namespace ToyBlockFactoryWebApp
                 case "/report" when request.HttpMethod == "GET":
                     try
                     {
-                        var report = _orderController.Get(request.QueryString);
-                        if (report == null) SendResponse(context.Response, HttpStatusCode.BadRequest);
-                        else SendResponse(context.Response, HttpStatusCode.NotFound, report); 
+                        _orderController.Get(request.QueryString);
                     }
                     catch (ArgumentException e)
                     {
