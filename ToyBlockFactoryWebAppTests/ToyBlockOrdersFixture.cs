@@ -63,7 +63,5 @@ namespace ToyBlockFactoryWebAppTests
             return byteContent;
         }
 
-        
-        
     }
 }
