@@ -1,16 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
-using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    public class OrderController : IController
+    public partial class OrderController : IController
     {
         private static ToyBlockFactory _toyBlockFactory;
 
@@ -19,10 +17,6 @@ namespace ToyBlockFactoryWebApp
             _toyBlockFactory = toyBlockFactory;
         }
 
-        private record NewOrderDTO(string Name, string Address, DateTime? DueDate = null)
-        {
-        }
-        
         public string Post(string requestBody)
         {
             var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody)?? throw new InvalidDataException("Invalid order data");
@@ -32,14 +26,6 @@ namespace ToyBlockFactoryWebApp
             return orderId;
         }
 
-        private record BlockOrderDTO(List<BlockDTO> Order)
-        {
-        }
-
-        private record BlockDTO(Colour Colour, Shape Shape, int Quantity)
-        {
-        }
-        
         public void PostAddBlock(NameValueCollection queryString, string requestBody)
         {
             var options = new JsonSerializerOptions
