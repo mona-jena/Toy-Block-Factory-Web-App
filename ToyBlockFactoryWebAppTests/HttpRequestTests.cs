@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -43,7 +42,7 @@ namespace ToyBlockFactoryWebAppTests
 
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.NotNull(responseBody);
-            Assert.Matches("[0-9]{4}", responseBody);  //we don't care whats the orderID, only that an ID is returned
+            Assert.Matches("[0-9]{4}", responseBody);
         }
         
         [Fact]

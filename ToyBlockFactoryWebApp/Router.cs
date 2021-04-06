@@ -35,7 +35,7 @@ namespace ToyBlockFactoryWebApp
             var request = context.Request;
             var requestBody = GetRequestBody(request);
             Console.WriteLine(requestBody);
-            switch (request.Url.AbsolutePath)
+            switch (request.Url?.AbsolutePath)
             {
                 case "/health" when request.HttpMethod == "GET":
                     var healthMessage = _healthCheckController.HealthCheck();
@@ -89,8 +89,6 @@ namespace ToyBlockFactoryWebApp
             output.Write(buffer, 0, buffer.Length);
             output.Close();
         }
-        
-      
 
     }
 }

@@ -20,7 +20,9 @@ namespace ToyBlockFactoryWebApp
         public string Post(string requestBody)
         {
             var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody)?? throw new InvalidDataException("Invalid order data");
-            var orderId = !customerDetails.DueDate.HasValue ? _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId : _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address, customerDetails.DueDate.Value).OrderId;
+            var orderId = !customerDetails.DueDate.HasValue
+                ? _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId
+                : _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address, customerDetails.DueDate.Value).OrderId;
             
             Console.WriteLine("Created order: " + orderId);
             return orderId;
@@ -33,7 +35,7 @@ namespace ToyBlockFactoryWebApp
                 Converters = {new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)}
             };
             
-            var orderDetails = JsonSerializer.Deserialize<BlockOrderDTO>(requestBody, options);
+            var orderDetails = JsonSerializer.Deserialize<BlockOrderDTO>(requestBody, options) ?? throw new InvalidDataException("Invalid block order data");
             var orderId = queryString.Get("orderId");
             var order = _toyBlockFactory.GetOrder(orderId);
             if (orderId == null) return;
@@ -70,7 +72,7 @@ namespace ToyBlockFactoryWebApp
         public IReport Get(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
-            var reportType = (ReportType) Enum.Parse(typeof(ReportType), queryString.Get("ReportType"));
+            var reportType = (ReportType) Enum.Parse(typeof(ReportType), queryString.Get("ReportType") ?? throw new InvalidDataException("Invalid report type"));
             Console.WriteLine("Get " + reportType + " Report for order: " + orderId);
             var order = _toyBlockFactory.GetReport(orderId, reportType);
             

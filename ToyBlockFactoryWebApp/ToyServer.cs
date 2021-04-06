@@ -22,7 +22,6 @@ namespace ToyBlockFactoryWebApp
             var healthCheckController = new HealthCheckController();
             var orderController = new OrderController(toyBlockFactory);
             _router = new Router(healthCheckController, orderController);
-            //Start();
         }
 
         public async Task Start()
