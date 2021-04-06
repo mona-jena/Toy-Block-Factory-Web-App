@@ -15,7 +15,7 @@ namespace ToyBlockFactoryKata.Orders
         }
 
         public bool IsDeleted { get; set; }
-        public bool IsSubmitted { get; set; }
+        internal bool IsSubmitted { get; set; }
         public string Name { get; }
         public string Address { get; }
         public string OrderId { get; }

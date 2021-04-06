@@ -21,6 +21,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ToyBlockFactoryWebApp\ToyBlockFactoryWebApp.csproj" />
+        <Content Include="InvoiceReport.txt">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

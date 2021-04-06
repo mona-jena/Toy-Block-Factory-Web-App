@@ -1,16 +1,16 @@
 ---
 steps:
-  - label: ':test_tube: run tests'
+  - label: ':test_tube: Run tests'
     command: './bin/test.sh' 
     agents:
       queue: grace-lab
   - wait
-  - label: ':aws-cloudformation::ecr: make ecr using CloudFormation'
-    command: 'aws cloudformation deploy --template-file ecr.yml --stack-name mona-ecr --no-fail-on-empty-changeset'
+  - label: ':aws-cloudformation::ecr: Make ECR using CloudFormation'
+    command: 'aws cloudformation deploy --template-file ecr.yml --stack-name mona-ecr --no-fail-on-empty-changeset' #won't fail even if there is no change
     agents:
       queue: grace-lab
   - wait 
-  - label: ':ec2: make docker image with tbf' #builds docker image that's in this ecr and run these commands on an ec2 instance
+  - label: ':ec2: Make Docker image with TBF' #builds docker image that's in this ecr and run these commands on an ec2 instance
     command:
       - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER} .' 
       - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER}' #pushing latest image to ecr
@@ -22,7 +22,7 @@ steps:
     agents:
       queue: grace-lab 
   - wait
-  - label: ':k8s: deploy on jupiter'
+  - label: ':k8s: Deploy on Jupiter'
     command: './bin/deploy.sh ${BUILDKITE_BUILD_NUMBER}'
     agents:
       queue: europa-preprod-fma

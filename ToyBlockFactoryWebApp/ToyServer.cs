@@ -9,9 +9,7 @@ namespace ToyBlockFactoryWebApp
     {
         private readonly HttpListener _httpListener;
         private readonly string[] _uri;
-        public readonly HealthCheckController _healthCheckController;
         private readonly Router _router;
-        private OrderController _orderController;
 
         public ToyServer(string[] prefixes, ToyBlockFactory toyBlockFactory)
         {
@@ -21,13 +19,13 @@ namespace ToyBlockFactoryWebApp
             }
             _uri = prefixes;
             _httpListener = new HttpListener();
-            _healthCheckController = new HealthCheckController();
-            _orderController = new OrderController(toyBlockFactory);
-            _router = new Router(_healthCheckController, _orderController);
+            var healthCheckController = new HealthCheckController();
+            var orderController = new OrderController(toyBlockFactory);
+            _router = new Router(healthCheckController, orderController);
             //Start();
         }
 
-        public void Start()
+        public async Task Start()
         {
             foreach (string s in _uri)
             {
@@ -36,14 +34,14 @@ namespace ToyBlockFactoryWebApp
             _httpListener.Start();
             Console.WriteLine("Listening...");
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 while (true)
                 {
                     HttpListenerContext context = _httpListener.GetContext();
                     try
                     {
-                        Console.WriteLine($"\nReceived request from: {context.Request.Url.PathAndQuery}");
+                        Console.WriteLine($"\nReceived request from: {context.Request.Url?.PathAndQuery}");
                         _router.ReadRequests(context);
                     }
                     catch (Exception e)
@@ -55,8 +53,9 @@ namespace ToyBlockFactoryWebApp
                     }
 
                 }
+                //_httpListener.Stop();
             });
-            // _httpListener.Stop(); **** this line was killing it for you, it meant that you stopped the listener as soon as it started
+            _httpListener.Stop(); //this line was killing it for you, it meant that you stopped the listener as soon as it started
         }
     }
     

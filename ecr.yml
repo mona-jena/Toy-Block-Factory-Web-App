@@ -1,11 +1,11 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Access ECR to get app image"
+Description: "Access ECR to get tbf image"
 Resources:
   MyRepository:
     Type: AWS::ECR::Repository
     Properties:
-      RepositoryName: "mona-app-cloudformation"
+      RepositoryName: "mona-app-ecr-repo"
       RepositoryPolicyText:
         Version: "2012-10-17"
         Statement:

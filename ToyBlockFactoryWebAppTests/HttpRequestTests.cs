@@ -1,9 +1,11 @@
+using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace ToyBlockFactoryWebAppTests
@@ -27,7 +29,7 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await response.Content.ReadAsStringAsync();
             
             Assert.Equal(HttpStatusCode.OK, statusCode);
-            Assert.Equal("{\"status\":\"ok\"}", responseBody); //TODO:don't test literal string?!!
+            Assert.Contains("ok", responseBody);
         }
 
         [Fact]
@@ -83,14 +85,14 @@ namespace ToyBlockFactoryWebAppTests
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
 
-            var putContent = new StringContent(await JsonConvert.SerializeObjectAsync(body), Encoding.UTF8, "application/json");
+            var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var submittedOrder = await _toyBlockOrdersFixture.Client.PutAsync($"http://localhost:3000/order?orderid={orderNumber}", putContent);
             var statusCode = submittedOrder.StatusCode;
             
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
         }
 
-        /*[Fact]
+        [Fact]
         public async Task CanGetReport()
         {
             var orderRequest = _toyBlockOrdersFixture.CreateOrderRequest();
@@ -104,68 +106,9 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Equal(InvoiceReport(), responseBody);
-        }*/
-    
-        private string InvoiceReport(){
-            return 
-            "{"+
-                "\"LineItems\":["+
-                    "{"+
-                        "\"Description\":\"Square\","+
-                        "\"Quantity\":2,"+
-                        "\"Price\":1,"+
-                        "\"Total\":2"+
-                    "},"+
-                    "{"+
-                        "\"Description\":\"Triangle\","+
-                        "\"Quantity\":5,"+
-                        "\"Price\":2,"+
-                        "\"Total\":10"+
-                    "},"+
-                    "{"+
-                        "\"Description\":\"Red colour surcharge\","+
-                        "\"Quantity\":2,"+
-                        "\"Price\":1," +
-                        "\"Total\":2"+
-                    "}"+
-                "],"+
-                "\"Total\":14,"+
-                "\"ReportType\":\"invoice\","+
-                "\"Name\":\"Mona\","+
-                "\"Address\":\"30 Symonds Rd\","+
-                "\"DueDate\":\"2021-04-05T00:00:00+12:00\","+
-                "\"OrderId\":\"0001\","+
-                "\"OrderTable\":["+
-                    "{"+
-                        "\"Shape\":\"square\","+
-                        "\"TableColumn\":["+
-                            "{"+
-                                "\"MeasuredItem\":\"Red\","+
-                                "\"Quantity\":2"+
-                            "},"+
-                            "{"+
-                                "\"MeasuredItem\":\"Yellow\","+
-                                "\"Quantity\":0"+
-                            "}"+
-                        "]"+
-                    "},"+
-                    "{"+
-                        "\"Shape\":\"triangle\","+
-                        "\"TableColumn\":["+
-                            "{"+
-                                "\"MeasuredItem\":\"Red\","+
-                                "\"Quantity\":0"+
-                            "},"+
-                            "{"+
-                                "\"MeasuredItem\":\"Yellow\","+
-                                "\"Quantity\":5"+
-                            "}"+
-                        "]"+
-                    "}"+
-                "]"+
-            "}";
+            Assert.Equal(File.ReadAllText("InvoiceReport.txt"), responseBody);
         }
+        
         
     }
 }

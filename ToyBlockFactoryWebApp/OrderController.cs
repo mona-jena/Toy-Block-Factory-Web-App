@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
@@ -18,14 +19,15 @@ namespace ToyBlockFactoryWebApp
             _toyBlockFactory = toyBlockFactory;
         }
 
-        private record NewOrderDTO(string Name, string Address)
+        private record NewOrderDTO(string Name, string Address, DateTime? DueDate = null)
         {
         }
         
         public string Post(string requestBody)
         {
-            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody);
-            var orderId = _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId;
+            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody)?? throw new InvalidDataException("Invalid order data");
+            var orderId = !customerDetails.DueDate.HasValue ? _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId : _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address, customerDetails.DueDate.Value).OrderId;
+            
             Console.WriteLine("Created order: " + orderId);
             return orderId;
         }
