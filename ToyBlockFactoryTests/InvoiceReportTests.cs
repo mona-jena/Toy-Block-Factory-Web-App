@@ -163,6 +163,18 @@ namespace ToyBlockFactoryTests
             Assert.False(_unsubmittedOrder.IsSubmitted);
         }
         
+        [Fact]
+        public void ReportsShouldBeGeneratedForSubmittedOrders()
+        {
+            const string orderId = "0001";
+            
+            var submittedOrder = _toyBlockFactory.GetOrder(orderId);
+            var invoiceReport = _toyBlockFactory.GetReport(orderId, ReportType.Invoice);
+
+            Assert.True(submittedOrder.IsSubmitted);
+            Assert.Equal(ReportType.Invoice, invoiceReport.ReportType);
+        }
+        
         
         private void OrderWithAllShapesAndColoursIncluded()
         {
