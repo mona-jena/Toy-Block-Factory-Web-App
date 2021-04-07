@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
@@ -11,9 +12,9 @@ namespace ToyBlockFactoryWebApp
     public class Router
     {
         private readonly HealthCheckController _healthCheckController;
-        private readonly IController _orderController;
+        private readonly OrderController _orderController;
 
-        public Router(HealthCheckController healthCheckController, IController orderController)
+        public Router(HealthCheckController healthCheckController, OrderController orderController)
         {
             _healthCheckController = healthCheckController;
             _orderController = orderController;

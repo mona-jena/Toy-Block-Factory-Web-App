@@ -8,7 +8,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    public class OrderController : IController
+    public class OrderController
     {
         private static ToyBlockFactory _toyBlockFactory;
 
@@ -37,7 +37,7 @@ namespace ToyBlockFactoryWebApp
             
             var orderDetails = JsonSerializer.Deserialize<BlockOrderDTO>(requestBody, options) ?? throw new InvalidDataException("Invalid block order data");
             var orderId = queryString.Get("orderId");
-            var order = _toyBlockFactory.GetOrder(orderId);
+            var order = _toyBlockFactory.GetOrder(orderId, false);
             if (orderId == null) return;
             
             Console.WriteLine("Blocks added to order " + orderId + ": ");
@@ -61,7 +61,7 @@ namespace ToyBlockFactoryWebApp
         public bool Put(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
-            var order = _toyBlockFactory.GetOrder(orderId);
+            var order = _toyBlockFactory.GetOrder(orderId, false);
             var submittedOrderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("Submitted order: " + submittedOrderId);
             
@@ -74,7 +74,6 @@ namespace ToyBlockFactoryWebApp
             var orderId = queryString.Get("orderId");
             var reportType = (ReportType) Enum.Parse(typeof(ReportType), queryString.Get("ReportType") ?? throw new InvalidDataException("Invalid report type"));
             Console.WriteLine("Get " + reportType + " Report for order: " + orderId);
-            //var order = _toyBlockFactory.GetReport(orderId, reportType);
             
             return _toyBlockFactory.GetReport(orderId, reportType);
         }

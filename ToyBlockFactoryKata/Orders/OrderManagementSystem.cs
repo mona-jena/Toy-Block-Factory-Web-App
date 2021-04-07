@@ -23,14 +23,12 @@ namespace ToyBlockFactoryKata.Orders
             return order;
         }
 
-        internal bool GetOrder(string orderId, out Order order)
+        internal bool GetOrder(string orderId, out Order order, bool submitted = false)
         {
-            return orderRecords.TryGetValue(orderId, out order);
-            //order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted && o.OrderId == orderId);
-            //order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted ==submitted && o.OrderId == orderId);
-            //return order != null;
+            order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted == submitted && o.OrderId == orderId);
+            return order != null;
         }
-
+        
         internal string SubmitOrder(Order order)
         {
             order.IsSubmitted = true;
@@ -42,13 +40,22 @@ namespace ToyBlockFactoryKata.Orders
             var formattedOrderNumber = _orderId.ToString().PadLeft(4, '0');
             return formattedOrderNumber;
         }
-
+        
+        internal bool Exists(string orderId)
+        {
+            return orderRecords.ContainsKey(orderId);
+        }
+        
         internal void DeleteOrder(string orderId)
         {
             if (GetOrder(orderId, out var order) && !order.IsSubmitted)
             {
                 order.IsDeleted = true;
                 orderRecords.Remove(order.OrderId);
+            }
+            else
+            {
+                throw new ArgumentException("You cannot delete a submitted order!");
             }
         }
 

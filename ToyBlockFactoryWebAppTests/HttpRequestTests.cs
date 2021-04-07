@@ -1,4 +1,3 @@
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -21,7 +20,7 @@ namespace ToyBlockFactoryWebAppTests
 
 
         [Fact]
-        public async Task CanBeAccessedViaWeb()       //TODO: "DEPLOYED" -> too technical?
+        public async Task CanBeAccessedViaWeb()
         { 
             var response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             var statusCode = response.StatusCode;

@@ -36,12 +36,12 @@ namespace ToyBlockFactoryKata
 
         public bool OrderExists(string orderId) 
         {
-            return _orderManagementSystem.GetOrder(orderId, out _);
+            return _orderManagementSystem.Exists(orderId);
         }
-        
-        public Order GetOrder(string orderId)
+
+        public Order GetOrder(string orderId, bool submitted = true)
         {
-            var orderExists = _orderManagementSystem.GetOrder(orderId, out var order);
+            var orderExists = _orderManagementSystem.GetOrder(orderId, out var order, submitted);
             if (!orderExists)
                 throw new ArgumentException("This order does not exist!");
             
