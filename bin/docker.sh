@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 set -euxo pipefail 
+account=$1
+region=$2
+version=$3
 docker build -t \
-  138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app: \
-  "${BUILDKITE_BUILD_NUMBER}" . \
+  "$account".dkr.ecr."$region".amazonaws.com/mona-app: \
+  "$version" . \
 
 docker push \
-  138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app: \
-  "${BUILDKITE_BUILD_NUMBER}"
+  "$account".dkr.ecr."$region".amazonaws.com/mona-app: \
+  "$version"
