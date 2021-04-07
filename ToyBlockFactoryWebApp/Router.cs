@@ -4,7 +4,6 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp

@@ -11,9 +11,9 @@ steps:
       queue: grace-lab
   - wait 
   - label: ':ec2: Make Docker image with TBF' #builds docker image that's in this ecr and run these commands on an ec2 instance
-    command:
-      - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER} .' 
-      - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER}' #pushing latest image to ecr
+    command: './bin/docker.sh ${BUILDKITE_BUILD_NUMBER}'
+    #  - 'docker build -t 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER} .' 
+    #  - 'docker push 138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:${BUILDKITE_BUILD_NUMBER}' #pushing latest image to ecr
     plugins:
       - ecr#v2.3.0:
           login: true

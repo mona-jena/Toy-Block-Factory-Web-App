@@ -97,7 +97,7 @@ namespace ToyBlockFactoryWebAppTests
             var orderResponse = await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest);
             var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
-            var body = _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+            var body = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
             var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var submittedOrder = await _toyBlockOrdersFixture.Client.PutAsync($"http://localhost:3000/order?orderid={orderNumber}", putContent);
         
