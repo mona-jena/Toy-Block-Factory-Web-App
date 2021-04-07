@@ -8,7 +8,7 @@ using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
-    public partial class OrderController : IController
+    public class OrderController : IController
     {
         private static ToyBlockFactory _toyBlockFactory;
 
@@ -19,10 +19,10 @@ namespace ToyBlockFactoryWebApp
 
         public string Post(string requestBody)
         {
-            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody)?? throw new InvalidDataException("Invalid order data");
-            var orderId = !customerDetails.DueDate.HasValue
-                ? _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId
-                : _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address, customerDetails.DueDate.Value).OrderId;
+            var customerDetails = JsonSerializer.Deserialize<NewOrderDTO>(requestBody) ?? throw new InvalidDataException("Invalid order data");
+            var orderId = customerDetails.DueDate.HasValue
+                ? _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address, customerDetails.DueDate.Value).OrderId
+                : _toyBlockFactory.CreateOrder(customerDetails.Name, customerDetails.Address).OrderId;
             
             Console.WriteLine("Created order: " + orderId);
             return orderId;

@@ -21,7 +21,7 @@ namespace ToyBlockFactoryWebAppTests
 
 
         [Fact]
-        public async Task AppIsAbleToBeAccessedViaWeb()       //TODO: "DEPLOYED" -> too technical?
+        public async Task CanBeAccessedViaWeb()       //TODO: "DEPLOYED" -> too technical?
         { 
             var response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             var statusCode = response.StatusCode;
@@ -38,11 +38,11 @@ namespace ToyBlockFactoryWebAppTests
             
             var requestBody = await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", request);
             var statusCode = requestBody.StatusCode;
-            var responseBody = await requestBody.Content.ReadFromJsonAsync<string>();
+            var orderId = await requestBody.Content.ReadFromJsonAsync<string>();
 
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.NotNull(responseBody);
-            Assert.Matches("[0-9]{4}", responseBody);
+            Assert.NotNull(orderId);
+            Assert.Matches("[0-9]{4}", orderId);
         }
         
         [Fact]

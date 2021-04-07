@@ -29,11 +29,9 @@ namespace ToyBlockFactoryKata
 
         public string SubmitOrder(Order customerOrder)
         {
-            if (customerOrder.BlockList.Count > 0)
-            {
-                return _orderManagementSystem.SubmitOrder(customerOrder);
-            }
-            return string.Empty;  
+            if (customerOrder.BlockList.Count <= 0) return string.Empty;
+            
+            return _orderManagementSystem.SubmitOrder(customerOrder);
         }
 
         public bool OrderExists(string orderId) 
@@ -46,6 +44,7 @@ namespace ToyBlockFactoryKata
             var orderExists = _orderManagementSystem.GetOrder(orderId, out var order);
             if (!orderExists)
                 throw new ArgumentException("This order does not exist!");
+            
             return order;
         }
 
@@ -57,6 +56,10 @@ namespace ToyBlockFactoryKata
         public IReport GetReport(string orderId, ReportType reportType)
         {
             var requestedOrder = GetOrder(orderId);
+            if (!requestedOrder.IsSubmitted)
+            {
+                throw new ArgumentException("You need to submit your order to get a report!");
+            }
             return _reportSystem.GenerateReport(requestedOrder, reportType);
         }
         

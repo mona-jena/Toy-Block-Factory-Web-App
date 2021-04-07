@@ -25,10 +25,12 @@ namespace ToyBlockFactoryKata.Orders
 
         internal bool GetOrder(string orderId, out Order order)
         {
-            order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted && o.OrderId == orderId);
-            return order != null;
+            return orderRecords.TryGetValue(orderId, out order);
+            //order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted && o.OrderId == orderId);
+            //order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted ==submitted && o.OrderId == orderId);
+            //return order != null;
         }
-        
+
         internal string SubmitOrder(Order order)
         {
             order.IsSubmitted = true;

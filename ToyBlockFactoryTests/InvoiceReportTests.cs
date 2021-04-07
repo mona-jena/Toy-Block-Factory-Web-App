@@ -18,6 +18,7 @@ namespace ToyBlockFactoryTests
 
             OrderWithAllShapesAndColoursIncluded();
             OrderWithNotAllVariationsIncluded();
+            _unsubmittedOrder = UnsubmittedOrder();
         }
 
 
@@ -58,6 +59,7 @@ namespace ToyBlockFactoryTests
         }
 
         private DateTime _davidOrderDueDate;
+
         [Fact]
         public void ReportContainsOrderDueDate()
         {
@@ -149,6 +151,17 @@ namespace ToyBlockFactoryTests
             Assert.Equal(colour, tableColumn?.MeasuredItem);
             Assert.Equal(quantity, tableColumn?.Quantity);
         }
+
+        private readonly Order _unsubmittedOrder;
+        
+        [Fact]
+        public void ReportsShouldNotBeGeneratedForUnsubmittedOrders()
+        {
+            string orderId = _unsubmittedOrder.OrderId;
+
+            Assert.Throws<ArgumentException>(() => _toyBlockFactory.GetReport(orderId, ReportType.Invoice));
+            Assert.False(_unsubmittedOrder.IsSubmitted);
+        }
         
         
         private void OrderWithAllShapesAndColoursIncluded()
@@ -178,6 +191,19 @@ namespace ToyBlockFactoryTests
             steveOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
             steveOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
             _toyBlockFactory.SubmitOrder(steveOrder);
+        }
+        
+        private Order UnsubmittedOrder()
+        {
+            var mark = "Steve Richards";
+            var markAddress = "102 Robin Street, Auckland";
+            var markOrderDueDate = new DateTime(2021, 2, 15);
+            var markOrder = _toyBlockFactory.CreateOrder(mark, markAddress, markOrderDueDate);
+            markOrder.AddBlock(Shape.Square, Colour.Yellow, 1);
+            markOrder.AddBlock(Shape.Square, Colour.Blue, 1);
+            markOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            markOrder.AddBlock(Shape.Circle, Colour.Blue, 1);
+            return markOrder;
         }
         
     }
