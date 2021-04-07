@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -66,15 +67,16 @@ namespace ToyBlockFactoryWebApp
                     break;
                 
                 case "/report" when request.HttpMethod == "GET":
+                    IReport report = null;   //TODO: WHAT TO SETUP AS DEFAULT?
                     try
                     {
-                        _orderController.Get(request.QueryString);
+                        report = _orderController.Get(request.QueryString);
                     }
                     catch (ArgumentException e)
                     {
                         SendResponse(context.Response, HttpStatusCode.NotFound); 
                     }
-                    SendResponse(context.Response, HttpStatusCode.Accepted);
+                    SendResponse(context.Response, HttpStatusCode.Accepted, report);
                     break;
             }
         }

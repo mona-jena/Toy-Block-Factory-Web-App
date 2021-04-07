@@ -99,15 +99,16 @@ namespace ToyBlockFactoryWebAppTests
             var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+            var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+            var submittedOrder = await _toyBlockOrdersFixture.Client.PutAsync($"http://localhost:3000/order?orderid={orderNumber}", putContent);
         
             var order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/report?orderid={orderNumber}&ReportType=Invoice");
             var statusCode = order.StatusCode;
             var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Equal(await File.ReadAllTextAsync("InvoiceReport.txt"), responseBody);
+            Assert.Contains("\"ReportType\":\"invoice\"", responseBody);
         }
-        
         
     }
 }

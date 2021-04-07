@@ -12,11 +12,8 @@ namespace ToyBlockFactoryWebAppTests
 {
     public class ToyBlockOrdersFixture
     {
-        private readonly Router _router;    
         public readonly HttpClient Client = new();
-        public readonly ToyServer ToyServer;
-        private readonly ToyBlockFactory _toyBlockFactory;
-        private JsonSerializerOptions _options = new JsonSerializerOptions
+        private readonly JsonSerializerOptions _options = new()
         {
             Converters = {new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)}
         };
@@ -24,9 +21,9 @@ namespace ToyBlockFactoryWebAppTests
         public ToyBlockOrdersFixture()
         {
             string[] prefixes = {"http://+:3000/"};
-            _toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
-            ToyServer = new ToyServer(prefixes, _toyBlockFactory);
-            ToyServer.Start();
+            var toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
+            var toyServer = new ToyServer(prefixes, toyBlockFactory);
+            toyServer.Start();
         }
 
         public ByteArrayContent CreateOrderRequest()
