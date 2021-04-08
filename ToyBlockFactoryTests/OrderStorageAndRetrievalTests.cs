@@ -137,7 +137,6 @@ namespace ToyBlockFactoryTests
             _toyBlockFactory.DeleteOrder(deletedOrder);
 
             Assert.Throws<ArgumentException>(() => _toyBlockFactory.GetOrder(deletedOrder));
-            Assert.True(_unsubmittedOrder.IsDeleted);
         }
         
         private void OrderWithDateGiven()

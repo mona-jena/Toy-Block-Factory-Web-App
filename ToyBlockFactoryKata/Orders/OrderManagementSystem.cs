@@ -46,17 +46,15 @@ namespace ToyBlockFactoryKata.Orders
             return orderRecords.ContainsKey(orderId);
         }
         
-        internal void DeleteOrder(string orderId)
+        // delete order that doesn't exist --> throw exception - can use c# one
+        // delete order that has been submitted --> return false
+        // delete order that has not be submitted --> return true
+        internal bool DeleteOrder(string orderId)
         {
-            if (GetOrder(orderId, out var order) && !order.IsSubmitted)
-            {
-                order.IsDeleted = true;
-                orderRecords.Remove(order.OrderId);
-            }
-            else
-            {
-                throw new ArgumentException("You cannot delete a submitted order!");
-            }
+            if (!GetOrder(orderId, out var order))
+                throw new ("This order does not exist!");
+
+            return !order.IsSubmitted && orderRecords.Remove(order.OrderId);
         }
 
         internal Dictionary<string, Order> FilterOrders(DateTime dueDate)

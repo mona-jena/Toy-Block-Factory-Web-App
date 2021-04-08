@@ -9,8 +9,7 @@ namespace ToyBlockFactoryWebApp
     {
         static async Task Main(string[] args)
         {
-            var port = Environment.GetEnvironmentVariable("MONA_PORT");
-            Console.WriteLine(port);
+            var port = Environment.GetEnvironmentVariable("MONA_PORT") ?? throw new ApplicationException("No port defined!");
             string[] prefixes = {$"http://*:{port}/"};
             ToyBlockFactory toyBlockFactory = new (new LineItemsCalculator());
             var toyServer = new ToyServer(prefixes, toyBlockFactory);

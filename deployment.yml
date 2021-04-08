@@ -29,10 +29,10 @@ objects:
           - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(imagetag)"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
             name: mona-tbf
             env:
-              - name: MONA_PORT
+              - name: MONA_PORT   #variable to refer locally on app
                 valueFrom:
                   secretKeyRef:
-                    key: port
+                    key: port     
                     name: "mona-port"
             ports:
               - containerPort: 3000
@@ -110,7 +110,7 @@ objects:
       kind: Deployment
       name: "mona-deployment"
     # make sure this is at least 3, as that is the minimum replicas Managed Infrastructure team recommend to be running for an app
-    minReplicas: 1
+    minReplicas: 2
     maxReplicas: 5
     metrics:
       - type: External
