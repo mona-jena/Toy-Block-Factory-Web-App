@@ -29,7 +29,7 @@ objects:
           - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(imagetag)"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
             name: mona-tbf
             env:
-              - name: MONA_PORT   #variable to refer locally on app
+              - name: MONA_PORT   #variable to refer to locally on app
                 valueFrom:
                   secretKeyRef:
                     key: port     
@@ -72,12 +72,8 @@ objects:
     annotations:
       # This annotation will trigger the cluster to provision a TLS certificate which will
       # be stored in the specified secretName below.
-      # NOTE: The secret will be:
-      # - CREATED if it doesn't exist
-      #       OR
-      # - UPDATED if it already exists (ie. the existing certificate in the secret WILL BE OVERWRITTEN!!!)
       "kubernetes.io/tls-acme": "true"
-      nginx.ingress.kubernetes.io/affinity: cookie
+      nginx.ingress.kubernetes.io/affinity: cookie          #creates session affinity to store data in cookies
       nginx.ingress.kubernetes.io/session-cookie-hash: sha1
       nginx.ingress.kubernetes.io/session-cookie-name: route
 

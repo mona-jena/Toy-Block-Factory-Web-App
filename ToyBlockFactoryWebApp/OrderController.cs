@@ -56,8 +56,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Delete order: " + orderId);
 
             if (!_toyBlockFactory.OrderExists(orderId)) return false;
-            _toyBlockFactory.DeleteOrder(orderId);
-            return true;
+            return _toyBlockFactory.DeleteOrder(orderId);
         }
         
         public bool Put(NameValueCollection queryString)

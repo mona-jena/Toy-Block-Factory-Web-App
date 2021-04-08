@@ -48,9 +48,9 @@ namespace ToyBlockFactoryKata
             return order;
         }
 
-        public void DeleteOrder(string orderId)
+        public bool DeleteOrder(string orderId)
         {
-            _orderManagementSystem.DeleteOrder(orderId);
+            return _orderManagementSystem.DeleteOrder(orderId);
         }
 
         public IReport GetReport(string orderId, ReportType reportType)
