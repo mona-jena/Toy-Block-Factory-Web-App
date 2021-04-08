@@ -28,6 +28,12 @@ objects:
         containers:               # docker run 
           - image: "138666658526.dkr.ecr.ap-southeast-2.amazonaws.com/mona-app:$(imagetag)"  #ecr address of my image --> buildkite builds the images and pushes it to ecr
             name: mona-tbf
+            env:
+              - name: MONA_PORT
+                valueFrom:
+                  secretKeyRef:
+                    key: port
+                    name: "mona-port"
             ports:
               - containerPort: 3000
        
@@ -86,6 +92,7 @@ objects:
         # WARNING: DO NOT use the same secret for more than one ingress
         # to ensure misconfiguration of one ingress does not affect any other ingresses
         secretName: "mona-tls"
+
 
 
 - apiVersion: autoscaling/v2beta1

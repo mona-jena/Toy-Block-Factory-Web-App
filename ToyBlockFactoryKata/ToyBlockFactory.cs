@@ -56,10 +56,10 @@ namespace ToyBlockFactoryKata
         public IReport GetReport(string orderId, ReportType reportType)
         {
             var requestedOrder = GetOrder(orderId);
-            if (!requestedOrder.IsSubmitted)
+            /*if (!requestedOrder.IsSubmitted)
             {
                 throw new ArgumentException("You need to submit your order to get a report!");
-            }
+            }*/
             return _reportSystem.GenerateReport(requestedOrder, reportType);
         }
         

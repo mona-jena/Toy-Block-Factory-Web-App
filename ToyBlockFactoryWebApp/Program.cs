@@ -10,6 +10,7 @@ namespace ToyBlockFactoryWebApp
         static async Task Main(string[] args)
         {
             var port = Environment.GetEnvironmentVariable("MONA_PORT");
+            Console.WriteLine(port);
             string[] prefixes = {$"http://*:{port}/"};
             ToyBlockFactory toyBlockFactory = new (new LineItemsCalculator());
             var toyServer = new ToyServer(prefixes, toyBlockFactory);
