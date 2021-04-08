@@ -77,6 +77,10 @@ objects:
       #       OR
       # - UPDATED if it already exists (ie. the existing certificate in the secret WILL BE OVERWRITTEN!!!)
       "kubernetes.io/tls-acme": "true"
+      nginx.ingress.kubernetes.io/affinity: cookie
+      nginx.ingress.kubernetes.io/session-cookie-hash: sha1
+      nginx.ingress.kubernetes.io/session-cookie-name: route
+
   spec:
     rules:
       - host: "mona.svc.platform.myobdev.com"
