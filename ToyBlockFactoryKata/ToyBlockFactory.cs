@@ -65,11 +65,10 @@ namespace ToyBlockFactoryKata
         }
 
         
-
-        /*public List<Order> GetAllOrders()
+        public List<Order> GetAllOrders()
         {
-            
-        }*/
+            return _orderManagementSystem.GetAllOrders();
+        }
         
 
         public IReport GetReport(string orderId, ReportType reportType)

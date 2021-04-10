@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -73,6 +74,20 @@ namespace ToyBlockFactoryWebApp
                                                 //TODO: Block key is not able to be Serialized
                     break;
                 
+                case "/orders" when request.HttpMethod == "GET":
+                    List<Order> orders = null;        //TODO: WHAT TO SETUP AS DEFAULT?
+                    try
+                    {
+                        orders = _orderController.GetAllOrders();
+                    }
+                    catch (ArgumentException e)
+                    {
+                        SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    }
+                    SendResponse(context.Response, HttpStatusCode.Accepted, orders);
+                    //TODO: Block key is not able to be Serialized
+                    break;
+                
                 case "/order" when request.HttpMethod == "DELETE":
                     var deleted = _orderController.Delete(request.QueryString);
                     if (!deleted) SendResponse(context.Response, HttpStatusCode.BadRequest);
@@ -97,11 +112,8 @@ namespace ToyBlockFactoryWebApp
                         SendResponse(context.Response, HttpStatusCode.NotFound); 
                     }
                     SendResponse(context.Response, HttpStatusCode.Accepted, report);
-                                                
+                                                //TODO: Block key is not able to be Serialized
                     break;
-                
-                // GET /order
-                // GET /orders
             }
         }
 

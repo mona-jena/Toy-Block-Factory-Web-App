@@ -84,7 +84,6 @@ namespace ToyBlockFactoryWebAppTests
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = await _toyBlockOrdersFixture.Client.PostAsync(
                 $"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest); 
-            //var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
         
             var order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/order?orderid={orderNumber}");
             var statusCode = order.StatusCode;
@@ -92,6 +91,34 @@ namespace ToyBlockFactoryWebAppTests
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
             Assert.Contains("OrderId:" + orderNumber, responseBody);
+        }
+        
+        [Fact]
+        public async Task CanGetAllOrders()
+        {
+            var orderRequest = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderResponse =
+                await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest);
+            var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
+            var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
+            var body = await _toyBlockOrdersFixture.Client.PostAsync(
+                $"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+
+            var orderRequest2 = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderResponse2 =
+                await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest2);
+            var order2Number = await orderResponse2.Content.ReadFromJsonAsync<string>();
+            var blockOrderRequest2 = _toyBlockOrdersFixture.AddBlocks();
+            var body2 = await _toyBlockOrdersFixture.Client.PostAsync(
+                $"http://localhost:3000/addblock?orderId={order2Number}", blockOrderRequest2);
+        
+            var order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/orders");
+            var statusCode = order.StatusCode;
+            var responseBody = await order.Content.ReadAsStringAsync();
+        
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
+            Assert.Contains("OrderId:" + orderNumber, responseBody);
+            Assert.Contains("OrderId:" + order2Number, responseBody);
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Text.Json;
@@ -56,8 +57,7 @@ namespace ToyBlockFactoryWebApp
             var orderId = queryString.Get("orderId");
             Console.WriteLine("Delete order: " + orderId);
 
-            if (!_toyBlockFactory.OrderExists(orderId)) return false;
-            return _toyBlockFactory.DeleteOrder(orderId);
+            return _toyBlockFactory.OrderExists(orderId) && _toyBlockFactory.DeleteOrder(orderId);
         }
         
         public Order Put(NameValueCollection queryString)
@@ -66,8 +66,8 @@ namespace ToyBlockFactoryWebApp
             var order = _toyBlockFactory.GetOrder(orderId, false);
             var submittedOrderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("Submitted order: " + submittedOrderId);
+            
             return _toyBlockFactory.GetOrder(orderId, true);
-            //TODO: CHECK IF SUBMITTED 
         }
 
         
@@ -90,6 +90,12 @@ namespace ToyBlockFactoryWebApp
             var submitted = _toyBlockFactory.OrderSubmitted(orderId);  
                                                     // TODO: Had to add this method to make this work, another way?
             return _toyBlockFactory.GetOrder(orderId, submitted);
+        }
+        
+        public List<Order> GetAllOrders()
+        {
+            Console.WriteLine("Getting all orders:");
+            return _toyBlockFactory.GetAllOrders();
         }
     }
 }

@@ -67,5 +67,10 @@ namespace ToyBlockFactoryKata.Orders
             var orders = orderRecords.Where(o => o.Value.DueDate == dueDate);
             return orders.ToDictionary(order => order.Key, order => order.Value);
         }
+
+        internal List<Order> GetAllOrders()
+        {
+            return orderRecords.Select(order => order.Value).ToList();
+        }
     }
 }
