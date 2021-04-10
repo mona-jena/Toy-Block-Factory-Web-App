@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.PricingStrategy;
 using ToyBlockFactoryWebApp;
@@ -24,6 +25,7 @@ namespace ToyBlockFactoryWebAppTests
             var toyBlockFactory = new ToyBlockFactory(new LineItemsCalculator());
             var toyServer = new ToyServer(prefixes, toyBlockFactory);
             toyServer.Start();
+            Thread.Sleep(100);
         }
 
         public ByteArrayContent CreateOrderRequest()
@@ -38,7 +40,7 @@ namespace ToyBlockFactoryWebAppTests
 
         public ByteArrayContent AddBlocks()
         {
-            var requestBody =
+            const string requestBody =
                 "{" +
                     "\"Order\":[" +
                     "{" +

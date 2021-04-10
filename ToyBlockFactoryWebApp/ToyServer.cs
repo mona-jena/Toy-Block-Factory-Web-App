@@ -48,6 +48,7 @@ namespace ToyBlockFactoryWebApp
                         Console.WriteLine(e.Message);
                         Console.WriteLine(e.StackTrace);
                         context.Response.StatusCode = 500;
+                        context.Response.StatusDescription = e.Message;
                         context.Response.Close();
                     }
 

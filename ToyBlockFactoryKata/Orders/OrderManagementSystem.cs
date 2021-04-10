@@ -7,7 +7,7 @@ namespace ToyBlockFactoryKata.Orders
     internal class OrderManagementSystem
     {
         private int _orderId;
-        private Dictionary<string, Order> orderRecords { get; } = new();
+        internal Dictionary<string, Order> orderRecords { get; } = new();
 
         internal Order CreateOrder(string customerName, string customerAddress)
         {
@@ -55,6 +55,11 @@ namespace ToyBlockFactoryKata.Orders
                 throw new ("This order does not exist!");
 
             return !order.IsSubmitted && orderRecords.Remove(order.OrderId);
+        }
+        
+        internal bool OrderSubmitted(string orderId)
+        {
+            return orderRecords[orderId].IsSubmitted;
         }
 
         internal Dictionary<string, Order> FilterOrders(DateTime dueDate)

@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
@@ -49,7 +50,7 @@ namespace ToyBlockFactoryWebApp
                 Console.WriteLine("{0} {1} {2}", block.Quantity, block.Colour, block.Shape);
             }
         }
-
+        
         public bool Delete(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
@@ -59,26 +60,36 @@ namespace ToyBlockFactoryWebApp
             return _toyBlockFactory.DeleteOrder(orderId);
         }
         
-        public bool Put(NameValueCollection queryString)
+        public Order Put(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
             var order = _toyBlockFactory.GetOrder(orderId, false);
             var submittedOrderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("Submitted order: " + submittedOrderId);
-            
-            if (submittedOrderId != orderId) return false;
-            return true;
+            return _toyBlockFactory.GetOrder(orderId, true);
+            //TODO: CHECK IF SUBMITTED 
         }
+
         
         public IReport Get(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
             var reportType = (ReportType) Enum.Parse(typeof(ReportType), queryString.Get("ReportType") 
-                                 ?? throw new InvalidDataException("Invalid report type"));
+                              ?? throw new InvalidDataException("Invalid report type"));
             Console.WriteLine("Get " + reportType + " Report for order: " + orderId);
             
             return _toyBlockFactory.GetReport(orderId, reportType);
         }
 
+        //GET /order endpoint 
+        // GET //orders --> return all order objects 
+        public Order GetOrder(NameValueCollection queryString)
+        {
+            var orderId = queryString.Get("orderid");
+            Console.WriteLine("Getting order: " + orderId);
+            var submitted = _toyBlockFactory.OrderSubmitted(orderId);  
+                                                    // TODO: Had to add this method to make this work, another way?
+            return _toyBlockFactory.GetOrder(orderId, submitted);
+        }
     }
 }

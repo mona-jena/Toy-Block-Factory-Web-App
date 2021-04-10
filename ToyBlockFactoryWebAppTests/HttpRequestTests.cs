@@ -75,6 +75,26 @@ namespace ToyBlockFactoryWebAppTests
         }
 
         [Fact]
+        public async Task CanGetSingleOrder()
+        {
+            var orderRequest = _toyBlockOrdersFixture.CreateOrderRequest();
+            var orderResponse =
+                await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest);
+            var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
+            var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
+            var body = await _toyBlockOrdersFixture.Client.PostAsync(
+                $"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest); 
+            //var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
+        
+            var order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/order?orderid={orderNumber}");
+            var statusCode = order.StatusCode;
+            var responseBody = await order.Content.ReadAsStringAsync();
+        
+            Assert.Equal(HttpStatusCode.Accepted, statusCode);
+            Assert.Contains("OrderId:" + orderNumber, responseBody);
+        }
+
+        [Fact]
         public async Task CanSubmitOrder()
         {
             var orderRequest = _toyBlockOrdersFixture.CreateOrderRequest();
