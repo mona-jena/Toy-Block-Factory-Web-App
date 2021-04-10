@@ -12,9 +12,6 @@
     <ItemGroup>
       <ProjectReference Include="..\ToyBlockFactoryKata\ToyBlockFactoryKata.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="xunit.extensibility.core" Version="2.4.1" />
-    </ItemGroup>
+    
 
 </Project>

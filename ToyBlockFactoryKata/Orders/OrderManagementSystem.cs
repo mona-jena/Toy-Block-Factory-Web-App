@@ -67,10 +67,10 @@ namespace ToyBlockFactoryKata.Orders
             return orderRecords[orderId].IsSubmitted;
         }
 
-        internal Dictionary<string, Order> FilterOrders(DateTime dueDate)
+        internal List<Order> FilterOrders(DateTime dueDate)
         {
             var orders = orderRecords.Where(o => o.Value.DueDate == dueDate);
-            return orders.ToDictionary(order => order.Key, order => order.Value);
+            return orders.Select(order => order.Value).ToList();
         }
         
     }

@@ -20,7 +20,7 @@ namespace ToyBlockFactoryWebAppTests
 
 
         [Fact]
-        public async Task CanBeAccessedViaWeb()
+        public async Task ServerWorks()
         { 
             var response = await _toyBlockOrdersFixture.Client.GetAsync("http://localhost:3000/health");
             var statusCode = response.StatusCode;

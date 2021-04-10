@@ -71,7 +71,7 @@ namespace ToyBlockFactoryKata
         public IEnumerable<IReport> GetReportsByDate(DateTime date, ReportType reportType)
         {
             var orderRecords = _orderManagementSystem.FilterOrders(date); 
-            return _reportSystem.FilterReportsByDate(date, orderRecords, reportType);
+            return _reportSystem.FilterReportsByDate(orderRecords, reportType);
         }
         
     }

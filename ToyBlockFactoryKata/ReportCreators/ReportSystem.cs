@@ -40,16 +40,16 @@ namespace ToyBlockFactoryKata.ReportCreators
             return report;
         }
         
-        internal IEnumerable<IReport> FilterReportsByDate(DateTime date, Dictionary<string,Order> orderRecords, ReportType reportType)
+        internal IEnumerable<IReport> FilterReportsByDate(List<Order> orderRecords, ReportType reportType)
         {
             IEnumerable<IReport> reports;
             switch (reportType)
             {
                 case ReportType.CuttingList:
-                    reports = FilterCuttingReportsByDate(date, orderRecords);
+                    reports = FilterCuttingReportsByDate(orderRecords);
                     break;
                 case ReportType.Painting:
-                    reports = FilterPaintingReportsByDate(date, orderRecords);
+                    reports = FilterPaintingReportsByDate(orderRecords);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(reportType), reportType, "Invalid report type");
@@ -73,14 +73,14 @@ namespace ToyBlockFactoryKata.ReportCreators
             return _paintingReportCreator.GenerateReport(requestedOrder);
         }
 
-        private IEnumerable<IReport> FilterCuttingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
+        private IEnumerable<IReport> FilterCuttingReportsByDate(List<Order> orderRecords)
         {
-            return orderRecords.Select(o => GenerateCuttingList(o.Value));
+            return orderRecords.Select(o => GenerateCuttingList(o));
         }
 
-        private IEnumerable<IReport> FilterPaintingReportsByDate(DateTime date, Dictionary<string, Order> orderRecords)
+        private IEnumerable<IReport> FilterPaintingReportsByDate(List<Order> orderRecords)
         {
-            return orderRecords.Select(o => GeneratePaintingReport(o.Value));
+            return orderRecords.Select(o => GeneratePaintingReport(o));
         }
         
     }
