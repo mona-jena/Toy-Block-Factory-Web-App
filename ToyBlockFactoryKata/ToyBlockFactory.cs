@@ -29,7 +29,8 @@ namespace ToyBlockFactoryKata
 
         public string SubmitOrder(Order customerOrder)
         {
-            if (customerOrder.BlockList.Count <= 0) return string.Empty;
+            if (customerOrder.BlockList.Count == 0)
+                throw new ArgumentException("Can't submit order with no blocks!");
             return _orderManagementSystem.SubmitOrder(customerOrder);
         }
 

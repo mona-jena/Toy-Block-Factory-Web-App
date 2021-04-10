@@ -23,11 +23,9 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void EmptyBlockOrderShouldNotBeAbleToBeSubmitted_AndReturnEmptyId()
+        public void EmptyBlockOrderShouldNotBeAbleToBeSubmitted_AndThrowsException()
         {
-            var orderId = _toyBlockFactory.SubmitOrder(_emptyOrder);
-            
-            Assert.Equal(string.Empty, orderId);
+            Assert.Throws<ArgumentException>(() => _toyBlockFactory.SubmitOrder(_emptyOrder));
         }
         
         [Fact]
