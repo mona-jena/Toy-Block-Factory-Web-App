@@ -85,7 +85,7 @@ namespace ToyBlockFactoryWebApp
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
                     SendResponse(context.Response, HttpStatusCode.Accepted, orders);
-                    //TODO: Block key is not able to be Serialized
+                                                //TODO: Block key is not able to be Serialized
                     break;
                 
                 case "/order" when request.HttpMethod == "DELETE":
@@ -105,7 +105,7 @@ namespace ToyBlockFactoryWebApp
                     IReport report = null;   //TODO: WHAT TO SETUP AS DEFAULT?
                     try
                     {
-                        report = _orderController.Get(request.QueryString);
+                        report = _orderController.GetReport(request.QueryString);
                     }
                     catch (ArgumentException e)
                     {

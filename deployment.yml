@@ -76,7 +76,6 @@ objects:
       nginx.ingress.kubernetes.io/affinity: cookie          #creates session affinity to store data in cookies
       nginx.ingress.kubernetes.io/session-cookie-hash: sha1
       nginx.ingress.kubernetes.io/session-cookie-name: route
-
   spec:
     rules:
       - host: "mona.svc.platform.myobdev.com"
@@ -89,8 +88,6 @@ objects:
     tls:                  #gives certificate given by https
       - hosts:
           - "mona.svc.platform.myobdev.com"
-        # WARNING: DO NOT use the same secret for more than one ingress
-        # to ensure misconfiguration of one ingress does not affect any other ingresses
         secretName: "mona-tls"
 
 
@@ -105,23 +102,19 @@ objects:
       repo: "mona-app"
   spec:
     scaleTargetRef:
-      # reference the deployment that this HPA will scale up and down
       apiVersion: apps/v1
       kind: Deployment
       name: "mona-deployment"
-    # make sure this is at least 3, as that is the minimum replicas Managed Infrastructure team recommend to be running for an app
     minReplicas: 2
     maxReplicas: 5
     metrics:
       - type: External
         external:
-          # this is the Metric Name from the table above
           metricName: jupiter_http_requests_per_second
           # this says that if the average number of requests per second over the last 5 minutes is greater than 10, then scale up
           targetAverageValue: 10
           metricSelector:
             matchLabels:
-              # the key here is the Metric Selector from the table above and the value is the name of your Ingress you want to scale against
               ingress: mona-ingress
             
 

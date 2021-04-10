@@ -69,9 +69,8 @@ namespace ToyBlockFactoryWebApp
             
             return _toyBlockFactory.GetOrder(orderId, true);
         }
-
         
-        public IReport Get(NameValueCollection queryString)
+        public IReport GetReport(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
             var reportType = (ReportType) Enum.Parse(typeof(ReportType), queryString.Get("ReportType") 
@@ -80,9 +79,7 @@ namespace ToyBlockFactoryWebApp
             
             return _toyBlockFactory.GetReport(orderId, reportType);
         }
-
-        //GET /order endpoint 
-        // GET //orders --> return all order objects 
+        
         public Order GetOrder(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderid");
@@ -97,5 +94,6 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Getting all orders:");
             return _toyBlockFactory.GetAllOrders();
         }
+        
     }
 }

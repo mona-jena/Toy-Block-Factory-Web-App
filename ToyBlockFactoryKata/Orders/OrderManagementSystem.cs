@@ -7,7 +7,7 @@ namespace ToyBlockFactoryKata.Orders
     internal class OrderManagementSystem
     {
         private int _orderId;
-        internal Dictionary<string, Order> orderRecords { get; } = new();
+        private Dictionary<string, Order> orderRecords { get; } = new();
 
         internal Order CreateOrder(string customerName, string customerAddress)
         {
@@ -27,6 +27,11 @@ namespace ToyBlockFactoryKata.Orders
         {
             order = orderRecords.Select(kvp => kvp.Value).FirstOrDefault(o => o.IsSubmitted == submitted && o.OrderId == orderId);
             return order != null;
+        }
+        
+        internal List<Order> GetAllOrders()
+        {
+            return orderRecords.Values.ToList();
         }
         
         internal string SubmitOrder(Order order)
@@ -52,7 +57,7 @@ namespace ToyBlockFactoryKata.Orders
         internal bool DeleteOrder(string orderId)
         {
             if (!GetOrder(orderId, out var order))
-                throw new ("This order does not exist!");
+                throw new ArgumentException("This order does not exist!");
 
             return !order.IsSubmitted && orderRecords.Remove(order.OrderId);
         }
@@ -67,10 +72,6 @@ namespace ToyBlockFactoryKata.Orders
             var orders = orderRecords.Where(o => o.Value.DueDate == dueDate);
             return orders.ToDictionary(order => order.Key, order => order.Value);
         }
-
-        internal List<Order> GetAllOrders()
-        {
-            return orderRecords.Select(order => order.Value).ToList();
-        }
+        
     }
 }

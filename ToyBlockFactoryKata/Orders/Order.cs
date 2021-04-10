@@ -37,7 +37,7 @@ namespace ToyBlockFactoryKata.Orders
 
         private void AddShapeQuantity(Shape blockShape, int blockQuantity)
         {
-            if (shapeQuantities.TryGetValue(blockShape, out _))
+            if (shapeQuantities.ContainsKey(blockShape))
                 shapeQuantities[blockShape] += blockQuantity;
             else
                 shapeQuantities.Add(blockShape, blockQuantity);

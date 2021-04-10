@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using ToyBlockFactoryKata;
 
@@ -9,15 +10,17 @@ namespace ToyBlockFactoryWebApp
     {
         private readonly HttpListener _httpListener;
         private readonly string[] _uri;
+        private readonly CancellationToken _token;
         private readonly Router _router;
 
-        public ToyServer(string[] prefixes, ToyBlockFactory toyBlockFactory)
+        public ToyServer(string[] prefixes, CancellationToken token, ToyBlockFactory toyBlockFactory)
         {
             if (prefixes == null || prefixes.Length == 0)
             {
                 throw new ArgumentException("prefixes");
             }
             _uri = prefixes;
+            _token = token;
             _httpListener = new HttpListener();
             var healthCheckController = new HealthCheckController();
             var orderController = new OrderController(toyBlockFactory);
@@ -37,6 +40,7 @@ namespace ToyBlockFactoryWebApp
             {
                 while (true)
                 {
+                    _token.ThrowIfCancellationRequested();
                     HttpListenerContext context = _httpListener.GetContext();
                     try
                     {
@@ -55,6 +59,7 @@ namespace ToyBlockFactoryWebApp
                 }
             });
             _httpListener.Stop();
+       
         }
     }
     
