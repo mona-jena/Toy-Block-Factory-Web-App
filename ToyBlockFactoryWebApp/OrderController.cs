@@ -37,13 +37,13 @@ namespace ToyBlockFactoryWebApp
             {
                 Converters = {new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)}
             };
-            
             var orderDetails = JsonSerializer.Deserialize<BlockOrderDTO>(requestBody, options) 
                                ?? throw new InvalidDataException("Invalid block order data");
             var orderId = queryString.Get("orderId");
-            var order = _toyBlockFactory.GetOrder(orderId, false);
-            if (orderId == null) return;
+            if (orderId == null) 
+                throw new ArgumentException("Must provide an Order ID!");
             
+            var order = _toyBlockFactory.GetOrder(orderId, false);
             Console.WriteLine("Blocks added to order " + orderId + ": ");
             foreach (var block in orderDetails.Order)
             {

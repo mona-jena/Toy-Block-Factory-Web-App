@@ -54,9 +54,11 @@ namespace ToyBlockFactoryWebAppTests
             
             var requestBody = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
             var statusCode = requestBody.StatusCode;
-            //TODO:SHOULD I BE RETURNING SOMETHING? Or is this enough to show it worked?
-                                                
+            var updatedOrder = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/order?orderid={orderNumber}");
+            var responseBody = await updatedOrder.Content.ReadAsStringAsync();
+
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
+            Assert.Contains("\"Colour\":\"Red\"", responseBody);
         }
 
         [Fact]

@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: "2010-09-09"
-Description: "Access ECR to get tbf image"
+Description: "Create ECR to store the TBF image & add permissions for Jupiter to access"
 Resources:
   MyRepository:
     Type: AWS::ECR::Repository

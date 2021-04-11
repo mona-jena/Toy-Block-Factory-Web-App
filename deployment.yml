@@ -73,7 +73,7 @@ objects:
       # This annotation will trigger the cluster to provision a TLS certificate which will
       # be stored in the specified secretName below.
       "kubernetes.io/tls-acme": "true"
-      nginx.ingress.kubernetes.io/affinity: cookie          #creates session affinity to store data in cookies
+      nginx.ingress.kubernetes.io/affinity: cookie          #creates session affinity to send you back to the same pod
       nginx.ingress.kubernetes.io/session-cookie-hash: sha1
       nginx.ingress.kubernetes.io/session-cookie-name: route
   spec:

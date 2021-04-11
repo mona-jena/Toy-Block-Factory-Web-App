@@ -56,7 +56,14 @@ namespace ToyBlockFactoryWebApp
                     break;
                 
                 case "/addblock" when request.HttpMethod == "POST":
-                    _orderController.PostAddBlock(request.QueryString, requestBody);
+                    try
+                    {
+                        _orderController.PostAddBlock(request.QueryString, requestBody);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        SendResponse(context.Response, HttpStatusCode.BadRequest);
+                    }
                     SendResponse(context.Response, HttpStatusCode.Accepted); 
                     break;
                 
