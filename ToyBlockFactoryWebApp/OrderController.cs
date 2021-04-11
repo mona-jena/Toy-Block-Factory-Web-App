@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
-using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp

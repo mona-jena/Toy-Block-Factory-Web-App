@@ -54,7 +54,7 @@ namespace ToyBlockFactoryWebApp
                         _orderController.PostAddBlock(request.QueryString, requestBody);
                         SendResponse(context.Response, HttpStatusCode.Accepted);
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
@@ -73,7 +73,7 @@ namespace ToyBlockFactoryWebApp
                         var orders = _orderController.GetAllOrders();
                         SendResponse(context.Response, HttpStatusCode.Accepted, orders);
                     }
-                    catch (ArgumentException e)
+                    catch (ArgumentException)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
@@ -97,7 +97,7 @@ namespace ToyBlockFactoryWebApp
                         var report = _orderController.GetReport(request.QueryString);
                         SendResponse(context.Response, HttpStatusCode.Accepted, report);
                     }
-                    catch (InvalidDataException e)
+                    catch (InvalidDataException)
                     {
                         SendResponse(context.Response, HttpStatusCode.Forbidden);
                     }
