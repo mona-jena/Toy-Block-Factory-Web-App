@@ -111,7 +111,7 @@ namespace ToyBlockFactoryWebApp
                 order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
                 order.DueDate
             );
-            
+        
             return returnOrder;
         }
         
