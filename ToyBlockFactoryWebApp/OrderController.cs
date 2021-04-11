@@ -52,14 +52,7 @@ namespace ToyBlockFactoryWebApp
                 Console.WriteLine("{0} {1} {2}", block.Quantity, block.Colour, block.Shape);
             }
             
-            var returnOrder = new OrderDTO(
-                order.OrderId,
-                order.Name,
-                order.Address,
-                order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
-                order.DueDate
-            );
-            return returnOrder;
+            return CreateOrderDTO(order);
         }
         
         public bool Delete(NameValueCollection queryString)
@@ -77,15 +70,8 @@ namespace ToyBlockFactoryWebApp
             var submittedOrderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("Submitted order: " + submittedOrderId);
             var submittedOrder = _toyBlockFactory.GetOrder(submittedOrderId, true);
-            var returnOrder = new OrderDTO(
-                submittedOrder.OrderId,
-                submittedOrder.Name,
-                submittedOrder.Address,
-                submittedOrder.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
-                submittedOrder.DueDate
-            );
-            
-            return returnOrder;
+           
+            return CreateOrderDTO(submittedOrder);
         }
         
         public IReport GetReport(NameValueCollection queryString)
@@ -104,15 +90,8 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Getting order: " + orderId);
             var submitted = _toyBlockFactory.IsOrderSubmitted(orderId);  
             var order = _toyBlockFactory.GetOrder(orderId, submitted);
-            var returnOrder = new OrderDTO(
-                order.OrderId,
-                order.Name,
-                order.Address,
-                order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
-                order.DueDate
-            );
-        
-            return returnOrder;
+
+            return CreateOrderDTO(order);
         }
         
         public List<OrderDTO> GetAllOrders()
@@ -122,17 +101,22 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("Getting all orders:");
             foreach (var order in orders)
             {
-                returnOrder.Add(new OrderDTO(
-                    order.OrderId,
-                    order.Name,
-                    order.Address,
-                    order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
-                    order.DueDate
-                ));
+                returnOrder.Add(CreateOrderDTO(order));
                 Console.WriteLine(returnOrder);
             }
 
             return returnOrder;
+        }
+
+        private OrderDTO CreateOrderDTO(Order order)
+        {
+            return new OrderDTO(
+                order.OrderId,
+                order.Name,
+                order.Address,
+                order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
+                order.DueDate
+            );
         }
         
     }
