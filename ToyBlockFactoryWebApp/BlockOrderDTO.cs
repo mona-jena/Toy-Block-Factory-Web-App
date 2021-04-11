@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace ToyBlockFactoryWebApp
 {
-    internal record BlockOrderDTO(List<BlockDTO> Order)
+    internal record BlockOrderDTO(IEnumerable<BlockDTO> Order)
     {
     }
     

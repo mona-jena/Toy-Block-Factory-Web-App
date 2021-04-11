@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ToyBlockFactoryKata.Orders;
-using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -55,19 +52,20 @@ namespace ToyBlockFactoryWebApp
                     try
                     {
                         _orderController.PostAddBlock(request.QueryString, requestBody);
-                        SendResponse(context.Response, HttpStatusCode.Accepted); 
+                        SendResponse(context.Response, HttpStatusCode.Accepted);
                     }
                     catch (ArgumentException e)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
+
                     break;
                 
                 case "/order" when request.HttpMethod == "GET":
                     var order = _orderController.GetOrder(request.QueryString);
                     if (order == null) SendResponse(context.Response, HttpStatusCode.NotFound);
                     else SendResponse(context.Response, HttpStatusCode.Accepted, order);
-                                                    //TODO: Block key is not able to be Serialized
+                                                        //TODO: Block key is not able to be Serialized
                     break;
 
                 case "/orders" when request.HttpMethod == "GET":
@@ -76,7 +74,7 @@ namespace ToyBlockFactoryWebApp
                     {
                         var orders = _orderController.GetAllOrders();
                         SendResponse(context.Response, HttpStatusCode.Accepted, orders);
-                                                    //TODO: Block key is not able to be Serialized
+                                                        //TODO: Block key is not able to be Serialized
                     }
                     catch (ArgumentException e)
                     {
@@ -94,7 +92,7 @@ namespace ToyBlockFactoryWebApp
                     var submittedOrder = _orderController.Put(request.QueryString);
                     if (submittedOrder == null) SendResponse(context.Response, HttpStatusCode.BadRequest);
                     else SendResponse(context.Response, HttpStatusCode.Accepted, submittedOrder); 
-                                                //TODO: Block key is not able to be Serialized
+                                                        //TODO: Block key is not able to be Serialized
                     break;
                 
                 case "/report" when request.HttpMethod == "GET":
@@ -103,7 +101,7 @@ namespace ToyBlockFactoryWebApp
                     {
                         var report = _orderController.GetReport(request.QueryString);
                         SendResponse(context.Response, HttpStatusCode.Accepted, report);
-                        //TODO: Block key is not able to be Serialized
+                                                        //TODO: Block key is not able to be Serialized
                     }
                     catch (InvalidDataException e)
                     {
@@ -118,7 +116,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data.");
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = (int) statusCode;
-            //if (@object == null) return;  //TODO: CAUSING THREADING ISSUES!!
+            //if (@object == null) return;              //TODO: CAUSING THREADING ISSUES!!
             
             var options = new JsonSerializerOptions
             {
@@ -134,6 +132,5 @@ namespace ToyBlockFactoryWebApp
             response.Close();
         }
         
-
     }
 }
