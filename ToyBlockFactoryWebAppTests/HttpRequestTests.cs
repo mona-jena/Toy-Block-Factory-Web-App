@@ -58,7 +58,7 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await updatedOrder.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Contains("\"Colour\":\"Red\"", responseBody);
+            Assert.Contains("\"Colour\":\"red\"", responseBody);
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Contains("OrderId:" + orderNumber, responseBody);
+            Assert.Contains("\"OrderId\":\"" + orderNumber, responseBody);
         }
         
         [Fact]
@@ -119,8 +119,8 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Contains("OrderId:" + orderNumber, responseBody);
-            Assert.Contains("OrderId:" + order2Number, responseBody);
+            Assert.Contains("\"OrderId\":\"" + orderNumber, responseBody);
+            Assert.Contains("\"OrderId\":\"" + order2Number, responseBody);
         }
 
         [Fact]

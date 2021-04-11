@@ -65,16 +65,13 @@ namespace ToyBlockFactoryWebApp
                     var order = _orderController.GetOrder(request.QueryString);
                     if (order == null) SendResponse(context.Response, HttpStatusCode.NotFound);
                     else SendResponse(context.Response, HttpStatusCode.Accepted, order);
-                                                        //TODO: Block key is not able to be Serialized
                     break;
 
                 case "/orders" when request.HttpMethod == "GET":
-                    //List<Order> orders = new List<Order>();        //TODO: WHAT TO SETUP AS DEFAULT?
                     try
                     {
                         var orders = _orderController.GetAllOrders();
                         SendResponse(context.Response, HttpStatusCode.Accepted, orders);
-                                                        //TODO: Block key is not able to be Serialized
                     }
                     catch (ArgumentException e)
                     {
@@ -92,16 +89,13 @@ namespace ToyBlockFactoryWebApp
                     var submittedOrder = _orderController.Put(request.QueryString);
                     if (submittedOrder == null) SendResponse(context.Response, HttpStatusCode.BadRequest);
                     else SendResponse(context.Response, HttpStatusCode.Accepted, submittedOrder); 
-                                                        //TODO: Block key is not able to be Serialized
                     break;
                 
                 case "/report" when request.HttpMethod == "GET":
-                    //IReport report = new Report();   //TODO: WHAT TO SETUP AS DEFAULT?
                     try
                     {
                         var report = _orderController.GetReport(request.QueryString);
                         SendResponse(context.Response, HttpStatusCode.Accepted, report);
-                                                        //TODO: Block key is not able to be Serialized
                     }
                     catch (InvalidDataException e)
                     {

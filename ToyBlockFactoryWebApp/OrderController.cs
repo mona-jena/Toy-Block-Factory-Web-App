@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
@@ -60,14 +61,22 @@ namespace ToyBlockFactoryWebApp
             return _toyBlockFactory.OrderExists(orderId) && _toyBlockFactory.DeleteOrder(orderId);
         }
         
-        public Order Put(NameValueCollection queryString)
+        public OrderDTO Put(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderId");
             var order = _toyBlockFactory.GetOrder(orderId, false);
             var submittedOrderId = _toyBlockFactory.SubmitOrder(order);
             Console.WriteLine("Submitted order: " + submittedOrderId);
+            var submittedOrder = _toyBlockFactory.GetOrder(submittedOrderId, true);
+            var returnOrder = new OrderDTO(
+                submittedOrder.OrderId,
+                submittedOrder.Name,
+                submittedOrder.Address,
+                submittedOrder.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
+                submittedOrder.DueDate
+            );
             
-            return _toyBlockFactory.GetOrder(orderId, true);
+            return returnOrder;
         }
         
         public IReport GetReport(NameValueCollection queryString)
@@ -80,19 +89,41 @@ namespace ToyBlockFactoryWebApp
             return _toyBlockFactory.GetReport(orderId, reportType);
         }
         
-        public Order GetOrder(NameValueCollection queryString)
+        public OrderDTO GetOrder(NameValueCollection queryString)
         {
             var orderId = queryString.Get("orderid");
             Console.WriteLine("Getting order: " + orderId);
             var submitted = _toyBlockFactory.IsOrderSubmitted(orderId);  
-                                                    // TODO: Had to add this method to make this work, another way?
-            return _toyBlockFactory.GetOrder(orderId, submitted);
+            var order = _toyBlockFactory.GetOrder(orderId, submitted);
+            var returnOrder = new OrderDTO(
+                order.OrderId,
+                order.Name,
+                order.Address,
+                order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
+                order.DueDate
+            );
+            
+            return returnOrder;
         }
         
-        public List<Order> GetAllOrders()
+        public List<OrderDTO> GetAllOrders()
         {
+            List<OrderDTO> returnOrder = new();
             Console.WriteLine("Getting all orders:");
-            return _toyBlockFactory.GetAllOrders();
+            var orders = _toyBlockFactory.GetAllOrders();
+            foreach (var order in orders)
+            {
+                returnOrder.Add(new OrderDTO(
+                    order.OrderId,
+                    order.Name,
+                    order.Address,
+                    order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
+                    order.DueDate
+                ));
+                Console.WriteLine(returnOrder);
+            }
+
+            return returnOrder;
         }
         
     }
