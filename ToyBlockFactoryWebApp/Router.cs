@@ -40,10 +40,6 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine(requestBody);
             switch (request.Url?.AbsolutePath)
             {
-                // case "/orders" when request.HttpMethod == "GET":
-                //     break;
-                    //DO SOMETHING!!!
-                    
                 case "/health" when request.HttpMethod == "GET":
                     var healthMessage = _healthCheckController.HealthCheck();
                     SendResponse(context.Response, HttpStatusCode.OK, healthMessage);
@@ -59,40 +55,33 @@ namespace ToyBlockFactoryWebApp
                     try
                     {
                         _orderController.PostAddBlock(request.QueryString, requestBody);
+                        SendResponse(context.Response, HttpStatusCode.Accepted); 
                     }
                     catch (ArgumentException e)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
-                    SendResponse(context.Response, HttpStatusCode.Accepted); 
                     break;
                 
                 case "/order" when request.HttpMethod == "GET":
-                    Order order = null;        //TODO: WHAT TO SETUP AS DEFAULT?
-                    try
-                    {
-                        order = _orderController.GetOrder(request.QueryString);
-                    }
-                    catch (ArgumentException e)
-                    {
-                        SendResponse(context.Response, HttpStatusCode.BadRequest);
-                    }
-                    SendResponse(context.Response, HttpStatusCode.Accepted, order);
-                                                //TODO: Block key is not able to be Serialized
+                    var order = _orderController.GetOrder(request.QueryString);
+                    if (order == null) SendResponse(context.Response, HttpStatusCode.NotFound);
+                    else SendResponse(context.Response, HttpStatusCode.Accepted, order);
+                                                    //TODO: Block key is not able to be Serialized
                     break;
-                
+
                 case "/orders" when request.HttpMethod == "GET":
-                    List<Order> orders = null;        //TODO: WHAT TO SETUP AS DEFAULT?
+                    //List<Order> orders = new List<Order>();        //TODO: WHAT TO SETUP AS DEFAULT?
                     try
                     {
-                        orders = _orderController.GetAllOrders();
+                        var orders = _orderController.GetAllOrders();
+                        SendResponse(context.Response, HttpStatusCode.Accepted, orders);
+                                                    //TODO: Block key is not able to be Serialized
                     }
                     catch (ArgumentException e)
                     {
                         SendResponse(context.Response, HttpStatusCode.BadRequest);
                     }
-                    SendResponse(context.Response, HttpStatusCode.Accepted, orders);
-                                                //TODO: Block key is not able to be Serialized
                     break;
                 
                 case "/order" when request.HttpMethod == "DELETE":
@@ -109,17 +98,17 @@ namespace ToyBlockFactoryWebApp
                     break;
                 
                 case "/report" when request.HttpMethod == "GET":
-                    IReport report = null;   //TODO: WHAT TO SETUP AS DEFAULT?
+                    //IReport report = new Report();   //TODO: WHAT TO SETUP AS DEFAULT?
                     try
                     {
-                        report = _orderController.GetReport(request.QueryString);
+                        var report = _orderController.GetReport(request.QueryString);
+                        SendResponse(context.Response, HttpStatusCode.Accepted, report);
+                        //TODO: Block key is not able to be Serialized
                     }
-                    catch (ArgumentException e)
+                    catch (InvalidDataException e)
                     {
-                        SendResponse(context.Response, HttpStatusCode.NotFound); 
+                        SendResponse(context.Response, HttpStatusCode.Forbidden);
                     }
-                    SendResponse(context.Response, HttpStatusCode.Accepted, report);
-                                                //TODO: Block key is not able to be Serialized
                     break;
             }
         }
