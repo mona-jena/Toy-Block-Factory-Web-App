@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
+using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 
 namespace ToyBlockFactoryWebApp
@@ -31,7 +32,7 @@ namespace ToyBlockFactoryWebApp
             return orderId;
         }
 
-        public void PostAddBlock(NameValueCollection queryString, string requestBody)
+        public OrderDTO PostAddBlock(NameValueCollection queryString, string requestBody)
         {
             var options = new JsonSerializerOptions
             {
@@ -50,6 +51,15 @@ namespace ToyBlockFactoryWebApp
                 order.AddBlock(block.Shape, block.Colour, block.Quantity);
                 Console.WriteLine("{0} {1} {2}", block.Quantity, block.Colour, block.Shape);
             }
+            
+            var returnOrder = new OrderDTO(
+                order.OrderId,
+                order.Name,
+                order.Address,
+                order.BlockList.Select(kvp => new BlockDTO(kvp.Key.Colour, kvp.Key.Shape, kvp.Value)),
+                order.DueDate
+            );
+            return returnOrder;
         }
         
         public bool Delete(NameValueCollection queryString)
@@ -108,8 +118,8 @@ namespace ToyBlockFactoryWebApp
         public List<OrderDTO> GetAllOrders()
         {
             List<OrderDTO> returnOrder = new();
-            Console.WriteLine("Getting all orders:");
             var orders = _toyBlockFactory.GetAllOrders();
+            Console.WriteLine("Getting all orders:");
             foreach (var order in orders)
             {
                 returnOrder.Add(new OrderDTO(
