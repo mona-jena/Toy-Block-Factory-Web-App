@@ -36,7 +36,20 @@ objects:
                     name: "mona-port"
             ports:
               - containerPort: 3000
-       
+            livenessProbe:
+              httpGet:
+                path: /health
+                port: 3000
+              initialDelaySeconds: 3
+              periodSeconds: 3
+            readinessProbe:
+              httpGet:
+                path: /order
+                port: 3000
+              initialDelaySeconds: 3
+              timeoutSeconds: 8
+              periodSeconds: 10
+     
 
 # This is an example of a service - a logical grouping of pods - so we can access all worker nodes even if they get updated
 
