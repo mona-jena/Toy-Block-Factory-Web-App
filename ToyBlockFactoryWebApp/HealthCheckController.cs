@@ -6,8 +6,7 @@ namespace ToyBlockFactoryWebApp
     {
         public HealthDTO HealthCheck()
         {
-            var health = new HealthDTO("ok");
-            return health;
+            return new ("ok");
         }
     }
 }

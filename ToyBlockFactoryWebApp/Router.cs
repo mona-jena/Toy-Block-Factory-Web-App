@@ -135,6 +135,7 @@ namespace ToyBlockFactoryWebApp
             var output = response.OutputStream;
             output.Write(buffer, 0, buffer.Length);
             output.Close();
+            response.Close();
         }
         
 

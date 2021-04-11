@@ -128,7 +128,7 @@ namespace ToyBlockFactoryTests
         }
 
         [Fact]
-        public void OrdersNotSubmittedCanBeDeleted()
+        public void SubmittedOrderCantBeDeleted()
         {
             var deletedOrder = _unsubmittedOrder.OrderId;
             

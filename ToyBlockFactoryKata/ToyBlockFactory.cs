@@ -39,7 +39,7 @@ namespace ToyBlockFactoryKata
             return _orderManagementSystem.Exists(orderId);
         }
 
-        public bool OrderSubmitted(string orderId)
+        public bool IsOrderSubmitted(string orderId)
         {
             return _orderManagementSystem.OrderSubmitted(orderId);
         }

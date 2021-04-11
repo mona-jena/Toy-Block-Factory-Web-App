@@ -84,7 +84,7 @@ namespace ToyBlockFactoryWebApp
         {
             var orderId = queryString.Get("orderid");
             Console.WriteLine("Getting order: " + orderId);
-            var submitted = _toyBlockFactory.OrderSubmitted(orderId);  
+            var submitted = _toyBlockFactory.IsOrderSubmitted(orderId);  
                                                     // TODO: Had to add this method to make this work, another way?
             return _toyBlockFactory.GetOrder(orderId, submitted);
         }

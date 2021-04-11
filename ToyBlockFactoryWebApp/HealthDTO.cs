@@ -1,6 +1,6 @@
 namespace ToyBlockFactoryWebApp
 {
-    public record HealthDTO(string status)
+    public record HealthDTO(string Status)
     {
     }
 }
