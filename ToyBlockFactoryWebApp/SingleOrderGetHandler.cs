@@ -1,32 +1,32 @@
 using System.Net;
-using ToyBlockFactoryKata.Orders;
 
 namespace ToyBlockFactoryWebApp
 {
-    public class OrderCreateHandler : IRequestHandler
+    public class SingleOrderGetHandler : IRequestHandler
     {
         private readonly OrderController _orderController;
 
-        public OrderCreateHandler(OrderController orderController)
+        public SingleOrderGetHandler(OrderController orderController)
         {
             _orderController = orderController;
         }
         
         public bool ShouldHandle(string url, string httpMethod)
         {
-            return url == "/order" && httpMethod == "POST";
+            return url == "/order" && httpMethod == "GET";
         }
 
         public IResponseHandler Handle(HttpListenerRequest request)
         {
-            var orderId = _orderController.Post(request.GetRequestBody());
-            if (orderId == null)
+            var orders = _orderController.GetOrder(request.QueryString);
+            if (orders == null)
             {
                 return new BadRequestResponse();
             }
-            return new AcceptedResponse(orderId);
+            return new AcceptedResponse(orders);
         }
         
        
     }
+    
 }

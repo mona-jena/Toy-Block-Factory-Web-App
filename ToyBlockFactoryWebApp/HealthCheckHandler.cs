@@ -10,12 +10,12 @@ namespace ToyBlockFactoryWebApp
         }
         
 
-        public IResponseHandler Handle(string requestBody)
+        public IResponseHandler Handle(HttpListenerRequest request)
         {
             var healthCheckController = new HealthCheckController();
             var healthMessage = healthCheckController.HealthCheck();
-            return new OkResponse(healthMessage);
             
+            return new OkResponse(healthMessage);
         }
     }
 }

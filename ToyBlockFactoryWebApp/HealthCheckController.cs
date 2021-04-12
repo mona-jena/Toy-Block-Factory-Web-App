@@ -1,4 +1,5 @@
 using System.Net;
+using ToyBlockFactoryWebApp.DTOs;
 
 namespace ToyBlockFactoryWebApp
 {

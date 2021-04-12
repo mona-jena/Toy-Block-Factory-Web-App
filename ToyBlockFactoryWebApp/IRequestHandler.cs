@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 
 namespace ToyBlockFactoryWebApp
@@ -6,6 +5,6 @@ namespace ToyBlockFactoryWebApp
     public interface IRequestHandler
     {
         bool ShouldHandle(string url, string httpMethod);
-        IResponseHandler Handle(string requestBody);
+        IResponseHandler Handle(HttpListenerRequest request);
     }
 }

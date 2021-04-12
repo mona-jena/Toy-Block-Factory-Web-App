@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
+using ToyBlockFactoryWebApp.DTOs;
 
 namespace ToyBlockFactoryWebApp
 {
@@ -32,15 +33,8 @@ namespace ToyBlockFactoryWebApp
             return orderId;
         }
 
-        public OrderDTO PostAddBlock(NameValueCollection queryString, string requestBody)
+        public OrderDTO PostAddBlock(string orderId, BlockOrderDTO orderDetails)
         {
-            var options = new JsonSerializerOptions
-            {
-                Converters = {new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)}
-            };
-            var orderDetails = JsonSerializer.Deserialize<BlockOrderDTO>(requestBody, options) 
-                               ?? throw new InvalidDataException("Invalid block order data");
-            var orderId = queryString.Get("orderId");
             if (orderId == null) 
                 throw new ArgumentException("Must provide an Order ID!");
             

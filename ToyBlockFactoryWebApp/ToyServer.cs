@@ -40,6 +40,7 @@ namespace ToyBlockFactoryWebApp
                     try
                     {
                         Console.WriteLine($"\nReceived request from: {context.Request.Url?.PathAndQuery}");
+                        context.Response.Headers.Set("Server", "mona's-server");
                         _router.ReadRequests(context);
                         context.Response.Close();
                     }

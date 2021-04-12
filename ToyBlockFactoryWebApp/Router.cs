@@ -1,8 +1,6 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -11,40 +9,32 @@ namespace ToyBlockFactoryWebApp
 {
     public class Router
     {
-        private readonly OrderController _orderController;
         private readonly IRequestHandler[] _handlers;
 
         public Router(OrderController orderController)
         {
-            _orderController = orderController;
-            _handlers = new IRequestHandler[] {new HealthCheckHandler(), new OrderCreateHandler(orderController)};
-        }
-
-        private string GetRequestBody(HttpListenerRequest request)
-        {
-            Console.WriteLine("Start of client data:");
-            var body = request.InputStream;
-            var encoding = request.ContentEncoding;
-            var reader = new StreamReader(body, encoding);
-            string bodyString = reader.ReadToEnd();
-            body.Close();
-            reader.Close();
-            return bodyString;
+            _handlers = new IRequestHandler[] {new HealthCheckHandler(), 
+                new OrderCreateHandler(orderController), 
+                new OrderAddBlocksHandler(orderController), 
+                new SingleOrderGetHandler(orderController),
+                new OrdersGetHandler(orderController),
+                new OrderDeleteHandler(orderController),
+                new SubmitOrderHandler(orderController),
+                new GetReportHandler(orderController)
+            };
         }
 
         public void ReadRequests(HttpListenerContext context)
         {
             var request = context.Request;
-            var requestBody = GetRequestBody(request);
-            Console.WriteLine(requestBody);
             var handler = _handlers.FirstOrDefault(h => h.ShouldHandle(request.Url?.AbsolutePath, request.HttpMethod));
             if (handler != null)
             {
-                var responseHandler = handler.Handle(requestBody);
+                var responseHandler = handler.Handle(request);
                 responseHandler.Respond(context.Response);
                 return;
             }
-            switch (request.Url?.AbsolutePath)
+            /*switch (request.Url?.AbsolutePath)
             {
                 case "/order" when request.HttpMethod == "POST":
                     var orderId = _orderController.Post(requestBody);
@@ -69,7 +59,7 @@ namespace ToyBlockFactoryWebApp
                     if (order == null) SendResponse(context.Response, HttpStatusCode.NotFound);
                     else SendResponse(context.Response, HttpStatusCode.Accepted, order);
                     break;
-
+            
                 case "/orders" when request.HttpMethod == "GET":
                     try
                     {
@@ -105,7 +95,7 @@ namespace ToyBlockFactoryWebApp
                         SendResponse(context.Response, HttpStatusCode.Forbidden);
                     }
                     break;
-            }
+            }*/
         }
 
         private static void SendResponse(HttpListenerResponse response, HttpStatusCode statusCode, Object @object = null)

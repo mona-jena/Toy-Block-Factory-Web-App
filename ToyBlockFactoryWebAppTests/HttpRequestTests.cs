@@ -52,7 +52,7 @@ namespace ToyBlockFactoryWebAppTests
             var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             
-            var requestBody = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+            var requestBody = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/order/{orderNumber}/addblock", blockOrderRequest);
             var statusCode = requestBody.StatusCode;
             var updatedOrder = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/order?orderid={orderNumber}");
             var responseBody = await updatedOrder.Content.ReadAsStringAsync();
@@ -68,12 +68,12 @@ namespace ToyBlockFactoryWebAppTests
             var orderResponse = await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest);
             var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
-            var blockOrderRequestBody = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+            var blockOrderRequestBody = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/order/{orderNumber}/addblock", blockOrderRequest);
            
             var deletedOrder = await _toyBlockOrdersFixture.Client.DeleteAsync($"http://localhost:3000/order?orderId={orderNumber}");
             var statusCode = deletedOrder.StatusCode;
 
-            Assert.Equal(HttpStatusCode.Accepted, statusCode);
+            Assert.Equal(HttpStatusCode.NoContent, statusCode);
         }
 
         [Fact]
@@ -104,7 +104,7 @@ namespace ToyBlockFactoryWebAppTests
             var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
             var body = await _toyBlockOrdersFixture.Client.PostAsync(
-                $"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+                $"http://localhost:3000/order/{orderNumber}/addblock", blockOrderRequest);
 
             var orderRequest2 = _toyBlockOrdersFixture.CreateOrderRequest();
             var orderResponse2 =
@@ -112,7 +112,7 @@ namespace ToyBlockFactoryWebAppTests
             var order2Number = await orderResponse2.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest2 = _toyBlockOrdersFixture.AddBlocks();
             var body2 = await _toyBlockOrdersFixture.Client.PostAsync(
-                $"http://localhost:3000/addblock?orderId={order2Number}", blockOrderRequest2);
+                $"http://localhost:3000/order/{order2Number}/addblock", blockOrderRequest2);
         
             var order = await _toyBlockOrdersFixture.Client.GetAsync($"http://localhost:3000/orders");
             var statusCode = order.StatusCode;
@@ -130,7 +130,7 @@ namespace ToyBlockFactoryWebAppTests
             var orderResponse = await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest);
             var orderNumber = await  orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
-            var body = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+            var body = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/order/{orderNumber}/addblock", blockOrderRequest);
 
             var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var submittedOrder = await _toyBlockOrdersFixture.Client.PutAsync($"http://localhost:3000/order?orderid={orderNumber}", putContent);
@@ -146,7 +146,7 @@ namespace ToyBlockFactoryWebAppTests
             var orderResponse = await _toyBlockOrdersFixture.Client.PostAsync("http://localhost:3000/order", orderRequest);
             var orderNumber = await orderResponse.Content.ReadFromJsonAsync<string>();
             var blockOrderRequest = _toyBlockOrdersFixture.AddBlocks();
-            var body = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/addblock?orderId={orderNumber}", blockOrderRequest);
+            var body = await _toyBlockOrdersFixture.Client.PostAsync($"http://localhost:3000/order/{orderNumber}/addblock", blockOrderRequest);
             var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var submittedOrder = await _toyBlockOrdersFixture.Client.PutAsync($"http://localhost:3000/order?orderid={orderNumber}", putContent);
         
