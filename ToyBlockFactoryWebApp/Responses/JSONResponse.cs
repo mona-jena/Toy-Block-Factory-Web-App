@@ -3,7 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Responses
 {
     public abstract class JSONResponse
     {

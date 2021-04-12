@@ -2,10 +2,10 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryWebApp.DTOs;
+using ToyBlockFactoryWebApp.Responses;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Handlers
 {
     public class OrderAddBlocksHandler : IRequestHandler
     {

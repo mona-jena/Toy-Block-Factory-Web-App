@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Responses
 {
     public class BadRequestResponse : IResponseHandler
     {

@@ -1,32 +1,32 @@
 using System.Net;
+using ToyBlockFactoryWebApp.Responses;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Handlers
 {
-    public class SingleOrderGetHandler : IRequestHandler
+    public class OrderDeleteHandler : IRequestHandler
     {
         private readonly OrderController _orderController;
 
-        public SingleOrderGetHandler(OrderController orderController)
+        public OrderDeleteHandler(OrderController orderController)
         {
             _orderController = orderController;
         }
         
         public bool ShouldHandle(string url, string httpMethod)
         {
-            return url == "/order" && httpMethod == "GET";
+            return url == "/order" && httpMethod == "DELETE";
         }
 
         public IResponseHandler Handle(HttpListenerRequest request)
         {
-            var orders = _orderController.GetOrder(request.QueryString);
-            if (orders == null)
+            var orderId = _orderController.Delete(request.QueryString);
+            if (orderId == false)
             {
                 return new BadRequestResponse();
             }
-            return new AcceptedResponse(orders);
+
+            return new NoContentResponse();
         }
         
-       
     }
-    
 }

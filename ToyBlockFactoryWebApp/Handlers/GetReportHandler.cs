@@ -1,30 +1,30 @@
 using System.Net;
+using ToyBlockFactoryWebApp.Responses;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Handlers
 {
-    public class OrdersGetHandler : IRequestHandler
+    public class GetReportHandler : IRequestHandler
     {
         private readonly OrderController _orderController;
 
-        public OrdersGetHandler(OrderController orderController)
+        public GetReportHandler(OrderController orderController)
         {
             _orderController = orderController;
         }
         
         public bool ShouldHandle(string url, string httpMethod)
         {
-            return url == "/orders" && httpMethod == "GET";
+            return url == "/report" && httpMethod == "GET";
         }
 
         public IResponseHandler Handle(HttpListenerRequest request)
         {
-            ////
-            var orders = _orderController.GetAllOrders();
-            if (orders == null)
+            var report = _orderController.GetReport(request.QueryString);
+            if (report == null)
             {
                 return new BadRequestResponse();
             }
-            return new AcceptedResponse(orders);
+            return new AcceptedResponse(report);
         }
         
        
