@@ -1,7 +1,6 @@
-using System.Net;
 using ToyBlockFactoryWebApp.DTOs;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Controllers
 {
     public class HealthCheckController
     {
@@ -9,5 +8,6 @@ namespace ToyBlockFactoryWebApp
         {
             return new ("ok");
         }
+        
     }
 }

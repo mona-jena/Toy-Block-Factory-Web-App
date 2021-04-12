@@ -4,13 +4,12 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using ToyBlockFactoryKata;
 using ToyBlockFactoryKata.Orders;
 using ToyBlockFactoryKata.Reports;
 using ToyBlockFactoryWebApp.DTOs;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Controllers
 {
     public class OrderController
     {

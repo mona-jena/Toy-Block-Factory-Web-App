@@ -1,14 +1,10 @@
-using System;
-using System.IO;
 using System.Net;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.Responses
 {
     public interface IResponseHandler
     {
         void Respond(HttpListenerResponse response);
-
     }
 
-    
 }

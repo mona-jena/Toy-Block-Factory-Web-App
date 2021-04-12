@@ -1,32 +1,34 @@
 using System.Net;
+using ToyBlockFactoryWebApp.Controllers;
+using ToyBlockFactoryWebApp.RequestHandlers;
 using ToyBlockFactoryWebApp.Responses;
 
 namespace ToyBlockFactoryWebApp.Handlers
 {
-    public class SingleOrderGetHandler : IRequestHandler
+    public class SubmitOrderHandler : IRequestHandler
     {
         private readonly OrderController _orderController;
 
-        public SingleOrderGetHandler(OrderController orderController)
+        public SubmitOrderHandler(OrderController orderController)
         {
             _orderController = orderController;
         }
         
         public bool ShouldHandle(string url, string httpMethod)
         {
-            return url == "/order" && httpMethod == "GET";
+            return url == "/order" && httpMethod == "PUT";
         }
 
         public IResponseHandler Handle(HttpListenerRequest request)
         {
-            var orders = _orderController.GetOrder(request.QueryString);
-            if (orders == null)
+            var submittedOrder = _orderController.Put(request.QueryString);
+            if (submittedOrder == null)
             {
                 return new BadRequestResponse();
             }
-            return new AcceptedResponse(orders);
+            return new AcceptedResponse(submittedOrder);
         }
-
+        
     }
     
 }
