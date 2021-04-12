@@ -38,7 +38,7 @@ objects:
               - containerPort: 3000
             readinessProbe:       #app is ready and running 
               httpGet:
-                path: /orders
+                path: /health
                 port: 3000
               initialDelaySeconds: 3
               timeoutSeconds: 8
