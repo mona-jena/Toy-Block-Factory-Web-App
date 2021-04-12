@@ -1,6 +1,8 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,13 +11,13 @@ namespace ToyBlockFactoryWebApp
 {
     public class Router
     {
-        private readonly HealthCheckController _healthCheckController;
         private readonly OrderController _orderController;
+        private readonly IRequestHandler[] _handlers;
 
-        public Router(HealthCheckController healthCheckController, OrderController orderController)
+        public Router(OrderController orderController)
         {
-            _healthCheckController = healthCheckController;
             _orderController = orderController;
+            _handlers = new IRequestHandler[] {new HealthCheckHandler(), new OrderCreateHandler(orderController)};
         }
 
         private string GetRequestBody(HttpListenerRequest request)
@@ -35,19 +37,21 @@ namespace ToyBlockFactoryWebApp
             var request = context.Request;
             var requestBody = GetRequestBody(request);
             Console.WriteLine(requestBody);
+            var handler = _handlers.FirstOrDefault(h => h.ShouldHandle(request.Url?.AbsolutePath, request.HttpMethod));
+            if (handler != null)
+            {
+                var responseHandler = handler.Handle(requestBody);
+                responseHandler.Respond(context.Response);
+                return;
+            }
             switch (request.Url?.AbsolutePath)
             {
-                case "/health" when request.HttpMethod == "GET":
-                    var healthMessage = _healthCheckController.HealthCheck();
-                    SendResponse(context.Response, HttpStatusCode.OK, healthMessage);
-                    break;
-
                 case "/order" when request.HttpMethod == "POST":
                     var orderId = _orderController.Post(requestBody);
                     if (orderId == null) SendResponse(context.Response, HttpStatusCode.BadRequest);
                     else SendResponse(context.Response, HttpStatusCode.Accepted, orderId);
                     break;
-                
+                 
                 case "/addblock" when request.HttpMethod == "POST":
                     try
                     {
@@ -109,7 +113,7 @@ namespace ToyBlockFactoryWebApp
             Console.WriteLine("End of client data.");
             response.Headers.Set("Server", "mona's-server");
             response.StatusCode = (int) statusCode;
-            //if (@object == null) return;              //TODO: CAUSING THREADING ISSUES!!
+            if (@object == null) return;              //TODO: CAUSING THREADING ISSUES!!
             
             var options = new JsonSerializerOptions
             {

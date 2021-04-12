@@ -19,9 +19,8 @@ namespace ToyBlockFactoryWebApp
             }
             _uri = prefixes;
             _httpListener = new HttpListener();
-            var healthCheckController = new HealthCheckController();
             var orderController = new OrderController(toyBlockFactory);
-            _router = new Router(healthCheckController, orderController);
+            _router = new Router(orderController);
         }
 
         public async Task Start()
@@ -42,6 +41,7 @@ namespace ToyBlockFactoryWebApp
                     {
                         Console.WriteLine($"\nReceived request from: {context.Request.Url?.PathAndQuery}");
                         _router.ReadRequests(context);
+                        context.Response.Close();
                     }
                     catch (Exception e)
                     {

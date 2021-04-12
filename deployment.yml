@@ -44,7 +44,7 @@ objects:
               periodSeconds: 3
             readinessProbe:
               httpGet:
-                path: /order
+                path: /orders
                 port: 3000
               initialDelaySeconds: 3
               timeoutSeconds: 8
