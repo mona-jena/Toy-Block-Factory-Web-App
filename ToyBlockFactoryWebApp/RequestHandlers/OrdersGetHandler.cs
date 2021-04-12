@@ -21,7 +21,6 @@ namespace ToyBlockFactoryWebApp.Handlers
 
         public IResponseHandler Handle(HttpListenerRequest request)
         {
-            ////
             var orders = _orderController.GetAllOrders();
             if (orders == null)
             {
@@ -29,8 +28,7 @@ namespace ToyBlockFactoryWebApp.Handlers
             }
             return new AcceptedResponse(orders);
         }
-        
-       
+
     }
     
 }
