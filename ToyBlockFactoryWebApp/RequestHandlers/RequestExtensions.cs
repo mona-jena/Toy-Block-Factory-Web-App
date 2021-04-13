@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Net;
 
-namespace ToyBlockFactoryWebApp
+namespace ToyBlockFactoryWebApp.RequestHandlers
 {
-    public static class ResponseExtensions
+    public static class RequestExtensions
     {
         public static string GetRequestBody(this HttpListenerRequest request)
         {
