@@ -1,9 +1,8 @@
 using System.Net;
 using ToyBlockFactoryWebApp.Controllers;
-using ToyBlockFactoryWebApp.RequestHandlers;
 using ToyBlockFactoryWebApp.Responses;
 
-namespace ToyBlockFactoryWebApp.Handlers
+namespace ToyBlockFactoryWebApp.RequestHandlers
 {
     public class HealthCheckHandler : IRequestHandler
     {

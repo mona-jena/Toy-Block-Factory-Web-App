@@ -135,7 +135,7 @@ namespace ToyBlockFactoryWebAppTests
             var putContent = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
             var submittedOrder = await _toyBlockOrdersFixture.Client.PutAsync($"http://localhost:3000/order?orderid={orderNumber}", putContent);
             var statusCode = submittedOrder.StatusCode;
-            
+
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
         }
 
