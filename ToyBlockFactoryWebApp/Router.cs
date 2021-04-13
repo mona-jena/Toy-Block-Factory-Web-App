@@ -19,19 +19,17 @@ namespace ToyBlockFactoryWebApp
                 new OrdersGetHandler(orderController),
                 new OrderDeleteHandler(orderController),
                 new SubmitOrderHandler(orderController),
-                new GetReportHandler(orderController)
+                new GetReportHandler(orderController),
+                new CatchAllHandler()
             };
         }
 
         public void ReadRequests(HttpListenerContext context)
         {
             var request = context.Request;
-            var handler = _handlers.FirstOrDefault(h => h.ShouldHandle(request.Url?.AbsolutePath, request.HttpMethod));
-            if (handler != null)
-            {   
-                var responseHandler = handler.Handle(request);
-                responseHandler.Respond(context.Response);
-            }
+            var handler = _handlers.First(h => h.ShouldHandle(request.Url?.AbsolutePath, request.HttpMethod));
+            var responseHandler = handler.Handle(request);
+            responseHandler.Respond(context.Response);
         }
         
     }
