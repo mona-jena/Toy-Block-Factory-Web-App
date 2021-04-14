@@ -92,7 +92,7 @@ namespace ToyBlockFactoryWebAppTests
             var responseBody = await order.Content.ReadAsStringAsync();
         
             Assert.Equal(HttpStatusCode.Accepted, statusCode);
-            Assert.Contains("\"Toy\":\"" + orderNumber, responseBody);
+            Assert.Contains("\"OrderId\":\"" + orderNumber, responseBody);
         }
         
         
