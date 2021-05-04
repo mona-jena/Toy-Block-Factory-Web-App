@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+FROM mcr.microsoft.com/dotnet/sdk:5.0
 
 ARG HOST_URL="https://sonarqube.svc.platform.myob.com/"
 ARG PROJECT_KEY
@@ -9,7 +9,13 @@ ARG SOLUTION_FILE
 COPY . ./
 
 # Install Java dependency for SonarScanner and restore SonarScanner
-RUN apt-get update && apt-get install -y default-jre
+RUN mkdir -p /usr/share/man/man1
+
+RUN apt-get update -y \
+    && apt-get install --no-install-recommends -y apt-transport-https \
+    && apt-get update -y \
+    && apt-get install --no-install-recommends -y openjdk-11-jre \
+    && apt-get install -y shellcheck
 RUN dotnet tool install --global dotnet-sonarscanner
 ENV PATH="$PATH:/root/.dotnet/tools"
 ENV LANG C.UTF-8
