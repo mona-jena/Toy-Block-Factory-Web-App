@@ -14,7 +14,7 @@ TOKEN=$(ssm-get "/etc/tokens/sonarqube")
 SOLUTION_FILE="ToyBlockFactory.sln"
 
 docker build \
-  -f .sonarqube/Dockerfile \
+  -f sonarqube/Dockerfile \
   --build-arg PROJECT_KEY="$PROJECT_KEY" \
   --build-arg PROJECT_NAME="$PROJECT_NAME" \
   --build-arg TOKEN="$TOKEN" \
