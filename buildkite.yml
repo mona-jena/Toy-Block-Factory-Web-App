@@ -5,7 +5,7 @@ steps:
     agents:
       queue: grace-lab
   - label: ':sonarqube: SonarQube scan'
-    command: '.sonarqube/scan.sh'
+    command: './sonarqube/scan.sh'
     agents:
       queue: grace-lab
   - wait
