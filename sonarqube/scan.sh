@@ -8,7 +8,7 @@ function ssm-get {
 	echo "$var"
 }
 
-PROJECT_KEY="sonar-fma:mona-sonarqube"
+PROJECT_KEY="sonar-proteges:mona-sonarqube"
 PROJECT_NAME="Mona's TBF App"
 TOKEN=$(ssm-get "/etc/tokens/sonarqube")
 SOLUTION_FILE="ToyBlockFactory.sln"
