@@ -12,7 +12,7 @@ namespace ToyBlockFactoryKata.Orders
         internal Order CreateOrder(string customerName, string customerAddress)
         {
             return CreateOrder(customerName, customerAddress, DateTime.Today.AddDays(7));
-        }
+        }     
         
         internal Order CreateOrder(string customerName, string customerAddress, DateTime dueDate)
         {

@@ -4,6 +4,10 @@ steps:
     command: './bin/test.sh' 
     agents:
       queue: grace-lab
+  - label: ':sonarqube: SonarQube scan'
+    command: '.sonarqube/scan.sh'
+    agents:
+      queue: grace-lab
   - wait
   - label: ':aws-cloudformation::ecr: Make ECR using CloudFormation'
     command: 'aws cloudformation deploy --template-file ecr.yml --stack-name mona-ecr --no-fail-on-empty-changeset' #won't fail even if there is no change
