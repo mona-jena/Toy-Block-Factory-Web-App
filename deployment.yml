@@ -120,7 +120,7 @@ objects:
       apiVersion: apps/v1
       kind: Deployment
       name: "mona-deployment"
-    minReplicas: 1
+    minReplicas: 2          #if there are multiple pods then it doesn't return to the same pod!!!
     maxReplicas: 5
     metrics:
       - type: External
