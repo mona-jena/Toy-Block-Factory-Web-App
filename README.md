@@ -2,6 +2,45 @@
 
 [![build status](https://badge.buildkite.com/8f19c12dbe6f3d7215bf1864c3a99900b97734aa0afda30365.svg?branch=master&theme=00aa65,ce2554,2b74df,8241aa,fff,fff)](https://buildkite.com/myob/mona-app)
 
+------------------------------------------------------------------------------------------------------------
+
+## Web App Url:
+~~~
+https://mona.svc.platform.myobdev.com
+~~~
+## Endpoints:
+
+####Create new order:
+~~~
+POST  /order 
+~~~
+####Add blocks to an order:
+~~~
+POST  /order/{orderId}/addblock 
+~~~
+####Delete order:
+~~~
+DELETE  /order?orderId={orderId}
+~~~
+####Get an existing order:
+~~~
+GET  /order?orderId={orderId}
+~~~
+####Get all orders:
+~~~
+GET  /orders
+~~~
+####Submit order:
+~~~
+PUT  /order?orderId={orderId}
+~~~
+####Get report:
+~~~
+GET  /report?orderId={orderId}&reportType={ReportType}
+~~~
+------------------------------------------------------------------------------------------------------------
+# Toy Block Factory Specifications
+
 There is a factory that makes toy blocks. The blocks come in three different shapes (square, circle and triangle) and in three different colours (red, blue and yellow)
 
 The factory does not keep any stock of blocks, instead blocks are produced per order. For example let's say the factory gets 3 orders in a day, the factory would make each order on it's own. 
@@ -54,7 +93,7 @@ Please input the number of Yellow Circle: 2
 
 ~~~
 
-## Pricing of blocks
+### Pricing of blocks
 
 Blocks have a fixed price which is determine by the shape. We have the following pricing list:
 
@@ -64,7 +103,7 @@ Blocks have a fixed price which is determine by the shape. We have the following
 
 Red colour blocks are charged an additional $1 per shape surcharge, other colours have no surcharges applied.
 
-## Order details
+### Order details
 
 An order has a:
 - Customer Name
@@ -73,7 +112,7 @@ An order has a:
 - Order Number
 - List of the blocks in an order with their respective colors
 
-## Cutting & Painting Department Needs
+### Cutting & Painting Department Needs
 
 The factory cutting department and a painting department
 
@@ -81,7 +120,7 @@ Your cutting department has 3 groups, one that cuts squares, one that cuts circl
 
 You have a single painting department that paints all shapes but wants to have shapes grouped by color
 
-# Invoice Report
+## Invoice Report
 
 Name: Mark Pearl &nbsp;
 Address: 1 Bob Avenue, Auckland &nbsp;
@@ -122,7 +161,7 @@ Total : $16
 
 ~~~
 
-# Cutting List Report
+## Cutting List Report
 
 Name: Mark Pearl &nbsp;
 Address: 1 Bob Avenue, Auckland &nbsp;
@@ -150,7 +189,7 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 11/02/2021 Order #: 0
 
 ~~~
 
-# Painting Report
+## Painting Report
 
 Name: Mark Pearl &nbsp;
 Address: 1 Bob Avenue, Auckland &nbsp;
@@ -178,12 +217,11 @@ Name: Mark Pearl Address: 1 Bob Avenue, Auckland Due Date: 11/02/2021 Order #: 0
 ~~~
 
 ------------------------------------------------------------------------------------------------------------
-
-# Run program: 
+## Run program locally:
 
 #### 1. Clone this repo to your local machine:
 ~~~
-https://github.com/monajena27/Toy-Block-Factory.git
+https://github.com/monajena27/Toy-Block-Factory-Web-App.git
 ~~~
 
 #### 2. From your terminal, navigate to the /ToyBlockFactoryConsole folder.
@@ -192,5 +230,4 @@ https://github.com/monajena27/Toy-Block-Factory.git
 ~~~
 dotnet run
 ~~~
-
-
+------------------------------------------------------------------------------------------------------------
