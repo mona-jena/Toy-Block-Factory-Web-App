@@ -90,7 +90,7 @@ objects:
       nginx.ingress.kubernetes.io/affinity: cookie          #creates session affinity to send you back to the same pod
       nginx.ingress.kubernetes.io/session-cookie-hash: sha1
       nginx.ingress.kubernetes.io/session-cookie-name: route
-      # nginx.ingress.kubernetes.io/session-cookie-max-age: 
+      nginx.ingress.kubernetes.io/session-cookie-max-age: 600
   spec:
     rules:
       - host: "mona.svc.platform.myobdev.com"
