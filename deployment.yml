@@ -131,6 +131,7 @@ objects:
             matchLabels:
               ingress: mona-ingress
             
+
 parameters:
   - name : "imagetag"
     parameterType : "string"
