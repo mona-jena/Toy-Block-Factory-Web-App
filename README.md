@@ -69,8 +69,9 @@ This application can:
 - Generate Cutting List Reports due on a particular date
 - Generate Painting Reports due on a particular date
 
-Everything will be done via the console.
+####Requests can be made via the console or hitting the above api endpoints. 
 
+####This is how an order would be taken via the console:
 ### Example input
 ~~~
 Welcome to the Toy Block Factory!
