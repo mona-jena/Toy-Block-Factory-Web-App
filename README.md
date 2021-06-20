@@ -96,7 +96,7 @@ Please input the number of Yellow Circle: 2
 
 ### Pricing of blocks
 
-Blocks have a fixed price which is determine by the shape. We have the following pricing list:
+Blocks have a fixed price which is determined by the shape. We have the following pricing list:
 
 - Square blocks cost $1 
 - Triangle blocks cost $2 
