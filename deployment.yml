@@ -135,12 +135,12 @@ objects:
 - apiVersion: myob.com/v1alpha1
   kind: AlertingRule
   metadata:
-    name: "mona-app-alert"
-    namespace: "fma"
+    name: mona-app-alert
+    namespace: fma
   spec:
-    config: 
+    config: |
       groups:
-      - name: "mona-app-alerts"
+      - name: mona-app-alerts
         rules:
         - alert: PodsTakingTooLongToStartRunning
           expr: max_over_time(kube_pod_status_phase{namespace="my-namespace",pod=~"my-app-.*",phase!~"Running"}[2m] offset 2m) > 0
