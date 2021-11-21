@@ -3,6 +3,15 @@
 [![build status](https://badge.buildkite.com/8f19c12dbe6f3d7215bf1864c3a99900b97734aa0afda30365.svg?branch=master&theme=00aa65,ce2554,2b74df,8241aa,fff,fff)](https://buildkite.com/myob/mona-app)
 
 ------------------------------------------------------------------------------------------------------------
+## Tools & Technologies
+- App built on .NET framework
+- Containerized using Docker
+- Runs on CI/CD Buildkite pipeline
+- Deployed on Kubernetes
+- Hosted on AWS
+- Automated quality and security checking through Sonarqube
+
+------------------------------------------------------------------------------------------------------------
 
 ## Web App Url:
 ~~~
