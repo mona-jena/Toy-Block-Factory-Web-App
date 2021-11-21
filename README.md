@@ -6,9 +6,9 @@
 ## Tools & Technologies
 - App built on .NET framework
 - Containerized using Docker
-- Runs on CI/CD Buildkite pipeline
 - Deployed on Kubernetes
 - Hosted on AWS
+- Automated deployment that runs on CI/CD Buildkite pipeline
 - Automated quality and security checking through Sonarqube
 
 ------------------------------------------------------------------------------------------------------------
