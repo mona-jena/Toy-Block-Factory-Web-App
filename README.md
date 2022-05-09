@@ -9,7 +9,7 @@
 - Deployed on Kubernetes
 - Hosted on AWS
 - Automated deployment that runs on CI/CD Buildkite pipeline
-- Automated quality and security checking through Sonarqube
+- Automated quality and security checks through Sonarqube
 
 ------------------------------------------------------------------------------------------------------------
 ## Code Architecture:
