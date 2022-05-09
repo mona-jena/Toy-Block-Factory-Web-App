@@ -13,7 +13,6 @@
 
 ------------------------------------------------------------------------------------------------------------
 ## Code Architecture:
-[Toy Block Factory.pdf](https://github.com/mona-jena/Toy-Block-Factory-Web-App/files/8649041/Toy.Block.Factory.pdf)
 ![image](https://user-images.githubusercontent.com/68258766/167347968-bacce01f-db79-48dc-9e74-0e54e85900b8.png)
 
 
